@@ -1,0 +1,11 @@
+rootProject.name = 'ReadIO-Spring'
+
+// 包含所有子项目
+include 'readio-admin'
+include 'readio-auth'
+include 'readio-common'
+include 'readio-gateway'
+include 'readio-mbg'
+include 'readio-monitor'
+include 'readio-portal'
+include 'readio-search'
