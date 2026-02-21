@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: readio-postgres-dev
+    environment:
+      POSTGRES_USER: readio
+      POSTGRES_PASSWORD: readio
+      POSTGRES_DB: readio
+    ports:
+      - "26001:5432"
+    volumes:
+      - readio_postgres_data:/var/lib/postgresql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U readio -d readio"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  readio_postgres_data:
