@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgAttrdefMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgAttrdef">
+    <id column="oid" jdbcType="BIGINT" property="oid" />
+    <result column="adrelid" jdbcType="BIGINT" property="adrelid" />
+    <result column="adnum" jdbcType="SMALLINT" property="adnum" />
+    <result column="adbin" jdbcType="OTHER" property="adbin" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    oid, adrelid, adnum, adbin
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgAttrdefExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_attrdef
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pg_attrdef
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pg_attrdef
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgAttrdefExample">
+    delete from pg_attrdef
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgAttrdef">
+    insert into pg_attrdef (oid, adrelid, adnum, 
+      adbin)
+    values (#{oid,jdbcType=BIGINT}, #{adrelid,jdbcType=BIGINT}, #{adnum,jdbcType=SMALLINT}, 
+      #{adbin,jdbcType=OTHER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgAttrdef">
+    insert into pg_attrdef
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="adrelid != null">
+        adrelid,
+      </if>
+      <if test="adnum != null">
+        adnum,
+      </if>
+      <if test="adbin != null">
+        adbin,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="adrelid != null">
+        #{adrelid,jdbcType=BIGINT},
+      </if>
+      <if test="adnum != null">
+        #{adnum,jdbcType=SMALLINT},
+      </if>
+      <if test="adbin != null">
+        #{adbin,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgAttrdefExample" resultType="java.lang.Long">
+    select count(*) from pg_attrdef
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_attrdef
+    <set>
+      <if test="row.oid != null">
+        oid = #{row.oid,jdbcType=BIGINT},
+      </if>
+      <if test="row.adrelid != null">
+        adrelid = #{row.adrelid,jdbcType=BIGINT},
+      </if>
+      <if test="row.adnum != null">
+        adnum = #{row.adnum,jdbcType=SMALLINT},
+      </if>
+      <if test="row.adbin != null">
+        adbin = #{row.adbin,jdbcType=OTHER},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_attrdef
+    set oid = #{row.oid,jdbcType=BIGINT},
+      adrelid = #{row.adrelid,jdbcType=BIGINT},
+      adnum = #{row.adnum,jdbcType=SMALLINT},
+      adbin = #{row.adbin,jdbcType=OTHER}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.readiombg.model.PgAttrdef">
+    update pg_attrdef
+    <set>
+      <if test="adrelid != null">
+        adrelid = #{adrelid,jdbcType=BIGINT},
+      </if>
+      <if test="adnum != null">
+        adnum = #{adnum,jdbcType=SMALLINT},
+      </if>
+      <if test="adbin != null">
+        adbin = #{adbin,jdbcType=OTHER},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pool.readio.readiombg.model.PgAttrdef">
+    update pg_attrdef
+    set adrelid = #{adrelid,jdbcType=BIGINT},
+      adnum = #{adnum,jdbcType=SMALLINT},
+      adbin = #{adbin,jdbcType=OTHER}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+</mapper>

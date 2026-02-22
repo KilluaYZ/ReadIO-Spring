@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgBackendMemoryContextsMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgBackendMemoryContexts">
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="ident" jdbcType="VARCHAR" property="ident" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="path" jdbcType="ARRAY" property="path" />
+    <result column="total_bytes" jdbcType="BIGINT" property="totalBytes" />
+    <result column="total_nblocks" jdbcType="BIGINT" property="totalNblocks" />
+    <result column="free_bytes" jdbcType="BIGINT" property="freeBytes" />
+    <result column="free_chunks" jdbcType="BIGINT" property="freeChunks" />
+    <result column="used_bytes" jdbcType="BIGINT" property="usedBytes" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    name, ident, type, level, path, total_bytes, total_nblocks, free_bytes, free_chunks, 
+    used_bytes
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgBackendMemoryContextsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_backend_memory_contexts
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgBackendMemoryContextsExample">
+    delete from pg_backend_memory_contexts
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgBackendMemoryContexts">
+    insert into pg_backend_memory_contexts (name, ident, type, 
+      level, path, total_bytes, 
+      total_nblocks, free_bytes, free_chunks, 
+      used_bytes)
+    values (#{name,jdbcType=VARCHAR}, #{ident,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{level,jdbcType=INTEGER}, #{path,jdbcType=ARRAY}, #{totalBytes,jdbcType=BIGINT}, 
+      #{totalNblocks,jdbcType=BIGINT}, #{freeBytes,jdbcType=BIGINT}, #{freeChunks,jdbcType=BIGINT}, 
+      #{usedBytes,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgBackendMemoryContexts">
+    insert into pg_backend_memory_contexts
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="ident != null">
+        ident,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="path != null">
+        path,
+      </if>
+      <if test="totalBytes != null">
+        total_bytes,
+      </if>
+      <if test="totalNblocks != null">
+        total_nblocks,
+      </if>
+      <if test="freeBytes != null">
+        free_bytes,
+      </if>
+      <if test="freeChunks != null">
+        free_chunks,
+      </if>
+      <if test="usedBytes != null">
+        used_bytes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="ident != null">
+        #{ident,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=ARRAY},
+      </if>
+      <if test="totalBytes != null">
+        #{totalBytes,jdbcType=BIGINT},
+      </if>
+      <if test="totalNblocks != null">
+        #{totalNblocks,jdbcType=BIGINT},
+      </if>
+      <if test="freeBytes != null">
+        #{freeBytes,jdbcType=BIGINT},
+      </if>
+      <if test="freeChunks != null">
+        #{freeChunks,jdbcType=BIGINT},
+      </if>
+      <if test="usedBytes != null">
+        #{usedBytes,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgBackendMemoryContextsExample" resultType="java.lang.Long">
+    select count(*) from pg_backend_memory_contexts
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_backend_memory_contexts
+    <set>
+      <if test="row.name != null">
+        name = #{row.name,jdbcType=VARCHAR},
+      </if>
+      <if test="row.ident != null">
+        ident = #{row.ident,jdbcType=VARCHAR},
+      </if>
+      <if test="row.type != null">
+        type = #{row.type,jdbcType=VARCHAR},
+      </if>
+      <if test="row.level != null">
+        level = #{row.level,jdbcType=INTEGER},
+      </if>
+      <if test="row.path != null">
+        path = #{row.path,jdbcType=ARRAY},
+      </if>
+      <if test="row.totalBytes != null">
+        total_bytes = #{row.totalBytes,jdbcType=BIGINT},
+      </if>
+      <if test="row.totalNblocks != null">
+        total_nblocks = #{row.totalNblocks,jdbcType=BIGINT},
+      </if>
+      <if test="row.freeBytes != null">
+        free_bytes = #{row.freeBytes,jdbcType=BIGINT},
+      </if>
+      <if test="row.freeChunks != null">
+        free_chunks = #{row.freeChunks,jdbcType=BIGINT},
+      </if>
+      <if test="row.usedBytes != null">
+        used_bytes = #{row.usedBytes,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_backend_memory_contexts
+    set name = #{row.name,jdbcType=VARCHAR},
+      ident = #{row.ident,jdbcType=VARCHAR},
+      type = #{row.type,jdbcType=VARCHAR},
+      level = #{row.level,jdbcType=INTEGER},
+      path = #{row.path,jdbcType=ARRAY},
+      total_bytes = #{row.totalBytes,jdbcType=BIGINT},
+      total_nblocks = #{row.totalNblocks,jdbcType=BIGINT},
+      free_bytes = #{row.freeBytes,jdbcType=BIGINT},
+      free_chunks = #{row.freeChunks,jdbcType=BIGINT},
+      used_bytes = #{row.usedBytes,jdbcType=BIGINT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

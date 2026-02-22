@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgStatUserFunctionsMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgStatUserFunctions">
+    <result column="funcid" jdbcType="BIGINT" property="funcid" />
+    <result column="schemaname" jdbcType="VARCHAR" property="schemaname" />
+    <result column="funcname" jdbcType="VARCHAR" property="funcname" />
+    <result column="calls" jdbcType="BIGINT" property="calls" />
+    <result column="total_time" jdbcType="DOUBLE" property="totalTime" />
+    <result column="self_time" jdbcType="DOUBLE" property="selfTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    funcid, schemaname, funcname, calls, total_time, self_time
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgStatUserFunctionsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_stat_user_functions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgStatUserFunctionsExample">
+    delete from pg_stat_user_functions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgStatUserFunctions">
+    insert into pg_stat_user_functions (funcid, schemaname, funcname, 
+      calls, total_time, self_time
+      )
+    values (#{funcid,jdbcType=BIGINT}, #{schemaname,jdbcType=VARCHAR}, #{funcname,jdbcType=VARCHAR}, 
+      #{calls,jdbcType=BIGINT}, #{totalTime,jdbcType=DOUBLE}, #{selfTime,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgStatUserFunctions">
+    insert into pg_stat_user_functions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="funcid != null">
+        funcid,
+      </if>
+      <if test="schemaname != null">
+        schemaname,
+      </if>
+      <if test="funcname != null">
+        funcname,
+      </if>
+      <if test="calls != null">
+        calls,
+      </if>
+      <if test="totalTime != null">
+        total_time,
+      </if>
+      <if test="selfTime != null">
+        self_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="funcid != null">
+        #{funcid,jdbcType=BIGINT},
+      </if>
+      <if test="schemaname != null">
+        #{schemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="funcname != null">
+        #{funcname,jdbcType=VARCHAR},
+      </if>
+      <if test="calls != null">
+        #{calls,jdbcType=BIGINT},
+      </if>
+      <if test="totalTime != null">
+        #{totalTime,jdbcType=DOUBLE},
+      </if>
+      <if test="selfTime != null">
+        #{selfTime,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgStatUserFunctionsExample" resultType="java.lang.Long">
+    select count(*) from pg_stat_user_functions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_stat_user_functions
+    <set>
+      <if test="row.funcid != null">
+        funcid = #{row.funcid,jdbcType=BIGINT},
+      </if>
+      <if test="row.schemaname != null">
+        schemaname = #{row.schemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.funcname != null">
+        funcname = #{row.funcname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.calls != null">
+        calls = #{row.calls,jdbcType=BIGINT},
+      </if>
+      <if test="row.totalTime != null">
+        total_time = #{row.totalTime,jdbcType=DOUBLE},
+      </if>
+      <if test="row.selfTime != null">
+        self_time = #{row.selfTime,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_stat_user_functions
+    set funcid = #{row.funcid,jdbcType=BIGINT},
+      schemaname = #{row.schemaname,jdbcType=VARCHAR},
+      funcname = #{row.funcname,jdbcType=VARCHAR},
+      calls = #{row.calls,jdbcType=BIGINT},
+      total_time = #{row.totalTime,jdbcType=DOUBLE},
+      self_time = #{row.selfTime,jdbcType=DOUBLE}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgStatXactAllTablesMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgStatXactAllTables">
+    <result column="relid" jdbcType="BIGINT" property="relid" />
+    <result column="schemaname" jdbcType="VARCHAR" property="schemaname" />
+    <result column="relname" jdbcType="VARCHAR" property="relname" />
+    <result column="seq_scan" jdbcType="BIGINT" property="seqScan" />
+    <result column="seq_tup_read" jdbcType="BIGINT" property="seqTupRead" />
+    <result column="idx_scan" jdbcType="BIGINT" property="idxScan" />
+    <result column="idx_tup_fetch" jdbcType="BIGINT" property="idxTupFetch" />
+    <result column="n_tup_ins" jdbcType="BIGINT" property="nTupIns" />
+    <result column="n_tup_upd" jdbcType="BIGINT" property="nTupUpd" />
+    <result column="n_tup_del" jdbcType="BIGINT" property="nTupDel" />
+    <result column="n_tup_hot_upd" jdbcType="BIGINT" property="nTupHotUpd" />
+    <result column="n_tup_newpage_upd" jdbcType="BIGINT" property="nTupNewpageUpd" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    relid, schemaname, relname, seq_scan, seq_tup_read, idx_scan, idx_tup_fetch, n_tup_ins, 
+    n_tup_upd, n_tup_del, n_tup_hot_upd, n_tup_newpage_upd
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgStatXactAllTablesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_stat_xact_all_tables
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgStatXactAllTablesExample">
+    delete from pg_stat_xact_all_tables
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgStatXactAllTables">
+    insert into pg_stat_xact_all_tables (relid, schemaname, relname, 
+      seq_scan, seq_tup_read, idx_scan, 
+      idx_tup_fetch, n_tup_ins, n_tup_upd, 
+      n_tup_del, n_tup_hot_upd, n_tup_newpage_upd
+      )
+    values (#{relid,jdbcType=BIGINT}, #{schemaname,jdbcType=VARCHAR}, #{relname,jdbcType=VARCHAR}, 
+      #{seqScan,jdbcType=BIGINT}, #{seqTupRead,jdbcType=BIGINT}, #{idxScan,jdbcType=BIGINT}, 
+      #{idxTupFetch,jdbcType=BIGINT}, #{nTupIns,jdbcType=BIGINT}, #{nTupUpd,jdbcType=BIGINT}, 
+      #{nTupDel,jdbcType=BIGINT}, #{nTupHotUpd,jdbcType=BIGINT}, #{nTupNewpageUpd,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgStatXactAllTables">
+    insert into pg_stat_xact_all_tables
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="relid != null">
+        relid,
+      </if>
+      <if test="schemaname != null">
+        schemaname,
+      </if>
+      <if test="relname != null">
+        relname,
+      </if>
+      <if test="seqScan != null">
+        seq_scan,
+      </if>
+      <if test="seqTupRead != null">
+        seq_tup_read,
+      </if>
+      <if test="idxScan != null">
+        idx_scan,
+      </if>
+      <if test="idxTupFetch != null">
+        idx_tup_fetch,
+      </if>
+      <if test="nTupIns != null">
+        n_tup_ins,
+      </if>
+      <if test="nTupUpd != null">
+        n_tup_upd,
+      </if>
+      <if test="nTupDel != null">
+        n_tup_del,
+      </if>
+      <if test="nTupHotUpd != null">
+        n_tup_hot_upd,
+      </if>
+      <if test="nTupNewpageUpd != null">
+        n_tup_newpage_upd,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="relid != null">
+        #{relid,jdbcType=BIGINT},
+      </if>
+      <if test="schemaname != null">
+        #{schemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="relname != null">
+        #{relname,jdbcType=VARCHAR},
+      </if>
+      <if test="seqScan != null">
+        #{seqScan,jdbcType=BIGINT},
+      </if>
+      <if test="seqTupRead != null">
+        #{seqTupRead,jdbcType=BIGINT},
+      </if>
+      <if test="idxScan != null">
+        #{idxScan,jdbcType=BIGINT},
+      </if>
+      <if test="idxTupFetch != null">
+        #{idxTupFetch,jdbcType=BIGINT},
+      </if>
+      <if test="nTupIns != null">
+        #{nTupIns,jdbcType=BIGINT},
+      </if>
+      <if test="nTupUpd != null">
+        #{nTupUpd,jdbcType=BIGINT},
+      </if>
+      <if test="nTupDel != null">
+        #{nTupDel,jdbcType=BIGINT},
+      </if>
+      <if test="nTupHotUpd != null">
+        #{nTupHotUpd,jdbcType=BIGINT},
+      </if>
+      <if test="nTupNewpageUpd != null">
+        #{nTupNewpageUpd,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgStatXactAllTablesExample" resultType="java.lang.Long">
+    select count(*) from pg_stat_xact_all_tables
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_stat_xact_all_tables
+    <set>
+      <if test="row.relid != null">
+        relid = #{row.relid,jdbcType=BIGINT},
+      </if>
+      <if test="row.schemaname != null">
+        schemaname = #{row.schemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.relname != null">
+        relname = #{row.relname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.seqScan != null">
+        seq_scan = #{row.seqScan,jdbcType=BIGINT},
+      </if>
+      <if test="row.seqTupRead != null">
+        seq_tup_read = #{row.seqTupRead,jdbcType=BIGINT},
+      </if>
+      <if test="row.idxScan != null">
+        idx_scan = #{row.idxScan,jdbcType=BIGINT},
+      </if>
+      <if test="row.idxTupFetch != null">
+        idx_tup_fetch = #{row.idxTupFetch,jdbcType=BIGINT},
+      </if>
+      <if test="row.nTupIns != null">
+        n_tup_ins = #{row.nTupIns,jdbcType=BIGINT},
+      </if>
+      <if test="row.nTupUpd != null">
+        n_tup_upd = #{row.nTupUpd,jdbcType=BIGINT},
+      </if>
+      <if test="row.nTupDel != null">
+        n_tup_del = #{row.nTupDel,jdbcType=BIGINT},
+      </if>
+      <if test="row.nTupHotUpd != null">
+        n_tup_hot_upd = #{row.nTupHotUpd,jdbcType=BIGINT},
+      </if>
+      <if test="row.nTupNewpageUpd != null">
+        n_tup_newpage_upd = #{row.nTupNewpageUpd,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_stat_xact_all_tables
+    set relid = #{row.relid,jdbcType=BIGINT},
+      schemaname = #{row.schemaname,jdbcType=VARCHAR},
+      relname = #{row.relname,jdbcType=VARCHAR},
+      seq_scan = #{row.seqScan,jdbcType=BIGINT},
+      seq_tup_read = #{row.seqTupRead,jdbcType=BIGINT},
+      idx_scan = #{row.idxScan,jdbcType=BIGINT},
+      idx_tup_fetch = #{row.idxTupFetch,jdbcType=BIGINT},
+      n_tup_ins = #{row.nTupIns,jdbcType=BIGINT},
+      n_tup_upd = #{row.nTupUpd,jdbcType=BIGINT},
+      n_tup_del = #{row.nTupDel,jdbcType=BIGINT},
+      n_tup_hot_upd = #{row.nTupHotUpd,jdbcType=BIGINT},
+      n_tup_newpage_upd = #{row.nTupNewpageUpd,jdbcType=BIGINT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

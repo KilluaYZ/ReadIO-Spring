@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.RoutineColumnUsageMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.RoutineColumnUsage">
+    <result column="specific_catalog" jdbcType="DISTINCT" property="specificCatalog" />
+    <result column="specific_schema" jdbcType="DISTINCT" property="specificSchema" />
+    <result column="specific_name" jdbcType="DISTINCT" property="specificName" />
+    <result column="routine_catalog" jdbcType="DISTINCT" property="routineCatalog" />
+    <result column="routine_schema" jdbcType="DISTINCT" property="routineSchema" />
+    <result column="routine_name" jdbcType="DISTINCT" property="routineName" />
+    <result column="table_catalog" jdbcType="DISTINCT" property="tableCatalog" />
+    <result column="table_schema" jdbcType="DISTINCT" property="tableSchema" />
+    <result column="table_name" jdbcType="DISTINCT" property="tableName" />
+    <result column="column_name" jdbcType="DISTINCT" property="columnName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    specific_catalog, specific_schema, specific_name, routine_catalog, routine_schema, 
+    routine_name, table_catalog, table_schema, table_name, column_name
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.RoutineColumnUsageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from routine_column_usage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.RoutineColumnUsageExample">
+    delete from routine_column_usage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.RoutineColumnUsage">
+    insert into routine_column_usage (specific_catalog, specific_schema, 
+      specific_name, routine_catalog, routine_schema, 
+      routine_name, table_catalog, table_schema, 
+      table_name, column_name)
+    values (#{specificCatalog,jdbcType=DISTINCT}, #{specificSchema,jdbcType=DISTINCT}, 
+      #{specificName,jdbcType=DISTINCT}, #{routineCatalog,jdbcType=DISTINCT}, #{routineSchema,jdbcType=DISTINCT}, 
+      #{routineName,jdbcType=DISTINCT}, #{tableCatalog,jdbcType=DISTINCT}, #{tableSchema,jdbcType=DISTINCT}, 
+      #{tableName,jdbcType=DISTINCT}, #{columnName,jdbcType=DISTINCT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.RoutineColumnUsage">
+    insert into routine_column_usage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="specificCatalog != null">
+        specific_catalog,
+      </if>
+      <if test="specificSchema != null">
+        specific_schema,
+      </if>
+      <if test="specificName != null">
+        specific_name,
+      </if>
+      <if test="routineCatalog != null">
+        routine_catalog,
+      </if>
+      <if test="routineSchema != null">
+        routine_schema,
+      </if>
+      <if test="routineName != null">
+        routine_name,
+      </if>
+      <if test="tableCatalog != null">
+        table_catalog,
+      </if>
+      <if test="tableSchema != null">
+        table_schema,
+      </if>
+      <if test="tableName != null">
+        table_name,
+      </if>
+      <if test="columnName != null">
+        column_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="specificCatalog != null">
+        #{specificCatalog,jdbcType=DISTINCT},
+      </if>
+      <if test="specificSchema != null">
+        #{specificSchema,jdbcType=DISTINCT},
+      </if>
+      <if test="specificName != null">
+        #{specificName,jdbcType=DISTINCT},
+      </if>
+      <if test="routineCatalog != null">
+        #{routineCatalog,jdbcType=DISTINCT},
+      </if>
+      <if test="routineSchema != null">
+        #{routineSchema,jdbcType=DISTINCT},
+      </if>
+      <if test="routineName != null">
+        #{routineName,jdbcType=DISTINCT},
+      </if>
+      <if test="tableCatalog != null">
+        #{tableCatalog,jdbcType=DISTINCT},
+      </if>
+      <if test="tableSchema != null">
+        #{tableSchema,jdbcType=DISTINCT},
+      </if>
+      <if test="tableName != null">
+        #{tableName,jdbcType=DISTINCT},
+      </if>
+      <if test="columnName != null">
+        #{columnName,jdbcType=DISTINCT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.RoutineColumnUsageExample" resultType="java.lang.Long">
+    select count(*) from routine_column_usage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update routine_column_usage
+    <set>
+      <if test="row.specificCatalog != null">
+        specific_catalog = #{row.specificCatalog,jdbcType=DISTINCT},
+      </if>
+      <if test="row.specificSchema != null">
+        specific_schema = #{row.specificSchema,jdbcType=DISTINCT},
+      </if>
+      <if test="row.specificName != null">
+        specific_name = #{row.specificName,jdbcType=DISTINCT},
+      </if>
+      <if test="row.routineCatalog != null">
+        routine_catalog = #{row.routineCatalog,jdbcType=DISTINCT},
+      </if>
+      <if test="row.routineSchema != null">
+        routine_schema = #{row.routineSchema,jdbcType=DISTINCT},
+      </if>
+      <if test="row.routineName != null">
+        routine_name = #{row.routineName,jdbcType=DISTINCT},
+      </if>
+      <if test="row.tableCatalog != null">
+        table_catalog = #{row.tableCatalog,jdbcType=DISTINCT},
+      </if>
+      <if test="row.tableSchema != null">
+        table_schema = #{row.tableSchema,jdbcType=DISTINCT},
+      </if>
+      <if test="row.tableName != null">
+        table_name = #{row.tableName,jdbcType=DISTINCT},
+      </if>
+      <if test="row.columnName != null">
+        column_name = #{row.columnName,jdbcType=DISTINCT},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update routine_column_usage
+    set specific_catalog = #{row.specificCatalog,jdbcType=DISTINCT},
+      specific_schema = #{row.specificSchema,jdbcType=DISTINCT},
+      specific_name = #{row.specificName,jdbcType=DISTINCT},
+      routine_catalog = #{row.routineCatalog,jdbcType=DISTINCT},
+      routine_schema = #{row.routineSchema,jdbcType=DISTINCT},
+      routine_name = #{row.routineName,jdbcType=DISTINCT},
+      table_catalog = #{row.tableCatalog,jdbcType=DISTINCT},
+      table_schema = #{row.tableSchema,jdbcType=DISTINCT},
+      table_name = #{row.tableName,jdbcType=DISTINCT},
+      column_name = #{row.columnName,jdbcType=DISTINCT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgStatsExtMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgStatsExt">
+    <result column="schemaname" jdbcType="VARCHAR" property="schemaname" />
+    <result column="tablename" jdbcType="VARCHAR" property="tablename" />
+    <result column="statistics_schemaname" jdbcType="VARCHAR" property="statisticsSchemaname" />
+    <result column="statistics_name" jdbcType="VARCHAR" property="statisticsName" />
+    <result column="statistics_owner" jdbcType="VARCHAR" property="statisticsOwner" />
+    <result column="attnames" jdbcType="ARRAY" property="attnames" />
+    <result column="exprs" jdbcType="ARRAY" property="exprs" />
+    <result column="kinds" jdbcType="ARRAY" property="kinds" />
+    <result column="inherited" jdbcType="BIT" property="inherited" />
+    <result column="n_distinct" jdbcType="OTHER" property="nDistinct" />
+    <result column="dependencies" jdbcType="OTHER" property="dependencies" />
+    <result column="most_common_vals" jdbcType="ARRAY" property="mostCommonVals" />
+    <result column="most_common_val_nulls" jdbcType="ARRAY" property="mostCommonValNulls" />
+    <result column="most_common_freqs" jdbcType="ARRAY" property="mostCommonFreqs" />
+    <result column="most_common_base_freqs" jdbcType="ARRAY" property="mostCommonBaseFreqs" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    schemaname, tablename, statistics_schemaname, statistics_name, statistics_owner, 
+    attnames, exprs, kinds, inherited, n_distinct, dependencies, most_common_vals, most_common_val_nulls, 
+    most_common_freqs, most_common_base_freqs
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgStatsExtExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_stats_ext
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgStatsExtExample">
+    delete from pg_stats_ext
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgStatsExt">
+    insert into pg_stats_ext (schemaname, tablename, statistics_schemaname, 
+      statistics_name, statistics_owner, attnames, 
+      exprs, kinds, inherited, n_distinct, 
+      dependencies, most_common_vals, most_common_val_nulls, 
+      most_common_freqs, most_common_base_freqs)
+    values (#{schemaname,jdbcType=VARCHAR}, #{tablename,jdbcType=VARCHAR}, #{statisticsSchemaname,jdbcType=VARCHAR}, 
+      #{statisticsName,jdbcType=VARCHAR}, #{statisticsOwner,jdbcType=VARCHAR}, #{attnames,jdbcType=ARRAY}, 
+      #{exprs,jdbcType=ARRAY}, #{kinds,jdbcType=ARRAY}, #{inherited,jdbcType=BIT}, #{nDistinct,jdbcType=OTHER}, 
+      #{dependencies,jdbcType=OTHER}, #{mostCommonVals,jdbcType=ARRAY}, #{mostCommonValNulls,jdbcType=ARRAY}, 
+      #{mostCommonFreqs,jdbcType=ARRAY}, #{mostCommonBaseFreqs,jdbcType=ARRAY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgStatsExt">
+    insert into pg_stats_ext
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="schemaname != null">
+        schemaname,
+      </if>
+      <if test="tablename != null">
+        tablename,
+      </if>
+      <if test="statisticsSchemaname != null">
+        statistics_schemaname,
+      </if>
+      <if test="statisticsName != null">
+        statistics_name,
+      </if>
+      <if test="statisticsOwner != null">
+        statistics_owner,
+      </if>
+      <if test="attnames != null">
+        attnames,
+      </if>
+      <if test="exprs != null">
+        exprs,
+      </if>
+      <if test="kinds != null">
+        kinds,
+      </if>
+      <if test="inherited != null">
+        inherited,
+      </if>
+      <if test="nDistinct != null">
+        n_distinct,
+      </if>
+      <if test="dependencies != null">
+        dependencies,
+      </if>
+      <if test="mostCommonVals != null">
+        most_common_vals,
+      </if>
+      <if test="mostCommonValNulls != null">
+        most_common_val_nulls,
+      </if>
+      <if test="mostCommonFreqs != null">
+        most_common_freqs,
+      </if>
+      <if test="mostCommonBaseFreqs != null">
+        most_common_base_freqs,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="schemaname != null">
+        #{schemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="tablename != null">
+        #{tablename,jdbcType=VARCHAR},
+      </if>
+      <if test="statisticsSchemaname != null">
+        #{statisticsSchemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="statisticsName != null">
+        #{statisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="statisticsOwner != null">
+        #{statisticsOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="attnames != null">
+        #{attnames,jdbcType=ARRAY},
+      </if>
+      <if test="exprs != null">
+        #{exprs,jdbcType=ARRAY},
+      </if>
+      <if test="kinds != null">
+        #{kinds,jdbcType=ARRAY},
+      </if>
+      <if test="inherited != null">
+        #{inherited,jdbcType=BIT},
+      </if>
+      <if test="nDistinct != null">
+        #{nDistinct,jdbcType=OTHER},
+      </if>
+      <if test="dependencies != null">
+        #{dependencies,jdbcType=OTHER},
+      </if>
+      <if test="mostCommonVals != null">
+        #{mostCommonVals,jdbcType=ARRAY},
+      </if>
+      <if test="mostCommonValNulls != null">
+        #{mostCommonValNulls,jdbcType=ARRAY},
+      </if>
+      <if test="mostCommonFreqs != null">
+        #{mostCommonFreqs,jdbcType=ARRAY},
+      </if>
+      <if test="mostCommonBaseFreqs != null">
+        #{mostCommonBaseFreqs,jdbcType=ARRAY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgStatsExtExample" resultType="java.lang.Long">
+    select count(*) from pg_stats_ext
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_stats_ext
+    <set>
+      <if test="row.schemaname != null">
+        schemaname = #{row.schemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.tablename != null">
+        tablename = #{row.tablename,jdbcType=VARCHAR},
+      </if>
+      <if test="row.statisticsSchemaname != null">
+        statistics_schemaname = #{row.statisticsSchemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.statisticsName != null">
+        statistics_name = #{row.statisticsName,jdbcType=VARCHAR},
+      </if>
+      <if test="row.statisticsOwner != null">
+        statistics_owner = #{row.statisticsOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="row.attnames != null">
+        attnames = #{row.attnames,jdbcType=ARRAY},
+      </if>
+      <if test="row.exprs != null">
+        exprs = #{row.exprs,jdbcType=ARRAY},
+      </if>
+      <if test="row.kinds != null">
+        kinds = #{row.kinds,jdbcType=ARRAY},
+      </if>
+      <if test="row.inherited != null">
+        inherited = #{row.inherited,jdbcType=BIT},
+      </if>
+      <if test="row.nDistinct != null">
+        n_distinct = #{row.nDistinct,jdbcType=OTHER},
+      </if>
+      <if test="row.dependencies != null">
+        dependencies = #{row.dependencies,jdbcType=OTHER},
+      </if>
+      <if test="row.mostCommonVals != null">
+        most_common_vals = #{row.mostCommonVals,jdbcType=ARRAY},
+      </if>
+      <if test="row.mostCommonValNulls != null">
+        most_common_val_nulls = #{row.mostCommonValNulls,jdbcType=ARRAY},
+      </if>
+      <if test="row.mostCommonFreqs != null">
+        most_common_freqs = #{row.mostCommonFreqs,jdbcType=ARRAY},
+      </if>
+      <if test="row.mostCommonBaseFreqs != null">
+        most_common_base_freqs = #{row.mostCommonBaseFreqs,jdbcType=ARRAY},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_stats_ext
+    set schemaname = #{row.schemaname,jdbcType=VARCHAR},
+      tablename = #{row.tablename,jdbcType=VARCHAR},
+      statistics_schemaname = #{row.statisticsSchemaname,jdbcType=VARCHAR},
+      statistics_name = #{row.statisticsName,jdbcType=VARCHAR},
+      statistics_owner = #{row.statisticsOwner,jdbcType=VARCHAR},
+      attnames = #{row.attnames,jdbcType=ARRAY},
+      exprs = #{row.exprs,jdbcType=ARRAY},
+      kinds = #{row.kinds,jdbcType=ARRAY},
+      inherited = #{row.inherited,jdbcType=BIT},
+      n_distinct = #{row.nDistinct,jdbcType=OTHER},
+      dependencies = #{row.dependencies,jdbcType=OTHER},
+      most_common_vals = #{row.mostCommonVals,jdbcType=ARRAY},
+      most_common_val_nulls = #{row.mostCommonValNulls,jdbcType=ARRAY},
+      most_common_freqs = #{row.mostCommonFreqs,jdbcType=ARRAY},
+      most_common_base_freqs = #{row.mostCommonBaseFreqs,jdbcType=ARRAY}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

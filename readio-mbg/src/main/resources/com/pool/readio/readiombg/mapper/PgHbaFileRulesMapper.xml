@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgHbaFileRulesMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgHbaFileRules">
+    <result column="rule_number" jdbcType="INTEGER" property="ruleNumber" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="line_number" jdbcType="INTEGER" property="lineNumber" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="database" jdbcType="ARRAY" property="database" />
+    <result column="user_name" jdbcType="ARRAY" property="userName" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="netmask" jdbcType="VARCHAR" property="netmask" />
+    <result column="auth_method" jdbcType="VARCHAR" property="authMethod" />
+    <result column="options" jdbcType="ARRAY" property="options" />
+    <result column="error" jdbcType="VARCHAR" property="error" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    rule_number, file_name, line_number, type, database, user_name, address, netmask, 
+    auth_method, options, error
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgHbaFileRulesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_hba_file_rules
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgHbaFileRulesExample">
+    delete from pg_hba_file_rules
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgHbaFileRules">
+    insert into pg_hba_file_rules (rule_number, file_name, line_number, 
+      type, database, user_name, 
+      address, netmask, auth_method, 
+      options, error)
+    values (#{ruleNumber,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{lineNumber,jdbcType=INTEGER}, 
+      #{type,jdbcType=VARCHAR}, #{database,jdbcType=ARRAY}, #{userName,jdbcType=ARRAY}, 
+      #{address,jdbcType=VARCHAR}, #{netmask,jdbcType=VARCHAR}, #{authMethod,jdbcType=VARCHAR}, 
+      #{options,jdbcType=ARRAY}, #{error,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgHbaFileRules">
+    insert into pg_hba_file_rules
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ruleNumber != null">
+        rule_number,
+      </if>
+      <if test="fileName != null">
+        file_name,
+      </if>
+      <if test="lineNumber != null">
+        line_number,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="database != null">
+        database,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="netmask != null">
+        netmask,
+      </if>
+      <if test="authMethod != null">
+        auth_method,
+      </if>
+      <if test="options != null">
+        options,
+      </if>
+      <if test="error != null">
+        error,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ruleNumber != null">
+        #{ruleNumber,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="lineNumber != null">
+        #{lineNumber,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="database != null">
+        #{database,jdbcType=ARRAY},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=ARRAY},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="netmask != null">
+        #{netmask,jdbcType=VARCHAR},
+      </if>
+      <if test="authMethod != null">
+        #{authMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="options != null">
+        #{options,jdbcType=ARRAY},
+      </if>
+      <if test="error != null">
+        #{error,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgHbaFileRulesExample" resultType="java.lang.Long">
+    select count(*) from pg_hba_file_rules
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_hba_file_rules
+    <set>
+      <if test="row.ruleNumber != null">
+        rule_number = #{row.ruleNumber,jdbcType=INTEGER},
+      </if>
+      <if test="row.fileName != null">
+        file_name = #{row.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="row.lineNumber != null">
+        line_number = #{row.lineNumber,jdbcType=INTEGER},
+      </if>
+      <if test="row.type != null">
+        type = #{row.type,jdbcType=VARCHAR},
+      </if>
+      <if test="row.database != null">
+        database = #{row.database,jdbcType=ARRAY},
+      </if>
+      <if test="row.userName != null">
+        user_name = #{row.userName,jdbcType=ARRAY},
+      </if>
+      <if test="row.address != null">
+        address = #{row.address,jdbcType=VARCHAR},
+      </if>
+      <if test="row.netmask != null">
+        netmask = #{row.netmask,jdbcType=VARCHAR},
+      </if>
+      <if test="row.authMethod != null">
+        auth_method = #{row.authMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="row.options != null">
+        options = #{row.options,jdbcType=ARRAY},
+      </if>
+      <if test="row.error != null">
+        error = #{row.error,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_hba_file_rules
+    set rule_number = #{row.ruleNumber,jdbcType=INTEGER},
+      file_name = #{row.fileName,jdbcType=VARCHAR},
+      line_number = #{row.lineNumber,jdbcType=INTEGER},
+      type = #{row.type,jdbcType=VARCHAR},
+      database = #{row.database,jdbcType=ARRAY},
+      user_name = #{row.userName,jdbcType=ARRAY},
+      address = #{row.address,jdbcType=VARCHAR},
+      netmask = #{row.netmask,jdbcType=VARCHAR},
+      auth_method = #{row.authMethod,jdbcType=VARCHAR},
+      options = #{row.options,jdbcType=ARRAY},
+      error = #{row.error,jdbcType=VARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

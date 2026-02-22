@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgTriggerMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgTrigger">
+    <id column="oid" jdbcType="BIGINT" property="oid" />
+    <result column="tgrelid" jdbcType="BIGINT" property="tgrelid" />
+    <result column="tgparentid" jdbcType="BIGINT" property="tgparentid" />
+    <result column="tgname" jdbcType="VARCHAR" property="tgname" />
+    <result column="tgfoid" jdbcType="BIGINT" property="tgfoid" />
+    <result column="tgtype" jdbcType="SMALLINT" property="tgtype" />
+    <result column="tgenabled" jdbcType="CHAR" property="tgenabled" />
+    <result column="tgisinternal" jdbcType="BIT" property="tgisinternal" />
+    <result column="tgconstrrelid" jdbcType="BIGINT" property="tgconstrrelid" />
+    <result column="tgconstrindid" jdbcType="BIGINT" property="tgconstrindid" />
+    <result column="tgconstraint" jdbcType="BIGINT" property="tgconstraint" />
+    <result column="tgdeferrable" jdbcType="BIT" property="tgdeferrable" />
+    <result column="tginitdeferred" jdbcType="BIT" property="tginitdeferred" />
+    <result column="tgnargs" jdbcType="SMALLINT" property="tgnargs" />
+    <result column="tgattr" jdbcType="OTHER" property="tgattr" />
+    <result column="tgqual" jdbcType="OTHER" property="tgqual" />
+    <result column="tgoldtable" jdbcType="VARCHAR" property="tgoldtable" />
+    <result column="tgnewtable" jdbcType="VARCHAR" property="tgnewtable" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pool.readio.readiombg.model.PgTrigger">
+    <result column="tgargs" jdbcType="BINARY" property="tgargs" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    oid, tgrelid, tgparentid, tgname, tgfoid, tgtype, tgenabled, tgisinternal, tgconstrrelid, 
+    tgconstrindid, tgconstraint, tgdeferrable, tginitdeferred, tgnargs, tgattr, tgqual, 
+    tgoldtable, tgnewtable
+  </sql>
+  <sql id="Blob_Column_List">
+    tgargs
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.pool.readio.readiombg.model.PgTriggerExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pg_trigger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgTriggerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_trigger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pg_trigger
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pg_trigger
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgTriggerExample">
+    delete from pg_trigger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgTrigger">
+    insert into pg_trigger (oid, tgrelid, tgparentid, 
+      tgname, tgfoid, tgtype, 
+      tgenabled, tgisinternal, tgconstrrelid, 
+      tgconstrindid, tgconstraint, tgdeferrable, 
+      tginitdeferred, tgnargs, tgattr, 
+      tgqual, tgoldtable, tgnewtable, 
+      tgargs)
+    values (#{oid,jdbcType=BIGINT}, #{tgrelid,jdbcType=BIGINT}, #{tgparentid,jdbcType=BIGINT}, 
+      #{tgname,jdbcType=VARCHAR}, #{tgfoid,jdbcType=BIGINT}, #{tgtype,jdbcType=SMALLINT}, 
+      #{tgenabled,jdbcType=CHAR}, #{tgisinternal,jdbcType=BIT}, #{tgconstrrelid,jdbcType=BIGINT}, 
+      #{tgconstrindid,jdbcType=BIGINT}, #{tgconstraint,jdbcType=BIGINT}, #{tgdeferrable,jdbcType=BIT}, 
+      #{tginitdeferred,jdbcType=BIT}, #{tgnargs,jdbcType=SMALLINT}, #{tgattr,jdbcType=OTHER}, 
+      #{tgqual,jdbcType=OTHER}, #{tgoldtable,jdbcType=VARCHAR}, #{tgnewtable,jdbcType=VARCHAR}, 
+      #{tgargs,jdbcType=BINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgTrigger">
+    insert into pg_trigger
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="tgrelid != null">
+        tgrelid,
+      </if>
+      <if test="tgparentid != null">
+        tgparentid,
+      </if>
+      <if test="tgname != null">
+        tgname,
+      </if>
+      <if test="tgfoid != null">
+        tgfoid,
+      </if>
+      <if test="tgtype != null">
+        tgtype,
+      </if>
+      <if test="tgenabled != null">
+        tgenabled,
+      </if>
+      <if test="tgisinternal != null">
+        tgisinternal,
+      </if>
+      <if test="tgconstrrelid != null">
+        tgconstrrelid,
+      </if>
+      <if test="tgconstrindid != null">
+        tgconstrindid,
+      </if>
+      <if test="tgconstraint != null">
+        tgconstraint,
+      </if>
+      <if test="tgdeferrable != null">
+        tgdeferrable,
+      </if>
+      <if test="tginitdeferred != null">
+        tginitdeferred,
+      </if>
+      <if test="tgnargs != null">
+        tgnargs,
+      </if>
+      <if test="tgattr != null">
+        tgattr,
+      </if>
+      <if test="tgqual != null">
+        tgqual,
+      </if>
+      <if test="tgoldtable != null">
+        tgoldtable,
+      </if>
+      <if test="tgnewtable != null">
+        tgnewtable,
+      </if>
+      <if test="tgargs != null">
+        tgargs,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="tgrelid != null">
+        #{tgrelid,jdbcType=BIGINT},
+      </if>
+      <if test="tgparentid != null">
+        #{tgparentid,jdbcType=BIGINT},
+      </if>
+      <if test="tgname != null">
+        #{tgname,jdbcType=VARCHAR},
+      </if>
+      <if test="tgfoid != null">
+        #{tgfoid,jdbcType=BIGINT},
+      </if>
+      <if test="tgtype != null">
+        #{tgtype,jdbcType=SMALLINT},
+      </if>
+      <if test="tgenabled != null">
+        #{tgenabled,jdbcType=CHAR},
+      </if>
+      <if test="tgisinternal != null">
+        #{tgisinternal,jdbcType=BIT},
+      </if>
+      <if test="tgconstrrelid != null">
+        #{tgconstrrelid,jdbcType=BIGINT},
+      </if>
+      <if test="tgconstrindid != null">
+        #{tgconstrindid,jdbcType=BIGINT},
+      </if>
+      <if test="tgconstraint != null">
+        #{tgconstraint,jdbcType=BIGINT},
+      </if>
+      <if test="tgdeferrable != null">
+        #{tgdeferrable,jdbcType=BIT},
+      </if>
+      <if test="tginitdeferred != null">
+        #{tginitdeferred,jdbcType=BIT},
+      </if>
+      <if test="tgnargs != null">
+        #{tgnargs,jdbcType=SMALLINT},
+      </if>
+      <if test="tgattr != null">
+        #{tgattr,jdbcType=OTHER},
+      </if>
+      <if test="tgqual != null">
+        #{tgqual,jdbcType=OTHER},
+      </if>
+      <if test="tgoldtable != null">
+        #{tgoldtable,jdbcType=VARCHAR},
+      </if>
+      <if test="tgnewtable != null">
+        #{tgnewtable,jdbcType=VARCHAR},
+      </if>
+      <if test="tgargs != null">
+        #{tgargs,jdbcType=BINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgTriggerExample" resultType="java.lang.Long">
+    select count(*) from pg_trigger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_trigger
+    <set>
+      <if test="row.oid != null">
+        oid = #{row.oid,jdbcType=BIGINT},
+      </if>
+      <if test="row.tgrelid != null">
+        tgrelid = #{row.tgrelid,jdbcType=BIGINT},
+      </if>
+      <if test="row.tgparentid != null">
+        tgparentid = #{row.tgparentid,jdbcType=BIGINT},
+      </if>
+      <if test="row.tgname != null">
+        tgname = #{row.tgname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.tgfoid != null">
+        tgfoid = #{row.tgfoid,jdbcType=BIGINT},
+      </if>
+      <if test="row.tgtype != null">
+        tgtype = #{row.tgtype,jdbcType=SMALLINT},
+      </if>
+      <if test="row.tgenabled != null">
+        tgenabled = #{row.tgenabled,jdbcType=CHAR},
+      </if>
+      <if test="row.tgisinternal != null">
+        tgisinternal = #{row.tgisinternal,jdbcType=BIT},
+      </if>
+      <if test="row.tgconstrrelid != null">
+        tgconstrrelid = #{row.tgconstrrelid,jdbcType=BIGINT},
+      </if>
+      <if test="row.tgconstrindid != null">
+        tgconstrindid = #{row.tgconstrindid,jdbcType=BIGINT},
+      </if>
+      <if test="row.tgconstraint != null">
+        tgconstraint = #{row.tgconstraint,jdbcType=BIGINT},
+      </if>
+      <if test="row.tgdeferrable != null">
+        tgdeferrable = #{row.tgdeferrable,jdbcType=BIT},
+      </if>
+      <if test="row.tginitdeferred != null">
+        tginitdeferred = #{row.tginitdeferred,jdbcType=BIT},
+      </if>
+      <if test="row.tgnargs != null">
+        tgnargs = #{row.tgnargs,jdbcType=SMALLINT},
+      </if>
+      <if test="row.tgattr != null">
+        tgattr = #{row.tgattr,jdbcType=OTHER},
+      </if>
+      <if test="row.tgqual != null">
+        tgqual = #{row.tgqual,jdbcType=OTHER},
+      </if>
+      <if test="row.tgoldtable != null">
+        tgoldtable = #{row.tgoldtable,jdbcType=VARCHAR},
+      </if>
+      <if test="row.tgnewtable != null">
+        tgnewtable = #{row.tgnewtable,jdbcType=VARCHAR},
+      </if>
+      <if test="row.tgargs != null">
+        tgargs = #{row.tgargs,jdbcType=BINARY},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update pg_trigger
+    set oid = #{row.oid,jdbcType=BIGINT},
+      tgrelid = #{row.tgrelid,jdbcType=BIGINT},
+      tgparentid = #{row.tgparentid,jdbcType=BIGINT},
+      tgname = #{row.tgname,jdbcType=VARCHAR},
+      tgfoid = #{row.tgfoid,jdbcType=BIGINT},
+      tgtype = #{row.tgtype,jdbcType=SMALLINT},
+      tgenabled = #{row.tgenabled,jdbcType=CHAR},
+      tgisinternal = #{row.tgisinternal,jdbcType=BIT},
+      tgconstrrelid = #{row.tgconstrrelid,jdbcType=BIGINT},
+      tgconstrindid = #{row.tgconstrindid,jdbcType=BIGINT},
+      tgconstraint = #{row.tgconstraint,jdbcType=BIGINT},
+      tgdeferrable = #{row.tgdeferrable,jdbcType=BIT},
+      tginitdeferred = #{row.tginitdeferred,jdbcType=BIT},
+      tgnargs = #{row.tgnargs,jdbcType=SMALLINT},
+      tgattr = #{row.tgattr,jdbcType=OTHER},
+      tgqual = #{row.tgqual,jdbcType=OTHER},
+      tgoldtable = #{row.tgoldtable,jdbcType=VARCHAR},
+      tgnewtable = #{row.tgnewtable,jdbcType=VARCHAR},
+      tgargs = #{row.tgargs,jdbcType=BINARY}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_trigger
+    set oid = #{row.oid,jdbcType=BIGINT},
+      tgrelid = #{row.tgrelid,jdbcType=BIGINT},
+      tgparentid = #{row.tgparentid,jdbcType=BIGINT},
+      tgname = #{row.tgname,jdbcType=VARCHAR},
+      tgfoid = #{row.tgfoid,jdbcType=BIGINT},
+      tgtype = #{row.tgtype,jdbcType=SMALLINT},
+      tgenabled = #{row.tgenabled,jdbcType=CHAR},
+      tgisinternal = #{row.tgisinternal,jdbcType=BIT},
+      tgconstrrelid = #{row.tgconstrrelid,jdbcType=BIGINT},
+      tgconstrindid = #{row.tgconstrindid,jdbcType=BIGINT},
+      tgconstraint = #{row.tgconstraint,jdbcType=BIGINT},
+      tgdeferrable = #{row.tgdeferrable,jdbcType=BIT},
+      tginitdeferred = #{row.tginitdeferred,jdbcType=BIT},
+      tgnargs = #{row.tgnargs,jdbcType=SMALLINT},
+      tgattr = #{row.tgattr,jdbcType=OTHER},
+      tgqual = #{row.tgqual,jdbcType=OTHER},
+      tgoldtable = #{row.tgoldtable,jdbcType=VARCHAR},
+      tgnewtable = #{row.tgnewtable,jdbcType=VARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.readiombg.model.PgTrigger">
+    update pg_trigger
+    <set>
+      <if test="tgrelid != null">
+        tgrelid = #{tgrelid,jdbcType=BIGINT},
+      </if>
+      <if test="tgparentid != null">
+        tgparentid = #{tgparentid,jdbcType=BIGINT},
+      </if>
+      <if test="tgname != null">
+        tgname = #{tgname,jdbcType=VARCHAR},
+      </if>
+      <if test="tgfoid != null">
+        tgfoid = #{tgfoid,jdbcType=BIGINT},
+      </if>
+      <if test="tgtype != null">
+        tgtype = #{tgtype,jdbcType=SMALLINT},
+      </if>
+      <if test="tgenabled != null">
+        tgenabled = #{tgenabled,jdbcType=CHAR},
+      </if>
+      <if test="tgisinternal != null">
+        tgisinternal = #{tgisinternal,jdbcType=BIT},
+      </if>
+      <if test="tgconstrrelid != null">
+        tgconstrrelid = #{tgconstrrelid,jdbcType=BIGINT},
+      </if>
+      <if test="tgconstrindid != null">
+        tgconstrindid = #{tgconstrindid,jdbcType=BIGINT},
+      </if>
+      <if test="tgconstraint != null">
+        tgconstraint = #{tgconstraint,jdbcType=BIGINT},
+      </if>
+      <if test="tgdeferrable != null">
+        tgdeferrable = #{tgdeferrable,jdbcType=BIT},
+      </if>
+      <if test="tginitdeferred != null">
+        tginitdeferred = #{tginitdeferred,jdbcType=BIT},
+      </if>
+      <if test="tgnargs != null">
+        tgnargs = #{tgnargs,jdbcType=SMALLINT},
+      </if>
+      <if test="tgattr != null">
+        tgattr = #{tgattr,jdbcType=OTHER},
+      </if>
+      <if test="tgqual != null">
+        tgqual = #{tgqual,jdbcType=OTHER},
+      </if>
+      <if test="tgoldtable != null">
+        tgoldtable = #{tgoldtable,jdbcType=VARCHAR},
+      </if>
+      <if test="tgnewtable != null">
+        tgnewtable = #{tgnewtable,jdbcType=VARCHAR},
+      </if>
+      <if test="tgargs != null">
+        tgargs = #{tgargs,jdbcType=BINARY},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pool.readio.readiombg.model.PgTrigger">
+    update pg_trigger
+    set tgrelid = #{tgrelid,jdbcType=BIGINT},
+      tgparentid = #{tgparentid,jdbcType=BIGINT},
+      tgname = #{tgname,jdbcType=VARCHAR},
+      tgfoid = #{tgfoid,jdbcType=BIGINT},
+      tgtype = #{tgtype,jdbcType=SMALLINT},
+      tgenabled = #{tgenabled,jdbcType=CHAR},
+      tgisinternal = #{tgisinternal,jdbcType=BIT},
+      tgconstrrelid = #{tgconstrrelid,jdbcType=BIGINT},
+      tgconstrindid = #{tgconstrindid,jdbcType=BIGINT},
+      tgconstraint = #{tgconstraint,jdbcType=BIGINT},
+      tgdeferrable = #{tgdeferrable,jdbcType=BIT},
+      tginitdeferred = #{tginitdeferred,jdbcType=BIT},
+      tgnargs = #{tgnargs,jdbcType=SMALLINT},
+      tgattr = #{tgattr,jdbcType=OTHER},
+      tgqual = #{tgqual,jdbcType=OTHER},
+      tgoldtable = #{tgoldtable,jdbcType=VARCHAR},
+      tgnewtable = #{tgnewtable,jdbcType=VARCHAR},
+      tgargs = #{tgargs,jdbcType=BINARY}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pool.readio.readiombg.model.PgTrigger">
+    update pg_trigger
+    set tgrelid = #{tgrelid,jdbcType=BIGINT},
+      tgparentid = #{tgparentid,jdbcType=BIGINT},
+      tgname = #{tgname,jdbcType=VARCHAR},
+      tgfoid = #{tgfoid,jdbcType=BIGINT},
+      tgtype = #{tgtype,jdbcType=SMALLINT},
+      tgenabled = #{tgenabled,jdbcType=CHAR},
+      tgisinternal = #{tgisinternal,jdbcType=BIT},
+      tgconstrrelid = #{tgconstrrelid,jdbcType=BIGINT},
+      tgconstrindid = #{tgconstrindid,jdbcType=BIGINT},
+      tgconstraint = #{tgconstraint,jdbcType=BIGINT},
+      tgdeferrable = #{tgdeferrable,jdbcType=BIT},
+      tginitdeferred = #{tginitdeferred,jdbcType=BIT},
+      tgnargs = #{tgnargs,jdbcType=SMALLINT},
+      tgattr = #{tgattr,jdbcType=OTHER},
+      tgqual = #{tgqual,jdbcType=OTHER},
+      tgoldtable = #{tgoldtable,jdbcType=VARCHAR},
+      tgnewtable = #{tgnewtable,jdbcType=VARCHAR}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+</mapper>

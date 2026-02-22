@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgProcMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgProc">
+    <id column="oid" jdbcType="BIGINT" property="oid" />
+    <result column="proname" jdbcType="VARCHAR" property="proname" />
+    <result column="pronamespace" jdbcType="BIGINT" property="pronamespace" />
+    <result column="proowner" jdbcType="BIGINT" property="proowner" />
+    <result column="prolang" jdbcType="BIGINT" property="prolang" />
+    <result column="procost" jdbcType="REAL" property="procost" />
+    <result column="prorows" jdbcType="REAL" property="prorows" />
+    <result column="provariadic" jdbcType="BIGINT" property="provariadic" />
+    <result column="prosupport" jdbcType="OTHER" property="prosupport" />
+    <result column="prokind" jdbcType="CHAR" property="prokind" />
+    <result column="prosecdef" jdbcType="BIT" property="prosecdef" />
+    <result column="proleakproof" jdbcType="BIT" property="proleakproof" />
+    <result column="proisstrict" jdbcType="BIT" property="proisstrict" />
+    <result column="proretset" jdbcType="BIT" property="proretset" />
+    <result column="provolatile" jdbcType="CHAR" property="provolatile" />
+    <result column="proparallel" jdbcType="CHAR" property="proparallel" />
+    <result column="pronargs" jdbcType="SMALLINT" property="pronargs" />
+    <result column="pronargdefaults" jdbcType="SMALLINT" property="pronargdefaults" />
+    <result column="prorettype" jdbcType="BIGINT" property="prorettype" />
+    <result column="proargtypes" jdbcType="OTHER" property="proargtypes" />
+    <result column="proallargtypes" jdbcType="ARRAY" property="proallargtypes" />
+    <result column="proargmodes" jdbcType="ARRAY" property="proargmodes" />
+    <result column="proargnames" jdbcType="ARRAY" property="proargnames" />
+    <result column="proargdefaults" jdbcType="OTHER" property="proargdefaults" />
+    <result column="protrftypes" jdbcType="ARRAY" property="protrftypes" />
+    <result column="prosrc" jdbcType="VARCHAR" property="prosrc" />
+    <result column="probin" jdbcType="VARCHAR" property="probin" />
+    <result column="prosqlbody" jdbcType="OTHER" property="prosqlbody" />
+    <result column="proconfig" jdbcType="ARRAY" property="proconfig" />
+    <result column="proacl" jdbcType="ARRAY" property="proacl" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    oid, proname, pronamespace, proowner, prolang, procost, prorows, provariadic, prosupport, 
+    prokind, prosecdef, proleakproof, proisstrict, proretset, provolatile, proparallel, 
+    pronargs, pronargdefaults, prorettype, proargtypes, proallargtypes, proargmodes, 
+    proargnames, proargdefaults, protrftypes, prosrc, probin, prosqlbody, proconfig, 
+    proacl
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgProcExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_proc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pg_proc
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pg_proc
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgProcExample">
+    delete from pg_proc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgProc">
+    insert into pg_proc (oid, proname, pronamespace, 
+      proowner, prolang, procost, 
+      prorows, provariadic, prosupport, 
+      prokind, prosecdef, proleakproof, 
+      proisstrict, proretset, provolatile, 
+      proparallel, pronargs, pronargdefaults, 
+      prorettype, proargtypes, proallargtypes, 
+      proargmodes, proargnames, proargdefaults, 
+      protrftypes, prosrc, probin, 
+      prosqlbody, proconfig, proacl
+      )
+    values (#{oid,jdbcType=BIGINT}, #{proname,jdbcType=VARCHAR}, #{pronamespace,jdbcType=BIGINT}, 
+      #{proowner,jdbcType=BIGINT}, #{prolang,jdbcType=BIGINT}, #{procost,jdbcType=REAL}, 
+      #{prorows,jdbcType=REAL}, #{provariadic,jdbcType=BIGINT}, #{prosupport,jdbcType=OTHER}, 
+      #{prokind,jdbcType=CHAR}, #{prosecdef,jdbcType=BIT}, #{proleakproof,jdbcType=BIT}, 
+      #{proisstrict,jdbcType=BIT}, #{proretset,jdbcType=BIT}, #{provolatile,jdbcType=CHAR}, 
+      #{proparallel,jdbcType=CHAR}, #{pronargs,jdbcType=SMALLINT}, #{pronargdefaults,jdbcType=SMALLINT}, 
+      #{prorettype,jdbcType=BIGINT}, #{proargtypes,jdbcType=OTHER}, #{proallargtypes,jdbcType=ARRAY}, 
+      #{proargmodes,jdbcType=ARRAY}, #{proargnames,jdbcType=ARRAY}, #{proargdefaults,jdbcType=OTHER}, 
+      #{protrftypes,jdbcType=ARRAY}, #{prosrc,jdbcType=VARCHAR}, #{probin,jdbcType=VARCHAR}, 
+      #{prosqlbody,jdbcType=OTHER}, #{proconfig,jdbcType=ARRAY}, #{proacl,jdbcType=ARRAY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgProc">
+    insert into pg_proc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="proname != null">
+        proname,
+      </if>
+      <if test="pronamespace != null">
+        pronamespace,
+      </if>
+      <if test="proowner != null">
+        proowner,
+      </if>
+      <if test="prolang != null">
+        prolang,
+      </if>
+      <if test="procost != null">
+        procost,
+      </if>
+      <if test="prorows != null">
+        prorows,
+      </if>
+      <if test="provariadic != null">
+        provariadic,
+      </if>
+      <if test="prosupport != null">
+        prosupport,
+      </if>
+      <if test="prokind != null">
+        prokind,
+      </if>
+      <if test="prosecdef != null">
+        prosecdef,
+      </if>
+      <if test="proleakproof != null">
+        proleakproof,
+      </if>
+      <if test="proisstrict != null">
+        proisstrict,
+      </if>
+      <if test="proretset != null">
+        proretset,
+      </if>
+      <if test="provolatile != null">
+        provolatile,
+      </if>
+      <if test="proparallel != null">
+        proparallel,
+      </if>
+      <if test="pronargs != null">
+        pronargs,
+      </if>
+      <if test="pronargdefaults != null">
+        pronargdefaults,
+      </if>
+      <if test="prorettype != null">
+        prorettype,
+      </if>
+      <if test="proargtypes != null">
+        proargtypes,
+      </if>
+      <if test="proallargtypes != null">
+        proallargtypes,
+      </if>
+      <if test="proargmodes != null">
+        proargmodes,
+      </if>
+      <if test="proargnames != null">
+        proargnames,
+      </if>
+      <if test="proargdefaults != null">
+        proargdefaults,
+      </if>
+      <if test="protrftypes != null">
+        protrftypes,
+      </if>
+      <if test="prosrc != null">
+        prosrc,
+      </if>
+      <if test="probin != null">
+        probin,
+      </if>
+      <if test="prosqlbody != null">
+        prosqlbody,
+      </if>
+      <if test="proconfig != null">
+        proconfig,
+      </if>
+      <if test="proacl != null">
+        proacl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="proname != null">
+        #{proname,jdbcType=VARCHAR},
+      </if>
+      <if test="pronamespace != null">
+        #{pronamespace,jdbcType=BIGINT},
+      </if>
+      <if test="proowner != null">
+        #{proowner,jdbcType=BIGINT},
+      </if>
+      <if test="prolang != null">
+        #{prolang,jdbcType=BIGINT},
+      </if>
+      <if test="procost != null">
+        #{procost,jdbcType=REAL},
+      </if>
+      <if test="prorows != null">
+        #{prorows,jdbcType=REAL},
+      </if>
+      <if test="provariadic != null">
+        #{provariadic,jdbcType=BIGINT},
+      </if>
+      <if test="prosupport != null">
+        #{prosupport,jdbcType=OTHER},
+      </if>
+      <if test="prokind != null">
+        #{prokind,jdbcType=CHAR},
+      </if>
+      <if test="prosecdef != null">
+        #{prosecdef,jdbcType=BIT},
+      </if>
+      <if test="proleakproof != null">
+        #{proleakproof,jdbcType=BIT},
+      </if>
+      <if test="proisstrict != null">
+        #{proisstrict,jdbcType=BIT},
+      </if>
+      <if test="proretset != null">
+        #{proretset,jdbcType=BIT},
+      </if>
+      <if test="provolatile != null">
+        #{provolatile,jdbcType=CHAR},
+      </if>
+      <if test="proparallel != null">
+        #{proparallel,jdbcType=CHAR},
+      </if>
+      <if test="pronargs != null">
+        #{pronargs,jdbcType=SMALLINT},
+      </if>
+      <if test="pronargdefaults != null">
+        #{pronargdefaults,jdbcType=SMALLINT},
+      </if>
+      <if test="prorettype != null">
+        #{prorettype,jdbcType=BIGINT},
+      </if>
+      <if test="proargtypes != null">
+        #{proargtypes,jdbcType=OTHER},
+      </if>
+      <if test="proallargtypes != null">
+        #{proallargtypes,jdbcType=ARRAY},
+      </if>
+      <if test="proargmodes != null">
+        #{proargmodes,jdbcType=ARRAY},
+      </if>
+      <if test="proargnames != null">
+        #{proargnames,jdbcType=ARRAY},
+      </if>
+      <if test="proargdefaults != null">
+        #{proargdefaults,jdbcType=OTHER},
+      </if>
+      <if test="protrftypes != null">
+        #{protrftypes,jdbcType=ARRAY},
+      </if>
+      <if test="prosrc != null">
+        #{prosrc,jdbcType=VARCHAR},
+      </if>
+      <if test="probin != null">
+        #{probin,jdbcType=VARCHAR},
+      </if>
+      <if test="prosqlbody != null">
+        #{prosqlbody,jdbcType=OTHER},
+      </if>
+      <if test="proconfig != null">
+        #{proconfig,jdbcType=ARRAY},
+      </if>
+      <if test="proacl != null">
+        #{proacl,jdbcType=ARRAY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgProcExample" resultType="java.lang.Long">
+    select count(*) from pg_proc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_proc
+    <set>
+      <if test="row.oid != null">
+        oid = #{row.oid,jdbcType=BIGINT},
+      </if>
+      <if test="row.proname != null">
+        proname = #{row.proname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.pronamespace != null">
+        pronamespace = #{row.pronamespace,jdbcType=BIGINT},
+      </if>
+      <if test="row.proowner != null">
+        proowner = #{row.proowner,jdbcType=BIGINT},
+      </if>
+      <if test="row.prolang != null">
+        prolang = #{row.prolang,jdbcType=BIGINT},
+      </if>
+      <if test="row.procost != null">
+        procost = #{row.procost,jdbcType=REAL},
+      </if>
+      <if test="row.prorows != null">
+        prorows = #{row.prorows,jdbcType=REAL},
+      </if>
+      <if test="row.provariadic != null">
+        provariadic = #{row.provariadic,jdbcType=BIGINT},
+      </if>
+      <if test="row.prosupport != null">
+        prosupport = #{row.prosupport,jdbcType=OTHER},
+      </if>
+      <if test="row.prokind != null">
+        prokind = #{row.prokind,jdbcType=CHAR},
+      </if>
+      <if test="row.prosecdef != null">
+        prosecdef = #{row.prosecdef,jdbcType=BIT},
+      </if>
+      <if test="row.proleakproof != null">
+        proleakproof = #{row.proleakproof,jdbcType=BIT},
+      </if>
+      <if test="row.proisstrict != null">
+        proisstrict = #{row.proisstrict,jdbcType=BIT},
+      </if>
+      <if test="row.proretset != null">
+        proretset = #{row.proretset,jdbcType=BIT},
+      </if>
+      <if test="row.provolatile != null">
+        provolatile = #{row.provolatile,jdbcType=CHAR},
+      </if>
+      <if test="row.proparallel != null">
+        proparallel = #{row.proparallel,jdbcType=CHAR},
+      </if>
+      <if test="row.pronargs != null">
+        pronargs = #{row.pronargs,jdbcType=SMALLINT},
+      </if>
+      <if test="row.pronargdefaults != null">
+        pronargdefaults = #{row.pronargdefaults,jdbcType=SMALLINT},
+      </if>
+      <if test="row.prorettype != null">
+        prorettype = #{row.prorettype,jdbcType=BIGINT},
+      </if>
+      <if test="row.proargtypes != null">
+        proargtypes = #{row.proargtypes,jdbcType=OTHER},
+      </if>
+      <if test="row.proallargtypes != null">
+        proallargtypes = #{row.proallargtypes,jdbcType=ARRAY},
+      </if>
+      <if test="row.proargmodes != null">
+        proargmodes = #{row.proargmodes,jdbcType=ARRAY},
+      </if>
+      <if test="row.proargnames != null">
+        proargnames = #{row.proargnames,jdbcType=ARRAY},
+      </if>
+      <if test="row.proargdefaults != null">
+        proargdefaults = #{row.proargdefaults,jdbcType=OTHER},
+      </if>
+      <if test="row.protrftypes != null">
+        protrftypes = #{row.protrftypes,jdbcType=ARRAY},
+      </if>
+      <if test="row.prosrc != null">
+        prosrc = #{row.prosrc,jdbcType=VARCHAR},
+      </if>
+      <if test="row.probin != null">
+        probin = #{row.probin,jdbcType=VARCHAR},
+      </if>
+      <if test="row.prosqlbody != null">
+        prosqlbody = #{row.prosqlbody,jdbcType=OTHER},
+      </if>
+      <if test="row.proconfig != null">
+        proconfig = #{row.proconfig,jdbcType=ARRAY},
+      </if>
+      <if test="row.proacl != null">
+        proacl = #{row.proacl,jdbcType=ARRAY},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_proc
+    set oid = #{row.oid,jdbcType=BIGINT},
+      proname = #{row.proname,jdbcType=VARCHAR},
+      pronamespace = #{row.pronamespace,jdbcType=BIGINT},
+      proowner = #{row.proowner,jdbcType=BIGINT},
+      prolang = #{row.prolang,jdbcType=BIGINT},
+      procost = #{row.procost,jdbcType=REAL},
+      prorows = #{row.prorows,jdbcType=REAL},
+      provariadic = #{row.provariadic,jdbcType=BIGINT},
+      prosupport = #{row.prosupport,jdbcType=OTHER},
+      prokind = #{row.prokind,jdbcType=CHAR},
+      prosecdef = #{row.prosecdef,jdbcType=BIT},
+      proleakproof = #{row.proleakproof,jdbcType=BIT},
+      proisstrict = #{row.proisstrict,jdbcType=BIT},
+      proretset = #{row.proretset,jdbcType=BIT},
+      provolatile = #{row.provolatile,jdbcType=CHAR},
+      proparallel = #{row.proparallel,jdbcType=CHAR},
+      pronargs = #{row.pronargs,jdbcType=SMALLINT},
+      pronargdefaults = #{row.pronargdefaults,jdbcType=SMALLINT},
+      prorettype = #{row.prorettype,jdbcType=BIGINT},
+      proargtypes = #{row.proargtypes,jdbcType=OTHER},
+      proallargtypes = #{row.proallargtypes,jdbcType=ARRAY},
+      proargmodes = #{row.proargmodes,jdbcType=ARRAY},
+      proargnames = #{row.proargnames,jdbcType=ARRAY},
+      proargdefaults = #{row.proargdefaults,jdbcType=OTHER},
+      protrftypes = #{row.protrftypes,jdbcType=ARRAY},
+      prosrc = #{row.prosrc,jdbcType=VARCHAR},
+      probin = #{row.probin,jdbcType=VARCHAR},
+      prosqlbody = #{row.prosqlbody,jdbcType=OTHER},
+      proconfig = #{row.proconfig,jdbcType=ARRAY},
+      proacl = #{row.proacl,jdbcType=ARRAY}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.readiombg.model.PgProc">
+    update pg_proc
+    <set>
+      <if test="proname != null">
+        proname = #{proname,jdbcType=VARCHAR},
+      </if>
+      <if test="pronamespace != null">
+        pronamespace = #{pronamespace,jdbcType=BIGINT},
+      </if>
+      <if test="proowner != null">
+        proowner = #{proowner,jdbcType=BIGINT},
+      </if>
+      <if test="prolang != null">
+        prolang = #{prolang,jdbcType=BIGINT},
+      </if>
+      <if test="procost != null">
+        procost = #{procost,jdbcType=REAL},
+      </if>
+      <if test="prorows != null">
+        prorows = #{prorows,jdbcType=REAL},
+      </if>
+      <if test="provariadic != null">
+        provariadic = #{provariadic,jdbcType=BIGINT},
+      </if>
+      <if test="prosupport != null">
+        prosupport = #{prosupport,jdbcType=OTHER},
+      </if>
+      <if test="prokind != null">
+        prokind = #{prokind,jdbcType=CHAR},
+      </if>
+      <if test="prosecdef != null">
+        prosecdef = #{prosecdef,jdbcType=BIT},
+      </if>
+      <if test="proleakproof != null">
+        proleakproof = #{proleakproof,jdbcType=BIT},
+      </if>
+      <if test="proisstrict != null">
+        proisstrict = #{proisstrict,jdbcType=BIT},
+      </if>
+      <if test="proretset != null">
+        proretset = #{proretset,jdbcType=BIT},
+      </if>
+      <if test="provolatile != null">
+        provolatile = #{provolatile,jdbcType=CHAR},
+      </if>
+      <if test="proparallel != null">
+        proparallel = #{proparallel,jdbcType=CHAR},
+      </if>
+      <if test="pronargs != null">
+        pronargs = #{pronargs,jdbcType=SMALLINT},
+      </if>
+      <if test="pronargdefaults != null">
+        pronargdefaults = #{pronargdefaults,jdbcType=SMALLINT},
+      </if>
+      <if test="prorettype != null">
+        prorettype = #{prorettype,jdbcType=BIGINT},
+      </if>
+      <if test="proargtypes != null">
+        proargtypes = #{proargtypes,jdbcType=OTHER},
+      </if>
+      <if test="proallargtypes != null">
+        proallargtypes = #{proallargtypes,jdbcType=ARRAY},
+      </if>
+      <if test="proargmodes != null">
+        proargmodes = #{proargmodes,jdbcType=ARRAY},
+      </if>
+      <if test="proargnames != null">
+        proargnames = #{proargnames,jdbcType=ARRAY},
+      </if>
+      <if test="proargdefaults != null">
+        proargdefaults = #{proargdefaults,jdbcType=OTHER},
+      </if>
+      <if test="protrftypes != null">
+        protrftypes = #{protrftypes,jdbcType=ARRAY},
+      </if>
+      <if test="prosrc != null">
+        prosrc = #{prosrc,jdbcType=VARCHAR},
+      </if>
+      <if test="probin != null">
+        probin = #{probin,jdbcType=VARCHAR},
+      </if>
+      <if test="prosqlbody != null">
+        prosqlbody = #{prosqlbody,jdbcType=OTHER},
+      </if>
+      <if test="proconfig != null">
+        proconfig = #{proconfig,jdbcType=ARRAY},
+      </if>
+      <if test="proacl != null">
+        proacl = #{proacl,jdbcType=ARRAY},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pool.readio.readiombg.model.PgProc">
+    update pg_proc
+    set proname = #{proname,jdbcType=VARCHAR},
+      pronamespace = #{pronamespace,jdbcType=BIGINT},
+      proowner = #{proowner,jdbcType=BIGINT},
+      prolang = #{prolang,jdbcType=BIGINT},
+      procost = #{procost,jdbcType=REAL},
+      prorows = #{prorows,jdbcType=REAL},
+      provariadic = #{provariadic,jdbcType=BIGINT},
+      prosupport = #{prosupport,jdbcType=OTHER},
+      prokind = #{prokind,jdbcType=CHAR},
+      prosecdef = #{prosecdef,jdbcType=BIT},
+      proleakproof = #{proleakproof,jdbcType=BIT},
+      proisstrict = #{proisstrict,jdbcType=BIT},
+      proretset = #{proretset,jdbcType=BIT},
+      provolatile = #{provolatile,jdbcType=CHAR},
+      proparallel = #{proparallel,jdbcType=CHAR},
+      pronargs = #{pronargs,jdbcType=SMALLINT},
+      pronargdefaults = #{pronargdefaults,jdbcType=SMALLINT},
+      prorettype = #{prorettype,jdbcType=BIGINT},
+      proargtypes = #{proargtypes,jdbcType=OTHER},
+      proallargtypes = #{proallargtypes,jdbcType=ARRAY},
+      proargmodes = #{proargmodes,jdbcType=ARRAY},
+      proargnames = #{proargnames,jdbcType=ARRAY},
+      proargdefaults = #{proargdefaults,jdbcType=OTHER},
+      protrftypes = #{protrftypes,jdbcType=ARRAY},
+      prosrc = #{prosrc,jdbcType=VARCHAR},
+      probin = #{probin,jdbcType=VARCHAR},
+      prosqlbody = #{prosqlbody,jdbcType=OTHER},
+      proconfig = #{proconfig,jdbcType=ARRAY},
+      proacl = #{proacl,jdbcType=ARRAY}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+</mapper>

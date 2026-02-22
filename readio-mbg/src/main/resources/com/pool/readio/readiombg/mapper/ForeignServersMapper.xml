@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.ForeignServersMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.ForeignServers">
+    <result column="foreign_server_catalog" jdbcType="DISTINCT" property="foreignServerCatalog" />
+    <result column="foreign_server_name" jdbcType="DISTINCT" property="foreignServerName" />
+    <result column="foreign_data_wrapper_catalog" jdbcType="DISTINCT" property="foreignDataWrapperCatalog" />
+    <result column="foreign_data_wrapper_name" jdbcType="DISTINCT" property="foreignDataWrapperName" />
+    <result column="foreign_server_type" jdbcType="DISTINCT" property="foreignServerType" />
+    <result column="foreign_server_version" jdbcType="DISTINCT" property="foreignServerVersion" />
+    <result column="authorization_identifier" jdbcType="DISTINCT" property="authorizationIdentifier" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    foreign_server_catalog, foreign_server_name, foreign_data_wrapper_catalog, foreign_data_wrapper_name, 
+    foreign_server_type, foreign_server_version, authorization_identifier
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.ForeignServersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from foreign_servers
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.ForeignServersExample">
+    delete from foreign_servers
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.ForeignServers">
+    insert into foreign_servers (foreign_server_catalog, foreign_server_name, 
+      foreign_data_wrapper_catalog, foreign_data_wrapper_name, 
+      foreign_server_type, foreign_server_version, 
+      authorization_identifier)
+    values (#{foreignServerCatalog,jdbcType=DISTINCT}, #{foreignServerName,jdbcType=DISTINCT}, 
+      #{foreignDataWrapperCatalog,jdbcType=DISTINCT}, #{foreignDataWrapperName,jdbcType=DISTINCT}, 
+      #{foreignServerType,jdbcType=DISTINCT}, #{foreignServerVersion,jdbcType=DISTINCT}, 
+      #{authorizationIdentifier,jdbcType=DISTINCT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.ForeignServers">
+    insert into foreign_servers
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="foreignServerCatalog != null">
+        foreign_server_catalog,
+      </if>
+      <if test="foreignServerName != null">
+        foreign_server_name,
+      </if>
+      <if test="foreignDataWrapperCatalog != null">
+        foreign_data_wrapper_catalog,
+      </if>
+      <if test="foreignDataWrapperName != null">
+        foreign_data_wrapper_name,
+      </if>
+      <if test="foreignServerType != null">
+        foreign_server_type,
+      </if>
+      <if test="foreignServerVersion != null">
+        foreign_server_version,
+      </if>
+      <if test="authorizationIdentifier != null">
+        authorization_identifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="foreignServerCatalog != null">
+        #{foreignServerCatalog,jdbcType=DISTINCT},
+      </if>
+      <if test="foreignServerName != null">
+        #{foreignServerName,jdbcType=DISTINCT},
+      </if>
+      <if test="foreignDataWrapperCatalog != null">
+        #{foreignDataWrapperCatalog,jdbcType=DISTINCT},
+      </if>
+      <if test="foreignDataWrapperName != null">
+        #{foreignDataWrapperName,jdbcType=DISTINCT},
+      </if>
+      <if test="foreignServerType != null">
+        #{foreignServerType,jdbcType=DISTINCT},
+      </if>
+      <if test="foreignServerVersion != null">
+        #{foreignServerVersion,jdbcType=DISTINCT},
+      </if>
+      <if test="authorizationIdentifier != null">
+        #{authorizationIdentifier,jdbcType=DISTINCT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.ForeignServersExample" resultType="java.lang.Long">
+    select count(*) from foreign_servers
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update foreign_servers
+    <set>
+      <if test="row.foreignServerCatalog != null">
+        foreign_server_catalog = #{row.foreignServerCatalog,jdbcType=DISTINCT},
+      </if>
+      <if test="row.foreignServerName != null">
+        foreign_server_name = #{row.foreignServerName,jdbcType=DISTINCT},
+      </if>
+      <if test="row.foreignDataWrapperCatalog != null">
+        foreign_data_wrapper_catalog = #{row.foreignDataWrapperCatalog,jdbcType=DISTINCT},
+      </if>
+      <if test="row.foreignDataWrapperName != null">
+        foreign_data_wrapper_name = #{row.foreignDataWrapperName,jdbcType=DISTINCT},
+      </if>
+      <if test="row.foreignServerType != null">
+        foreign_server_type = #{row.foreignServerType,jdbcType=DISTINCT},
+      </if>
+      <if test="row.foreignServerVersion != null">
+        foreign_server_version = #{row.foreignServerVersion,jdbcType=DISTINCT},
+      </if>
+      <if test="row.authorizationIdentifier != null">
+        authorization_identifier = #{row.authorizationIdentifier,jdbcType=DISTINCT},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update foreign_servers
+    set foreign_server_catalog = #{row.foreignServerCatalog,jdbcType=DISTINCT},
+      foreign_server_name = #{row.foreignServerName,jdbcType=DISTINCT},
+      foreign_data_wrapper_catalog = #{row.foreignDataWrapperCatalog,jdbcType=DISTINCT},
+      foreign_data_wrapper_name = #{row.foreignDataWrapperName,jdbcType=DISTINCT},
+      foreign_server_type = #{row.foreignServerType,jdbcType=DISTINCT},
+      foreign_server_version = #{row.foreignServerVersion,jdbcType=DISTINCT},
+      authorization_identifier = #{row.authorizationIdentifier,jdbcType=DISTINCT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

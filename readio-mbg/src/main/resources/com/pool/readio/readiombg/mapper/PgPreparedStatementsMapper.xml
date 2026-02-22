@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgPreparedStatementsMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgPreparedStatements">
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="statement" jdbcType="VARCHAR" property="statement" />
+    <result column="prepare_time" jdbcType="TIMESTAMP" property="prepareTime" />
+    <result column="parameter_types" jdbcType="ARRAY" property="parameterTypes" />
+    <result column="result_types" jdbcType="ARRAY" property="resultTypes" />
+    <result column="from_sql" jdbcType="BIT" property="fromSql" />
+    <result column="generic_plans" jdbcType="BIGINT" property="genericPlans" />
+    <result column="custom_plans" jdbcType="BIGINT" property="customPlans" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    name, statement, prepare_time, parameter_types, result_types, from_sql, generic_plans, 
+    custom_plans
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgPreparedStatementsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_prepared_statements
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgPreparedStatementsExample">
+    delete from pg_prepared_statements
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgPreparedStatements">
+    insert into pg_prepared_statements (name, statement, prepare_time, 
+      parameter_types, result_types, from_sql, 
+      generic_plans, custom_plans)
+    values (#{name,jdbcType=VARCHAR}, #{statement,jdbcType=VARCHAR}, #{prepareTime,jdbcType=TIMESTAMP}, 
+      #{parameterTypes,jdbcType=ARRAY}, #{resultTypes,jdbcType=ARRAY}, #{fromSql,jdbcType=BIT}, 
+      #{genericPlans,jdbcType=BIGINT}, #{customPlans,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgPreparedStatements">
+    insert into pg_prepared_statements
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="statement != null">
+        statement,
+      </if>
+      <if test="prepareTime != null">
+        prepare_time,
+      </if>
+      <if test="parameterTypes != null">
+        parameter_types,
+      </if>
+      <if test="resultTypes != null">
+        result_types,
+      </if>
+      <if test="fromSql != null">
+        from_sql,
+      </if>
+      <if test="genericPlans != null">
+        generic_plans,
+      </if>
+      <if test="customPlans != null">
+        custom_plans,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="statement != null">
+        #{statement,jdbcType=VARCHAR},
+      </if>
+      <if test="prepareTime != null">
+        #{prepareTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parameterTypes != null">
+        #{parameterTypes,jdbcType=ARRAY},
+      </if>
+      <if test="resultTypes != null">
+        #{resultTypes,jdbcType=ARRAY},
+      </if>
+      <if test="fromSql != null">
+        #{fromSql,jdbcType=BIT},
+      </if>
+      <if test="genericPlans != null">
+        #{genericPlans,jdbcType=BIGINT},
+      </if>
+      <if test="customPlans != null">
+        #{customPlans,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgPreparedStatementsExample" resultType="java.lang.Long">
+    select count(*) from pg_prepared_statements
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_prepared_statements
+    <set>
+      <if test="row.name != null">
+        name = #{row.name,jdbcType=VARCHAR},
+      </if>
+      <if test="row.statement != null">
+        statement = #{row.statement,jdbcType=VARCHAR},
+      </if>
+      <if test="row.prepareTime != null">
+        prepare_time = #{row.prepareTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.parameterTypes != null">
+        parameter_types = #{row.parameterTypes,jdbcType=ARRAY},
+      </if>
+      <if test="row.resultTypes != null">
+        result_types = #{row.resultTypes,jdbcType=ARRAY},
+      </if>
+      <if test="row.fromSql != null">
+        from_sql = #{row.fromSql,jdbcType=BIT},
+      </if>
+      <if test="row.genericPlans != null">
+        generic_plans = #{row.genericPlans,jdbcType=BIGINT},
+      </if>
+      <if test="row.customPlans != null">
+        custom_plans = #{row.customPlans,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_prepared_statements
+    set name = #{row.name,jdbcType=VARCHAR},
+      statement = #{row.statement,jdbcType=VARCHAR},
+      prepare_time = #{row.prepareTime,jdbcType=TIMESTAMP},
+      parameter_types = #{row.parameterTypes,jdbcType=ARRAY},
+      result_types = #{row.resultTypes,jdbcType=ARRAY},
+      from_sql = #{row.fromSql,jdbcType=BIT},
+      generic_plans = #{row.genericPlans,jdbcType=BIGINT},
+      custom_plans = #{row.customPlans,jdbcType=BIGINT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

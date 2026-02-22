@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgEventTriggerMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgEventTrigger">
+    <id column="oid" jdbcType="BIGINT" property="oid" />
+    <result column="evtname" jdbcType="VARCHAR" property="evtname" />
+    <result column="evtevent" jdbcType="VARCHAR" property="evtevent" />
+    <result column="evtowner" jdbcType="BIGINT" property="evtowner" />
+    <result column="evtfoid" jdbcType="BIGINT" property="evtfoid" />
+    <result column="evtenabled" jdbcType="CHAR" property="evtenabled" />
+    <result column="evttags" jdbcType="ARRAY" property="evttags" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    oid, evtname, evtevent, evtowner, evtfoid, evtenabled, evttags
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgEventTriggerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_event_trigger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pg_event_trigger
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pg_event_trigger
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgEventTriggerExample">
+    delete from pg_event_trigger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgEventTrigger">
+    insert into pg_event_trigger (oid, evtname, evtevent, 
+      evtowner, evtfoid, evtenabled, 
+      evttags)
+    values (#{oid,jdbcType=BIGINT}, #{evtname,jdbcType=VARCHAR}, #{evtevent,jdbcType=VARCHAR}, 
+      #{evtowner,jdbcType=BIGINT}, #{evtfoid,jdbcType=BIGINT}, #{evtenabled,jdbcType=CHAR}, 
+      #{evttags,jdbcType=ARRAY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgEventTrigger">
+    insert into pg_event_trigger
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="evtname != null">
+        evtname,
+      </if>
+      <if test="evtevent != null">
+        evtevent,
+      </if>
+      <if test="evtowner != null">
+        evtowner,
+      </if>
+      <if test="evtfoid != null">
+        evtfoid,
+      </if>
+      <if test="evtenabled != null">
+        evtenabled,
+      </if>
+      <if test="evttags != null">
+        evttags,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="evtname != null">
+        #{evtname,jdbcType=VARCHAR},
+      </if>
+      <if test="evtevent != null">
+        #{evtevent,jdbcType=VARCHAR},
+      </if>
+      <if test="evtowner != null">
+        #{evtowner,jdbcType=BIGINT},
+      </if>
+      <if test="evtfoid != null">
+        #{evtfoid,jdbcType=BIGINT},
+      </if>
+      <if test="evtenabled != null">
+        #{evtenabled,jdbcType=CHAR},
+      </if>
+      <if test="evttags != null">
+        #{evttags,jdbcType=ARRAY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgEventTriggerExample" resultType="java.lang.Long">
+    select count(*) from pg_event_trigger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_event_trigger
+    <set>
+      <if test="row.oid != null">
+        oid = #{row.oid,jdbcType=BIGINT},
+      </if>
+      <if test="row.evtname != null">
+        evtname = #{row.evtname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.evtevent != null">
+        evtevent = #{row.evtevent,jdbcType=VARCHAR},
+      </if>
+      <if test="row.evtowner != null">
+        evtowner = #{row.evtowner,jdbcType=BIGINT},
+      </if>
+      <if test="row.evtfoid != null">
+        evtfoid = #{row.evtfoid,jdbcType=BIGINT},
+      </if>
+      <if test="row.evtenabled != null">
+        evtenabled = #{row.evtenabled,jdbcType=CHAR},
+      </if>
+      <if test="row.evttags != null">
+        evttags = #{row.evttags,jdbcType=ARRAY},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_event_trigger
+    set oid = #{row.oid,jdbcType=BIGINT},
+      evtname = #{row.evtname,jdbcType=VARCHAR},
+      evtevent = #{row.evtevent,jdbcType=VARCHAR},
+      evtowner = #{row.evtowner,jdbcType=BIGINT},
+      evtfoid = #{row.evtfoid,jdbcType=BIGINT},
+      evtenabled = #{row.evtenabled,jdbcType=CHAR},
+      evttags = #{row.evttags,jdbcType=ARRAY}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.readiombg.model.PgEventTrigger">
+    update pg_event_trigger
+    <set>
+      <if test="evtname != null">
+        evtname = #{evtname,jdbcType=VARCHAR},
+      </if>
+      <if test="evtevent != null">
+        evtevent = #{evtevent,jdbcType=VARCHAR},
+      </if>
+      <if test="evtowner != null">
+        evtowner = #{evtowner,jdbcType=BIGINT},
+      </if>
+      <if test="evtfoid != null">
+        evtfoid = #{evtfoid,jdbcType=BIGINT},
+      </if>
+      <if test="evtenabled != null">
+        evtenabled = #{evtenabled,jdbcType=CHAR},
+      </if>
+      <if test="evttags != null">
+        evttags = #{evttags,jdbcType=ARRAY},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pool.readio.readiombg.model.PgEventTrigger">
+    update pg_event_trigger
+    set evtname = #{evtname,jdbcType=VARCHAR},
+      evtevent = #{evtevent,jdbcType=VARCHAR},
+      evtowner = #{evtowner,jdbcType=BIGINT},
+      evtfoid = #{evtfoid,jdbcType=BIGINT},
+      evtenabled = #{evtenabled,jdbcType=CHAR},
+      evttags = #{evttags,jdbcType=ARRAY}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+</mapper>

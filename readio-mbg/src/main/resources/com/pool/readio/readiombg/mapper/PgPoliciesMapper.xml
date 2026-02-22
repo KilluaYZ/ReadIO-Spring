@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgPoliciesMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgPolicies">
+    <result column="schemaname" jdbcType="VARCHAR" property="schemaname" />
+    <result column="tablename" jdbcType="VARCHAR" property="tablename" />
+    <result column="policyname" jdbcType="VARCHAR" property="policyname" />
+    <result column="permissive" jdbcType="VARCHAR" property="permissive" />
+    <result column="roles" jdbcType="ARRAY" property="roles" />
+    <result column="cmd" jdbcType="VARCHAR" property="cmd" />
+    <result column="qual" jdbcType="VARCHAR" property="qual" />
+    <result column="with_check" jdbcType="VARCHAR" property="withCheck" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    schemaname, tablename, policyname, permissive, roles, cmd, qual, with_check
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgPoliciesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_policies
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgPoliciesExample">
+    delete from pg_policies
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgPolicies">
+    insert into pg_policies (schemaname, tablename, policyname, 
+      permissive, roles, cmd, 
+      qual, with_check)
+    values (#{schemaname,jdbcType=VARCHAR}, #{tablename,jdbcType=VARCHAR}, #{policyname,jdbcType=VARCHAR}, 
+      #{permissive,jdbcType=VARCHAR}, #{roles,jdbcType=ARRAY}, #{cmd,jdbcType=VARCHAR}, 
+      #{qual,jdbcType=VARCHAR}, #{withCheck,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgPolicies">
+    insert into pg_policies
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="schemaname != null">
+        schemaname,
+      </if>
+      <if test="tablename != null">
+        tablename,
+      </if>
+      <if test="policyname != null">
+        policyname,
+      </if>
+      <if test="permissive != null">
+        permissive,
+      </if>
+      <if test="roles != null">
+        roles,
+      </if>
+      <if test="cmd != null">
+        cmd,
+      </if>
+      <if test="qual != null">
+        qual,
+      </if>
+      <if test="withCheck != null">
+        with_check,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="schemaname != null">
+        #{schemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="tablename != null">
+        #{tablename,jdbcType=VARCHAR},
+      </if>
+      <if test="policyname != null">
+        #{policyname,jdbcType=VARCHAR},
+      </if>
+      <if test="permissive != null">
+        #{permissive,jdbcType=VARCHAR},
+      </if>
+      <if test="roles != null">
+        #{roles,jdbcType=ARRAY},
+      </if>
+      <if test="cmd != null">
+        #{cmd,jdbcType=VARCHAR},
+      </if>
+      <if test="qual != null">
+        #{qual,jdbcType=VARCHAR},
+      </if>
+      <if test="withCheck != null">
+        #{withCheck,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgPoliciesExample" resultType="java.lang.Long">
+    select count(*) from pg_policies
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_policies
+    <set>
+      <if test="row.schemaname != null">
+        schemaname = #{row.schemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.tablename != null">
+        tablename = #{row.tablename,jdbcType=VARCHAR},
+      </if>
+      <if test="row.policyname != null">
+        policyname = #{row.policyname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.permissive != null">
+        permissive = #{row.permissive,jdbcType=VARCHAR},
+      </if>
+      <if test="row.roles != null">
+        roles = #{row.roles,jdbcType=ARRAY},
+      </if>
+      <if test="row.cmd != null">
+        cmd = #{row.cmd,jdbcType=VARCHAR},
+      </if>
+      <if test="row.qual != null">
+        qual = #{row.qual,jdbcType=VARCHAR},
+      </if>
+      <if test="row.withCheck != null">
+        with_check = #{row.withCheck,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_policies
+    set schemaname = #{row.schemaname,jdbcType=VARCHAR},
+      tablename = #{row.tablename,jdbcType=VARCHAR},
+      policyname = #{row.policyname,jdbcType=VARCHAR},
+      permissive = #{row.permissive,jdbcType=VARCHAR},
+      roles = #{row.roles,jdbcType=ARRAY},
+      cmd = #{row.cmd,jdbcType=VARCHAR},
+      qual = #{row.qual,jdbcType=VARCHAR},
+      with_check = #{row.withCheck,jdbcType=VARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

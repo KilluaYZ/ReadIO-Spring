@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgSettingsMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgSettings">
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="setting" jdbcType="VARCHAR" property="setting" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="short_desc" jdbcType="VARCHAR" property="shortDesc" />
+    <result column="extra_desc" jdbcType="VARCHAR" property="extraDesc" />
+    <result column="context" jdbcType="VARCHAR" property="context" />
+    <result column="vartype" jdbcType="VARCHAR" property="vartype" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="min_val" jdbcType="VARCHAR" property="minVal" />
+    <result column="max_val" jdbcType="VARCHAR" property="maxVal" />
+    <result column="enumvals" jdbcType="ARRAY" property="enumvals" />
+    <result column="boot_val" jdbcType="VARCHAR" property="bootVal" />
+    <result column="reset_val" jdbcType="VARCHAR" property="resetVal" />
+    <result column="sourcefile" jdbcType="VARCHAR" property="sourcefile" />
+    <result column="sourceline" jdbcType="INTEGER" property="sourceline" />
+    <result column="pending_restart" jdbcType="BIT" property="pendingRestart" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    name, setting, unit, category, short_desc, extra_desc, context, vartype, source, 
+    min_val, max_val, enumvals, boot_val, reset_val, sourcefile, sourceline, pending_restart
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgSettingsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_settings
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgSettingsExample">
+    delete from pg_settings
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgSettings">
+    insert into pg_settings (name, setting, unit, 
+      category, short_desc, extra_desc, 
+      context, vartype, source, 
+      min_val, max_val, enumvals, 
+      boot_val, reset_val, sourcefile, 
+      sourceline, pending_restart)
+    values (#{name,jdbcType=VARCHAR}, #{setting,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{category,jdbcType=VARCHAR}, #{shortDesc,jdbcType=VARCHAR}, #{extraDesc,jdbcType=VARCHAR}, 
+      #{context,jdbcType=VARCHAR}, #{vartype,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
+      #{minVal,jdbcType=VARCHAR}, #{maxVal,jdbcType=VARCHAR}, #{enumvals,jdbcType=ARRAY}, 
+      #{bootVal,jdbcType=VARCHAR}, #{resetVal,jdbcType=VARCHAR}, #{sourcefile,jdbcType=VARCHAR}, 
+      #{sourceline,jdbcType=INTEGER}, #{pendingRestart,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgSettings">
+    insert into pg_settings
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="setting != null">
+        setting,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="shortDesc != null">
+        short_desc,
+      </if>
+      <if test="extraDesc != null">
+        extra_desc,
+      </if>
+      <if test="context != null">
+        context,
+      </if>
+      <if test="vartype != null">
+        vartype,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="minVal != null">
+        min_val,
+      </if>
+      <if test="maxVal != null">
+        max_val,
+      </if>
+      <if test="enumvals != null">
+        enumvals,
+      </if>
+      <if test="bootVal != null">
+        boot_val,
+      </if>
+      <if test="resetVal != null">
+        reset_val,
+      </if>
+      <if test="sourcefile != null">
+        sourcefile,
+      </if>
+      <if test="sourceline != null">
+        sourceline,
+      </if>
+      <if test="pendingRestart != null">
+        pending_restart,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="setting != null">
+        #{setting,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="shortDesc != null">
+        #{shortDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="extraDesc != null">
+        #{extraDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="context != null">
+        #{context,jdbcType=VARCHAR},
+      </if>
+      <if test="vartype != null">
+        #{vartype,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="minVal != null">
+        #{minVal,jdbcType=VARCHAR},
+      </if>
+      <if test="maxVal != null">
+        #{maxVal,jdbcType=VARCHAR},
+      </if>
+      <if test="enumvals != null">
+        #{enumvals,jdbcType=ARRAY},
+      </if>
+      <if test="bootVal != null">
+        #{bootVal,jdbcType=VARCHAR},
+      </if>
+      <if test="resetVal != null">
+        #{resetVal,jdbcType=VARCHAR},
+      </if>
+      <if test="sourcefile != null">
+        #{sourcefile,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceline != null">
+        #{sourceline,jdbcType=INTEGER},
+      </if>
+      <if test="pendingRestart != null">
+        #{pendingRestart,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgSettingsExample" resultType="java.lang.Long">
+    select count(*) from pg_settings
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_settings
+    <set>
+      <if test="row.name != null">
+        name = #{row.name,jdbcType=VARCHAR},
+      </if>
+      <if test="row.setting != null">
+        setting = #{row.setting,jdbcType=VARCHAR},
+      </if>
+      <if test="row.unit != null">
+        unit = #{row.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="row.category != null">
+        category = #{row.category,jdbcType=VARCHAR},
+      </if>
+      <if test="row.shortDesc != null">
+        short_desc = #{row.shortDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="row.extraDesc != null">
+        extra_desc = #{row.extraDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="row.context != null">
+        context = #{row.context,jdbcType=VARCHAR},
+      </if>
+      <if test="row.vartype != null">
+        vartype = #{row.vartype,jdbcType=VARCHAR},
+      </if>
+      <if test="row.source != null">
+        source = #{row.source,jdbcType=VARCHAR},
+      </if>
+      <if test="row.minVal != null">
+        min_val = #{row.minVal,jdbcType=VARCHAR},
+      </if>
+      <if test="row.maxVal != null">
+        max_val = #{row.maxVal,jdbcType=VARCHAR},
+      </if>
+      <if test="row.enumvals != null">
+        enumvals = #{row.enumvals,jdbcType=ARRAY},
+      </if>
+      <if test="row.bootVal != null">
+        boot_val = #{row.bootVal,jdbcType=VARCHAR},
+      </if>
+      <if test="row.resetVal != null">
+        reset_val = #{row.resetVal,jdbcType=VARCHAR},
+      </if>
+      <if test="row.sourcefile != null">
+        sourcefile = #{row.sourcefile,jdbcType=VARCHAR},
+      </if>
+      <if test="row.sourceline != null">
+        sourceline = #{row.sourceline,jdbcType=INTEGER},
+      </if>
+      <if test="row.pendingRestart != null">
+        pending_restart = #{row.pendingRestart,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_settings
+    set name = #{row.name,jdbcType=VARCHAR},
+      setting = #{row.setting,jdbcType=VARCHAR},
+      unit = #{row.unit,jdbcType=VARCHAR},
+      category = #{row.category,jdbcType=VARCHAR},
+      short_desc = #{row.shortDesc,jdbcType=VARCHAR},
+      extra_desc = #{row.extraDesc,jdbcType=VARCHAR},
+      context = #{row.context,jdbcType=VARCHAR},
+      vartype = #{row.vartype,jdbcType=VARCHAR},
+      source = #{row.source,jdbcType=VARCHAR},
+      min_val = #{row.minVal,jdbcType=VARCHAR},
+      max_val = #{row.maxVal,jdbcType=VARCHAR},
+      enumvals = #{row.enumvals,jdbcType=ARRAY},
+      boot_val = #{row.bootVal,jdbcType=VARCHAR},
+      reset_val = #{row.resetVal,jdbcType=VARCHAR},
+      sourcefile = #{row.sourcefile,jdbcType=VARCHAR},
+      sourceline = #{row.sourceline,jdbcType=INTEGER},
+      pending_restart = #{row.pendingRestart,jdbcType=BIT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

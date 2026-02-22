@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgStatActivityMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgStatActivity">
+    <result column="datid" jdbcType="BIGINT" property="datid" />
+    <result column="datname" jdbcType="VARCHAR" property="datname" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="leader_pid" jdbcType="INTEGER" property="leaderPid" />
+    <result column="usesysid" jdbcType="BIGINT" property="usesysid" />
+    <result column="usename" jdbcType="VARCHAR" property="usename" />
+    <result column="application_name" jdbcType="VARCHAR" property="applicationName" />
+    <result column="client_addr" jdbcType="OTHER" property="clientAddr" />
+    <result column="client_hostname" jdbcType="VARCHAR" property="clientHostname" />
+    <result column="client_port" jdbcType="INTEGER" property="clientPort" />
+    <result column="backend_start" jdbcType="TIMESTAMP" property="backendStart" />
+    <result column="xact_start" jdbcType="TIMESTAMP" property="xactStart" />
+    <result column="query_start" jdbcType="TIMESTAMP" property="queryStart" />
+    <result column="state_change" jdbcType="TIMESTAMP" property="stateChange" />
+    <result column="wait_event_type" jdbcType="VARCHAR" property="waitEventType" />
+    <result column="wait_event" jdbcType="VARCHAR" property="waitEvent" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="backend_xid" jdbcType="OTHER" property="backendXid" />
+    <result column="backend_xmin" jdbcType="OTHER" property="backendXmin" />
+    <result column="query_id" jdbcType="BIGINT" property="queryId" />
+    <result column="query" jdbcType="VARCHAR" property="query" />
+    <result column="backend_type" jdbcType="VARCHAR" property="backendType" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    datid, datname, pid, leader_pid, usesysid, usename, application_name, client_addr, 
+    client_hostname, client_port, backend_start, xact_start, query_start, state_change, 
+    wait_event_type, wait_event, state, backend_xid, backend_xmin, query_id, query, backend_type
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgStatActivityExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_stat_activity
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgStatActivityExample">
+    delete from pg_stat_activity
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgStatActivity">
+    insert into pg_stat_activity (datid, datname, pid, 
+      leader_pid, usesysid, usename, 
+      application_name, client_addr, client_hostname, 
+      client_port, backend_start, xact_start, 
+      query_start, state_change, wait_event_type, 
+      wait_event, state, backend_xid, 
+      backend_xmin, query_id, query, 
+      backend_type)
+    values (#{datid,jdbcType=BIGINT}, #{datname,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, 
+      #{leaderPid,jdbcType=INTEGER}, #{usesysid,jdbcType=BIGINT}, #{usename,jdbcType=VARCHAR}, 
+      #{applicationName,jdbcType=VARCHAR}, #{clientAddr,jdbcType=OTHER}, #{clientHostname,jdbcType=VARCHAR}, 
+      #{clientPort,jdbcType=INTEGER}, #{backendStart,jdbcType=TIMESTAMP}, #{xactStart,jdbcType=TIMESTAMP}, 
+      #{queryStart,jdbcType=TIMESTAMP}, #{stateChange,jdbcType=TIMESTAMP}, #{waitEventType,jdbcType=VARCHAR}, 
+      #{waitEvent,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{backendXid,jdbcType=OTHER}, 
+      #{backendXmin,jdbcType=OTHER}, #{queryId,jdbcType=BIGINT}, #{query,jdbcType=VARCHAR}, 
+      #{backendType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgStatActivity">
+    insert into pg_stat_activity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="datid != null">
+        datid,
+      </if>
+      <if test="datname != null">
+        datname,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="leaderPid != null">
+        leader_pid,
+      </if>
+      <if test="usesysid != null">
+        usesysid,
+      </if>
+      <if test="usename != null">
+        usename,
+      </if>
+      <if test="applicationName != null">
+        application_name,
+      </if>
+      <if test="clientAddr != null">
+        client_addr,
+      </if>
+      <if test="clientHostname != null">
+        client_hostname,
+      </if>
+      <if test="clientPort != null">
+        client_port,
+      </if>
+      <if test="backendStart != null">
+        backend_start,
+      </if>
+      <if test="xactStart != null">
+        xact_start,
+      </if>
+      <if test="queryStart != null">
+        query_start,
+      </if>
+      <if test="stateChange != null">
+        state_change,
+      </if>
+      <if test="waitEventType != null">
+        wait_event_type,
+      </if>
+      <if test="waitEvent != null">
+        wait_event,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="backendXid != null">
+        backend_xid,
+      </if>
+      <if test="backendXmin != null">
+        backend_xmin,
+      </if>
+      <if test="queryId != null">
+        query_id,
+      </if>
+      <if test="query != null">
+        query,
+      </if>
+      <if test="backendType != null">
+        backend_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="datid != null">
+        #{datid,jdbcType=BIGINT},
+      </if>
+      <if test="datname != null">
+        #{datname,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="leaderPid != null">
+        #{leaderPid,jdbcType=INTEGER},
+      </if>
+      <if test="usesysid != null">
+        #{usesysid,jdbcType=BIGINT},
+      </if>
+      <if test="usename != null">
+        #{usename,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationName != null">
+        #{applicationName,jdbcType=VARCHAR},
+      </if>
+      <if test="clientAddr != null">
+        #{clientAddr,jdbcType=OTHER},
+      </if>
+      <if test="clientHostname != null">
+        #{clientHostname,jdbcType=VARCHAR},
+      </if>
+      <if test="clientPort != null">
+        #{clientPort,jdbcType=INTEGER},
+      </if>
+      <if test="backendStart != null">
+        #{backendStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="xactStart != null">
+        #{xactStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="queryStart != null">
+        #{queryStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stateChange != null">
+        #{stateChange,jdbcType=TIMESTAMP},
+      </if>
+      <if test="waitEventType != null">
+        #{waitEventType,jdbcType=VARCHAR},
+      </if>
+      <if test="waitEvent != null">
+        #{waitEvent,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="backendXid != null">
+        #{backendXid,jdbcType=OTHER},
+      </if>
+      <if test="backendXmin != null">
+        #{backendXmin,jdbcType=OTHER},
+      </if>
+      <if test="queryId != null">
+        #{queryId,jdbcType=BIGINT},
+      </if>
+      <if test="query != null">
+        #{query,jdbcType=VARCHAR},
+      </if>
+      <if test="backendType != null">
+        #{backendType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgStatActivityExample" resultType="java.lang.Long">
+    select count(*) from pg_stat_activity
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_stat_activity
+    <set>
+      <if test="row.datid != null">
+        datid = #{row.datid,jdbcType=BIGINT},
+      </if>
+      <if test="row.datname != null">
+        datname = #{row.datname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.pid != null">
+        pid = #{row.pid,jdbcType=INTEGER},
+      </if>
+      <if test="row.leaderPid != null">
+        leader_pid = #{row.leaderPid,jdbcType=INTEGER},
+      </if>
+      <if test="row.usesysid != null">
+        usesysid = #{row.usesysid,jdbcType=BIGINT},
+      </if>
+      <if test="row.usename != null">
+        usename = #{row.usename,jdbcType=VARCHAR},
+      </if>
+      <if test="row.applicationName != null">
+        application_name = #{row.applicationName,jdbcType=VARCHAR},
+      </if>
+      <if test="row.clientAddr != null">
+        client_addr = #{row.clientAddr,jdbcType=OTHER},
+      </if>
+      <if test="row.clientHostname != null">
+        client_hostname = #{row.clientHostname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.clientPort != null">
+        client_port = #{row.clientPort,jdbcType=INTEGER},
+      </if>
+      <if test="row.backendStart != null">
+        backend_start = #{row.backendStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.xactStart != null">
+        xact_start = #{row.xactStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.queryStart != null">
+        query_start = #{row.queryStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.stateChange != null">
+        state_change = #{row.stateChange,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.waitEventType != null">
+        wait_event_type = #{row.waitEventType,jdbcType=VARCHAR},
+      </if>
+      <if test="row.waitEvent != null">
+        wait_event = #{row.waitEvent,jdbcType=VARCHAR},
+      </if>
+      <if test="row.state != null">
+        state = #{row.state,jdbcType=VARCHAR},
+      </if>
+      <if test="row.backendXid != null">
+        backend_xid = #{row.backendXid,jdbcType=OTHER},
+      </if>
+      <if test="row.backendXmin != null">
+        backend_xmin = #{row.backendXmin,jdbcType=OTHER},
+      </if>
+      <if test="row.queryId != null">
+        query_id = #{row.queryId,jdbcType=BIGINT},
+      </if>
+      <if test="row.query != null">
+        query = #{row.query,jdbcType=VARCHAR},
+      </if>
+      <if test="row.backendType != null">
+        backend_type = #{row.backendType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_stat_activity
+    set datid = #{row.datid,jdbcType=BIGINT},
+      datname = #{row.datname,jdbcType=VARCHAR},
+      pid = #{row.pid,jdbcType=INTEGER},
+      leader_pid = #{row.leaderPid,jdbcType=INTEGER},
+      usesysid = #{row.usesysid,jdbcType=BIGINT},
+      usename = #{row.usename,jdbcType=VARCHAR},
+      application_name = #{row.applicationName,jdbcType=VARCHAR},
+      client_addr = #{row.clientAddr,jdbcType=OTHER},
+      client_hostname = #{row.clientHostname,jdbcType=VARCHAR},
+      client_port = #{row.clientPort,jdbcType=INTEGER},
+      backend_start = #{row.backendStart,jdbcType=TIMESTAMP},
+      xact_start = #{row.xactStart,jdbcType=TIMESTAMP},
+      query_start = #{row.queryStart,jdbcType=TIMESTAMP},
+      state_change = #{row.stateChange,jdbcType=TIMESTAMP},
+      wait_event_type = #{row.waitEventType,jdbcType=VARCHAR},
+      wait_event = #{row.waitEvent,jdbcType=VARCHAR},
+      state = #{row.state,jdbcType=VARCHAR},
+      backend_xid = #{row.backendXid,jdbcType=OTHER},
+      backend_xmin = #{row.backendXmin,jdbcType=OTHER},
+      query_id = #{row.queryId,jdbcType=BIGINT},
+      query = #{row.query,jdbcType=VARCHAR},
+      backend_type = #{row.backendType,jdbcType=VARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgAmopMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgAmop">
+    <id column="oid" jdbcType="BIGINT" property="oid" />
+    <result column="amopfamily" jdbcType="BIGINT" property="amopfamily" />
+    <result column="amoplefttype" jdbcType="BIGINT" property="amoplefttype" />
+    <result column="amoprighttype" jdbcType="BIGINT" property="amoprighttype" />
+    <result column="amopstrategy" jdbcType="SMALLINT" property="amopstrategy" />
+    <result column="amoppurpose" jdbcType="CHAR" property="amoppurpose" />
+    <result column="amopopr" jdbcType="BIGINT" property="amopopr" />
+    <result column="amopmethod" jdbcType="BIGINT" property="amopmethod" />
+    <result column="amopsortfamily" jdbcType="BIGINT" property="amopsortfamily" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    oid, amopfamily, amoplefttype, amoprighttype, amopstrategy, amoppurpose, amopopr, 
+    amopmethod, amopsortfamily
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgAmopExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_amop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pg_amop
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pg_amop
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgAmopExample">
+    delete from pg_amop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgAmop">
+    insert into pg_amop (oid, amopfamily, amoplefttype, 
+      amoprighttype, amopstrategy, amoppurpose, 
+      amopopr, amopmethod, amopsortfamily
+      )
+    values (#{oid,jdbcType=BIGINT}, #{amopfamily,jdbcType=BIGINT}, #{amoplefttype,jdbcType=BIGINT}, 
+      #{amoprighttype,jdbcType=BIGINT}, #{amopstrategy,jdbcType=SMALLINT}, #{amoppurpose,jdbcType=CHAR}, 
+      #{amopopr,jdbcType=BIGINT}, #{amopmethod,jdbcType=BIGINT}, #{amopsortfamily,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgAmop">
+    insert into pg_amop
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="amopfamily != null">
+        amopfamily,
+      </if>
+      <if test="amoplefttype != null">
+        amoplefttype,
+      </if>
+      <if test="amoprighttype != null">
+        amoprighttype,
+      </if>
+      <if test="amopstrategy != null">
+        amopstrategy,
+      </if>
+      <if test="amoppurpose != null">
+        amoppurpose,
+      </if>
+      <if test="amopopr != null">
+        amopopr,
+      </if>
+      <if test="amopmethod != null">
+        amopmethod,
+      </if>
+      <if test="amopsortfamily != null">
+        amopsortfamily,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="amopfamily != null">
+        #{amopfamily,jdbcType=BIGINT},
+      </if>
+      <if test="amoplefttype != null">
+        #{amoplefttype,jdbcType=BIGINT},
+      </if>
+      <if test="amoprighttype != null">
+        #{amoprighttype,jdbcType=BIGINT},
+      </if>
+      <if test="amopstrategy != null">
+        #{amopstrategy,jdbcType=SMALLINT},
+      </if>
+      <if test="amoppurpose != null">
+        #{amoppurpose,jdbcType=CHAR},
+      </if>
+      <if test="amopopr != null">
+        #{amopopr,jdbcType=BIGINT},
+      </if>
+      <if test="amopmethod != null">
+        #{amopmethod,jdbcType=BIGINT},
+      </if>
+      <if test="amopsortfamily != null">
+        #{amopsortfamily,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgAmopExample" resultType="java.lang.Long">
+    select count(*) from pg_amop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_amop
+    <set>
+      <if test="row.oid != null">
+        oid = #{row.oid,jdbcType=BIGINT},
+      </if>
+      <if test="row.amopfamily != null">
+        amopfamily = #{row.amopfamily,jdbcType=BIGINT},
+      </if>
+      <if test="row.amoplefttype != null">
+        amoplefttype = #{row.amoplefttype,jdbcType=BIGINT},
+      </if>
+      <if test="row.amoprighttype != null">
+        amoprighttype = #{row.amoprighttype,jdbcType=BIGINT},
+      </if>
+      <if test="row.amopstrategy != null">
+        amopstrategy = #{row.amopstrategy,jdbcType=SMALLINT},
+      </if>
+      <if test="row.amoppurpose != null">
+        amoppurpose = #{row.amoppurpose,jdbcType=CHAR},
+      </if>
+      <if test="row.amopopr != null">
+        amopopr = #{row.amopopr,jdbcType=BIGINT},
+      </if>
+      <if test="row.amopmethod != null">
+        amopmethod = #{row.amopmethod,jdbcType=BIGINT},
+      </if>
+      <if test="row.amopsortfamily != null">
+        amopsortfamily = #{row.amopsortfamily,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_amop
+    set oid = #{row.oid,jdbcType=BIGINT},
+      amopfamily = #{row.amopfamily,jdbcType=BIGINT},
+      amoplefttype = #{row.amoplefttype,jdbcType=BIGINT},
+      amoprighttype = #{row.amoprighttype,jdbcType=BIGINT},
+      amopstrategy = #{row.amopstrategy,jdbcType=SMALLINT},
+      amoppurpose = #{row.amoppurpose,jdbcType=CHAR},
+      amopopr = #{row.amopopr,jdbcType=BIGINT},
+      amopmethod = #{row.amopmethod,jdbcType=BIGINT},
+      amopsortfamily = #{row.amopsortfamily,jdbcType=BIGINT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.readiombg.model.PgAmop">
+    update pg_amop
+    <set>
+      <if test="amopfamily != null">
+        amopfamily = #{amopfamily,jdbcType=BIGINT},
+      </if>
+      <if test="amoplefttype != null">
+        amoplefttype = #{amoplefttype,jdbcType=BIGINT},
+      </if>
+      <if test="amoprighttype != null">
+        amoprighttype = #{amoprighttype,jdbcType=BIGINT},
+      </if>
+      <if test="amopstrategy != null">
+        amopstrategy = #{amopstrategy,jdbcType=SMALLINT},
+      </if>
+      <if test="amoppurpose != null">
+        amoppurpose = #{amoppurpose,jdbcType=CHAR},
+      </if>
+      <if test="amopopr != null">
+        amopopr = #{amopopr,jdbcType=BIGINT},
+      </if>
+      <if test="amopmethod != null">
+        amopmethod = #{amopmethod,jdbcType=BIGINT},
+      </if>
+      <if test="amopsortfamily != null">
+        amopsortfamily = #{amopsortfamily,jdbcType=BIGINT},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pool.readio.readiombg.model.PgAmop">
+    update pg_amop
+    set amopfamily = #{amopfamily,jdbcType=BIGINT},
+      amoplefttype = #{amoplefttype,jdbcType=BIGINT},
+      amoprighttype = #{amoprighttype,jdbcType=BIGINT},
+      amopstrategy = #{amopstrategy,jdbcType=SMALLINT},
+      amoppurpose = #{amoppurpose,jdbcType=CHAR},
+      amopopr = #{amopopr,jdbcType=BIGINT},
+      amopmethod = #{amopmethod,jdbcType=BIGINT},
+      amopsortfamily = #{amopsortfamily,jdbcType=BIGINT}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+</mapper>

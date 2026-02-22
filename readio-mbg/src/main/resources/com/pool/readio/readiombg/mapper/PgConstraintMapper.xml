@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.readiombg.mapper.PgConstraintMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.readiombg.model.PgConstraint">
+    <id column="oid" jdbcType="BIGINT" property="oid" />
+    <result column="conname" jdbcType="VARCHAR" property="conname" />
+    <result column="connamespace" jdbcType="BIGINT" property="connamespace" />
+    <result column="contype" jdbcType="CHAR" property="contype" />
+    <result column="condeferrable" jdbcType="BIT" property="condeferrable" />
+    <result column="condeferred" jdbcType="BIT" property="condeferred" />
+    <result column="conenforced" jdbcType="BIT" property="conenforced" />
+    <result column="convalidated" jdbcType="BIT" property="convalidated" />
+    <result column="conrelid" jdbcType="BIGINT" property="conrelid" />
+    <result column="contypid" jdbcType="BIGINT" property="contypid" />
+    <result column="conindid" jdbcType="BIGINT" property="conindid" />
+    <result column="conparentid" jdbcType="BIGINT" property="conparentid" />
+    <result column="confrelid" jdbcType="BIGINT" property="confrelid" />
+    <result column="confupdtype" jdbcType="CHAR" property="confupdtype" />
+    <result column="confdeltype" jdbcType="CHAR" property="confdeltype" />
+    <result column="confmatchtype" jdbcType="CHAR" property="confmatchtype" />
+    <result column="conislocal" jdbcType="BIT" property="conislocal" />
+    <result column="coninhcount" jdbcType="SMALLINT" property="coninhcount" />
+    <result column="connoinherit" jdbcType="BIT" property="connoinherit" />
+    <result column="conperiod" jdbcType="BIT" property="conperiod" />
+    <result column="conkey" jdbcType="ARRAY" property="conkey" />
+    <result column="confkey" jdbcType="ARRAY" property="confkey" />
+    <result column="conpfeqop" jdbcType="ARRAY" property="conpfeqop" />
+    <result column="conppeqop" jdbcType="ARRAY" property="conppeqop" />
+    <result column="conffeqop" jdbcType="ARRAY" property="conffeqop" />
+    <result column="confdelsetcols" jdbcType="ARRAY" property="confdelsetcols" />
+    <result column="conexclop" jdbcType="ARRAY" property="conexclop" />
+    <result column="conbin" jdbcType="OTHER" property="conbin" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    oid, conname, connamespace, contype, condeferrable, condeferred, conenforced, convalidated, 
+    conrelid, contypid, conindid, conparentid, confrelid, confupdtype, confdeltype, confmatchtype, 
+    conislocal, coninhcount, connoinherit, conperiod, conkey, confkey, conpfeqop, conppeqop, 
+    conffeqop, confdelsetcols, conexclop, conbin
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.readiombg.model.PgConstraintExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_constraint
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pg_constraint
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pg_constraint
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pool.readio.readiombg.model.PgConstraintExample">
+    delete from pg_constraint
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.readiombg.model.PgConstraint">
+    insert into pg_constraint (oid, conname, connamespace, 
+      contype, condeferrable, condeferred, 
+      conenforced, convalidated, conrelid, 
+      contypid, conindid, conparentid, 
+      confrelid, confupdtype, confdeltype, 
+      confmatchtype, conislocal, coninhcount, 
+      connoinherit, conperiod, conkey, 
+      confkey, conpfeqop, conppeqop, 
+      conffeqop, confdelsetcols, conexclop, 
+      conbin)
+    values (#{oid,jdbcType=BIGINT}, #{conname,jdbcType=VARCHAR}, #{connamespace,jdbcType=BIGINT}, 
+      #{contype,jdbcType=CHAR}, #{condeferrable,jdbcType=BIT}, #{condeferred,jdbcType=BIT}, 
+      #{conenforced,jdbcType=BIT}, #{convalidated,jdbcType=BIT}, #{conrelid,jdbcType=BIGINT}, 
+      #{contypid,jdbcType=BIGINT}, #{conindid,jdbcType=BIGINT}, #{conparentid,jdbcType=BIGINT}, 
+      #{confrelid,jdbcType=BIGINT}, #{confupdtype,jdbcType=CHAR}, #{confdeltype,jdbcType=CHAR}, 
+      #{confmatchtype,jdbcType=CHAR}, #{conislocal,jdbcType=BIT}, #{coninhcount,jdbcType=SMALLINT}, 
+      #{connoinherit,jdbcType=BIT}, #{conperiod,jdbcType=BIT}, #{conkey,jdbcType=ARRAY}, 
+      #{confkey,jdbcType=ARRAY}, #{conpfeqop,jdbcType=ARRAY}, #{conppeqop,jdbcType=ARRAY}, 
+      #{conffeqop,jdbcType=ARRAY}, #{confdelsetcols,jdbcType=ARRAY}, #{conexclop,jdbcType=ARRAY}, 
+      #{conbin,jdbcType=OTHER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.readiombg.model.PgConstraint">
+    insert into pg_constraint
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="conname != null">
+        conname,
+      </if>
+      <if test="connamespace != null">
+        connamespace,
+      </if>
+      <if test="contype != null">
+        contype,
+      </if>
+      <if test="condeferrable != null">
+        condeferrable,
+      </if>
+      <if test="condeferred != null">
+        condeferred,
+      </if>
+      <if test="conenforced != null">
+        conenforced,
+      </if>
+      <if test="convalidated != null">
+        convalidated,
+      </if>
+      <if test="conrelid != null">
+        conrelid,
+      </if>
+      <if test="contypid != null">
+        contypid,
+      </if>
+      <if test="conindid != null">
+        conindid,
+      </if>
+      <if test="conparentid != null">
+        conparentid,
+      </if>
+      <if test="confrelid != null">
+        confrelid,
+      </if>
+      <if test="confupdtype != null">
+        confupdtype,
+      </if>
+      <if test="confdeltype != null">
+        confdeltype,
+      </if>
+      <if test="confmatchtype != null">
+        confmatchtype,
+      </if>
+      <if test="conislocal != null">
+        conislocal,
+      </if>
+      <if test="coninhcount != null">
+        coninhcount,
+      </if>
+      <if test="connoinherit != null">
+        connoinherit,
+      </if>
+      <if test="conperiod != null">
+        conperiod,
+      </if>
+      <if test="conkey != null">
+        conkey,
+      </if>
+      <if test="confkey != null">
+        confkey,
+      </if>
+      <if test="conpfeqop != null">
+        conpfeqop,
+      </if>
+      <if test="conppeqop != null">
+        conppeqop,
+      </if>
+      <if test="conffeqop != null">
+        conffeqop,
+      </if>
+      <if test="confdelsetcols != null">
+        confdelsetcols,
+      </if>
+      <if test="conexclop != null">
+        conexclop,
+      </if>
+      <if test="conbin != null">
+        conbin,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="conname != null">
+        #{conname,jdbcType=VARCHAR},
+      </if>
+      <if test="connamespace != null">
+        #{connamespace,jdbcType=BIGINT},
+      </if>
+      <if test="contype != null">
+        #{contype,jdbcType=CHAR},
+      </if>
+      <if test="condeferrable != null">
+        #{condeferrable,jdbcType=BIT},
+      </if>
+      <if test="condeferred != null">
+        #{condeferred,jdbcType=BIT},
+      </if>
+      <if test="conenforced != null">
+        #{conenforced,jdbcType=BIT},
+      </if>
+      <if test="convalidated != null">
+        #{convalidated,jdbcType=BIT},
+      </if>
+      <if test="conrelid != null">
+        #{conrelid,jdbcType=BIGINT},
+      </if>
+      <if test="contypid != null">
+        #{contypid,jdbcType=BIGINT},
+      </if>
+      <if test="conindid != null">
+        #{conindid,jdbcType=BIGINT},
+      </if>
+      <if test="conparentid != null">
+        #{conparentid,jdbcType=BIGINT},
+      </if>
+      <if test="confrelid != null">
+        #{confrelid,jdbcType=BIGINT},
+      </if>
+      <if test="confupdtype != null">
+        #{confupdtype,jdbcType=CHAR},
+      </if>
+      <if test="confdeltype != null">
+        #{confdeltype,jdbcType=CHAR},
+      </if>
+      <if test="confmatchtype != null">
+        #{confmatchtype,jdbcType=CHAR},
+      </if>
+      <if test="conislocal != null">
+        #{conislocal,jdbcType=BIT},
+      </if>
+      <if test="coninhcount != null">
+        #{coninhcount,jdbcType=SMALLINT},
+      </if>
+      <if test="connoinherit != null">
+        #{connoinherit,jdbcType=BIT},
+      </if>
+      <if test="conperiod != null">
+        #{conperiod,jdbcType=BIT},
+      </if>
+      <if test="conkey != null">
+        #{conkey,jdbcType=ARRAY},
+      </if>
+      <if test="confkey != null">
+        #{confkey,jdbcType=ARRAY},
+      </if>
+      <if test="conpfeqop != null">
+        #{conpfeqop,jdbcType=ARRAY},
+      </if>
+      <if test="conppeqop != null">
+        #{conppeqop,jdbcType=ARRAY},
+      </if>
+      <if test="conffeqop != null">
+        #{conffeqop,jdbcType=ARRAY},
+      </if>
+      <if test="confdelsetcols != null">
+        #{confdelsetcols,jdbcType=ARRAY},
+      </if>
+      <if test="conexclop != null">
+        #{conexclop,jdbcType=ARRAY},
+      </if>
+      <if test="conbin != null">
+        #{conbin,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.readiombg.model.PgConstraintExample" resultType="java.lang.Long">
+    select count(*) from pg_constraint
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_constraint
+    <set>
+      <if test="row.oid != null">
+        oid = #{row.oid,jdbcType=BIGINT},
+      </if>
+      <if test="row.conname != null">
+        conname = #{row.conname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.connamespace != null">
+        connamespace = #{row.connamespace,jdbcType=BIGINT},
+      </if>
+      <if test="row.contype != null">
+        contype = #{row.contype,jdbcType=CHAR},
+      </if>
+      <if test="row.condeferrable != null">
+        condeferrable = #{row.condeferrable,jdbcType=BIT},
+      </if>
+      <if test="row.condeferred != null">
+        condeferred = #{row.condeferred,jdbcType=BIT},
+      </if>
+      <if test="row.conenforced != null">
+        conenforced = #{row.conenforced,jdbcType=BIT},
+      </if>
+      <if test="row.convalidated != null">
+        convalidated = #{row.convalidated,jdbcType=BIT},
+      </if>
+      <if test="row.conrelid != null">
+        conrelid = #{row.conrelid,jdbcType=BIGINT},
+      </if>
+      <if test="row.contypid != null">
+        contypid = #{row.contypid,jdbcType=BIGINT},
+      </if>
+      <if test="row.conindid != null">
+        conindid = #{row.conindid,jdbcType=BIGINT},
+      </if>
+      <if test="row.conparentid != null">
+        conparentid = #{row.conparentid,jdbcType=BIGINT},
+      </if>
+      <if test="row.confrelid != null">
+        confrelid = #{row.confrelid,jdbcType=BIGINT},
+      </if>
+      <if test="row.confupdtype != null">
+        confupdtype = #{row.confupdtype,jdbcType=CHAR},
+      </if>
+      <if test="row.confdeltype != null">
+        confdeltype = #{row.confdeltype,jdbcType=CHAR},
+      </if>
+      <if test="row.confmatchtype != null">
+        confmatchtype = #{row.confmatchtype,jdbcType=CHAR},
+      </if>
+      <if test="row.conislocal != null">
+        conislocal = #{row.conislocal,jdbcType=BIT},
+      </if>
+      <if test="row.coninhcount != null">
+        coninhcount = #{row.coninhcount,jdbcType=SMALLINT},
+      </if>
+      <if test="row.connoinherit != null">
+        connoinherit = #{row.connoinherit,jdbcType=BIT},
+      </if>
+      <if test="row.conperiod != null">
+        conperiod = #{row.conperiod,jdbcType=BIT},
+      </if>
+      <if test="row.conkey != null">
+        conkey = #{row.conkey,jdbcType=ARRAY},
+      </if>
+      <if test="row.confkey != null">
+        confkey = #{row.confkey,jdbcType=ARRAY},
+      </if>
+      <if test="row.conpfeqop != null">
+        conpfeqop = #{row.conpfeqop,jdbcType=ARRAY},
+      </if>
+      <if test="row.conppeqop != null">
+        conppeqop = #{row.conppeqop,jdbcType=ARRAY},
+      </if>
+      <if test="row.conffeqop != null">
+        conffeqop = #{row.conffeqop,jdbcType=ARRAY},
+      </if>
+      <if test="row.confdelsetcols != null">
+        confdelsetcols = #{row.confdelsetcols,jdbcType=ARRAY},
+      </if>
+      <if test="row.conexclop != null">
+        conexclop = #{row.conexclop,jdbcType=ARRAY},
+      </if>
+      <if test="row.conbin != null">
+        conbin = #{row.conbin,jdbcType=OTHER},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_constraint
+    set oid = #{row.oid,jdbcType=BIGINT},
+      conname = #{row.conname,jdbcType=VARCHAR},
+      connamespace = #{row.connamespace,jdbcType=BIGINT},
+      contype = #{row.contype,jdbcType=CHAR},
+      condeferrable = #{row.condeferrable,jdbcType=BIT},
+      condeferred = #{row.condeferred,jdbcType=BIT},
+      conenforced = #{row.conenforced,jdbcType=BIT},
+      convalidated = #{row.convalidated,jdbcType=BIT},
+      conrelid = #{row.conrelid,jdbcType=BIGINT},
+      contypid = #{row.contypid,jdbcType=BIGINT},
+      conindid = #{row.conindid,jdbcType=BIGINT},
+      conparentid = #{row.conparentid,jdbcType=BIGINT},
+      confrelid = #{row.confrelid,jdbcType=BIGINT},
+      confupdtype = #{row.confupdtype,jdbcType=CHAR},
+      confdeltype = #{row.confdeltype,jdbcType=CHAR},
+      confmatchtype = #{row.confmatchtype,jdbcType=CHAR},
+      conislocal = #{row.conislocal,jdbcType=BIT},
+      coninhcount = #{row.coninhcount,jdbcType=SMALLINT},
+      connoinherit = #{row.connoinherit,jdbcType=BIT},
+      conperiod = #{row.conperiod,jdbcType=BIT},
+      conkey = #{row.conkey,jdbcType=ARRAY},
+      confkey = #{row.confkey,jdbcType=ARRAY},
+      conpfeqop = #{row.conpfeqop,jdbcType=ARRAY},
+      conppeqop = #{row.conppeqop,jdbcType=ARRAY},
+      conffeqop = #{row.conffeqop,jdbcType=ARRAY},
+      confdelsetcols = #{row.confdelsetcols,jdbcType=ARRAY},
+      conexclop = #{row.conexclop,jdbcType=ARRAY},
+      conbin = #{row.conbin,jdbcType=OTHER}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.readiombg.model.PgConstraint">
+    update pg_constraint
+    <set>
+      <if test="conname != null">
+        conname = #{conname,jdbcType=VARCHAR},
+      </if>
+      <if test="connamespace != null">
+        connamespace = #{connamespace,jdbcType=BIGINT},
+      </if>
+      <if test="contype != null">
+        contype = #{contype,jdbcType=CHAR},
+      </if>
+      <if test="condeferrable != null">
+        condeferrable = #{condeferrable,jdbcType=BIT},
+      </if>
+      <if test="condeferred != null">
+        condeferred = #{condeferred,jdbcType=BIT},
+      </if>
+      <if test="conenforced != null">
+        conenforced = #{conenforced,jdbcType=BIT},
+      </if>
+      <if test="convalidated != null">
+        convalidated = #{convalidated,jdbcType=BIT},
+      </if>
+      <if test="conrelid != null">
+        conrelid = #{conrelid,jdbcType=BIGINT},
+      </if>
+      <if test="contypid != null">
+        contypid = #{contypid,jdbcType=BIGINT},
+      </if>
+      <if test="conindid != null">
+        conindid = #{conindid,jdbcType=BIGINT},
+      </if>
+      <if test="conparentid != null">
+        conparentid = #{conparentid,jdbcType=BIGINT},
+      </if>
+      <if test="confrelid != null">
+        confrelid = #{confrelid,jdbcType=BIGINT},
+      </if>
+      <if test="confupdtype != null">
+        confupdtype = #{confupdtype,jdbcType=CHAR},
+      </if>
+      <if test="confdeltype != null">
+        confdeltype = #{confdeltype,jdbcType=CHAR},
+      </if>
+      <if test="confmatchtype != null">
+        confmatchtype = #{confmatchtype,jdbcType=CHAR},
+      </if>
+      <if test="conislocal != null">
+        conislocal = #{conislocal,jdbcType=BIT},
+      </if>
+      <if test="coninhcount != null">
+        coninhcount = #{coninhcount,jdbcType=SMALLINT},
+      </if>
+      <if test="connoinherit != null">
+        connoinherit = #{connoinherit,jdbcType=BIT},
+      </if>
+      <if test="conperiod != null">
+        conperiod = #{conperiod,jdbcType=BIT},
+      </if>
+      <if test="conkey != null">
+        conkey = #{conkey,jdbcType=ARRAY},
+      </if>
+      <if test="confkey != null">
+        confkey = #{confkey,jdbcType=ARRAY},
+      </if>
+      <if test="conpfeqop != null">
+        conpfeqop = #{conpfeqop,jdbcType=ARRAY},
+      </if>
+      <if test="conppeqop != null">
+        conppeqop = #{conppeqop,jdbcType=ARRAY},
+      </if>
+      <if test="conffeqop != null">
+        conffeqop = #{conffeqop,jdbcType=ARRAY},
+      </if>
+      <if test="confdelsetcols != null">
+        confdelsetcols = #{confdelsetcols,jdbcType=ARRAY},
+      </if>
+      <if test="conexclop != null">
+        conexclop = #{conexclop,jdbcType=ARRAY},
+      </if>
+      <if test="conbin != null">
+        conbin = #{conbin,jdbcType=OTHER},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pool.readio.readiombg.model.PgConstraint">
+    update pg_constraint
+    set conname = #{conname,jdbcType=VARCHAR},
+      connamespace = #{connamespace,jdbcType=BIGINT},
+      contype = #{contype,jdbcType=CHAR},
+      condeferrable = #{condeferrable,jdbcType=BIT},
+      condeferred = #{condeferred,jdbcType=BIT},
+      conenforced = #{conenforced,jdbcType=BIT},
+      convalidated = #{convalidated,jdbcType=BIT},
+      conrelid = #{conrelid,jdbcType=BIGINT},
+      contypid = #{contypid,jdbcType=BIGINT},
+      conindid = #{conindid,jdbcType=BIGINT},
+      conparentid = #{conparentid,jdbcType=BIGINT},
+      confrelid = #{confrelid,jdbcType=BIGINT},
+      confupdtype = #{confupdtype,jdbcType=CHAR},
+      confdeltype = #{confdeltype,jdbcType=CHAR},
+      confmatchtype = #{confmatchtype,jdbcType=CHAR},
+      conislocal = #{conislocal,jdbcType=BIT},
+      coninhcount = #{coninhcount,jdbcType=SMALLINT},
+      connoinherit = #{connoinherit,jdbcType=BIT},
+      conperiod = #{conperiod,jdbcType=BIT},
+      conkey = #{conkey,jdbcType=ARRAY},
+      confkey = #{confkey,jdbcType=ARRAY},
+      conpfeqop = #{conpfeqop,jdbcType=ARRAY},
+      conppeqop = #{conppeqop,jdbcType=ARRAY},
+      conffeqop = #{conffeqop,jdbcType=ARRAY},
+      confdelsetcols = #{confdelsetcols,jdbcType=ARRAY},
+      conexclop = #{conexclop,jdbcType=ARRAY},
+      conbin = #{conbin,jdbcType=OTHER}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+</mapper>
