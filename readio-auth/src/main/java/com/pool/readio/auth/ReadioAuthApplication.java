@@ -1,4 +1,4 @@
-package com.pool.readio.readioauth;
+package com.pool.readio.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
