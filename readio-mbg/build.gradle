@@ -22,6 +22,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // MBG 与运行 Generator 所需依赖（子模块显式声明，保证编译/运行 classpath 正确）
+    implementation 'org.mybatis.generator:mybatis-generator-core:1.4.2'
+    implementation 'org.postgresql:postgresql'
+    implementation("com.networknt:swagger:1.1.8")
 }
 
 tasks.named('test') {

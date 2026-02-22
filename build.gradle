@@ -18,5 +18,30 @@ repositories {
     mavenCentral()
 }
 
-// 父项目不需要实际的依赖，依赖管理由子项目自己定义
-// 如果需要统一管理依赖版本，可以在这里使用 dependencyManagement 块
+// 为所有子项目统一引入依赖（子项目需先应用 Java 插件才有 implementation 配置）
+subprojects {
+    apply plugin: 'java'
+    dependencies {
+        implementation 'cn.hutool:hutool-all:5.8.43'
+        implementation("org.projectlombok:lombok:1.18.42")
+        implementation("com.github.pagehelper:pagehelper-spring-boot-starter:2.1.1")
+        implementation("com.github.pagehelper:pagehelper:6.1.1")
+        implementation("org.mybatis:mybatis:3.5.19")
+        implementation("com.alibaba:druid-spring-boot-starter:1.2.27")
+        implementation("com.github.xiaoymin:knife4j-gateway-spring-boot-starter:4.5.0")
+        implementation("com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:4.5.0")
+        implementation("org.mybatis.generator:mybatis-generator-core:1.4.2")
+        implementation("org.springframework.data:spring-data-commons:4.1.0-M1")
+        implementation("com.aliyun.oss:aliyun-sdk-oss:3.18.5")
+        implementation("net.logstash.logback:logstash-logback-encoder:9.0")
+        implementation("de.codecentric:spring-boot-admin-starter-server:4.0.1")
+        implementation("de.codecentric:spring-boot-admin-starter-client:4.0.1")
+        implementation("io.minio:minio:8.6.0")
+        implementation("com.alipay.sdk:alipay-sdk-java:4.40.658.ALL")
+        implementation("cn.dev33:sa-token-reactor-spring-boot3-starter:1.44.0")
+        implementation("cn.dev33:sa-token-spring-boot3-starter:1.44.0")
+        implementation("cn.dev33:sa-token-redis-jackson:1.44.0")
+        implementation("cn.dev33:sa-token-jwt:1.44.0")
+        implementation("org.postgresql:postgresql")
+    }
+}
