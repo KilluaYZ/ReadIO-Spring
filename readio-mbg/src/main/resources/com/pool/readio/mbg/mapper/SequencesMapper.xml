@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.mbg.mapper.SequencesMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.Sequences">
+    <result column="sequence_catalog" jdbcType="DISTINCT" property="sequenceCatalog" />
+    <result column="sequence_schema" jdbcType="DISTINCT" property="sequenceSchema" />
+    <result column="sequence_name" jdbcType="DISTINCT" property="sequenceName" />
+    <result column="data_type" jdbcType="DISTINCT" property="dataType" />
+    <result column="numeric_precision" jdbcType="DISTINCT" property="numericPrecision" />
+    <result column="numeric_precision_radix" jdbcType="DISTINCT" property="numericPrecisionRadix" />
+    <result column="numeric_scale" jdbcType="DISTINCT" property="numericScale" />
+    <result column="start_value" jdbcType="DISTINCT" property="startValue" />
+    <result column="minimum_value" jdbcType="DISTINCT" property="minimumValue" />
+    <result column="maximum_value" jdbcType="DISTINCT" property="maximumValue" />
+    <result column="increment" jdbcType="DISTINCT" property="increment" />
+    <result column="cycle_option" jdbcType="DISTINCT" property="cycleOption" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    sequence_catalog, sequence_schema, sequence_name, data_type, numeric_precision, numeric_precision_radix, 
+    numeric_scale, start_value, minimum_value, maximum_value, increment, cycle_option
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.mbg.model.SequencesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sequences
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.SequencesExample">
+    delete from sequences
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.mbg.model.Sequences">
+    insert into sequences (sequence_catalog, sequence_schema, 
+      sequence_name, data_type, numeric_precision, 
+      numeric_precision_radix, numeric_scale, 
+      start_value, minimum_value, maximum_value, 
+      increment, cycle_option)
+    values (#{sequenceCatalog,jdbcType=DISTINCT}, #{sequenceSchema,jdbcType=DISTINCT}, 
+      #{sequenceName,jdbcType=DISTINCT}, #{dataType,jdbcType=DISTINCT}, #{numericPrecision,jdbcType=DISTINCT}, 
+      #{numericPrecisionRadix,jdbcType=DISTINCT}, #{numericScale,jdbcType=DISTINCT}, 
+      #{startValue,jdbcType=DISTINCT}, #{minimumValue,jdbcType=DISTINCT}, #{maximumValue,jdbcType=DISTINCT}, 
+      #{increment,jdbcType=DISTINCT}, #{cycleOption,jdbcType=DISTINCT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.mbg.model.Sequences">
+    insert into sequences
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sequenceCatalog != null">
+        sequence_catalog,
+      </if>
+      <if test="sequenceSchema != null">
+        sequence_schema,
+      </if>
+      <if test="sequenceName != null">
+        sequence_name,
+      </if>
+      <if test="dataType != null">
+        data_type,
+      </if>
+      <if test="numericPrecision != null">
+        numeric_precision,
+      </if>
+      <if test="numericPrecisionRadix != null">
+        numeric_precision_radix,
+      </if>
+      <if test="numericScale != null">
+        numeric_scale,
+      </if>
+      <if test="startValue != null">
+        start_value,
+      </if>
+      <if test="minimumValue != null">
+        minimum_value,
+      </if>
+      <if test="maximumValue != null">
+        maximum_value,
+      </if>
+      <if test="increment != null">
+        increment,
+      </if>
+      <if test="cycleOption != null">
+        cycle_option,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sequenceCatalog != null">
+        #{sequenceCatalog,jdbcType=DISTINCT},
+      </if>
+      <if test="sequenceSchema != null">
+        #{sequenceSchema,jdbcType=DISTINCT},
+      </if>
+      <if test="sequenceName != null">
+        #{sequenceName,jdbcType=DISTINCT},
+      </if>
+      <if test="dataType != null">
+        #{dataType,jdbcType=DISTINCT},
+      </if>
+      <if test="numericPrecision != null">
+        #{numericPrecision,jdbcType=DISTINCT},
+      </if>
+      <if test="numericPrecisionRadix != null">
+        #{numericPrecisionRadix,jdbcType=DISTINCT},
+      </if>
+      <if test="numericScale != null">
+        #{numericScale,jdbcType=DISTINCT},
+      </if>
+      <if test="startValue != null">
+        #{startValue,jdbcType=DISTINCT},
+      </if>
+      <if test="minimumValue != null">
+        #{minimumValue,jdbcType=DISTINCT},
+      </if>
+      <if test="maximumValue != null">
+        #{maximumValue,jdbcType=DISTINCT},
+      </if>
+      <if test="increment != null">
+        #{increment,jdbcType=DISTINCT},
+      </if>
+      <if test="cycleOption != null">
+        #{cycleOption,jdbcType=DISTINCT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.mbg.model.SequencesExample" resultType="java.lang.Long">
+    select count(*) from sequences
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sequences
+    <set>
+      <if test="row.sequenceCatalog != null">
+        sequence_catalog = #{row.sequenceCatalog,jdbcType=DISTINCT},
+      </if>
+      <if test="row.sequenceSchema != null">
+        sequence_schema = #{row.sequenceSchema,jdbcType=DISTINCT},
+      </if>
+      <if test="row.sequenceName != null">
+        sequence_name = #{row.sequenceName,jdbcType=DISTINCT},
+      </if>
+      <if test="row.dataType != null">
+        data_type = #{row.dataType,jdbcType=DISTINCT},
+      </if>
+      <if test="row.numericPrecision != null">
+        numeric_precision = #{row.numericPrecision,jdbcType=DISTINCT},
+      </if>
+      <if test="row.numericPrecisionRadix != null">
+        numeric_precision_radix = #{row.numericPrecisionRadix,jdbcType=DISTINCT},
+      </if>
+      <if test="row.numericScale != null">
+        numeric_scale = #{row.numericScale,jdbcType=DISTINCT},
+      </if>
+      <if test="row.startValue != null">
+        start_value = #{row.startValue,jdbcType=DISTINCT},
+      </if>
+      <if test="row.minimumValue != null">
+        minimum_value = #{row.minimumValue,jdbcType=DISTINCT},
+      </if>
+      <if test="row.maximumValue != null">
+        maximum_value = #{row.maximumValue,jdbcType=DISTINCT},
+      </if>
+      <if test="row.increment != null">
+        increment = #{row.increment,jdbcType=DISTINCT},
+      </if>
+      <if test="row.cycleOption != null">
+        cycle_option = #{row.cycleOption,jdbcType=DISTINCT},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sequences
+    set sequence_catalog = #{row.sequenceCatalog,jdbcType=DISTINCT},
+      sequence_schema = #{row.sequenceSchema,jdbcType=DISTINCT},
+      sequence_name = #{row.sequenceName,jdbcType=DISTINCT},
+      data_type = #{row.dataType,jdbcType=DISTINCT},
+      numeric_precision = #{row.numericPrecision,jdbcType=DISTINCT},
+      numeric_precision_radix = #{row.numericPrecisionRadix,jdbcType=DISTINCT},
+      numeric_scale = #{row.numericScale,jdbcType=DISTINCT},
+      start_value = #{row.startValue,jdbcType=DISTINCT},
+      minimum_value = #{row.minimumValue,jdbcType=DISTINCT},
+      maximum_value = #{row.maximumValue,jdbcType=DISTINCT},
+      increment = #{row.increment,jdbcType=DISTINCT},
+      cycle_option = #{row.cycleOption,jdbcType=DISTINCT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.mbg.mapper.PgStatisticExtMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.PgStatisticExt">
+    <id column="oid" jdbcType="BIGINT" property="oid" />
+    <result column="stxrelid" jdbcType="BIGINT" property="stxrelid" />
+    <result column="stxname" jdbcType="VARCHAR" property="stxname" />
+    <result column="stxnamespace" jdbcType="BIGINT" property="stxnamespace" />
+    <result column="stxowner" jdbcType="BIGINT" property="stxowner" />
+    <result column="stxkeys" jdbcType="OTHER" property="stxkeys" />
+    <result column="stxstattarget" jdbcType="SMALLINT" property="stxstattarget" />
+    <result column="stxkind" jdbcType="ARRAY" property="stxkind" />
+    <result column="stxexprs" jdbcType="OTHER" property="stxexprs" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    oid, stxrelid, stxname, stxnamespace, stxowner, stxkeys, stxstattarget, stxkind, 
+    stxexprs
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.mbg.model.PgStatisticExtExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_statistic_ext
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pg_statistic_ext
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pg_statistic_ext
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.PgStatisticExtExample">
+    delete from pg_statistic_ext
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.mbg.model.PgStatisticExt">
+    insert into pg_statistic_ext (oid, stxrelid, stxname, 
+      stxnamespace, stxowner, stxkeys, 
+      stxstattarget, stxkind, stxexprs
+      )
+    values (#{oid,jdbcType=BIGINT}, #{stxrelid,jdbcType=BIGINT}, #{stxname,jdbcType=VARCHAR}, 
+      #{stxnamespace,jdbcType=BIGINT}, #{stxowner,jdbcType=BIGINT}, #{stxkeys,jdbcType=OTHER}, 
+      #{stxstattarget,jdbcType=SMALLINT}, #{stxkind,jdbcType=ARRAY}, #{stxexprs,jdbcType=OTHER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.mbg.model.PgStatisticExt">
+    insert into pg_statistic_ext
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="stxrelid != null">
+        stxrelid,
+      </if>
+      <if test="stxname != null">
+        stxname,
+      </if>
+      <if test="stxnamespace != null">
+        stxnamespace,
+      </if>
+      <if test="stxowner != null">
+        stxowner,
+      </if>
+      <if test="stxkeys != null">
+        stxkeys,
+      </if>
+      <if test="stxstattarget != null">
+        stxstattarget,
+      </if>
+      <if test="stxkind != null">
+        stxkind,
+      </if>
+      <if test="stxexprs != null">
+        stxexprs,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="stxrelid != null">
+        #{stxrelid,jdbcType=BIGINT},
+      </if>
+      <if test="stxname != null">
+        #{stxname,jdbcType=VARCHAR},
+      </if>
+      <if test="stxnamespace != null">
+        #{stxnamespace,jdbcType=BIGINT},
+      </if>
+      <if test="stxowner != null">
+        #{stxowner,jdbcType=BIGINT},
+      </if>
+      <if test="stxkeys != null">
+        #{stxkeys,jdbcType=OTHER},
+      </if>
+      <if test="stxstattarget != null">
+        #{stxstattarget,jdbcType=SMALLINT},
+      </if>
+      <if test="stxkind != null">
+        #{stxkind,jdbcType=ARRAY},
+      </if>
+      <if test="stxexprs != null">
+        #{stxexprs,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.mbg.model.PgStatisticExtExample" resultType="java.lang.Long">
+    select count(*) from pg_statistic_ext
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_statistic_ext
+    <set>
+      <if test="row.oid != null">
+        oid = #{row.oid,jdbcType=BIGINT},
+      </if>
+      <if test="row.stxrelid != null">
+        stxrelid = #{row.stxrelid,jdbcType=BIGINT},
+      </if>
+      <if test="row.stxname != null">
+        stxname = #{row.stxname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.stxnamespace != null">
+        stxnamespace = #{row.stxnamespace,jdbcType=BIGINT},
+      </if>
+      <if test="row.stxowner != null">
+        stxowner = #{row.stxowner,jdbcType=BIGINT},
+      </if>
+      <if test="row.stxkeys != null">
+        stxkeys = #{row.stxkeys,jdbcType=OTHER},
+      </if>
+      <if test="row.stxstattarget != null">
+        stxstattarget = #{row.stxstattarget,jdbcType=SMALLINT},
+      </if>
+      <if test="row.stxkind != null">
+        stxkind = #{row.stxkind,jdbcType=ARRAY},
+      </if>
+      <if test="row.stxexprs != null">
+        stxexprs = #{row.stxexprs,jdbcType=OTHER},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_statistic_ext
+    set oid = #{row.oid,jdbcType=BIGINT},
+      stxrelid = #{row.stxrelid,jdbcType=BIGINT},
+      stxname = #{row.stxname,jdbcType=VARCHAR},
+      stxnamespace = #{row.stxnamespace,jdbcType=BIGINT},
+      stxowner = #{row.stxowner,jdbcType=BIGINT},
+      stxkeys = #{row.stxkeys,jdbcType=OTHER},
+      stxstattarget = #{row.stxstattarget,jdbcType=SMALLINT},
+      stxkind = #{row.stxkind,jdbcType=ARRAY},
+      stxexprs = #{row.stxexprs,jdbcType=OTHER}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.PgStatisticExt">
+    update pg_statistic_ext
+    <set>
+      <if test="stxrelid != null">
+        stxrelid = #{stxrelid,jdbcType=BIGINT},
+      </if>
+      <if test="stxname != null">
+        stxname = #{stxname,jdbcType=VARCHAR},
+      </if>
+      <if test="stxnamespace != null">
+        stxnamespace = #{stxnamespace,jdbcType=BIGINT},
+      </if>
+      <if test="stxowner != null">
+        stxowner = #{stxowner,jdbcType=BIGINT},
+      </if>
+      <if test="stxkeys != null">
+        stxkeys = #{stxkeys,jdbcType=OTHER},
+      </if>
+      <if test="stxstattarget != null">
+        stxstattarget = #{stxstattarget,jdbcType=SMALLINT},
+      </if>
+      <if test="stxkind != null">
+        stxkind = #{stxkind,jdbcType=ARRAY},
+      </if>
+      <if test="stxexprs != null">
+        stxexprs = #{stxexprs,jdbcType=OTHER},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.PgStatisticExt">
+    update pg_statistic_ext
+    set stxrelid = #{stxrelid,jdbcType=BIGINT},
+      stxname = #{stxname,jdbcType=VARCHAR},
+      stxnamespace = #{stxnamespace,jdbcType=BIGINT},
+      stxowner = #{stxowner,jdbcType=BIGINT},
+      stxkeys = #{stxkeys,jdbcType=OTHER},
+      stxstattarget = #{stxstattarget,jdbcType=SMALLINT},
+      stxkind = #{stxkind,jdbcType=ARRAY},
+      stxexprs = #{stxexprs,jdbcType=OTHER}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+</mapper>

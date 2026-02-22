@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.mbg.mapper.PgPublicationMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.PgPublication">
+    <id column="oid" jdbcType="BIGINT" property="oid" />
+    <result column="pubname" jdbcType="VARCHAR" property="pubname" />
+    <result column="pubowner" jdbcType="BIGINT" property="pubowner" />
+    <result column="puballtables" jdbcType="BIT" property="puballtables" />
+    <result column="pubinsert" jdbcType="BIT" property="pubinsert" />
+    <result column="pubupdate" jdbcType="BIT" property="pubupdate" />
+    <result column="pubdelete" jdbcType="BIT" property="pubdelete" />
+    <result column="pubtruncate" jdbcType="BIT" property="pubtruncate" />
+    <result column="pubviaroot" jdbcType="BIT" property="pubviaroot" />
+    <result column="pubgencols" jdbcType="CHAR" property="pubgencols" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    oid, pubname, pubowner, puballtables, pubinsert, pubupdate, pubdelete, pubtruncate, 
+    pubviaroot, pubgencols
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.mbg.model.PgPublicationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_publication
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pg_publication
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pg_publication
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.PgPublicationExample">
+    delete from pg_publication
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.mbg.model.PgPublication">
+    insert into pg_publication (oid, pubname, pubowner, 
+      puballtables, pubinsert, pubupdate, 
+      pubdelete, pubtruncate, pubviaroot, 
+      pubgencols)
+    values (#{oid,jdbcType=BIGINT}, #{pubname,jdbcType=VARCHAR}, #{pubowner,jdbcType=BIGINT}, 
+      #{puballtables,jdbcType=BIT}, #{pubinsert,jdbcType=BIT}, #{pubupdate,jdbcType=BIT}, 
+      #{pubdelete,jdbcType=BIT}, #{pubtruncate,jdbcType=BIT}, #{pubviaroot,jdbcType=BIT}, 
+      #{pubgencols,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.mbg.model.PgPublication">
+    insert into pg_publication
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="pubname != null">
+        pubname,
+      </if>
+      <if test="pubowner != null">
+        pubowner,
+      </if>
+      <if test="puballtables != null">
+        puballtables,
+      </if>
+      <if test="pubinsert != null">
+        pubinsert,
+      </if>
+      <if test="pubupdate != null">
+        pubupdate,
+      </if>
+      <if test="pubdelete != null">
+        pubdelete,
+      </if>
+      <if test="pubtruncate != null">
+        pubtruncate,
+      </if>
+      <if test="pubviaroot != null">
+        pubviaroot,
+      </if>
+      <if test="pubgencols != null">
+        pubgencols,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="pubname != null">
+        #{pubname,jdbcType=VARCHAR},
+      </if>
+      <if test="pubowner != null">
+        #{pubowner,jdbcType=BIGINT},
+      </if>
+      <if test="puballtables != null">
+        #{puballtables,jdbcType=BIT},
+      </if>
+      <if test="pubinsert != null">
+        #{pubinsert,jdbcType=BIT},
+      </if>
+      <if test="pubupdate != null">
+        #{pubupdate,jdbcType=BIT},
+      </if>
+      <if test="pubdelete != null">
+        #{pubdelete,jdbcType=BIT},
+      </if>
+      <if test="pubtruncate != null">
+        #{pubtruncate,jdbcType=BIT},
+      </if>
+      <if test="pubviaroot != null">
+        #{pubviaroot,jdbcType=BIT},
+      </if>
+      <if test="pubgencols != null">
+        #{pubgencols,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.mbg.model.PgPublicationExample" resultType="java.lang.Long">
+    select count(*) from pg_publication
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_publication
+    <set>
+      <if test="row.oid != null">
+        oid = #{row.oid,jdbcType=BIGINT},
+      </if>
+      <if test="row.pubname != null">
+        pubname = #{row.pubname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.pubowner != null">
+        pubowner = #{row.pubowner,jdbcType=BIGINT},
+      </if>
+      <if test="row.puballtables != null">
+        puballtables = #{row.puballtables,jdbcType=BIT},
+      </if>
+      <if test="row.pubinsert != null">
+        pubinsert = #{row.pubinsert,jdbcType=BIT},
+      </if>
+      <if test="row.pubupdate != null">
+        pubupdate = #{row.pubupdate,jdbcType=BIT},
+      </if>
+      <if test="row.pubdelete != null">
+        pubdelete = #{row.pubdelete,jdbcType=BIT},
+      </if>
+      <if test="row.pubtruncate != null">
+        pubtruncate = #{row.pubtruncate,jdbcType=BIT},
+      </if>
+      <if test="row.pubviaroot != null">
+        pubviaroot = #{row.pubviaroot,jdbcType=BIT},
+      </if>
+      <if test="row.pubgencols != null">
+        pubgencols = #{row.pubgencols,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_publication
+    set oid = #{row.oid,jdbcType=BIGINT},
+      pubname = #{row.pubname,jdbcType=VARCHAR},
+      pubowner = #{row.pubowner,jdbcType=BIGINT},
+      puballtables = #{row.puballtables,jdbcType=BIT},
+      pubinsert = #{row.pubinsert,jdbcType=BIT},
+      pubupdate = #{row.pubupdate,jdbcType=BIT},
+      pubdelete = #{row.pubdelete,jdbcType=BIT},
+      pubtruncate = #{row.pubtruncate,jdbcType=BIT},
+      pubviaroot = #{row.pubviaroot,jdbcType=BIT},
+      pubgencols = #{row.pubgencols,jdbcType=CHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.PgPublication">
+    update pg_publication
+    <set>
+      <if test="pubname != null">
+        pubname = #{pubname,jdbcType=VARCHAR},
+      </if>
+      <if test="pubowner != null">
+        pubowner = #{pubowner,jdbcType=BIGINT},
+      </if>
+      <if test="puballtables != null">
+        puballtables = #{puballtables,jdbcType=BIT},
+      </if>
+      <if test="pubinsert != null">
+        pubinsert = #{pubinsert,jdbcType=BIT},
+      </if>
+      <if test="pubupdate != null">
+        pubupdate = #{pubupdate,jdbcType=BIT},
+      </if>
+      <if test="pubdelete != null">
+        pubdelete = #{pubdelete,jdbcType=BIT},
+      </if>
+      <if test="pubtruncate != null">
+        pubtruncate = #{pubtruncate,jdbcType=BIT},
+      </if>
+      <if test="pubviaroot != null">
+        pubviaroot = #{pubviaroot,jdbcType=BIT},
+      </if>
+      <if test="pubgencols != null">
+        pubgencols = #{pubgencols,jdbcType=CHAR},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.PgPublication">
+    update pg_publication
+    set pubname = #{pubname,jdbcType=VARCHAR},
+      pubowner = #{pubowner,jdbcType=BIGINT},
+      puballtables = #{puballtables,jdbcType=BIT},
+      pubinsert = #{pubinsert,jdbcType=BIT},
+      pubupdate = #{pubupdate,jdbcType=BIT},
+      pubdelete = #{pubdelete,jdbcType=BIT},
+      pubtruncate = #{pubtruncate,jdbcType=BIT},
+      pubviaroot = #{pubviaroot,jdbcType=BIT},
+      pubgencols = #{pubgencols,jdbcType=CHAR}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.mbg.mapper.PgLanguageMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.PgLanguage">
+    <id column="oid" jdbcType="BIGINT" property="oid" />
+    <result column="lanname" jdbcType="VARCHAR" property="lanname" />
+    <result column="lanowner" jdbcType="BIGINT" property="lanowner" />
+    <result column="lanispl" jdbcType="BIT" property="lanispl" />
+    <result column="lanpltrusted" jdbcType="BIT" property="lanpltrusted" />
+    <result column="lanplcallfoid" jdbcType="BIGINT" property="lanplcallfoid" />
+    <result column="laninline" jdbcType="BIGINT" property="laninline" />
+    <result column="lanvalidator" jdbcType="BIGINT" property="lanvalidator" />
+    <result column="lanacl" jdbcType="ARRAY" property="lanacl" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    oid, lanname, lanowner, lanispl, lanpltrusted, lanplcallfoid, laninline, lanvalidator, 
+    lanacl
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.mbg.model.PgLanguageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_language
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pg_language
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pg_language
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.PgLanguageExample">
+    delete from pg_language
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.mbg.model.PgLanguage">
+    insert into pg_language (oid, lanname, lanowner, 
+      lanispl, lanpltrusted, lanplcallfoid, 
+      laninline, lanvalidator, lanacl
+      )
+    values (#{oid,jdbcType=BIGINT}, #{lanname,jdbcType=VARCHAR}, #{lanowner,jdbcType=BIGINT}, 
+      #{lanispl,jdbcType=BIT}, #{lanpltrusted,jdbcType=BIT}, #{lanplcallfoid,jdbcType=BIGINT}, 
+      #{laninline,jdbcType=BIGINT}, #{lanvalidator,jdbcType=BIGINT}, #{lanacl,jdbcType=ARRAY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.mbg.model.PgLanguage">
+    insert into pg_language
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="lanname != null">
+        lanname,
+      </if>
+      <if test="lanowner != null">
+        lanowner,
+      </if>
+      <if test="lanispl != null">
+        lanispl,
+      </if>
+      <if test="lanpltrusted != null">
+        lanpltrusted,
+      </if>
+      <if test="lanplcallfoid != null">
+        lanplcallfoid,
+      </if>
+      <if test="laninline != null">
+        laninline,
+      </if>
+      <if test="lanvalidator != null">
+        lanvalidator,
+      </if>
+      <if test="lanacl != null">
+        lanacl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="lanname != null">
+        #{lanname,jdbcType=VARCHAR},
+      </if>
+      <if test="lanowner != null">
+        #{lanowner,jdbcType=BIGINT},
+      </if>
+      <if test="lanispl != null">
+        #{lanispl,jdbcType=BIT},
+      </if>
+      <if test="lanpltrusted != null">
+        #{lanpltrusted,jdbcType=BIT},
+      </if>
+      <if test="lanplcallfoid != null">
+        #{lanplcallfoid,jdbcType=BIGINT},
+      </if>
+      <if test="laninline != null">
+        #{laninline,jdbcType=BIGINT},
+      </if>
+      <if test="lanvalidator != null">
+        #{lanvalidator,jdbcType=BIGINT},
+      </if>
+      <if test="lanacl != null">
+        #{lanacl,jdbcType=ARRAY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.mbg.model.PgLanguageExample" resultType="java.lang.Long">
+    select count(*) from pg_language
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_language
+    <set>
+      <if test="row.oid != null">
+        oid = #{row.oid,jdbcType=BIGINT},
+      </if>
+      <if test="row.lanname != null">
+        lanname = #{row.lanname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.lanowner != null">
+        lanowner = #{row.lanowner,jdbcType=BIGINT},
+      </if>
+      <if test="row.lanispl != null">
+        lanispl = #{row.lanispl,jdbcType=BIT},
+      </if>
+      <if test="row.lanpltrusted != null">
+        lanpltrusted = #{row.lanpltrusted,jdbcType=BIT},
+      </if>
+      <if test="row.lanplcallfoid != null">
+        lanplcallfoid = #{row.lanplcallfoid,jdbcType=BIGINT},
+      </if>
+      <if test="row.laninline != null">
+        laninline = #{row.laninline,jdbcType=BIGINT},
+      </if>
+      <if test="row.lanvalidator != null">
+        lanvalidator = #{row.lanvalidator,jdbcType=BIGINT},
+      </if>
+      <if test="row.lanacl != null">
+        lanacl = #{row.lanacl,jdbcType=ARRAY},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_language
+    set oid = #{row.oid,jdbcType=BIGINT},
+      lanname = #{row.lanname,jdbcType=VARCHAR},
+      lanowner = #{row.lanowner,jdbcType=BIGINT},
+      lanispl = #{row.lanispl,jdbcType=BIT},
+      lanpltrusted = #{row.lanpltrusted,jdbcType=BIT},
+      lanplcallfoid = #{row.lanplcallfoid,jdbcType=BIGINT},
+      laninline = #{row.laninline,jdbcType=BIGINT},
+      lanvalidator = #{row.lanvalidator,jdbcType=BIGINT},
+      lanacl = #{row.lanacl,jdbcType=ARRAY}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.PgLanguage">
+    update pg_language
+    <set>
+      <if test="lanname != null">
+        lanname = #{lanname,jdbcType=VARCHAR},
+      </if>
+      <if test="lanowner != null">
+        lanowner = #{lanowner,jdbcType=BIGINT},
+      </if>
+      <if test="lanispl != null">
+        lanispl = #{lanispl,jdbcType=BIT},
+      </if>
+      <if test="lanpltrusted != null">
+        lanpltrusted = #{lanpltrusted,jdbcType=BIT},
+      </if>
+      <if test="lanplcallfoid != null">
+        lanplcallfoid = #{lanplcallfoid,jdbcType=BIGINT},
+      </if>
+      <if test="laninline != null">
+        laninline = #{laninline,jdbcType=BIGINT},
+      </if>
+      <if test="lanvalidator != null">
+        lanvalidator = #{lanvalidator,jdbcType=BIGINT},
+      </if>
+      <if test="lanacl != null">
+        lanacl = #{lanacl,jdbcType=ARRAY},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.PgLanguage">
+    update pg_language
+    set lanname = #{lanname,jdbcType=VARCHAR},
+      lanowner = #{lanowner,jdbcType=BIGINT},
+      lanispl = #{lanispl,jdbcType=BIT},
+      lanpltrusted = #{lanpltrusted,jdbcType=BIT},
+      lanplcallfoid = #{lanplcallfoid,jdbcType=BIGINT},
+      laninline = #{laninline,jdbcType=BIGINT},
+      lanvalidator = #{lanvalidator,jdbcType=BIGINT},
+      lanacl = #{lanacl,jdbcType=ARRAY}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+</mapper>

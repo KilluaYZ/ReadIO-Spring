@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.mbg.mapper.PgTransformMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.PgTransform">
+    <id column="oid" jdbcType="BIGINT" property="oid" />
+    <result column="trftype" jdbcType="BIGINT" property="trftype" />
+    <result column="trflang" jdbcType="BIGINT" property="trflang" />
+    <result column="trffromsql" jdbcType="OTHER" property="trffromsql" />
+    <result column="trftosql" jdbcType="OTHER" property="trftosql" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    oid, trftype, trflang, trffromsql, trftosql
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.mbg.model.PgTransformExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_transform
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pg_transform
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pg_transform
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.PgTransformExample">
+    delete from pg_transform
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.mbg.model.PgTransform">
+    insert into pg_transform (oid, trftype, trflang, 
+      trffromsql, trftosql)
+    values (#{oid,jdbcType=BIGINT}, #{trftype,jdbcType=BIGINT}, #{trflang,jdbcType=BIGINT}, 
+      #{trffromsql,jdbcType=OTHER}, #{trftosql,jdbcType=OTHER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.mbg.model.PgTransform">
+    insert into pg_transform
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="trftype != null">
+        trftype,
+      </if>
+      <if test="trflang != null">
+        trflang,
+      </if>
+      <if test="trffromsql != null">
+        trffromsql,
+      </if>
+      <if test="trftosql != null">
+        trftosql,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="trftype != null">
+        #{trftype,jdbcType=BIGINT},
+      </if>
+      <if test="trflang != null">
+        #{trflang,jdbcType=BIGINT},
+      </if>
+      <if test="trffromsql != null">
+        #{trffromsql,jdbcType=OTHER},
+      </if>
+      <if test="trftosql != null">
+        #{trftosql,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.mbg.model.PgTransformExample" resultType="java.lang.Long">
+    select count(*) from pg_transform
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_transform
+    <set>
+      <if test="row.oid != null">
+        oid = #{row.oid,jdbcType=BIGINT},
+      </if>
+      <if test="row.trftype != null">
+        trftype = #{row.trftype,jdbcType=BIGINT},
+      </if>
+      <if test="row.trflang != null">
+        trflang = #{row.trflang,jdbcType=BIGINT},
+      </if>
+      <if test="row.trffromsql != null">
+        trffromsql = #{row.trffromsql,jdbcType=OTHER},
+      </if>
+      <if test="row.trftosql != null">
+        trftosql = #{row.trftosql,jdbcType=OTHER},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_transform
+    set oid = #{row.oid,jdbcType=BIGINT},
+      trftype = #{row.trftype,jdbcType=BIGINT},
+      trflang = #{row.trflang,jdbcType=BIGINT},
+      trffromsql = #{row.trffromsql,jdbcType=OTHER},
+      trftosql = #{row.trftosql,jdbcType=OTHER}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.PgTransform">
+    update pg_transform
+    <set>
+      <if test="trftype != null">
+        trftype = #{trftype,jdbcType=BIGINT},
+      </if>
+      <if test="trflang != null">
+        trflang = #{trflang,jdbcType=BIGINT},
+      </if>
+      <if test="trffromsql != null">
+        trffromsql = #{trffromsql,jdbcType=OTHER},
+      </if>
+      <if test="trftosql != null">
+        trftosql = #{trftosql,jdbcType=OTHER},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.PgTransform">
+    update pg_transform
+    set trftype = #{trftype,jdbcType=BIGINT},
+      trflang = #{trflang,jdbcType=BIGINT},
+      trffromsql = #{trffromsql,jdbcType=OTHER},
+      trftosql = #{trftosql,jdbcType=OTHER}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+</mapper>

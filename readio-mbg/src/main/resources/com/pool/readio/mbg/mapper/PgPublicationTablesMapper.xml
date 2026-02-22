@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.mbg.mapper.PgPublicationTablesMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.PgPublicationTables">
+    <result column="pubname" jdbcType="VARCHAR" property="pubname" />
+    <result column="schemaname" jdbcType="VARCHAR" property="schemaname" />
+    <result column="tablename" jdbcType="VARCHAR" property="tablename" />
+    <result column="attnames" jdbcType="ARRAY" property="attnames" />
+    <result column="rowfilter" jdbcType="VARCHAR" property="rowfilter" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pubname, schemaname, tablename, attnames, rowfilter
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.mbg.model.PgPublicationTablesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_publication_tables
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.PgPublicationTablesExample">
+    delete from pg_publication_tables
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.mbg.model.PgPublicationTables">
+    insert into pg_publication_tables (pubname, schemaname, tablename, 
+      attnames, rowfilter)
+    values (#{pubname,jdbcType=VARCHAR}, #{schemaname,jdbcType=VARCHAR}, #{tablename,jdbcType=VARCHAR}, 
+      #{attnames,jdbcType=ARRAY}, #{rowfilter,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.mbg.model.PgPublicationTables">
+    insert into pg_publication_tables
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pubname != null">
+        pubname,
+      </if>
+      <if test="schemaname != null">
+        schemaname,
+      </if>
+      <if test="tablename != null">
+        tablename,
+      </if>
+      <if test="attnames != null">
+        attnames,
+      </if>
+      <if test="rowfilter != null">
+        rowfilter,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pubname != null">
+        #{pubname,jdbcType=VARCHAR},
+      </if>
+      <if test="schemaname != null">
+        #{schemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="tablename != null">
+        #{tablename,jdbcType=VARCHAR},
+      </if>
+      <if test="attnames != null">
+        #{attnames,jdbcType=ARRAY},
+      </if>
+      <if test="rowfilter != null">
+        #{rowfilter,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.mbg.model.PgPublicationTablesExample" resultType="java.lang.Long">
+    select count(*) from pg_publication_tables
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_publication_tables
+    <set>
+      <if test="row.pubname != null">
+        pubname = #{row.pubname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.schemaname != null">
+        schemaname = #{row.schemaname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.tablename != null">
+        tablename = #{row.tablename,jdbcType=VARCHAR},
+      </if>
+      <if test="row.attnames != null">
+        attnames = #{row.attnames,jdbcType=ARRAY},
+      </if>
+      <if test="row.rowfilter != null">
+        rowfilter = #{row.rowfilter,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_publication_tables
+    set pubname = #{row.pubname,jdbcType=VARCHAR},
+      schemaname = #{row.schemaname,jdbcType=VARCHAR},
+      tablename = #{row.tablename,jdbcType=VARCHAR},
+      attnames = #{row.attnames,jdbcType=ARRAY},
+      rowfilter = #{row.rowfilter,jdbcType=VARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

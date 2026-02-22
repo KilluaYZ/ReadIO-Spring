@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.mbg.mapper.ForeignTableOptionsMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.ForeignTableOptions">
+    <result column="foreign_table_catalog" jdbcType="DISTINCT" property="foreignTableCatalog" />
+    <result column="foreign_table_schema" jdbcType="DISTINCT" property="foreignTableSchema" />
+    <result column="foreign_table_name" jdbcType="DISTINCT" property="foreignTableName" />
+    <result column="option_name" jdbcType="DISTINCT" property="optionName" />
+    <result column="option_value" jdbcType="DISTINCT" property="optionValue" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    foreign_table_catalog, foreign_table_schema, foreign_table_name, option_name, option_value
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.mbg.model.ForeignTableOptionsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from foreign_table_options
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.ForeignTableOptionsExample">
+    delete from foreign_table_options
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.mbg.model.ForeignTableOptions">
+    insert into foreign_table_options (foreign_table_catalog, foreign_table_schema, 
+      foreign_table_name, option_name, option_value
+      )
+    values (#{foreignTableCatalog,jdbcType=DISTINCT}, #{foreignTableSchema,jdbcType=DISTINCT}, 
+      #{foreignTableName,jdbcType=DISTINCT}, #{optionName,jdbcType=DISTINCT}, #{optionValue,jdbcType=DISTINCT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.mbg.model.ForeignTableOptions">
+    insert into foreign_table_options
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="foreignTableCatalog != null">
+        foreign_table_catalog,
+      </if>
+      <if test="foreignTableSchema != null">
+        foreign_table_schema,
+      </if>
+      <if test="foreignTableName != null">
+        foreign_table_name,
+      </if>
+      <if test="optionName != null">
+        option_name,
+      </if>
+      <if test="optionValue != null">
+        option_value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="foreignTableCatalog != null">
+        #{foreignTableCatalog,jdbcType=DISTINCT},
+      </if>
+      <if test="foreignTableSchema != null">
+        #{foreignTableSchema,jdbcType=DISTINCT},
+      </if>
+      <if test="foreignTableName != null">
+        #{foreignTableName,jdbcType=DISTINCT},
+      </if>
+      <if test="optionName != null">
+        #{optionName,jdbcType=DISTINCT},
+      </if>
+      <if test="optionValue != null">
+        #{optionValue,jdbcType=DISTINCT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.mbg.model.ForeignTableOptionsExample" resultType="java.lang.Long">
+    select count(*) from foreign_table_options
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update foreign_table_options
+    <set>
+      <if test="row.foreignTableCatalog != null">
+        foreign_table_catalog = #{row.foreignTableCatalog,jdbcType=DISTINCT},
+      </if>
+      <if test="row.foreignTableSchema != null">
+        foreign_table_schema = #{row.foreignTableSchema,jdbcType=DISTINCT},
+      </if>
+      <if test="row.foreignTableName != null">
+        foreign_table_name = #{row.foreignTableName,jdbcType=DISTINCT},
+      </if>
+      <if test="row.optionName != null">
+        option_name = #{row.optionName,jdbcType=DISTINCT},
+      </if>
+      <if test="row.optionValue != null">
+        option_value = #{row.optionValue,jdbcType=DISTINCT},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update foreign_table_options
+    set foreign_table_catalog = #{row.foreignTableCatalog,jdbcType=DISTINCT},
+      foreign_table_schema = #{row.foreignTableSchema,jdbcType=DISTINCT},
+      foreign_table_name = #{row.foreignTableName,jdbcType=DISTINCT},
+      option_name = #{row.optionName,jdbcType=DISTINCT},
+      option_value = #{row.optionValue,jdbcType=DISTINCT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

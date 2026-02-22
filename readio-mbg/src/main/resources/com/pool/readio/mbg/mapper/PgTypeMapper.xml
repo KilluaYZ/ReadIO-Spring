@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.mbg.mapper.PgTypeMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.PgType">
+    <id column="oid" jdbcType="BIGINT" property="oid" />
+    <result column="typname" jdbcType="VARCHAR" property="typname" />
+    <result column="typnamespace" jdbcType="BIGINT" property="typnamespace" />
+    <result column="typowner" jdbcType="BIGINT" property="typowner" />
+    <result column="typlen" jdbcType="SMALLINT" property="typlen" />
+    <result column="typbyval" jdbcType="BIT" property="typbyval" />
+    <result column="typtype" jdbcType="CHAR" property="typtype" />
+    <result column="typcategory" jdbcType="CHAR" property="typcategory" />
+    <result column="typispreferred" jdbcType="BIT" property="typispreferred" />
+    <result column="typisdefined" jdbcType="BIT" property="typisdefined" />
+    <result column="typdelim" jdbcType="CHAR" property="typdelim" />
+    <result column="typrelid" jdbcType="BIGINT" property="typrelid" />
+    <result column="typsubscript" jdbcType="OTHER" property="typsubscript" />
+    <result column="typelem" jdbcType="BIGINT" property="typelem" />
+    <result column="typarray" jdbcType="BIGINT" property="typarray" />
+    <result column="typinput" jdbcType="OTHER" property="typinput" />
+    <result column="typoutput" jdbcType="OTHER" property="typoutput" />
+    <result column="typreceive" jdbcType="OTHER" property="typreceive" />
+    <result column="typsend" jdbcType="OTHER" property="typsend" />
+    <result column="typmodin" jdbcType="OTHER" property="typmodin" />
+    <result column="typmodout" jdbcType="OTHER" property="typmodout" />
+    <result column="typanalyze" jdbcType="OTHER" property="typanalyze" />
+    <result column="typalign" jdbcType="CHAR" property="typalign" />
+    <result column="typstorage" jdbcType="CHAR" property="typstorage" />
+    <result column="typnotnull" jdbcType="BIT" property="typnotnull" />
+    <result column="typbasetype" jdbcType="BIGINT" property="typbasetype" />
+    <result column="typtypmod" jdbcType="INTEGER" property="typtypmod" />
+    <result column="typndims" jdbcType="INTEGER" property="typndims" />
+    <result column="typcollation" jdbcType="BIGINT" property="typcollation" />
+    <result column="typdefaultbin" jdbcType="OTHER" property="typdefaultbin" />
+    <result column="typdefault" jdbcType="VARCHAR" property="typdefault" />
+    <result column="typacl" jdbcType="ARRAY" property="typacl" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    oid, typname, typnamespace, typowner, typlen, typbyval, typtype, typcategory, typispreferred, 
+    typisdefined, typdelim, typrelid, typsubscript, typelem, typarray, typinput, typoutput, 
+    typreceive, typsend, typmodin, typmodout, typanalyze, typalign, typstorage, typnotnull, 
+    typbasetype, typtypmod, typndims, typcollation, typdefaultbin, typdefault, typacl
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.mbg.model.PgTypeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pg_type
+    where oid = #{oid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pg_type
+    where oid = #{oid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.PgTypeExample">
+    delete from pg_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.mbg.model.PgType">
+    insert into pg_type (oid, typname, typnamespace, 
+      typowner, typlen, typbyval, 
+      typtype, typcategory, typispreferred, 
+      typisdefined, typdelim, typrelid, 
+      typsubscript, typelem, typarray, 
+      typinput, typoutput, typreceive, 
+      typsend, typmodin, typmodout, 
+      typanalyze, typalign, typstorage, 
+      typnotnull, typbasetype, typtypmod, 
+      typndims, typcollation, typdefaultbin, 
+      typdefault, typacl)
+    values (#{oid,jdbcType=BIGINT}, #{typname,jdbcType=VARCHAR}, #{typnamespace,jdbcType=BIGINT}, 
+      #{typowner,jdbcType=BIGINT}, #{typlen,jdbcType=SMALLINT}, #{typbyval,jdbcType=BIT}, 
+      #{typtype,jdbcType=CHAR}, #{typcategory,jdbcType=CHAR}, #{typispreferred,jdbcType=BIT}, 
+      #{typisdefined,jdbcType=BIT}, #{typdelim,jdbcType=CHAR}, #{typrelid,jdbcType=BIGINT}, 
+      #{typsubscript,jdbcType=OTHER}, #{typelem,jdbcType=BIGINT}, #{typarray,jdbcType=BIGINT}, 
+      #{typinput,jdbcType=OTHER}, #{typoutput,jdbcType=OTHER}, #{typreceive,jdbcType=OTHER}, 
+      #{typsend,jdbcType=OTHER}, #{typmodin,jdbcType=OTHER}, #{typmodout,jdbcType=OTHER}, 
+      #{typanalyze,jdbcType=OTHER}, #{typalign,jdbcType=CHAR}, #{typstorage,jdbcType=CHAR}, 
+      #{typnotnull,jdbcType=BIT}, #{typbasetype,jdbcType=BIGINT}, #{typtypmod,jdbcType=INTEGER}, 
+      #{typndims,jdbcType=INTEGER}, #{typcollation,jdbcType=BIGINT}, #{typdefaultbin,jdbcType=OTHER}, 
+      #{typdefault,jdbcType=VARCHAR}, #{typacl,jdbcType=ARRAY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.mbg.model.PgType">
+    insert into pg_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="typname != null">
+        typname,
+      </if>
+      <if test="typnamespace != null">
+        typnamespace,
+      </if>
+      <if test="typowner != null">
+        typowner,
+      </if>
+      <if test="typlen != null">
+        typlen,
+      </if>
+      <if test="typbyval != null">
+        typbyval,
+      </if>
+      <if test="typtype != null">
+        typtype,
+      </if>
+      <if test="typcategory != null">
+        typcategory,
+      </if>
+      <if test="typispreferred != null">
+        typispreferred,
+      </if>
+      <if test="typisdefined != null">
+        typisdefined,
+      </if>
+      <if test="typdelim != null">
+        typdelim,
+      </if>
+      <if test="typrelid != null">
+        typrelid,
+      </if>
+      <if test="typsubscript != null">
+        typsubscript,
+      </if>
+      <if test="typelem != null">
+        typelem,
+      </if>
+      <if test="typarray != null">
+        typarray,
+      </if>
+      <if test="typinput != null">
+        typinput,
+      </if>
+      <if test="typoutput != null">
+        typoutput,
+      </if>
+      <if test="typreceive != null">
+        typreceive,
+      </if>
+      <if test="typsend != null">
+        typsend,
+      </if>
+      <if test="typmodin != null">
+        typmodin,
+      </if>
+      <if test="typmodout != null">
+        typmodout,
+      </if>
+      <if test="typanalyze != null">
+        typanalyze,
+      </if>
+      <if test="typalign != null">
+        typalign,
+      </if>
+      <if test="typstorage != null">
+        typstorage,
+      </if>
+      <if test="typnotnull != null">
+        typnotnull,
+      </if>
+      <if test="typbasetype != null">
+        typbasetype,
+      </if>
+      <if test="typtypmod != null">
+        typtypmod,
+      </if>
+      <if test="typndims != null">
+        typndims,
+      </if>
+      <if test="typcollation != null">
+        typcollation,
+      </if>
+      <if test="typdefaultbin != null">
+        typdefaultbin,
+      </if>
+      <if test="typdefault != null">
+        typdefault,
+      </if>
+      <if test="typacl != null">
+        typacl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oid != null">
+        #{oid,jdbcType=BIGINT},
+      </if>
+      <if test="typname != null">
+        #{typname,jdbcType=VARCHAR},
+      </if>
+      <if test="typnamespace != null">
+        #{typnamespace,jdbcType=BIGINT},
+      </if>
+      <if test="typowner != null">
+        #{typowner,jdbcType=BIGINT},
+      </if>
+      <if test="typlen != null">
+        #{typlen,jdbcType=SMALLINT},
+      </if>
+      <if test="typbyval != null">
+        #{typbyval,jdbcType=BIT},
+      </if>
+      <if test="typtype != null">
+        #{typtype,jdbcType=CHAR},
+      </if>
+      <if test="typcategory != null">
+        #{typcategory,jdbcType=CHAR},
+      </if>
+      <if test="typispreferred != null">
+        #{typispreferred,jdbcType=BIT},
+      </if>
+      <if test="typisdefined != null">
+        #{typisdefined,jdbcType=BIT},
+      </if>
+      <if test="typdelim != null">
+        #{typdelim,jdbcType=CHAR},
+      </if>
+      <if test="typrelid != null">
+        #{typrelid,jdbcType=BIGINT},
+      </if>
+      <if test="typsubscript != null">
+        #{typsubscript,jdbcType=OTHER},
+      </if>
+      <if test="typelem != null">
+        #{typelem,jdbcType=BIGINT},
+      </if>
+      <if test="typarray != null">
+        #{typarray,jdbcType=BIGINT},
+      </if>
+      <if test="typinput != null">
+        #{typinput,jdbcType=OTHER},
+      </if>
+      <if test="typoutput != null">
+        #{typoutput,jdbcType=OTHER},
+      </if>
+      <if test="typreceive != null">
+        #{typreceive,jdbcType=OTHER},
+      </if>
+      <if test="typsend != null">
+        #{typsend,jdbcType=OTHER},
+      </if>
+      <if test="typmodin != null">
+        #{typmodin,jdbcType=OTHER},
+      </if>
+      <if test="typmodout != null">
+        #{typmodout,jdbcType=OTHER},
+      </if>
+      <if test="typanalyze != null">
+        #{typanalyze,jdbcType=OTHER},
+      </if>
+      <if test="typalign != null">
+        #{typalign,jdbcType=CHAR},
+      </if>
+      <if test="typstorage != null">
+        #{typstorage,jdbcType=CHAR},
+      </if>
+      <if test="typnotnull != null">
+        #{typnotnull,jdbcType=BIT},
+      </if>
+      <if test="typbasetype != null">
+        #{typbasetype,jdbcType=BIGINT},
+      </if>
+      <if test="typtypmod != null">
+        #{typtypmod,jdbcType=INTEGER},
+      </if>
+      <if test="typndims != null">
+        #{typndims,jdbcType=INTEGER},
+      </if>
+      <if test="typcollation != null">
+        #{typcollation,jdbcType=BIGINT},
+      </if>
+      <if test="typdefaultbin != null">
+        #{typdefaultbin,jdbcType=OTHER},
+      </if>
+      <if test="typdefault != null">
+        #{typdefault,jdbcType=VARCHAR},
+      </if>
+      <if test="typacl != null">
+        #{typacl,jdbcType=ARRAY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.mbg.model.PgTypeExample" resultType="java.lang.Long">
+    select count(*) from pg_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_type
+    <set>
+      <if test="row.oid != null">
+        oid = #{row.oid,jdbcType=BIGINT},
+      </if>
+      <if test="row.typname != null">
+        typname = #{row.typname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.typnamespace != null">
+        typnamespace = #{row.typnamespace,jdbcType=BIGINT},
+      </if>
+      <if test="row.typowner != null">
+        typowner = #{row.typowner,jdbcType=BIGINT},
+      </if>
+      <if test="row.typlen != null">
+        typlen = #{row.typlen,jdbcType=SMALLINT},
+      </if>
+      <if test="row.typbyval != null">
+        typbyval = #{row.typbyval,jdbcType=BIT},
+      </if>
+      <if test="row.typtype != null">
+        typtype = #{row.typtype,jdbcType=CHAR},
+      </if>
+      <if test="row.typcategory != null">
+        typcategory = #{row.typcategory,jdbcType=CHAR},
+      </if>
+      <if test="row.typispreferred != null">
+        typispreferred = #{row.typispreferred,jdbcType=BIT},
+      </if>
+      <if test="row.typisdefined != null">
+        typisdefined = #{row.typisdefined,jdbcType=BIT},
+      </if>
+      <if test="row.typdelim != null">
+        typdelim = #{row.typdelim,jdbcType=CHAR},
+      </if>
+      <if test="row.typrelid != null">
+        typrelid = #{row.typrelid,jdbcType=BIGINT},
+      </if>
+      <if test="row.typsubscript != null">
+        typsubscript = #{row.typsubscript,jdbcType=OTHER},
+      </if>
+      <if test="row.typelem != null">
+        typelem = #{row.typelem,jdbcType=BIGINT},
+      </if>
+      <if test="row.typarray != null">
+        typarray = #{row.typarray,jdbcType=BIGINT},
+      </if>
+      <if test="row.typinput != null">
+        typinput = #{row.typinput,jdbcType=OTHER},
+      </if>
+      <if test="row.typoutput != null">
+        typoutput = #{row.typoutput,jdbcType=OTHER},
+      </if>
+      <if test="row.typreceive != null">
+        typreceive = #{row.typreceive,jdbcType=OTHER},
+      </if>
+      <if test="row.typsend != null">
+        typsend = #{row.typsend,jdbcType=OTHER},
+      </if>
+      <if test="row.typmodin != null">
+        typmodin = #{row.typmodin,jdbcType=OTHER},
+      </if>
+      <if test="row.typmodout != null">
+        typmodout = #{row.typmodout,jdbcType=OTHER},
+      </if>
+      <if test="row.typanalyze != null">
+        typanalyze = #{row.typanalyze,jdbcType=OTHER},
+      </if>
+      <if test="row.typalign != null">
+        typalign = #{row.typalign,jdbcType=CHAR},
+      </if>
+      <if test="row.typstorage != null">
+        typstorage = #{row.typstorage,jdbcType=CHAR},
+      </if>
+      <if test="row.typnotnull != null">
+        typnotnull = #{row.typnotnull,jdbcType=BIT},
+      </if>
+      <if test="row.typbasetype != null">
+        typbasetype = #{row.typbasetype,jdbcType=BIGINT},
+      </if>
+      <if test="row.typtypmod != null">
+        typtypmod = #{row.typtypmod,jdbcType=INTEGER},
+      </if>
+      <if test="row.typndims != null">
+        typndims = #{row.typndims,jdbcType=INTEGER},
+      </if>
+      <if test="row.typcollation != null">
+        typcollation = #{row.typcollation,jdbcType=BIGINT},
+      </if>
+      <if test="row.typdefaultbin != null">
+        typdefaultbin = #{row.typdefaultbin,jdbcType=OTHER},
+      </if>
+      <if test="row.typdefault != null">
+        typdefault = #{row.typdefault,jdbcType=VARCHAR},
+      </if>
+      <if test="row.typacl != null">
+        typacl = #{row.typacl,jdbcType=ARRAY},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_type
+    set oid = #{row.oid,jdbcType=BIGINT},
+      typname = #{row.typname,jdbcType=VARCHAR},
+      typnamespace = #{row.typnamespace,jdbcType=BIGINT},
+      typowner = #{row.typowner,jdbcType=BIGINT},
+      typlen = #{row.typlen,jdbcType=SMALLINT},
+      typbyval = #{row.typbyval,jdbcType=BIT},
+      typtype = #{row.typtype,jdbcType=CHAR},
+      typcategory = #{row.typcategory,jdbcType=CHAR},
+      typispreferred = #{row.typispreferred,jdbcType=BIT},
+      typisdefined = #{row.typisdefined,jdbcType=BIT},
+      typdelim = #{row.typdelim,jdbcType=CHAR},
+      typrelid = #{row.typrelid,jdbcType=BIGINT},
+      typsubscript = #{row.typsubscript,jdbcType=OTHER},
+      typelem = #{row.typelem,jdbcType=BIGINT},
+      typarray = #{row.typarray,jdbcType=BIGINT},
+      typinput = #{row.typinput,jdbcType=OTHER},
+      typoutput = #{row.typoutput,jdbcType=OTHER},
+      typreceive = #{row.typreceive,jdbcType=OTHER},
+      typsend = #{row.typsend,jdbcType=OTHER},
+      typmodin = #{row.typmodin,jdbcType=OTHER},
+      typmodout = #{row.typmodout,jdbcType=OTHER},
+      typanalyze = #{row.typanalyze,jdbcType=OTHER},
+      typalign = #{row.typalign,jdbcType=CHAR},
+      typstorage = #{row.typstorage,jdbcType=CHAR},
+      typnotnull = #{row.typnotnull,jdbcType=BIT},
+      typbasetype = #{row.typbasetype,jdbcType=BIGINT},
+      typtypmod = #{row.typtypmod,jdbcType=INTEGER},
+      typndims = #{row.typndims,jdbcType=INTEGER},
+      typcollation = #{row.typcollation,jdbcType=BIGINT},
+      typdefaultbin = #{row.typdefaultbin,jdbcType=OTHER},
+      typdefault = #{row.typdefault,jdbcType=VARCHAR},
+      typacl = #{row.typacl,jdbcType=ARRAY}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.PgType">
+    update pg_type
+    <set>
+      <if test="typname != null">
+        typname = #{typname,jdbcType=VARCHAR},
+      </if>
+      <if test="typnamespace != null">
+        typnamespace = #{typnamespace,jdbcType=BIGINT},
+      </if>
+      <if test="typowner != null">
+        typowner = #{typowner,jdbcType=BIGINT},
+      </if>
+      <if test="typlen != null">
+        typlen = #{typlen,jdbcType=SMALLINT},
+      </if>
+      <if test="typbyval != null">
+        typbyval = #{typbyval,jdbcType=BIT},
+      </if>
+      <if test="typtype != null">
+        typtype = #{typtype,jdbcType=CHAR},
+      </if>
+      <if test="typcategory != null">
+        typcategory = #{typcategory,jdbcType=CHAR},
+      </if>
+      <if test="typispreferred != null">
+        typispreferred = #{typispreferred,jdbcType=BIT},
+      </if>
+      <if test="typisdefined != null">
+        typisdefined = #{typisdefined,jdbcType=BIT},
+      </if>
+      <if test="typdelim != null">
+        typdelim = #{typdelim,jdbcType=CHAR},
+      </if>
+      <if test="typrelid != null">
+        typrelid = #{typrelid,jdbcType=BIGINT},
+      </if>
+      <if test="typsubscript != null">
+        typsubscript = #{typsubscript,jdbcType=OTHER},
+      </if>
+      <if test="typelem != null">
+        typelem = #{typelem,jdbcType=BIGINT},
+      </if>
+      <if test="typarray != null">
+        typarray = #{typarray,jdbcType=BIGINT},
+      </if>
+      <if test="typinput != null">
+        typinput = #{typinput,jdbcType=OTHER},
+      </if>
+      <if test="typoutput != null">
+        typoutput = #{typoutput,jdbcType=OTHER},
+      </if>
+      <if test="typreceive != null">
+        typreceive = #{typreceive,jdbcType=OTHER},
+      </if>
+      <if test="typsend != null">
+        typsend = #{typsend,jdbcType=OTHER},
+      </if>
+      <if test="typmodin != null">
+        typmodin = #{typmodin,jdbcType=OTHER},
+      </if>
+      <if test="typmodout != null">
+        typmodout = #{typmodout,jdbcType=OTHER},
+      </if>
+      <if test="typanalyze != null">
+        typanalyze = #{typanalyze,jdbcType=OTHER},
+      </if>
+      <if test="typalign != null">
+        typalign = #{typalign,jdbcType=CHAR},
+      </if>
+      <if test="typstorage != null">
+        typstorage = #{typstorage,jdbcType=CHAR},
+      </if>
+      <if test="typnotnull != null">
+        typnotnull = #{typnotnull,jdbcType=BIT},
+      </if>
+      <if test="typbasetype != null">
+        typbasetype = #{typbasetype,jdbcType=BIGINT},
+      </if>
+      <if test="typtypmod != null">
+        typtypmod = #{typtypmod,jdbcType=INTEGER},
+      </if>
+      <if test="typndims != null">
+        typndims = #{typndims,jdbcType=INTEGER},
+      </if>
+      <if test="typcollation != null">
+        typcollation = #{typcollation,jdbcType=BIGINT},
+      </if>
+      <if test="typdefaultbin != null">
+        typdefaultbin = #{typdefaultbin,jdbcType=OTHER},
+      </if>
+      <if test="typdefault != null">
+        typdefault = #{typdefault,jdbcType=VARCHAR},
+      </if>
+      <if test="typacl != null">
+        typacl = #{typacl,jdbcType=ARRAY},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.PgType">
+    update pg_type
+    set typname = #{typname,jdbcType=VARCHAR},
+      typnamespace = #{typnamespace,jdbcType=BIGINT},
+      typowner = #{typowner,jdbcType=BIGINT},
+      typlen = #{typlen,jdbcType=SMALLINT},
+      typbyval = #{typbyval,jdbcType=BIT},
+      typtype = #{typtype,jdbcType=CHAR},
+      typcategory = #{typcategory,jdbcType=CHAR},
+      typispreferred = #{typispreferred,jdbcType=BIT},
+      typisdefined = #{typisdefined,jdbcType=BIT},
+      typdelim = #{typdelim,jdbcType=CHAR},
+      typrelid = #{typrelid,jdbcType=BIGINT},
+      typsubscript = #{typsubscript,jdbcType=OTHER},
+      typelem = #{typelem,jdbcType=BIGINT},
+      typarray = #{typarray,jdbcType=BIGINT},
+      typinput = #{typinput,jdbcType=OTHER},
+      typoutput = #{typoutput,jdbcType=OTHER},
+      typreceive = #{typreceive,jdbcType=OTHER},
+      typsend = #{typsend,jdbcType=OTHER},
+      typmodin = #{typmodin,jdbcType=OTHER},
+      typmodout = #{typmodout,jdbcType=OTHER},
+      typanalyze = #{typanalyze,jdbcType=OTHER},
+      typalign = #{typalign,jdbcType=CHAR},
+      typstorage = #{typstorage,jdbcType=CHAR},
+      typnotnull = #{typnotnull,jdbcType=BIT},
+      typbasetype = #{typbasetype,jdbcType=BIGINT},
+      typtypmod = #{typtypmod,jdbcType=INTEGER},
+      typndims = #{typndims,jdbcType=INTEGER},
+      typcollation = #{typcollation,jdbcType=BIGINT},
+      typdefaultbin = #{typdefaultbin,jdbcType=OTHER},
+      typdefault = #{typdefault,jdbcType=VARCHAR},
+      typacl = #{typacl,jdbcType=ARRAY}
+    where oid = #{oid,jdbcType=BIGINT}
+  </update>
+</mapper>

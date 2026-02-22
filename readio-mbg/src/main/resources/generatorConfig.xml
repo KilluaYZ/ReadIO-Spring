@@ -16,7 +16,7 @@
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
         <!--生成mapper.xml时覆盖原文件-->
         <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
-        <commentGenerator type="com.pool.readio.readiombg.CommentGenerator">
+        <commentGenerator type="com.pool.readio.mbg.CommentGenerator">
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
             <property name="suppressDate" value="true"/>
@@ -29,11 +29,11 @@
                         password="${jdbc.password}">
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.pool.readio.readiombg.model" targetProject="readio-mbg/src/main/java"/>
+        <javaModelGenerator targetPackage="com.pool.readio.mbg.model" targetProject="readio-mbg/src/main/java"/>
 
-        <sqlMapGenerator targetPackage="com.pool.readio.readiombg.mapper" targetProject="readio-mbg/src/main/resources"/>
+        <sqlMapGenerator targetPackage="com.pool.readio.mbg.mapper" targetProject="readio-mbg/src/main/resources"/>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.pool.readio.readiombg.mapper"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.pool.readio.mbg.mapper"
                              targetProject="readio-mbg/src/main/java"/>
         <!--生成全部表tableName设为%-->
         <table tableName="%">

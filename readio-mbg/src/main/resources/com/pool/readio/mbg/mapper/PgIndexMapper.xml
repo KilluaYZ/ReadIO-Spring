@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.mbg.mapper.PgIndexMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.PgIndex">
+    <id column="indexrelid" jdbcType="BIGINT" property="indexrelid" />
+    <result column="indrelid" jdbcType="BIGINT" property="indrelid" />
+    <result column="indnatts" jdbcType="SMALLINT" property="indnatts" />
+    <result column="indnkeyatts" jdbcType="SMALLINT" property="indnkeyatts" />
+    <result column="indisunique" jdbcType="BIT" property="indisunique" />
+    <result column="indnullsnotdistinct" jdbcType="BIT" property="indnullsnotdistinct" />
+    <result column="indisprimary" jdbcType="BIT" property="indisprimary" />
+    <result column="indisexclusion" jdbcType="BIT" property="indisexclusion" />
+    <result column="indimmediate" jdbcType="BIT" property="indimmediate" />
+    <result column="indisclustered" jdbcType="BIT" property="indisclustered" />
+    <result column="indisvalid" jdbcType="BIT" property="indisvalid" />
+    <result column="indcheckxmin" jdbcType="BIT" property="indcheckxmin" />
+    <result column="indisready" jdbcType="BIT" property="indisready" />
+    <result column="indislive" jdbcType="BIT" property="indislive" />
+    <result column="indisreplident" jdbcType="BIT" property="indisreplident" />
+    <result column="indkey" jdbcType="OTHER" property="indkey" />
+    <result column="indcollation" jdbcType="OTHER" property="indcollation" />
+    <result column="indclass" jdbcType="OTHER" property="indclass" />
+    <result column="indoption" jdbcType="OTHER" property="indoption" />
+    <result column="indexprs" jdbcType="OTHER" property="indexprs" />
+    <result column="indpred" jdbcType="OTHER" property="indpred" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    indexrelid, indrelid, indnatts, indnkeyatts, indisunique, indnullsnotdistinct, indisprimary, 
+    indisexclusion, indimmediate, indisclustered, indisvalid, indcheckxmin, indisready, 
+    indislive, indisreplident, indkey, indcollation, indclass, indoption, indexprs, indpred
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.mbg.model.PgIndexExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_index
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pg_index
+    where indexrelid = #{indexrelid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from pg_index
+    where indexrelid = #{indexrelid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.PgIndexExample">
+    delete from pg_index
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.mbg.model.PgIndex">
+    insert into pg_index (indexrelid, indrelid, indnatts, 
+      indnkeyatts, indisunique, indnullsnotdistinct, 
+      indisprimary, indisexclusion, indimmediate, 
+      indisclustered, indisvalid, indcheckxmin, 
+      indisready, indislive, indisreplident, 
+      indkey, indcollation, indclass, 
+      indoption, indexprs, indpred
+      )
+    values (#{indexrelid,jdbcType=BIGINT}, #{indrelid,jdbcType=BIGINT}, #{indnatts,jdbcType=SMALLINT}, 
+      #{indnkeyatts,jdbcType=SMALLINT}, #{indisunique,jdbcType=BIT}, #{indnullsnotdistinct,jdbcType=BIT}, 
+      #{indisprimary,jdbcType=BIT}, #{indisexclusion,jdbcType=BIT}, #{indimmediate,jdbcType=BIT}, 
+      #{indisclustered,jdbcType=BIT}, #{indisvalid,jdbcType=BIT}, #{indcheckxmin,jdbcType=BIT}, 
+      #{indisready,jdbcType=BIT}, #{indislive,jdbcType=BIT}, #{indisreplident,jdbcType=BIT}, 
+      #{indkey,jdbcType=OTHER}, #{indcollation,jdbcType=OTHER}, #{indclass,jdbcType=OTHER}, 
+      #{indoption,jdbcType=OTHER}, #{indexprs,jdbcType=OTHER}, #{indpred,jdbcType=OTHER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.mbg.model.PgIndex">
+    insert into pg_index
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="indexrelid != null">
+        indexrelid,
+      </if>
+      <if test="indrelid != null">
+        indrelid,
+      </if>
+      <if test="indnatts != null">
+        indnatts,
+      </if>
+      <if test="indnkeyatts != null">
+        indnkeyatts,
+      </if>
+      <if test="indisunique != null">
+        indisunique,
+      </if>
+      <if test="indnullsnotdistinct != null">
+        indnullsnotdistinct,
+      </if>
+      <if test="indisprimary != null">
+        indisprimary,
+      </if>
+      <if test="indisexclusion != null">
+        indisexclusion,
+      </if>
+      <if test="indimmediate != null">
+        indimmediate,
+      </if>
+      <if test="indisclustered != null">
+        indisclustered,
+      </if>
+      <if test="indisvalid != null">
+        indisvalid,
+      </if>
+      <if test="indcheckxmin != null">
+        indcheckxmin,
+      </if>
+      <if test="indisready != null">
+        indisready,
+      </if>
+      <if test="indislive != null">
+        indislive,
+      </if>
+      <if test="indisreplident != null">
+        indisreplident,
+      </if>
+      <if test="indkey != null">
+        indkey,
+      </if>
+      <if test="indcollation != null">
+        indcollation,
+      </if>
+      <if test="indclass != null">
+        indclass,
+      </if>
+      <if test="indoption != null">
+        indoption,
+      </if>
+      <if test="indexprs != null">
+        indexprs,
+      </if>
+      <if test="indpred != null">
+        indpred,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="indexrelid != null">
+        #{indexrelid,jdbcType=BIGINT},
+      </if>
+      <if test="indrelid != null">
+        #{indrelid,jdbcType=BIGINT},
+      </if>
+      <if test="indnatts != null">
+        #{indnatts,jdbcType=SMALLINT},
+      </if>
+      <if test="indnkeyatts != null">
+        #{indnkeyatts,jdbcType=SMALLINT},
+      </if>
+      <if test="indisunique != null">
+        #{indisunique,jdbcType=BIT},
+      </if>
+      <if test="indnullsnotdistinct != null">
+        #{indnullsnotdistinct,jdbcType=BIT},
+      </if>
+      <if test="indisprimary != null">
+        #{indisprimary,jdbcType=BIT},
+      </if>
+      <if test="indisexclusion != null">
+        #{indisexclusion,jdbcType=BIT},
+      </if>
+      <if test="indimmediate != null">
+        #{indimmediate,jdbcType=BIT},
+      </if>
+      <if test="indisclustered != null">
+        #{indisclustered,jdbcType=BIT},
+      </if>
+      <if test="indisvalid != null">
+        #{indisvalid,jdbcType=BIT},
+      </if>
+      <if test="indcheckxmin != null">
+        #{indcheckxmin,jdbcType=BIT},
+      </if>
+      <if test="indisready != null">
+        #{indisready,jdbcType=BIT},
+      </if>
+      <if test="indislive != null">
+        #{indislive,jdbcType=BIT},
+      </if>
+      <if test="indisreplident != null">
+        #{indisreplident,jdbcType=BIT},
+      </if>
+      <if test="indkey != null">
+        #{indkey,jdbcType=OTHER},
+      </if>
+      <if test="indcollation != null">
+        #{indcollation,jdbcType=OTHER},
+      </if>
+      <if test="indclass != null">
+        #{indclass,jdbcType=OTHER},
+      </if>
+      <if test="indoption != null">
+        #{indoption,jdbcType=OTHER},
+      </if>
+      <if test="indexprs != null">
+        #{indexprs,jdbcType=OTHER},
+      </if>
+      <if test="indpred != null">
+        #{indpred,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.mbg.model.PgIndexExample" resultType="java.lang.Long">
+    select count(*) from pg_index
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_index
+    <set>
+      <if test="row.indexrelid != null">
+        indexrelid = #{row.indexrelid,jdbcType=BIGINT},
+      </if>
+      <if test="row.indrelid != null">
+        indrelid = #{row.indrelid,jdbcType=BIGINT},
+      </if>
+      <if test="row.indnatts != null">
+        indnatts = #{row.indnatts,jdbcType=SMALLINT},
+      </if>
+      <if test="row.indnkeyatts != null">
+        indnkeyatts = #{row.indnkeyatts,jdbcType=SMALLINT},
+      </if>
+      <if test="row.indisunique != null">
+        indisunique = #{row.indisunique,jdbcType=BIT},
+      </if>
+      <if test="row.indnullsnotdistinct != null">
+        indnullsnotdistinct = #{row.indnullsnotdistinct,jdbcType=BIT},
+      </if>
+      <if test="row.indisprimary != null">
+        indisprimary = #{row.indisprimary,jdbcType=BIT},
+      </if>
+      <if test="row.indisexclusion != null">
+        indisexclusion = #{row.indisexclusion,jdbcType=BIT},
+      </if>
+      <if test="row.indimmediate != null">
+        indimmediate = #{row.indimmediate,jdbcType=BIT},
+      </if>
+      <if test="row.indisclustered != null">
+        indisclustered = #{row.indisclustered,jdbcType=BIT},
+      </if>
+      <if test="row.indisvalid != null">
+        indisvalid = #{row.indisvalid,jdbcType=BIT},
+      </if>
+      <if test="row.indcheckxmin != null">
+        indcheckxmin = #{row.indcheckxmin,jdbcType=BIT},
+      </if>
+      <if test="row.indisready != null">
+        indisready = #{row.indisready,jdbcType=BIT},
+      </if>
+      <if test="row.indislive != null">
+        indislive = #{row.indislive,jdbcType=BIT},
+      </if>
+      <if test="row.indisreplident != null">
+        indisreplident = #{row.indisreplident,jdbcType=BIT},
+      </if>
+      <if test="row.indkey != null">
+        indkey = #{row.indkey,jdbcType=OTHER},
+      </if>
+      <if test="row.indcollation != null">
+        indcollation = #{row.indcollation,jdbcType=OTHER},
+      </if>
+      <if test="row.indclass != null">
+        indclass = #{row.indclass,jdbcType=OTHER},
+      </if>
+      <if test="row.indoption != null">
+        indoption = #{row.indoption,jdbcType=OTHER},
+      </if>
+      <if test="row.indexprs != null">
+        indexprs = #{row.indexprs,jdbcType=OTHER},
+      </if>
+      <if test="row.indpred != null">
+        indpred = #{row.indpred,jdbcType=OTHER},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_index
+    set indexrelid = #{row.indexrelid,jdbcType=BIGINT},
+      indrelid = #{row.indrelid,jdbcType=BIGINT},
+      indnatts = #{row.indnatts,jdbcType=SMALLINT},
+      indnkeyatts = #{row.indnkeyatts,jdbcType=SMALLINT},
+      indisunique = #{row.indisunique,jdbcType=BIT},
+      indnullsnotdistinct = #{row.indnullsnotdistinct,jdbcType=BIT},
+      indisprimary = #{row.indisprimary,jdbcType=BIT},
+      indisexclusion = #{row.indisexclusion,jdbcType=BIT},
+      indimmediate = #{row.indimmediate,jdbcType=BIT},
+      indisclustered = #{row.indisclustered,jdbcType=BIT},
+      indisvalid = #{row.indisvalid,jdbcType=BIT},
+      indcheckxmin = #{row.indcheckxmin,jdbcType=BIT},
+      indisready = #{row.indisready,jdbcType=BIT},
+      indislive = #{row.indislive,jdbcType=BIT},
+      indisreplident = #{row.indisreplident,jdbcType=BIT},
+      indkey = #{row.indkey,jdbcType=OTHER},
+      indcollation = #{row.indcollation,jdbcType=OTHER},
+      indclass = #{row.indclass,jdbcType=OTHER},
+      indoption = #{row.indoption,jdbcType=OTHER},
+      indexprs = #{row.indexprs,jdbcType=OTHER},
+      indpred = #{row.indpred,jdbcType=OTHER}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.PgIndex">
+    update pg_index
+    <set>
+      <if test="indrelid != null">
+        indrelid = #{indrelid,jdbcType=BIGINT},
+      </if>
+      <if test="indnatts != null">
+        indnatts = #{indnatts,jdbcType=SMALLINT},
+      </if>
+      <if test="indnkeyatts != null">
+        indnkeyatts = #{indnkeyatts,jdbcType=SMALLINT},
+      </if>
+      <if test="indisunique != null">
+        indisunique = #{indisunique,jdbcType=BIT},
+      </if>
+      <if test="indnullsnotdistinct != null">
+        indnullsnotdistinct = #{indnullsnotdistinct,jdbcType=BIT},
+      </if>
+      <if test="indisprimary != null">
+        indisprimary = #{indisprimary,jdbcType=BIT},
+      </if>
+      <if test="indisexclusion != null">
+        indisexclusion = #{indisexclusion,jdbcType=BIT},
+      </if>
+      <if test="indimmediate != null">
+        indimmediate = #{indimmediate,jdbcType=BIT},
+      </if>
+      <if test="indisclustered != null">
+        indisclustered = #{indisclustered,jdbcType=BIT},
+      </if>
+      <if test="indisvalid != null">
+        indisvalid = #{indisvalid,jdbcType=BIT},
+      </if>
+      <if test="indcheckxmin != null">
+        indcheckxmin = #{indcheckxmin,jdbcType=BIT},
+      </if>
+      <if test="indisready != null">
+        indisready = #{indisready,jdbcType=BIT},
+      </if>
+      <if test="indislive != null">
+        indislive = #{indislive,jdbcType=BIT},
+      </if>
+      <if test="indisreplident != null">
+        indisreplident = #{indisreplident,jdbcType=BIT},
+      </if>
+      <if test="indkey != null">
+        indkey = #{indkey,jdbcType=OTHER},
+      </if>
+      <if test="indcollation != null">
+        indcollation = #{indcollation,jdbcType=OTHER},
+      </if>
+      <if test="indclass != null">
+        indclass = #{indclass,jdbcType=OTHER},
+      </if>
+      <if test="indoption != null">
+        indoption = #{indoption,jdbcType=OTHER},
+      </if>
+      <if test="indexprs != null">
+        indexprs = #{indexprs,jdbcType=OTHER},
+      </if>
+      <if test="indpred != null">
+        indpred = #{indpred,jdbcType=OTHER},
+      </if>
+    </set>
+    where indexrelid = #{indexrelid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.PgIndex">
+    update pg_index
+    set indrelid = #{indrelid,jdbcType=BIGINT},
+      indnatts = #{indnatts,jdbcType=SMALLINT},
+      indnkeyatts = #{indnkeyatts,jdbcType=SMALLINT},
+      indisunique = #{indisunique,jdbcType=BIT},
+      indnullsnotdistinct = #{indnullsnotdistinct,jdbcType=BIT},
+      indisprimary = #{indisprimary,jdbcType=BIT},
+      indisexclusion = #{indisexclusion,jdbcType=BIT},
+      indimmediate = #{indimmediate,jdbcType=BIT},
+      indisclustered = #{indisclustered,jdbcType=BIT},
+      indisvalid = #{indisvalid,jdbcType=BIT},
+      indcheckxmin = #{indcheckxmin,jdbcType=BIT},
+      indisready = #{indisready,jdbcType=BIT},
+      indislive = #{indislive,jdbcType=BIT},
+      indisreplident = #{indisreplident,jdbcType=BIT},
+      indkey = #{indkey,jdbcType=OTHER},
+      indcollation = #{indcollation,jdbcType=OTHER},
+      indclass = #{indclass,jdbcType=OTHER},
+      indoption = #{indoption,jdbcType=OTHER},
+      indexprs = #{indexprs,jdbcType=OTHER},
+      indpred = #{indpred,jdbcType=OTHER}
+    where indexrelid = #{indexrelid,jdbcType=BIGINT}
+  </update>
+</mapper>

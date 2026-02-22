@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.mbg.mapper.PgStatSubscriptionMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.PgStatSubscription">
+    <result column="subid" jdbcType="BIGINT" property="subid" />
+    <result column="subname" jdbcType="VARCHAR" property="subname" />
+    <result column="worker_type" jdbcType="VARCHAR" property="workerType" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="leader_pid" jdbcType="INTEGER" property="leaderPid" />
+    <result column="relid" jdbcType="BIGINT" property="relid" />
+    <result column="received_lsn" jdbcType="OTHER" property="receivedLsn" />
+    <result column="last_msg_send_time" jdbcType="TIMESTAMP" property="lastMsgSendTime" />
+    <result column="last_msg_receipt_time" jdbcType="TIMESTAMP" property="lastMsgReceiptTime" />
+    <result column="latest_end_lsn" jdbcType="OTHER" property="latestEndLsn" />
+    <result column="latest_end_time" jdbcType="TIMESTAMP" property="latestEndTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    subid, subname, worker_type, pid, leader_pid, relid, received_lsn, last_msg_send_time, 
+    last_msg_receipt_time, latest_end_lsn, latest_end_time
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.mbg.model.PgStatSubscriptionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_stat_subscription
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.PgStatSubscriptionExample">
+    delete from pg_stat_subscription
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.mbg.model.PgStatSubscription">
+    insert into pg_stat_subscription (subid, subname, worker_type, 
+      pid, leader_pid, relid, 
+      received_lsn, last_msg_send_time, last_msg_receipt_time, 
+      latest_end_lsn, latest_end_time)
+    values (#{subid,jdbcType=BIGINT}, #{subname,jdbcType=VARCHAR}, #{workerType,jdbcType=VARCHAR}, 
+      #{pid,jdbcType=INTEGER}, #{leaderPid,jdbcType=INTEGER}, #{relid,jdbcType=BIGINT}, 
+      #{receivedLsn,jdbcType=OTHER}, #{lastMsgSendTime,jdbcType=TIMESTAMP}, #{lastMsgReceiptTime,jdbcType=TIMESTAMP}, 
+      #{latestEndLsn,jdbcType=OTHER}, #{latestEndTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.mbg.model.PgStatSubscription">
+    insert into pg_stat_subscription
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="subid != null">
+        subid,
+      </if>
+      <if test="subname != null">
+        subname,
+      </if>
+      <if test="workerType != null">
+        worker_type,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="leaderPid != null">
+        leader_pid,
+      </if>
+      <if test="relid != null">
+        relid,
+      </if>
+      <if test="receivedLsn != null">
+        received_lsn,
+      </if>
+      <if test="lastMsgSendTime != null">
+        last_msg_send_time,
+      </if>
+      <if test="lastMsgReceiptTime != null">
+        last_msg_receipt_time,
+      </if>
+      <if test="latestEndLsn != null">
+        latest_end_lsn,
+      </if>
+      <if test="latestEndTime != null">
+        latest_end_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="subid != null">
+        #{subid,jdbcType=BIGINT},
+      </if>
+      <if test="subname != null">
+        #{subname,jdbcType=VARCHAR},
+      </if>
+      <if test="workerType != null">
+        #{workerType,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="leaderPid != null">
+        #{leaderPid,jdbcType=INTEGER},
+      </if>
+      <if test="relid != null">
+        #{relid,jdbcType=BIGINT},
+      </if>
+      <if test="receivedLsn != null">
+        #{receivedLsn,jdbcType=OTHER},
+      </if>
+      <if test="lastMsgSendTime != null">
+        #{lastMsgSendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastMsgReceiptTime != null">
+        #{lastMsgReceiptTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="latestEndLsn != null">
+        #{latestEndLsn,jdbcType=OTHER},
+      </if>
+      <if test="latestEndTime != null">
+        #{latestEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.mbg.model.PgStatSubscriptionExample" resultType="java.lang.Long">
+    select count(*) from pg_stat_subscription
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_stat_subscription
+    <set>
+      <if test="row.subid != null">
+        subid = #{row.subid,jdbcType=BIGINT},
+      </if>
+      <if test="row.subname != null">
+        subname = #{row.subname,jdbcType=VARCHAR},
+      </if>
+      <if test="row.workerType != null">
+        worker_type = #{row.workerType,jdbcType=VARCHAR},
+      </if>
+      <if test="row.pid != null">
+        pid = #{row.pid,jdbcType=INTEGER},
+      </if>
+      <if test="row.leaderPid != null">
+        leader_pid = #{row.leaderPid,jdbcType=INTEGER},
+      </if>
+      <if test="row.relid != null">
+        relid = #{row.relid,jdbcType=BIGINT},
+      </if>
+      <if test="row.receivedLsn != null">
+        received_lsn = #{row.receivedLsn,jdbcType=OTHER},
+      </if>
+      <if test="row.lastMsgSendTime != null">
+        last_msg_send_time = #{row.lastMsgSendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.lastMsgReceiptTime != null">
+        last_msg_receipt_time = #{row.lastMsgReceiptTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.latestEndLsn != null">
+        latest_end_lsn = #{row.latestEndLsn,jdbcType=OTHER},
+      </if>
+      <if test="row.latestEndTime != null">
+        latest_end_time = #{row.latestEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_stat_subscription
+    set subid = #{row.subid,jdbcType=BIGINT},
+      subname = #{row.subname,jdbcType=VARCHAR},
+      worker_type = #{row.workerType,jdbcType=VARCHAR},
+      pid = #{row.pid,jdbcType=INTEGER},
+      leader_pid = #{row.leaderPid,jdbcType=INTEGER},
+      relid = #{row.relid,jdbcType=BIGINT},
+      received_lsn = #{row.receivedLsn,jdbcType=OTHER},
+      last_msg_send_time = #{row.lastMsgSendTime,jdbcType=TIMESTAMP},
+      last_msg_receipt_time = #{row.lastMsgReceiptTime,jdbcType=TIMESTAMP},
+      latest_end_lsn = #{row.latestEndLsn,jdbcType=OTHER},
+      latest_end_time = #{row.latestEndTime,jdbcType=TIMESTAMP}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

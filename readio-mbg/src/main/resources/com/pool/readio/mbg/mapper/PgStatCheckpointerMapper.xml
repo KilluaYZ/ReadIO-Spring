@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.mbg.mapper.PgStatCheckpointerMapper">
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.PgStatCheckpointer">
+    <result column="num_timed" jdbcType="BIGINT" property="numTimed" />
+    <result column="num_requested" jdbcType="BIGINT" property="numRequested" />
+    <result column="num_done" jdbcType="BIGINT" property="numDone" />
+    <result column="restartpoints_timed" jdbcType="BIGINT" property="restartpointsTimed" />
+    <result column="restartpoints_req" jdbcType="BIGINT" property="restartpointsReq" />
+    <result column="restartpoints_done" jdbcType="BIGINT" property="restartpointsDone" />
+    <result column="write_time" jdbcType="DOUBLE" property="writeTime" />
+    <result column="sync_time" jdbcType="DOUBLE" property="syncTime" />
+    <result column="buffers_written" jdbcType="BIGINT" property="buffersWritten" />
+    <result column="slru_written" jdbcType="BIGINT" property="slruWritten" />
+    <result column="stats_reset" jdbcType="TIMESTAMP" property="statsReset" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    num_timed, num_requested, num_done, restartpoints_timed, restartpoints_req, restartpoints_done, 
+    write_time, sync_time, buffers_written, slru_written, stats_reset
+  </sql>
+  <select id="selectByExample" parameterType="com.pool.readio.mbg.model.PgStatCheckpointerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pg_stat_checkpointer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.PgStatCheckpointerExample">
+    delete from pg_stat_checkpointer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pool.readio.mbg.model.PgStatCheckpointer">
+    insert into pg_stat_checkpointer (num_timed, num_requested, num_done, 
+      restartpoints_timed, restartpoints_req, restartpoints_done, 
+      write_time, sync_time, buffers_written, 
+      slru_written, stats_reset)
+    values (#{numTimed,jdbcType=BIGINT}, #{numRequested,jdbcType=BIGINT}, #{numDone,jdbcType=BIGINT}, 
+      #{restartpointsTimed,jdbcType=BIGINT}, #{restartpointsReq,jdbcType=BIGINT}, #{restartpointsDone,jdbcType=BIGINT}, 
+      #{writeTime,jdbcType=DOUBLE}, #{syncTime,jdbcType=DOUBLE}, #{buffersWritten,jdbcType=BIGINT}, 
+      #{slruWritten,jdbcType=BIGINT}, #{statsReset,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pool.readio.mbg.model.PgStatCheckpointer">
+    insert into pg_stat_checkpointer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="numTimed != null">
+        num_timed,
+      </if>
+      <if test="numRequested != null">
+        num_requested,
+      </if>
+      <if test="numDone != null">
+        num_done,
+      </if>
+      <if test="restartpointsTimed != null">
+        restartpoints_timed,
+      </if>
+      <if test="restartpointsReq != null">
+        restartpoints_req,
+      </if>
+      <if test="restartpointsDone != null">
+        restartpoints_done,
+      </if>
+      <if test="writeTime != null">
+        write_time,
+      </if>
+      <if test="syncTime != null">
+        sync_time,
+      </if>
+      <if test="buffersWritten != null">
+        buffers_written,
+      </if>
+      <if test="slruWritten != null">
+        slru_written,
+      </if>
+      <if test="statsReset != null">
+        stats_reset,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="numTimed != null">
+        #{numTimed,jdbcType=BIGINT},
+      </if>
+      <if test="numRequested != null">
+        #{numRequested,jdbcType=BIGINT},
+      </if>
+      <if test="numDone != null">
+        #{numDone,jdbcType=BIGINT},
+      </if>
+      <if test="restartpointsTimed != null">
+        #{restartpointsTimed,jdbcType=BIGINT},
+      </if>
+      <if test="restartpointsReq != null">
+        #{restartpointsReq,jdbcType=BIGINT},
+      </if>
+      <if test="restartpointsDone != null">
+        #{restartpointsDone,jdbcType=BIGINT},
+      </if>
+      <if test="writeTime != null">
+        #{writeTime,jdbcType=DOUBLE},
+      </if>
+      <if test="syncTime != null">
+        #{syncTime,jdbcType=DOUBLE},
+      </if>
+      <if test="buffersWritten != null">
+        #{buffersWritten,jdbcType=BIGINT},
+      </if>
+      <if test="slruWritten != null">
+        #{slruWritten,jdbcType=BIGINT},
+      </if>
+      <if test="statsReset != null">
+        #{statsReset,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pool.readio.mbg.model.PgStatCheckpointerExample" resultType="java.lang.Long">
+    select count(*) from pg_stat_checkpointer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pg_stat_checkpointer
+    <set>
+      <if test="row.numTimed != null">
+        num_timed = #{row.numTimed,jdbcType=BIGINT},
+      </if>
+      <if test="row.numRequested != null">
+        num_requested = #{row.numRequested,jdbcType=BIGINT},
+      </if>
+      <if test="row.numDone != null">
+        num_done = #{row.numDone,jdbcType=BIGINT},
+      </if>
+      <if test="row.restartpointsTimed != null">
+        restartpoints_timed = #{row.restartpointsTimed,jdbcType=BIGINT},
+      </if>
+      <if test="row.restartpointsReq != null">
+        restartpoints_req = #{row.restartpointsReq,jdbcType=BIGINT},
+      </if>
+      <if test="row.restartpointsDone != null">
+        restartpoints_done = #{row.restartpointsDone,jdbcType=BIGINT},
+      </if>
+      <if test="row.writeTime != null">
+        write_time = #{row.writeTime,jdbcType=DOUBLE},
+      </if>
+      <if test="row.syncTime != null">
+        sync_time = #{row.syncTime,jdbcType=DOUBLE},
+      </if>
+      <if test="row.buffersWritten != null">
+        buffers_written = #{row.buffersWritten,jdbcType=BIGINT},
+      </if>
+      <if test="row.slruWritten != null">
+        slru_written = #{row.slruWritten,jdbcType=BIGINT},
+      </if>
+      <if test="row.statsReset != null">
+        stats_reset = #{row.statsReset,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pg_stat_checkpointer
+    set num_timed = #{row.numTimed,jdbcType=BIGINT},
+      num_requested = #{row.numRequested,jdbcType=BIGINT},
+      num_done = #{row.numDone,jdbcType=BIGINT},
+      restartpoints_timed = #{row.restartpointsTimed,jdbcType=BIGINT},
+      restartpoints_req = #{row.restartpointsReq,jdbcType=BIGINT},
+      restartpoints_done = #{row.restartpointsDone,jdbcType=BIGINT},
+      write_time = #{row.writeTime,jdbcType=DOUBLE},
+      sync_time = #{row.syncTime,jdbcType=DOUBLE},
+      buffers_written = #{row.buffersWritten,jdbcType=BIGINT},
+      slru_written = #{row.slruWritten,jdbcType=BIGINT},
+      stats_reset = #{row.statsReset,jdbcType=TIMESTAMP}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
