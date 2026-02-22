@@ -10,8 +10,7 @@ public class UmsAdmin implements Serializable {
     @Schema(title = "用户等级")
     private Integer memberLevelId;
 
-    @Schema(title = "用户名
-")
+    @Schema(title = "用户名")
     private String username;
 
     private String nickname;

@@ -43,6 +43,7 @@ public class CommentGenerator extends DefaultCommentGenerator {
             if(remarks.contains("\"")){
                 remarks = remarks.replace("\"","'");
             }
+            remarks = remarks.trim();
             //给model的字段添加swagger注解
             field.addJavaDocLine("@Schema(title = \""+remarks+"\")");
         }

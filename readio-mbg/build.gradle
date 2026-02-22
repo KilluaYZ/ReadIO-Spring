@@ -26,6 +26,8 @@ dependencies {
     implementation 'org.mybatis.generator:mybatis-generator-core:1.4.2'
     implementation 'org.postgresql:postgresql'
     implementation("com.networknt:swagger:1.1.8")
+    implementation("org.mybatis:mybatis:3.5.19")
+
 }
 
 tasks.named('test') {
