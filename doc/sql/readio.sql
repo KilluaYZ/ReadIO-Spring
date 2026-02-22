@@ -1,1643 +1,7013 @@
--- DROP SCHEMA public;
+--
+-- PostgreSQL database dump
+--
 
-CREATE SCHEMA public AUTHORIZATION pg_database_owner;
+\restrict kQEUZp7GjJ78GiALNQVezn86BgIMGH1IIoJq0ND15IMP5wOyq6b3z8mg5ZldWqw
 
-COMMENT ON SCHEMA public IS 'standard public schema';
+-- Dumped from database version 18.1 (Debian 18.1-1.pgdg13+2)
+-- Dumped by pg_dump version 18.2
 
--- DROP SEQUENCE public.bms_author_id_seq;
+-- Started on 2026-02-22 16:43:42 CST
 
-CREATE SEQUENCE public.bms_author_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_book_category_id_seq;
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
 
-CREATE SEQUENCE public.bms_book_category_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_book_content_block_id_seq;
+SET default_tablespace = '';
 
-CREATE SEQUENCE public.bms_book_content_block_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_book_content_block_order_seq;
+SET default_table_access_method = heap;
 
-CREATE SEQUENCE public.bms_book_content_block_order_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_book_footnote_id_seq;
-
-CREATE SEQUENCE public.bms_book_footnote_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_book_id_seq;
-
-CREATE SEQUENCE public.bms_book_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_book_list_book_relation_id_seq;
-
-CREATE SEQUENCE public.bms_book_list_book_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_book_list_id_seq;
-
-CREATE SEQUENCE public.bms_book_list_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_book_list_member_relation_id_seq;
-
-CREATE SEQUENCE public.bms_book_list_member_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_book_read_progress_id_seq;
-
-CREATE SEQUENCE public.bms_book_read_progress_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_book_select_content_id_seq;
-
-CREATE SEQUENCE public.bms_book_select_content_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_book_select_content_item_id_seq;
-
-CREATE SEQUENCE public.bms_book_select_content_item_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_book_shelf_book_relation_id_seq;
-
-CREATE SEQUENCE public.bms_book_shelf_book_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_book_shelf_id_seq;
-
-CREATE SEQUENCE public.bms_book_shelf_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_one_word_id_seq;
-
-CREATE SEQUENCE public.bms_one_word_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.bms_publisher_id_seq;
-
-CREATE SEQUENCE public.bms_publisher_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.cms_comment_id_seq;
-
-CREATE SEQUENCE public.cms_comment_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.cms_member_book_list_relation_id_seq;
-
-CREATE SEQUENCE public.cms_member_book_list_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.cms_member_book_relation_id_seq;
-
-CREATE SEQUENCE public.cms_member_book_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.cms_member_comment_relation_id_seq;
-
-CREATE SEQUENCE public.cms_member_comment_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.cms_member_one_word_relation_id_seq;
-
-CREATE SEQUENCE public.cms_member_one_word_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.cms_member_post_relation_id_seq;
-
-CREATE SEQUENCE public.cms_member_post_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.cms_post_content_block_id_seq;
-
-CREATE SEQUENCE public.cms_post_content_block_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.cms_post_content_block_order_seq;
-
-CREATE SEQUENCE public.cms_post_content_block_order_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.cms_post_id_seq;
-
-CREATE SEQUENCE public.cms_post_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.cms_post_tag_id_seq;
-
-CREATE SEQUENCE public.cms_post_tag_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.cms_post_tag_relation_id_seq;
-
-CREATE SEQUENCE public.cms_post_tag_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_admin_id_seq;
-
-CREATE SEQUENCE public.ums_admin_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_admin_login_log_id_seq;
-
-CREATE SEQUENCE public.ums_admin_login_log_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_admin_permission_relation_id_seq;
-
-CREATE SEQUENCE public.ums_admin_permission_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_admin_role_relation_id_seq;
-
-CREATE SEQUENCE public.ums_admin_role_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_member_book_category_relation_id_seq;
-
-CREATE SEQUENCE public.ums_member_book_category_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_member_follow_relation_id_seq;
-
-CREATE SEQUENCE public.ums_member_follow_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_member_id_seq;
-
-CREATE SEQUENCE public.ums_member_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_member_level_id_seq;
-
-CREATE SEQUENCE public.ums_member_level_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_member_login_log_id_seq;
-
-CREATE SEQUENCE public.ums_member_login_log_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_member_member_tag_relation_id_seq;
-
-CREATE SEQUENCE public.ums_member_member_tag_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_member_rule_setting_id_seq;
-
-CREATE SEQUENCE public.ums_member_rule_setting_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_member_statistics_info_id_seq;
-
-CREATE SEQUENCE public.ums_member_statistics_info_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_member_tag_id_seq;
-
-CREATE SEQUENCE public.ums_member_tag_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_member_task_id_seq;
-
-CREATE SEQUENCE public.ums_member_task_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_menu_id_seq;
-
-CREATE SEQUENCE public.ums_menu_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_permission_id_seq;
-
-CREATE SEQUENCE public.ums_permission_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_resource_category_id_seq;
-
-CREATE SEQUENCE public.ums_resource_category_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_resource_id_seq;
-
-CREATE SEQUENCE public.ums_resource_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_role_id_seq;
-
-CREATE SEQUENCE public.ums_role_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_role_menu_relation_id_seq;
-
-CREATE SEQUENCE public.ums_role_menu_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_role_permission_relation_id_seq;
-
-CREATE SEQUENCE public.ums_role_permission_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;
--- DROP SEQUENCE public.ums_role_resource_relation_id_seq;
-
-CREATE SEQUENCE public.ums_role_resource_relation_id_seq
-    INCREMENT BY 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    START 1
-	CACHE 1
-	NO CYCLE;-- public.bms_author definition
-
--- Drop table
-
--- DROP TABLE public.bms_author;
+--
+-- TOC entry 277 (class 1259 OID 16841)
+-- Name: bms_author; Type: TABLE; Schema: public; Owner: readio
+--
 
 CREATE TABLE public.bms_author (
-                                   id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                   "name" text NOT NULL, -- 作者名称
-                                   description text NULL, -- 作者简介
-                                   create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                   icon text NULL, -- 作者照片
-                                   CONSTRAINT bms_author_pkey PRIMARY KEY (id)
+                                   id integer NOT NULL,
+                                   name text NOT NULL,
+                                   description text,
+                                   create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                   icon text
 );
+
+
+ALTER TABLE public.bms_author OWNER TO readio;
+
+--
+-- TOC entry 4210 (class 0 OID 0)
+-- Dependencies: 277
+-- Name: TABLE bms_author; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON TABLE public.bms_author IS '作者';
 
--- Column comments
 
-COMMENT ON COLUMN public.bms_author."name" IS '作者名称';
+--
+-- TOC entry 4211 (class 0 OID 0)
+-- Dependencies: 277
+-- Name: COLUMN bms_author.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_author.name IS '作者名称';
+
+
+--
+-- TOC entry 4212 (class 0 OID 0)
+-- Dependencies: 277
+-- Name: COLUMN bms_author.description; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.bms_author.description IS '作者简介';
+
+
+--
+-- TOC entry 4213 (class 0 OID 0)
+-- Dependencies: 277
+-- Name: COLUMN bms_author.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.bms_author.create_time IS '创建时间';
+
+
+--
+-- TOC entry 4214 (class 0 OID 0)
+-- Dependencies: 277
+-- Name: COLUMN bms_author.icon; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.bms_author.icon IS '作者照片';
 
 
--- public.bms_book_category definition
-
--- Drop table
-
--- DROP TABLE public.bms_book_category;
-
-CREATE TABLE public.bms_book_category (
-                                          id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                          "name" text NOT NULL, -- 类型名称
-                                          "key" text NOT NULL, -- 代表字母
-                                          CONSTRAINT bms_book_category_pkey PRIMARY KEY (id)
-);
-COMMENT ON TABLE public.bms_book_category IS '书籍类型';
-
--- Column comments
-
-COMMENT ON COLUMN public.bms_book_category."name" IS '类型名称';
-COMMENT ON COLUMN public.bms_book_category."key" IS '代表字母';
-
-
--- public.bms_book_list definition
-
--- Drop table
-
--- DROP TABLE public.bms_book_list;
-
-CREATE TABLE public.bms_book_list (
-                                      id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                      "name" text NOT NULL, -- 书单名称
-                                      hidden bool DEFAULT true NOT NULL, -- 是否隐藏书单
-                                      description text NULL, -- 书单简介
-                                      CONSTRAINT bms_book_list_pkey PRIMARY KEY (id)
-);
-COMMENT ON TABLE public.bms_book_list IS '书单';
-
--- Column comments
-
-COMMENT ON COLUMN public.bms_book_list."name" IS '书单名称';
-COMMENT ON COLUMN public.bms_book_list.hidden IS '是否隐藏书单';
-COMMENT ON COLUMN public.bms_book_list.description IS '书单简介';
-
-
--- public.bms_book_select_content definition
-
--- Drop table
-
--- DROP TABLE public.bms_book_select_content;
-
-CREATE TABLE public.bms_book_select_content (
-                                                id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                member_id int4 NOT NULL,
-                                                "type" int4 NOT NULL, -- 选中类型：0->标注；1->评论
-                                                mark_type int4 NULL, -- 标注类型：0->荧光笔；1->下划实线；2->下划虚线；3->下划双实线；4->下划圆点；5->下划三角
-                                                mark_color text NULL, -- 标记颜色
-                                                create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                                CONSTRAINT bms_book_select_content_pkey PRIMARY KEY (id)
-);
-COMMENT ON TABLE public.bms_book_select_content IS '选中的段落';
-
--- Column comments
-
-COMMENT ON COLUMN public.bms_book_select_content."type" IS '选中类型：0->标注；1->评论';
-COMMENT ON COLUMN public.bms_book_select_content.mark_type IS '标注类型：0->荧光笔；1->下划实线；2->下划虚线；3->下划双实线；4->下划圆点；5->下划三角';
-COMMENT ON COLUMN public.bms_book_select_content.mark_color IS '标记颜色';
-COMMENT ON COLUMN public.bms_book_select_content.create_time IS '创建时间';
-
-
--- public.bms_publisher definition
-
--- Drop table
-
--- DROP TABLE public.bms_publisher;
-
-CREATE TABLE public.bms_publisher (
-                                      id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                      "name" text NOT NULL, -- 出版社名称
-                                      description text NULL, -- 出版社简介
-                                      CONSTRAINT bms_publisher_pkey PRIMARY KEY (id)
-);
-COMMENT ON TABLE public.bms_publisher IS '出版社';
-
--- Column comments
-
-COMMENT ON COLUMN public.bms_publisher."name" IS '出版社名称';
-COMMENT ON COLUMN public.bms_publisher.description IS '出版社简介';
-
-
--- public.cms_post_tag definition
-
--- Drop table
-
--- DROP TABLE public.cms_post_tag;
-
-CREATE TABLE public.cms_post_tag (
-                                     id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                     "name" text NOT NULL, -- 帖子标签名称
-                                     create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                     CONSTRAINT cms_post_tag_pkey PRIMARY KEY (id)
-);
-COMMENT ON TABLE public.cms_post_tag IS '帖子标签';
-
--- Column comments
-
-COMMENT ON COLUMN public.cms_post_tag."name" IS '帖子标签名称';
-COMMENT ON COLUMN public.cms_post_tag.create_time IS '创建时间';
-
-
--- public.ums_admin definition
-
--- Drop table
-
--- DROP TABLE public.ums_admin;
-
-CREATE TABLE public.ums_admin (
-                                  id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                  member_level_id int4 NOT NULL, -- 用户等级
-                                  username text NOT NULL, -- 用户名¶
-                                  nickname text NULL,
-                                  "password" text NOT NULL, -- 密码
-                                  phone text NULL, -- 手机
-                                  email text NOT NULL, -- 邮箱
-                                  status bool DEFAULT true NOT NULL, -- 用户状态，True表示启用，False表示禁用
-                                  create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 注册时间
-                                  login_time date NULL, -- 最后登录时间
-                                  icon text NULL, -- 用户头像
-                                  note text NULL, -- 备注信息
-                                  CONSTRAINT ums_admin_email_key UNIQUE (email),
-                                  CONSTRAINT ums_admin_phone_key UNIQUE (phone),
-                                  CONSTRAINT ums_admin_pkey PRIMARY KEY (id),
-                                  CONSTRAINT ums_admin_username_key UNIQUE (username)
-);
-COMMENT ON TABLE public.ums_admin IS '管理用户';
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_admin.member_level_id IS '用户等级';
-COMMENT ON COLUMN public.ums_admin.username IS '用户名
-';
-COMMENT ON COLUMN public.ums_admin."password" IS '密码';
-COMMENT ON COLUMN public.ums_admin.phone IS '手机';
-COMMENT ON COLUMN public.ums_admin.email IS '邮箱';
-COMMENT ON COLUMN public.ums_admin.status IS '用户状态，True表示启用，False表示禁用';
-COMMENT ON COLUMN public.ums_admin.create_time IS '注册时间';
-COMMENT ON COLUMN public.ums_admin.login_time IS '最后登录时间';
-COMMENT ON COLUMN public.ums_admin.icon IS '用户头像';
-COMMENT ON COLUMN public.ums_admin.note IS '备注信息';
-
-
--- public.ums_member_level definition
-
--- Drop table
-
--- DROP TABLE public.ums_member_level;
-
-CREATE TABLE public.ums_member_level (
-                                         id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                         "name" text NOT NULL, -- 等级名称
-                                         growth_point int4 DEFAULT 0 NOT NULL, -- 该级别所需成长点数
-                                         default_status bool DEFAULT false NOT NULL, -- 是否为默认等级：0->不是；1->是
-                                         comment_growth_point int4 DEFAULT 0 NOT NULL, -- 每次评论获取的成长值
-                                         priviledge_sign_in bool DEFAULT false NOT NULL, -- 是否有签到特权
-                                         priviledge_comment bool DEFAULT false NOT NULL, -- 是否有评论获奖励特权
-                                         priviledge_promotion bool DEFAULT false NOT NULL, -- 是否有专享活动特权
-                                         priviledge_member_price bool DEFAULT false NOT NULL, -- 是否有会员价格特权
-                                         priviledge_birthday bool DEFAULT false NOT NULL, -- 是否有生日特权
-                                         note text NULL, -- 备注
-                                         CONSTRAINT ums_member_level_pkey PRIMARY KEY (id)
-);
-COMMENT ON TABLE public.ums_member_level IS '会员等级表';
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_member_level."name" IS '等级名称';
-COMMENT ON COLUMN public.ums_member_level.growth_point IS '该级别所需成长点数';
-COMMENT ON COLUMN public.ums_member_level.default_status IS '是否为默认等级：0->不是；1->是';
-COMMENT ON COLUMN public.ums_member_level.comment_growth_point IS '每次评论获取的成长值';
-COMMENT ON COLUMN public.ums_member_level.priviledge_sign_in IS '是否有签到特权';
-COMMENT ON COLUMN public.ums_member_level.priviledge_comment IS '是否有评论获奖励特权';
-COMMENT ON COLUMN public.ums_member_level.priviledge_promotion IS '是否有专享活动特权';
-COMMENT ON COLUMN public.ums_member_level.priviledge_member_price IS '是否有会员价格特权';
-COMMENT ON COLUMN public.ums_member_level.priviledge_birthday IS '是否有生日特权';
-COMMENT ON COLUMN public.ums_member_level.note IS '备注';
-
-
--- public.ums_member_rule_setting definition
-
--- Drop table
-
--- DROP TABLE public.ums_member_rule_setting;
-
-CREATE TABLE public.ums_member_rule_setting (
-                                                id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                continue_sign_day int4 DEFAULT 0 NOT NULL, -- 连续签到天数
-                                                continue_sign_point int4 DEFAULT 0 NOT NULL, -- 连续签到赠送数量
-                                                consume_per_point int4 DEFAULT 0 NOT NULL, -- 每消费多少元获取1个点
-                                                low_order_amount int4 DEFAULT 0 NOT NULL, -- 最低获取点数的订单金额
-                                                max_point_per_order int4 DEFAULT 0 NOT NULL, -- 每笔订单最高获取点数
-                                                "type" int4 NULL, -- 类型：0->积分规则；1->成长值规则
-                                                CONSTRAINT ums_member_rule_setting_pkey PRIMARY KEY (id)
-);
-COMMENT ON TABLE public.ums_member_rule_setting IS '会员积分成长规则表';
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_member_rule_setting.continue_sign_day IS '连续签到天数';
-COMMENT ON COLUMN public.ums_member_rule_setting.continue_sign_point IS '连续签到赠送数量';
-COMMENT ON COLUMN public.ums_member_rule_setting.consume_per_point IS '每消费多少元获取1个点';
-COMMENT ON COLUMN public.ums_member_rule_setting.low_order_amount IS '最低获取点数的订单金额';
-COMMENT ON COLUMN public.ums_member_rule_setting.max_point_per_order IS '每笔订单最高获取点数';
-COMMENT ON COLUMN public.ums_member_rule_setting."type" IS '类型：0->积分规则；1->成长值规则';
-
-
--- public.ums_member_tag definition
-
--- Drop table
-
--- DROP TABLE public.ums_member_tag;
-
-CREATE TABLE public.ums_member_tag (
-                                       id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                       "name" text NOT NULL, -- 标签名称
-                                       finish_book_number int4 DEFAULT 0 NOT NULL, -- 已经完成阅读的数量
-                                       start_book_number int4 DEFAULT 0 NOT NULL, -- 开始阅读的书籍数量
-                                       CONSTRAINT ums_member_tag_pkey PRIMARY KEY (id)
-);
-COMMENT ON TABLE public.ums_member_tag IS '用户标签表';
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_member_tag."name" IS '标签名称';
-COMMENT ON COLUMN public.ums_member_tag.finish_book_number IS '已经完成阅读的数量';
-COMMENT ON COLUMN public.ums_member_tag.start_book_number IS '开始阅读的书籍数量';
-
-
--- public.ums_member_task definition
-
--- Drop table
-
--- DROP TABLE public.ums_member_task;
-
-CREATE TABLE public.ums_member_task (
-                                        id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                        "name" text NOT NULL, -- 任务名称
-                                        growth int4 DEFAULT 0 NOT NULL, -- 赠送成长值
-                                        intergration int4 DEFAULT 0 NOT NULL, -- 赠送积分
-                                        "type" int4 NULL, -- 任务类型：0->新手任务；1->日常任务
-                                        CONSTRAINT ums_member_task_pkey PRIMARY KEY (id)
-);
-COMMENT ON TABLE public.ums_member_task IS '会员任务表';
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_member_task."name" IS '任务名称';
-COMMENT ON COLUMN public.ums_member_task.growth IS '赠送成长值';
-COMMENT ON COLUMN public.ums_member_task.intergration IS '赠送积分';
-COMMENT ON COLUMN public.ums_member_task."type" IS '任务类型：0->新手任务；1->日常任务';
-
-
--- public.ums_menu definition
-
--- Drop table
-
--- DROP TABLE public.ums_menu;
-
-CREATE TABLE public.ums_menu (
-                                 id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                 parent_id int4 NULL, -- 父级ID
-                                 create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                 title text NOT NULL, -- 菜单名称
-                                 "level" int4 DEFAULT 0 NOT NULL, -- 菜单级数
-                                 sort int4 DEFAULT 0 NOT NULL, -- 菜单排序
-                                 "name" text NULL, -- 菜单前端名称
-                                 icon text NULL, -- 菜单图标
-                                 hidden bool DEFAULT false NOT NULL, -- 菜单前端隐藏
-                                 CONSTRAINT ums_menu_pkey PRIMARY KEY (id)
-);
-COMMENT ON TABLE public.ums_menu IS '后台菜单表';
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_menu.parent_id IS '父级ID';
-COMMENT ON COLUMN public.ums_menu.create_time IS '创建时间';
-COMMENT ON COLUMN public.ums_menu.title IS '菜单名称';
-COMMENT ON COLUMN public.ums_menu."level" IS '菜单级数';
-COMMENT ON COLUMN public.ums_menu.sort IS '菜单排序';
-COMMENT ON COLUMN public.ums_menu."name" IS '菜单前端名称';
-COMMENT ON COLUMN public.ums_menu.icon IS '菜单图标';
-COMMENT ON COLUMN public.ums_menu.hidden IS '菜单前端隐藏';
-
-
--- public.ums_permission definition
-
--- Drop table
-
--- DROP TABLE public.ums_permission;
-
-CREATE TABLE public.ums_permission (
-                                       id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                       parent_id int4 NULL, -- 父级权限ID
-                                       "name" text NOT NULL, -- 权限名称
-                                       value text NOT NULL, -- 权限值
-                                       icon text NULL, -- 权限图标
-                                       "type" int4 NOT NULL, -- 权限类型：0->目录；1->菜单；2->按钮（接口绑定权限）
-                                       uri text NULL, -- 前端资源路径
-                                       status bool DEFAULT true NOT NULL, -- 启用状态；0->禁用；1->启用
-                                       create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                       sort int4 DEFAULT 0 NOT NULL, -- 权限排序
-                                       CONSTRAINT ums_permission_pkey PRIMARY KEY (id)
-);
-COMMENT ON TABLE public.ums_permission IS '后台用户权限表';
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_permission.parent_id IS '父级权限ID';
-COMMENT ON COLUMN public.ums_permission."name" IS '权限名称';
-COMMENT ON COLUMN public.ums_permission.value IS '权限值';
-COMMENT ON COLUMN public.ums_permission.icon IS '权限图标';
-COMMENT ON COLUMN public.ums_permission."type" IS '权限类型：0->目录；1->菜单；2->按钮（接口绑定权限）';
-COMMENT ON COLUMN public.ums_permission.uri IS '前端资源路径';
-COMMENT ON COLUMN public.ums_permission.status IS '启用状态；0->禁用；1->启用';
-COMMENT ON COLUMN public.ums_permission.create_time IS '创建时间';
-COMMENT ON COLUMN public.ums_permission.sort IS '权限排序';
-
-
--- public.ums_resource_category definition
-
--- Drop table
-
--- DROP TABLE public.ums_resource_category;
-
-CREATE TABLE public.ums_resource_category (
-                                              id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                              create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                              "name" text NOT NULL, -- 分类名称
-                                              sort int4 DEFAULT 0 NOT NULL, -- 分类排序
-                                              CONSTRAINT ums_resource_category_pkey PRIMARY KEY (id)
-);
-COMMENT ON TABLE public.ums_resource_category IS '资源分类表';
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_resource_category.create_time IS '创建时间';
-COMMENT ON COLUMN public.ums_resource_category."name" IS '分类名称';
-COMMENT ON COLUMN public.ums_resource_category.sort IS '分类排序';
-
-
--- public.ums_role definition
-
--- Drop table
-
--- DROP TABLE public.ums_role;
-
-CREATE TABLE public.ums_role (
-                                 id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                 "name" text NOT NULL, -- 角色名称
-                                 description text NULL, -- 角色描述
-                                 admin_count int4 DEFAULT 0 NOT NULL, -- 后台用户数量
-                                 create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                 status bool DEFAULT true NOT NULL, -- 启用状态，True启用，False未启用
-                                 sort int4 DEFAULT 0 NOT NULL,
-                                 CONSTRAINT ums_role_pkey PRIMARY KEY (id)
-);
-COMMENT ON TABLE public.ums_role IS '后台用户角色表';
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_role."name" IS '角色名称';
-COMMENT ON COLUMN public.ums_role.description IS '角色描述';
-COMMENT ON COLUMN public.ums_role.admin_count IS '后台用户数量';
-COMMENT ON COLUMN public.ums_role.create_time IS '创建时间';
-COMMENT ON COLUMN public.ums_role.status IS '启用状态，True启用，False未启用';
-
-
--- public.bms_book definition
-
--- Drop table
-
--- DROP TABLE public.bms_book;
+--
+-- TOC entry 276 (class 1259 OID 16840)
+-- Name: bms_author_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.bms_author ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_author_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 264 (class 1259 OID 16749)
+-- Name: bms_book; Type: TABLE; Schema: public; Owner: readio
+--
 
 CREATE TABLE public.bms_book (
-                                 id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                 book_category_id int4 NOT NULL, -- 书籍类型ID
-                                 author_id int4 NOT NULL, -- 作者ID
-                                 publisher_id int4 NULL,
-                                 "name" text NOT NULL, -- 书籍名称
-                                 icon text NULL, -- 书籍封面
-                                 create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                 pushlish_time date NULL, -- 出版日期
-                                 isbn text NULL, -- 书籍ISBN码
-                                 word_count int4 DEFAULT 0 NOT NULL, -- 书籍字数
-                                 description text NULL, -- 书籍简介
-                                 "language" text NULL, -- 语言
-                                 CONSTRAINT bms_book_pkey PRIMARY KEY (id),
-                                 CONSTRAINT bms_book_author_id_fkey FOREIGN KEY (author_id) REFERENCES public.bms_author(id),
-                                 CONSTRAINT bms_book_book_category_id_fkey FOREIGN KEY (book_category_id) REFERENCES public.bms_book_category(id),
-                                 CONSTRAINT bms_book_publisher_id_fkey FOREIGN KEY (publisher_id) REFERENCES public.bms_publisher(id)
+                                 id integer NOT NULL,
+                                 book_category_id integer NOT NULL,
+                                 author_id integer NOT NULL,
+                                 publisher_id integer,
+                                 name text NOT NULL,
+                                 icon text,
+                                 create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                 pushlish_time timestamp without time zone,
+                                 isbn text,
+                                 word_count integer DEFAULT 0 NOT NULL,
+                                 description text,
+                                 language text
 );
+
+
+ALTER TABLE public.bms_book OWNER TO readio;
+
+--
+-- TOC entry 4215 (class 0 OID 0)
+-- Dependencies: 264
+-- Name: TABLE bms_book; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON TABLE public.bms_book IS '书籍';
 
--- Column comments
+
+--
+-- TOC entry 4216 (class 0 OID 0)
+-- Dependencies: 264
+-- Name: COLUMN bms_book.book_category_id; Type: COMMENT; Schema: public; Owner: readio
+--
 
 COMMENT ON COLUMN public.bms_book.book_category_id IS '书籍类型ID';
+
+
+--
+-- TOC entry 4217 (class 0 OID 0)
+-- Dependencies: 264
+-- Name: COLUMN bms_book.author_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.bms_book.author_id IS '作者ID';
-COMMENT ON COLUMN public.bms_book."name" IS '书籍名称';
+
+
+--
+-- TOC entry 4218 (class 0 OID 0)
+-- Dependencies: 264
+-- Name: COLUMN bms_book.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book.name IS '书籍名称';
+
+
+--
+-- TOC entry 4219 (class 0 OID 0)
+-- Dependencies: 264
+-- Name: COLUMN bms_book.icon; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.bms_book.icon IS '书籍封面';
+
+
+--
+-- TOC entry 4220 (class 0 OID 0)
+-- Dependencies: 264
+-- Name: COLUMN bms_book.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.bms_book.create_time IS '创建时间';
+
+
+--
+-- TOC entry 4221 (class 0 OID 0)
+-- Dependencies: 264
+-- Name: COLUMN bms_book.pushlish_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.bms_book.pushlish_time IS '出版日期';
+
+
+--
+-- TOC entry 4222 (class 0 OID 0)
+-- Dependencies: 264
+-- Name: COLUMN bms_book.isbn; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.bms_book.isbn IS '书籍ISBN码';
+
+
+--
+-- TOC entry 4223 (class 0 OID 0)
+-- Dependencies: 264
+-- Name: COLUMN bms_book.word_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.bms_book.word_count IS '书籍字数';
+
+
+--
+-- TOC entry 4224 (class 0 OID 0)
+-- Dependencies: 264
+-- Name: COLUMN bms_book.description; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.bms_book.description IS '书籍简介';
-COMMENT ON COLUMN public.bms_book."language" IS '语言';
 
 
--- public.bms_book_footnote definition
+--
+-- TOC entry 4225 (class 0 OID 0)
+-- Dependencies: 264
+-- Name: COLUMN bms_book.language; Type: COMMENT; Schema: public; Owner: readio
+--
 
--- Drop table
+COMMENT ON COLUMN public.bms_book.language IS '语言';
 
--- DROP TABLE public.bms_book_footnote;
+
+--
+-- TOC entry 262 (class 1259 OID 16738)
+-- Name: bms_book_category; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.bms_book_category (
+                                          id integer NOT NULL,
+                                          name text NOT NULL,
+                                          key text NOT NULL,
+                                          create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.bms_book_category OWNER TO readio;
+
+--
+-- TOC entry 4226 (class 0 OID 0)
+-- Dependencies: 262
+-- Name: TABLE bms_book_category; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.bms_book_category IS '书籍类型';
+
+
+--
+-- TOC entry 4227 (class 0 OID 0)
+-- Dependencies: 262
+-- Name: COLUMN bms_book_category.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_category.name IS '类型名称';
+
+
+--
+-- TOC entry 4228 (class 0 OID 0)
+-- Dependencies: 262
+-- Name: COLUMN bms_book_category.key; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_category.key IS '代表字母';
+
+
+--
+-- TOC entry 261 (class 1259 OID 16737)
+-- Name: bms_book_category_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.bms_book_category ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_category_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 319 (class 1259 OID 17799)
+-- Name: bms_book_chapter; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.bms_book_chapter (
+                                         id integer NOT NULL,
+                                         book_id integer NOT NULL,
+                                         name text NOT NULL,
+                                         "order" integer NOT NULL,
+                                         word_count integer DEFAULT 0 NOT NULL,
+                                         create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.bms_book_chapter OWNER TO readio;
+
+--
+-- TOC entry 4229 (class 0 OID 0)
+-- Dependencies: 319
+-- Name: TABLE bms_book_chapter; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.bms_book_chapter IS '书籍章节';
+
+
+--
+-- TOC entry 4230 (class 0 OID 0)
+-- Dependencies: 319
+-- Name: COLUMN bms_book_chapter.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_chapter.name IS '章节名';
+
+
+--
+-- TOC entry 4231 (class 0 OID 0)
+-- Dependencies: 319
+-- Name: COLUMN bms_book_chapter."order"; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_chapter."order" IS '章节顺序';
+
+
+--
+-- TOC entry 4232 (class 0 OID 0)
+-- Dependencies: 319
+-- Name: COLUMN bms_book_chapter.word_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_chapter.word_count IS '章节字数';
+
+
+--
+-- TOC entry 4233 (class 0 OID 0)
+-- Dependencies: 319
+-- Name: COLUMN bms_book_chapter.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_chapter.create_time IS '创建时间';
+
+
+--
+-- TOC entry 317 (class 1259 OID 17797)
+-- Name: bms_book_chapter_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.bms_book_chapter ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_chapter_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 318 (class 1259 OID 17798)
+-- Name: bms_book_chapter_order_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.bms_book_chapter ALTER COLUMN "order" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_chapter_order_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 267 (class 1259 OID 16772)
+-- Name: bms_book_content_block; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.bms_book_content_block (
+                                               id integer NOT NULL,
+                                               chapter_id integer,
+                                               footnote_id integer,
+                                               book_id integer,
+                                               type integer NOT NULL,
+                                               "order" integer NOT NULL,
+                                               content text,
+                                               image text,
+                                               newline boolean DEFAULT false NOT NULL
+);
+
+
+ALTER TABLE public.bms_book_content_block OWNER TO readio;
+
+--
+-- TOC entry 4234 (class 0 OID 0)
+-- Dependencies: 267
+-- Name: TABLE bms_book_content_block; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.bms_book_content_block IS '书籍内容块';
+
+
+--
+-- TOC entry 4235 (class 0 OID 0)
+-- Dependencies: 267
+-- Name: COLUMN bms_book_content_block.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_content_block.type IS '内容块类型：0->文本；1->图片；2->图书超链接；3->作者超链接；4->脚注超链接；5->概念知识超链接';
+
+
+--
+-- TOC entry 4236 (class 0 OID 0)
+-- Dependencies: 267
+-- Name: COLUMN bms_book_content_block."order"; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_content_block."order" IS '内容块顺序';
+
+
+--
+-- TOC entry 4237 (class 0 OID 0)
+-- Dependencies: 267
+-- Name: COLUMN bms_book_content_block.content; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_content_block.content IS '内容块内容';
+
+
+--
+-- TOC entry 4238 (class 0 OID 0)
+-- Dependencies: 267
+-- Name: COLUMN bms_book_content_block.newline; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_content_block.newline IS '是否需要换行';
+
+
+--
+-- TOC entry 265 (class 1259 OID 16770)
+-- Name: bms_book_content_block_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.bms_book_content_block ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_content_block_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 266 (class 1259 OID 16771)
+-- Name: bms_book_content_block_order_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.bms_book_content_block ALTER COLUMN "order" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_content_block_order_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 273 (class 1259 OID 16813)
+-- Name: bms_book_footnote; Type: TABLE; Schema: public; Owner: readio
+--
 
 CREATE TABLE public.bms_book_footnote (
-                                          id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                          "type" int4 NOT NULL, -- 脚注类型：0->章节末尾脚注；1->书籍末尾尾注
-                                          chapter_id int4 NOT NULL,
-                                          book_id int4 NOT NULL,
-                                          "content" text NOT NULL, -- 脚注内容
-                                          "order" int4 NOT NULL, -- 脚注顺序
-                                          CONSTRAINT bms_book_footnote_order_key UNIQUE ("order"),
-                                          CONSTRAINT bms_book_footnote_pkey PRIMARY KEY (id),
-                                          CONSTRAINT bms_book_footnote_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id)
+                                          id integer NOT NULL,
+                                          type integer NOT NULL,
+                                          chapter_id integer NOT NULL,
+                                          book_id integer NOT NULL,
+                                          content text NOT NULL,
+                                          "order" integer NOT NULL,
+                                          create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
+
+
+ALTER TABLE public.bms_book_footnote OWNER TO readio;
+
+--
+-- TOC entry 4239 (class 0 OID 0)
+-- Dependencies: 273
+-- Name: TABLE bms_book_footnote; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON TABLE public.bms_book_footnote IS '书籍脚注';
 
--- Column comments
 
-COMMENT ON COLUMN public.bms_book_footnote."type" IS '脚注类型：0->章节末尾脚注；1->书籍末尾尾注';
-COMMENT ON COLUMN public.bms_book_footnote."content" IS '脚注内容';
+--
+-- TOC entry 4240 (class 0 OID 0)
+-- Dependencies: 273
+-- Name: COLUMN bms_book_footnote.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_footnote.type IS '脚注类型：0->章节末尾脚注；1->书籍末尾尾注';
+
+
+--
+-- TOC entry 4241 (class 0 OID 0)
+-- Dependencies: 273
+-- Name: COLUMN bms_book_footnote.content; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_footnote.content IS '脚注内容';
+
+
+--
+-- TOC entry 4242 (class 0 OID 0)
+-- Dependencies: 273
+-- Name: COLUMN bms_book_footnote."order"; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.bms_book_footnote."order" IS '脚注顺序';
 
 
--- public.bms_book_list_book_relation definition
+--
+-- TOC entry 272 (class 1259 OID 16812)
+-- Name: bms_book_footnote_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
 
--- Drop table
+ALTER TABLE public.bms_book_footnote ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_footnote_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
 
--- DROP TABLE public.bms_book_list_book_relation;
+
+--
+-- TOC entry 263 (class 1259 OID 16748)
+-- Name: bms_book_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.bms_book ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 285 (class 1259 OID 16884)
+-- Name: bms_book_list; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.bms_book_list (
+                                      id integer NOT NULL,
+                                      name text NOT NULL,
+                                      hidden boolean DEFAULT true NOT NULL,
+                                      description text,
+                                      create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.bms_book_list OWNER TO readio;
+
+--
+-- TOC entry 4243 (class 0 OID 0)
+-- Dependencies: 285
+-- Name: TABLE bms_book_list; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.bms_book_list IS '书单';
+
+
+--
+-- TOC entry 4244 (class 0 OID 0)
+-- Dependencies: 285
+-- Name: COLUMN bms_book_list.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_list.name IS '书单名称';
+
+
+--
+-- TOC entry 4245 (class 0 OID 0)
+-- Dependencies: 285
+-- Name: COLUMN bms_book_list.hidden; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_list.hidden IS '是否隐藏书单';
+
+
+--
+-- TOC entry 4246 (class 0 OID 0)
+-- Dependencies: 285
+-- Name: COLUMN bms_book_list.description; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_list.description IS '书单简介';
+
+
+--
+-- TOC entry 287 (class 1259 OID 16896)
+-- Name: bms_book_list_book_relation; Type: TABLE; Schema: public; Owner: readio
+--
 
 CREATE TABLE public.bms_book_list_book_relation (
-                                                    id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                    book_list_id int4 NOT NULL,
-                                                    book_id int4 NOT NULL,
-                                                    create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                                    CONSTRAINT bms_book_list_book_relation_pkey PRIMARY KEY (id),
-                                                    CONSTRAINT bms_book_list_book_relation_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id),
-                                                    CONSTRAINT bms_book_list_book_relation_book_list_id_fkey FOREIGN KEY (book_list_id) REFERENCES public.bms_book_list(id)
+                                                    id integer NOT NULL,
+                                                    book_list_id integer NOT NULL,
+                                                    book_id integer NOT NULL,
+                                                    create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
+
+
+ALTER TABLE public.bms_book_list_book_relation OWNER TO readio;
+
+--
+-- TOC entry 4247 (class 0 OID 0)
+-- Dependencies: 287
+-- Name: TABLE bms_book_list_book_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON TABLE public.bms_book_list_book_relation IS '书单书籍关系';
 
--- Column comments
+
+--
+-- TOC entry 4248 (class 0 OID 0)
+-- Dependencies: 287
+-- Name: COLUMN bms_book_list_book_relation.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
 
 COMMENT ON COLUMN public.bms_book_list_book_relation.create_time IS '创建时间';
 
 
--- public.bms_one_word definition
-
--- Drop table
-
--- DROP TABLE public.bms_one_word;
-
-CREATE TABLE public.bms_one_word (
-                                     id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                     book_id int4 NOT NULL,
-                                     "content" text NOT NULL,
-                                     create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL,
-                                     CONSTRAINT bms_one_word_pkey PRIMARY KEY (id),
-                                     CONSTRAINT bms_one_word_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id)
-);
-COMMENT ON TABLE public.bms_one_word IS '一言';
-
-
--- public.ums_admin_login_log definition
-
--- Drop table
-
--- DROP TABLE public.ums_admin_login_log;
-
-CREATE TABLE public.ums_admin_login_log (
-                                            id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                            admin_id int4 NOT NULL,
-                                            ip text NULL, -- 登陆时管理用户的ip地址
-                                            address text NULL, -- 登陆时管理用户的地理位置
-                                            user_agent text NULL,
-                                            CONSTRAINT ums_admin_login_log_pkey PRIMARY KEY (id),
-                                            CONSTRAINT ums_admin_login_log_admin_id_fkey FOREIGN KEY (admin_id) REFERENCES public.ums_admin(id)
-);
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_admin_login_log.ip IS '登陆时管理用户的ip地址';
-COMMENT ON COLUMN public.ums_admin_login_log.address IS '登陆时管理用户的地理位置';
-
-
--- public.ums_admin_permission_relation definition
-
--- Drop table
-
--- DROP TABLE public.ums_admin_permission_relation;
-
-CREATE TABLE public.ums_admin_permission_relation (
-                                                      id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                      admin_id int4 NOT NULL,
-                                                      permission_id int4 NOT NULL,
-                                                      "type" bool NOT NULL,
-                                                      CONSTRAINT ums_admin_permission_relation_pkey PRIMARY KEY (id),
-                                                      CONSTRAINT ums_admin_permission_relation_admin_id_fkey FOREIGN KEY (admin_id) REFERENCES public.ums_admin(id)
-);
-COMMENT ON TABLE public.ums_admin_permission_relation IS '后台用户和权限关系表(除角色中定义的权限以外的加减权限)';
-
-
--- public.ums_admin_role_relation definition
-
--- Drop table
-
--- DROP TABLE public.ums_admin_role_relation;
-
-CREATE TABLE public.ums_admin_role_relation (
-                                                id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                admin_id int4 NOT NULL,
-                                                role_id int4 NOT NULL,
-                                                CONSTRAINT ums_admin_role_relation_pkey PRIMARY KEY (id),
-                                                CONSTRAINT ums_admin_role_relation_id_fkey FOREIGN KEY (id) REFERENCES public.ums_admin(id)
-);
-COMMENT ON TABLE public.ums_admin_role_relation IS '后台用户和角色关系表';
-
-
--- public.ums_member definition
-
--- Drop table
-
--- DROP TABLE public.ums_member;
-
-CREATE TABLE public.ums_member (
-                                   id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                   member_level_id int4 NOT NULL, -- 用户等级
-                                   username text NOT NULL, -- 用户名¶
-                                   nickname text NULL,
-                                   "password" text NOT NULL, -- 密码
-                                   phone text NULL, -- 手机
-                                   email text NOT NULL, -- 邮箱
-                                   status bool DEFAULT true NOT NULL, -- 用户状态，True表示启用，False表示禁用
-                                   create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 注册时间
-                                   icon text NULL, -- 用户头像
-                                   gender int4 DEFAULT 0 NULL, -- 用户性别，0未知，1女，2男
-                                   birthday date NULL, -- 生日
-                                   city text NOT NULL, -- 用户所在城市
-                                   personalized_signature text NULL, -- 用户个性签名
-                                   integration int4 DEFAULT 0 NOT NULL, -- 用户积分
-                                   growth int4 DEFAULT 0 NOT NULL, -- 用户成长值
-                                   source_type bool NULL, -- 用户来源
-                                   luckey_count int4 DEFAULT 0 NOT NULL, -- 剩余抽奖次数
-                                   history_integration int4 DEFAULT 0 NOT NULL, -- 历史积分数量
-                                   CONSTRAINT ums_member_email_key UNIQUE (email),
-                                   CONSTRAINT ums_member_phone_key UNIQUE (phone),
-                                   CONSTRAINT ums_member_pkey PRIMARY KEY (id),
-                                   CONSTRAINT ums_member_username_key UNIQUE (username),
-                                   CONSTRAINT ums_member_member_level_id_fkey FOREIGN KEY (member_level_id) REFERENCES public.ums_member_level(id)
-);
-COMMENT ON TABLE public.ums_member IS '会员表';
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_member.member_level_id IS '用户等级';
-COMMENT ON COLUMN public.ums_member.username IS '用户名
-';
-COMMENT ON COLUMN public.ums_member."password" IS '密码';
-COMMENT ON COLUMN public.ums_member.phone IS '手机';
-COMMENT ON COLUMN public.ums_member.email IS '邮箱';
-COMMENT ON COLUMN public.ums_member.status IS '用户状态，True表示启用，False表示禁用';
-COMMENT ON COLUMN public.ums_member.create_time IS '注册时间';
-COMMENT ON COLUMN public.ums_member.icon IS '用户头像';
-COMMENT ON COLUMN public.ums_member.gender IS '用户性别，0未知，1女，2男';
-COMMENT ON COLUMN public.ums_member.birthday IS '生日';
-COMMENT ON COLUMN public.ums_member.city IS '用户所在城市';
-COMMENT ON COLUMN public.ums_member.personalized_signature IS '用户个性签名';
-COMMENT ON COLUMN public.ums_member.integration IS '用户积分';
-COMMENT ON COLUMN public.ums_member.growth IS '用户成长值';
-COMMENT ON COLUMN public.ums_member.source_type IS '用户来源';
-COMMENT ON COLUMN public.ums_member.luckey_count IS '剩余抽奖次数';
-COMMENT ON COLUMN public.ums_member.history_integration IS '历史积分数量';
-
-
--- public.ums_member_book_category_relation definition
-
--- Drop table
-
--- DROP TABLE public.ums_member_book_category_relation;
-
-CREATE TABLE public.ums_member_book_category_relation (
-                                                          id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                          member_id int4 NOT NULL,
-                                                          book_category_id int4 NOT NULL,
-                                                          CONSTRAINT ums_member_book_category_relation_pkey PRIMARY KEY (id),
-                                                          CONSTRAINT ums_member_book_category_relation_book_category_id_fkey FOREIGN KEY (book_category_id) REFERENCES public.bms_book_category(id),
-                                                          CONSTRAINT ums_member_book_category_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id)
-);
-COMMENT ON TABLE public.ums_member_book_category_relation IS '会员与书籍分类关系表（用户喜欢的书籍分类）';
-
-
--- public.ums_member_follow_relation definition
-
--- Drop table
-
--- DROP TABLE public.ums_member_follow_relation;
-
-CREATE TABLE public.ums_member_follow_relation (
-                                                   id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                   follower_id int4 NOT NULL,
-                                                   flowee_id int4 NOT NULL,
-                                                   create_time date NOT NULL, -- 创建时间
-                                                   CONSTRAINT ums_member_follow_relation_pkey PRIMARY KEY (id),
-                                                   CONSTRAINT ums_member_follow_relation_flowee_id_fkey FOREIGN KEY (flowee_id) REFERENCES public.ums_member(id),
-                                                   CONSTRAINT ums_member_follow_relation_follower_id_fkey FOREIGN KEY (follower_id) REFERENCES public.ums_member(id)
-);
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_member_follow_relation.create_time IS '创建时间';
-
-
--- public.ums_member_login_log definition
-
--- Drop table
-
--- DROP TABLE public.ums_member_login_log;
-
-CREATE TABLE public.ums_member_login_log (
-                                             id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                             member_id int4 NOT NULL,
-                                             create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                             ip text NULL, -- 登陆时的ip地址
-                                             login_type int4 NULL, -- 登录类型：0->PC；1->android;2->ios;3->小程序
-                                             province text NULL, -- 登陆时所在省份
-                                             city text NULL, -- 登陆时所在的城市
-                                             CONSTRAINT ums_member_login_log_pkey PRIMARY KEY (id),
-                                             CONSTRAINT ums_member_login_log_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id)
-);
-COMMENT ON TABLE public.ums_member_login_log IS '会员登录记录';
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_member_login_log.create_time IS '创建时间';
-COMMENT ON COLUMN public.ums_member_login_log.ip IS '登陆时的ip地址';
-COMMENT ON COLUMN public.ums_member_login_log.login_type IS '登录类型：0->PC；1->android;2->ios;3->小程序';
-COMMENT ON COLUMN public.ums_member_login_log.province IS '登陆时所在省份';
-COMMENT ON COLUMN public.ums_member_login_log.city IS '登陆时所在的城市';
-
-
--- public.ums_member_member_tag_relation definition
-
--- Drop table
-
--- DROP TABLE public.ums_member_member_tag_relation;
-
-CREATE TABLE public.ums_member_member_tag_relation (
-                                                       id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                       member_id int4 NOT NULL,
-                                                       tag_id int4 NOT NULL,
-                                                       CONSTRAINT ums_member_member_tag_relation_pkey PRIMARY KEY (id),
-                                                       CONSTRAINT ums_member_member_tag_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id),
-                                                       CONSTRAINT ums_member_member_tag_relation_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES public.ums_member_tag(id)
-);
-COMMENT ON TABLE public.ums_member_member_tag_relation IS '用户和标签关系表';
-
-
--- public.ums_member_statistics_info definition
-
--- Drop table
-
--- DROP TABLE public.ums_member_statistics_info;
-
-CREATE TABLE public.ums_member_statistics_info (
-                                                   id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                   member_id int4 NOT NULL,
-                                                   consume_amount int4 DEFAULT 0 NOT NULL, -- 累计消费金额
-                                                   order_count int4 DEFAULT 0 NOT NULL, -- 订单数量
-                                                   coupon_count int4 DEFAULT 0 NOT NULL, -- 优惠券数量
-                                                   comment_count int4 DEFAULT 0 NOT NULL, -- 评价数
-                                                   login_count int4 DEFAULT 0 NOT NULL, -- 登录次数
-                                                   attend_count int4 DEFAULT 0 NOT NULL, -- 关注数量
-                                                   fans_count int4 DEFAULT 0 NOT NULL, -- 粉丝数量
-                                                   collect_book_num int4 DEFAULT 0 NOT NULL, -- 收藏的书籍数量
-                                                   collect_topic_count int4 DEFAULT 0 NOT NULL, -- 收藏主题数量
-                                                   collect_comment_count int4 DEFAULT 0 NOT NULL, -- 收藏评论数量
-                                                   invite_friend_count int4 DEFAULT 0 NOT NULL, -- 邀请朋友数量
-                                                   recent_order_time date NULL, -- 最后一次下订单时间
-                                                   CONSTRAINT ums_member_statistics_info_pkey PRIMARY KEY (id),
-                                                   CONSTRAINT ums_member_statistics_info_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id)
-);
-COMMENT ON TABLE public.ums_member_statistics_info IS '会员统计信息';
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_member_statistics_info.consume_amount IS '累计消费金额';
-COMMENT ON COLUMN public.ums_member_statistics_info.order_count IS '订单数量';
-COMMENT ON COLUMN public.ums_member_statistics_info.coupon_count IS '优惠券数量';
-COMMENT ON COLUMN public.ums_member_statistics_info.comment_count IS '评价数';
-COMMENT ON COLUMN public.ums_member_statistics_info.login_count IS '登录次数';
-COMMENT ON COLUMN public.ums_member_statistics_info.attend_count IS '关注数量';
-COMMENT ON COLUMN public.ums_member_statistics_info.fans_count IS '粉丝数量';
-COMMENT ON COLUMN public.ums_member_statistics_info.collect_book_num IS '收藏的书籍数量';
-COMMENT ON COLUMN public.ums_member_statistics_info.collect_topic_count IS '收藏主题数量';
-COMMENT ON COLUMN public.ums_member_statistics_info.collect_comment_count IS '收藏评论数量';
-COMMENT ON COLUMN public.ums_member_statistics_info.invite_friend_count IS '邀请朋友数量';
-COMMENT ON COLUMN public.ums_member_statistics_info.recent_order_time IS '最后一次下订单时间';
-
-
--- public.ums_resource definition
-
--- Drop table
-
--- DROP TABLE public.ums_resource;
-
-CREATE TABLE public.ums_resource (
-                                     id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                     create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                     "name" text NOT NULL, -- 资源名称
-                                     url text NOT NULL, -- 资源URL
-                                     description text NULL, -- 描述
-                                     category_id int4 NOT NULL, -- 资源分类ID
-                                     CONSTRAINT ums_resource_pkey PRIMARY KEY (id),
-                                     CONSTRAINT ums_resource_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.ums_resource_category(id)
-);
-COMMENT ON TABLE public.ums_resource IS '后台资源表';
-
--- Column comments
-
-COMMENT ON COLUMN public.ums_resource.create_time IS '创建时间';
-COMMENT ON COLUMN public.ums_resource."name" IS '资源名称';
-COMMENT ON COLUMN public.ums_resource.url IS '资源URL';
-COMMENT ON COLUMN public.ums_resource.description IS '描述';
-COMMENT ON COLUMN public.ums_resource.category_id IS '资源分类ID';
-
-
--- public.ums_role_menu_relation definition
-
--- Drop table
-
--- DROP TABLE public.ums_role_menu_relation;
-
-CREATE TABLE public.ums_role_menu_relation (
-                                               id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                               role_id int4 NOT NULL,
-                                               menu_id int4 NOT NULL,
-                                               CONSTRAINT ums_role_menu_relation_pkey PRIMARY KEY (id),
-                                               CONSTRAINT ums_role_menu_relation_menu_id_fkey FOREIGN KEY (menu_id) REFERENCES public.ums_menu(id),
-                                               CONSTRAINT ums_role_menu_relation_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.ums_role(id)
-);
-COMMENT ON TABLE public.ums_role_menu_relation IS '后台角色菜单关系表';
-
-
--- public.ums_role_permission_relation definition
-
--- Drop table
-
--- DROP TABLE public.ums_role_permission_relation;
-
-CREATE TABLE public.ums_role_permission_relation (
-                                                     id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                     role_id int4 NOT NULL,
-                                                     permission_id int4 NOT NULL,
-                                                     CONSTRAINT ums_role_permission_relation_pkey PRIMARY KEY (id),
-                                                     CONSTRAINT ums_role_permission_relation_permission_id_fkey FOREIGN KEY (permission_id) REFERENCES public.ums_permission(id),
-                                                     CONSTRAINT ums_role_permission_relation_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.ums_role(id)
-);
-COMMENT ON TABLE public.ums_role_permission_relation IS '后台用户角色和权限关系表';
-
-
--- public.ums_role_resource_relation definition
-
--- Drop table
-
--- DROP TABLE public.ums_role_resource_relation;
-
-CREATE TABLE public.ums_role_resource_relation (
-                                                   id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                   role_id int4 NOT NULL,
-                                                   resource_id int4 NOT NULL,
-                                                   CONSTRAINT ums_role_resource_relation_pkey PRIMARY KEY (id),
-                                                   CONSTRAINT ums_role_resource_relation_resource_id_fkey FOREIGN KEY (resource_id) REFERENCES public.ums_resource(id),
-                                                   CONSTRAINT ums_role_resource_relation_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.ums_role(id)
-);
-COMMENT ON TABLE public.ums_role_resource_relation IS '后台角色资源关系表';
-
-
--- public.bms_book_content_block definition
-
--- Drop table
-
--- DROP TABLE public.bms_book_content_block;
-
-CREATE TABLE public.bms_book_content_block (
-                                               id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                               chapter_id int4 NULL,
-                                               footnote_id int4 NULL,
-                                               book_id int4 NULL,
-                                               author_id int4 NULL,
-                                               "type" int4 NOT NULL, -- 内容块类型：0->文本；1->图片；2->图书超链接；3->作者超链接；4->脚注超链接；5->概念知识超链接
-                                               "order" int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL, -- 内容块顺序
-                                               "content" text NULL, -- 内容块内容
-                                               image text NULL,
-                                               newline bool DEFAULT false NOT NULL, -- 是否需要换行
-                                               CONSTRAINT bms_book_content_block_order_key UNIQUE ("order"),
-                                               CONSTRAINT bms_book_content_block_pkey PRIMARY KEY (id),
-                                               CONSTRAINT bms_book_content_block_author_id_fkey FOREIGN KEY (author_id) REFERENCES public.bms_author(id),
-                                               CONSTRAINT bms_book_content_block_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id),
-                                               CONSTRAINT bms_book_content_block_footnote_id_fkey FOREIGN KEY (footnote_id) REFERENCES public.bms_book_footnote(id)
-);
-COMMENT ON TABLE public.bms_book_content_block IS '书籍内容块';
-
--- Column comments
-
-COMMENT ON COLUMN public.bms_book_content_block."type" IS '内容块类型：0->文本；1->图片；2->图书超链接；3->作者超链接；4->脚注超链接；5->概念知识超链接';
-COMMENT ON COLUMN public.bms_book_content_block."order" IS '内容块顺序';
-COMMENT ON COLUMN public.bms_book_content_block."content" IS '内容块内容';
-COMMENT ON COLUMN public.bms_book_content_block.newline IS '是否需要换行';
-
-
--- public.bms_book_list_member_relation definition
-
--- Drop table
-
--- DROP TABLE public.bms_book_list_member_relation;
+--
+-- TOC entry 286 (class 1259 OID 16895)
+-- Name: bms_book_list_book_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.bms_book_list_book_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_list_book_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 284 (class 1259 OID 16883)
+-- Name: bms_book_list_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.bms_book_list ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_list_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 289 (class 1259 OID 16907)
+-- Name: bms_book_list_member_relation; Type: TABLE; Schema: public; Owner: readio
+--
 
 CREATE TABLE public.bms_book_list_member_relation (
-                                                      id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                      book_list_id int4 NOT NULL,
-                                                      member_id int4 NOT NULL,
-                                                      create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                                      CONSTRAINT bms_book_list_member_relation_pkey PRIMARY KEY (id),
-                                                      CONSTRAINT bms_book_list_member_relation_book_list_id_fkey FOREIGN KEY (book_list_id) REFERENCES public.bms_book_list(id),
-                                                      CONSTRAINT bms_book_list_member_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id)
+                                                      id integer NOT NULL,
+                                                      book_list_id integer NOT NULL,
+                                                      member_id integer NOT NULL,
+                                                      create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
--- Column comments
+
+ALTER TABLE public.bms_book_list_member_relation OWNER TO readio;
+
+--
+-- TOC entry 4249 (class 0 OID 0)
+-- Dependencies: 289
+-- Name: COLUMN bms_book_list_member_relation.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
 
 COMMENT ON COLUMN public.bms_book_list_member_relation.create_time IS '创建时间';
 
 
--- public.bms_book_read_progress definition
+--
+-- TOC entry 288 (class 1259 OID 16906)
+-- Name: bms_book_list_member_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
 
--- Drop table
+ALTER TABLE public.bms_book_list_member_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_list_member_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
 
--- DROP TABLE public.bms_book_read_progress;
+
+--
+-- TOC entry 275 (class 1259 OID 16829)
+-- Name: bms_book_read_progress; Type: TABLE; Schema: public; Owner: readio
+--
 
 CREATE TABLE public.bms_book_read_progress (
-                                               id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                               member_id int4 NOT NULL,
-                                               book_id int4 NOT NULL,
-                                               last_block_id int4 NOT NULL, -- 上一次阅读到的block位置
-                                               update_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 更新时间
-                                               CONSTRAINT bms_book_read_progress_pkey PRIMARY KEY (id),
-                                               CONSTRAINT bms_book_read_progress_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id),
-                                               CONSTRAINT bms_book_read_progress_last_block_id_fkey FOREIGN KEY (last_block_id) REFERENCES public.bms_book_content_block(id),
-                                               CONSTRAINT bms_book_read_progress_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id)
+                                               id integer NOT NULL,
+                                               member_id integer NOT NULL,
+                                               book_id integer NOT NULL,
+                                               last_block_id integer NOT NULL,
+                                               update_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                               is_finished boolean DEFAULT false NOT NULL
 );
+
+
+ALTER TABLE public.bms_book_read_progress OWNER TO readio;
+
+--
+-- TOC entry 4250 (class 0 OID 0)
+-- Dependencies: 275
+-- Name: TABLE bms_book_read_progress; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON TABLE public.bms_book_read_progress IS '书籍阅读进度';
 
--- Column comments
+
+--
+-- TOC entry 4251 (class 0 OID 0)
+-- Dependencies: 275
+-- Name: COLUMN bms_book_read_progress.last_block_id; Type: COMMENT; Schema: public; Owner: readio
+--
 
 COMMENT ON COLUMN public.bms_book_read_progress.last_block_id IS '上一次阅读到的block位置';
+
+
+--
+-- TOC entry 4252 (class 0 OID 0)
+-- Dependencies: 275
+-- Name: COLUMN bms_book_read_progress.update_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.bms_book_read_progress.update_time IS '更新时间';
 
 
--- public.bms_book_select_content_item definition
+--
+-- TOC entry 4253 (class 0 OID 0)
+-- Dependencies: 275
+-- Name: COLUMN bms_book_read_progress.is_finished; Type: COMMENT; Schema: public; Owner: readio
+--
 
--- Drop table
+COMMENT ON COLUMN public.bms_book_read_progress.is_finished IS '是否已经完成了该书籍的阅读';
 
--- DROP TABLE public.bms_book_select_content_item;
+
+--
+-- TOC entry 274 (class 1259 OID 16828)
+-- Name: bms_book_read_progress_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.bms_book_read_progress ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_read_progress_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 269 (class 1259 OID 16787)
+-- Name: bms_book_select_content; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.bms_book_select_content (
+                                                id integer NOT NULL,
+                                                member_id integer NOT NULL,
+                                                type integer NOT NULL,
+                                                mark_type integer,
+                                                mark_color text,
+                                                create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.bms_book_select_content OWNER TO readio;
+
+--
+-- TOC entry 4254 (class 0 OID 0)
+-- Dependencies: 269
+-- Name: TABLE bms_book_select_content; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.bms_book_select_content IS '选中的段落';
+
+
+--
+-- TOC entry 4255 (class 0 OID 0)
+-- Dependencies: 269
+-- Name: COLUMN bms_book_select_content.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_select_content.type IS '选中类型：0->标注；1->评论';
+
+
+--
+-- TOC entry 4256 (class 0 OID 0)
+-- Dependencies: 269
+-- Name: COLUMN bms_book_select_content.mark_type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_select_content.mark_type IS '标注类型：0->荧光笔；1->下划实线；2->下划虚线；3->下划双实线；4->下划圆点；5->下划三角';
+
+
+--
+-- TOC entry 4257 (class 0 OID 0)
+-- Dependencies: 269
+-- Name: COLUMN bms_book_select_content.mark_color; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_select_content.mark_color IS '标记颜色';
+
+
+--
+-- TOC entry 4258 (class 0 OID 0)
+-- Dependencies: 269
+-- Name: COLUMN bms_book_select_content.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_book_select_content.create_time IS '创建时间';
+
+
+--
+-- TOC entry 268 (class 1259 OID 16786)
+-- Name: bms_book_select_content_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.bms_book_select_content ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_select_content_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 271 (class 1259 OID 16800)
+-- Name: bms_book_select_content_item; Type: TABLE; Schema: public; Owner: readio
+--
 
 CREATE TABLE public.bms_book_select_content_item (
-                                                     id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                     select_id int4 NOT NULL,
-                                                     block_id int4 NOT NULL,
-                                                     "offset" int4 DEFAULT 0 NOT NULL, -- block中被选中部分的起始点的偏移量
-                                                     length int4 DEFAULT 0 NOT NULL, -- block中被选中部分的长度
-                                                     CONSTRAINT bms_book_select_content_item_pkey PRIMARY KEY (id),
-                                                     CONSTRAINT bms_book_select_content_item_block_id_fkey FOREIGN KEY (block_id) REFERENCES public.bms_book_content_block(id),
-                                                     CONSTRAINT bms_book_select_content_item_select_id_fkey FOREIGN KEY (select_id) REFERENCES public.bms_book_select_content(id)
+                                                     id integer NOT NULL,
+                                                     select_id integer NOT NULL,
+                                                     block_id integer NOT NULL,
+                                                     "offset" integer DEFAULT 0 NOT NULL,
+                                                     length integer DEFAULT 0 NOT NULL
 );
+
+
+ALTER TABLE public.bms_book_select_content_item OWNER TO readio;
+
+--
+-- TOC entry 4259 (class 0 OID 0)
+-- Dependencies: 271
+-- Name: TABLE bms_book_select_content_item; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON TABLE public.bms_book_select_content_item IS '书籍选中段落项目';
 
--- Column comments
+
+--
+-- TOC entry 4260 (class 0 OID 0)
+-- Dependencies: 271
+-- Name: COLUMN bms_book_select_content_item."offset"; Type: COMMENT; Schema: public; Owner: readio
+--
 
 COMMENT ON COLUMN public.bms_book_select_content_item."offset" IS 'block中被选中部分的起始点的偏移量';
+
+
+--
+-- TOC entry 4261 (class 0 OID 0)
+-- Dependencies: 271
+-- Name: COLUMN bms_book_select_content_item.length; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.bms_book_select_content_item.length IS 'block中被选中部分的长度';
 
 
--- public.bms_book_shelf definition
+--
+-- TOC entry 270 (class 1259 OID 16799)
+-- Name: bms_book_select_content_item_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
 
--- Drop table
+ALTER TABLE public.bms_book_select_content_item ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_select_content_item_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
 
--- DROP TABLE public.bms_book_shelf;
+
+--
+-- TOC entry 281 (class 1259 OID 16863)
+-- Name: bms_book_shelf; Type: TABLE; Schema: public; Owner: readio
+--
 
 CREATE TABLE public.bms_book_shelf (
-                                       id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                       member_id int4 NOT NULL, -- 会员ID
-                                       create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                       CONSTRAINT bms_book_shelf_pkey PRIMARY KEY (id),
-                                       CONSTRAINT bms_book_shelf_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id)
+                                       id integer NOT NULL,
+                                       member_id integer NOT NULL,
+                                       create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
+
+
+ALTER TABLE public.bms_book_shelf OWNER TO readio;
+
+--
+-- TOC entry 4262 (class 0 OID 0)
+-- Dependencies: 281
+-- Name: TABLE bms_book_shelf; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON TABLE public.bms_book_shelf IS '书架';
 
--- Column comments
+
+--
+-- TOC entry 4263 (class 0 OID 0)
+-- Dependencies: 281
+-- Name: COLUMN bms_book_shelf.member_id; Type: COMMENT; Schema: public; Owner: readio
+--
 
 COMMENT ON COLUMN public.bms_book_shelf.member_id IS '会员ID';
+
+
+--
+-- TOC entry 4264 (class 0 OID 0)
+-- Dependencies: 281
+-- Name: COLUMN bms_book_shelf.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.bms_book_shelf.create_time IS '创建时间';
 
 
--- public.bms_book_shelf_book_relation definition
-
--- Drop table
-
--- DROP TABLE public.bms_book_shelf_book_relation;
+--
+-- TOC entry 283 (class 1259 OID 16873)
+-- Name: bms_book_shelf_book_relation; Type: TABLE; Schema: public; Owner: readio
+--
 
 CREATE TABLE public.bms_book_shelf_book_relation (
-                                                     id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                     book_self_id int4 NOT NULL,
-                                                     book_id int4 NOT NULL,
-                                                     create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                                     CONSTRAINT bms_book_shelf_book_relation_pkey PRIMARY KEY (id),
-                                                     CONSTRAINT bms_book_shelf_book_relation_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id),
-                                                     CONSTRAINT bms_book_shelf_book_relation_book_self_id_fkey FOREIGN KEY (book_self_id) REFERENCES public.bms_book_shelf(id)
+                                                     id integer NOT NULL,
+                                                     book_self_id integer NOT NULL,
+                                                     book_id integer NOT NULL,
+                                                     create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
+
+
+ALTER TABLE public.bms_book_shelf_book_relation OWNER TO readio;
+
+--
+-- TOC entry 4265 (class 0 OID 0)
+-- Dependencies: 283
+-- Name: TABLE bms_book_shelf_book_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON TABLE public.bms_book_shelf_book_relation IS '书架与书籍关系';
 
--- Column comments
+
+--
+-- TOC entry 4266 (class 0 OID 0)
+-- Dependencies: 283
+-- Name: COLUMN bms_book_shelf_book_relation.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
 
 COMMENT ON COLUMN public.bms_book_shelf_book_relation.create_time IS '创建时间';
 
 
--- public.cms_member_book_list_relation definition
+--
+-- TOC entry 282 (class 1259 OID 16872)
+-- Name: bms_book_shelf_book_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
 
--- Drop table
+ALTER TABLE public.bms_book_shelf_book_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_shelf_book_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
 
--- DROP TABLE public.cms_member_book_list_relation;
 
-CREATE TABLE public.cms_member_book_list_relation (
-                                                      id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                      "type" int4 NOT NULL, -- 用户与一言的关系类型：0->喜欢 ；1->收藏；2->不喜欢
-                                                      member_id int4 NOT NULL,
-                                                      book_list_id int4 NOT NULL,
-                                                      create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                                      CONSTRAINT cms_member_book_list_relation_pkey PRIMARY KEY (id),
-                                                      CONSTRAINT cms_member_book_list_relation_book_list_id_fkey FOREIGN KEY (book_list_id) REFERENCES public.bms_book_list(id),
-                                                      CONSTRAINT cms_member_book_list_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id)
+--
+-- TOC entry 280 (class 1259 OID 16862)
+-- Name: bms_book_shelf_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.bms_book_shelf ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_book_shelf_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 291 (class 1259 OID 16918)
+-- Name: bms_one_word; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.bms_one_word (
+                                     id integer NOT NULL,
+                                     book_id integer NOT NULL,
+                                     content text NOT NULL,
+                                     create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
-COMMENT ON TABLE public.cms_member_book_list_relation IS '用户与书单的关系';
-
--- Column comments
-
-COMMENT ON COLUMN public.cms_member_book_list_relation."type" IS '用户与一言的关系类型：0->喜欢 ；1->收藏；2->不喜欢';
-COMMENT ON COLUMN public.cms_member_book_list_relation.create_time IS '创建时间';
 
 
--- public.cms_member_book_relation definition
+ALTER TABLE public.bms_one_word OWNER TO readio;
 
--- Drop table
+--
+-- TOC entry 4267 (class 0 OID 0)
+-- Dependencies: 291
+-- Name: TABLE bms_one_word; Type: COMMENT; Schema: public; Owner: readio
+--
 
--- DROP TABLE public.cms_member_book_relation;
+COMMENT ON TABLE public.bms_one_word IS '一言';
 
-CREATE TABLE public.cms_member_book_relation (
-                                                 id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                 "type" int4 NOT NULL, -- 用户与一言的关系类型：0->喜欢 ；1->收藏；2->不喜欢
-                                                 member_id int4 NOT NULL,
-                                                 book_id int4 NOT NULL,
-                                                 create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                                 CONSTRAINT cms_member_book_relation_pkey PRIMARY KEY (id),
-                                                 CONSTRAINT cms_member_book_relation_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id),
-                                                 CONSTRAINT cms_member_book_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id)
+
+--
+-- TOC entry 290 (class 1259 OID 16917)
+-- Name: bms_one_word_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.bms_one_word ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_one_word_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 279 (class 1259 OID 16853)
+-- Name: bms_publisher; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.bms_publisher (
+                                      id integer NOT NULL,
+                                      name text NOT NULL,
+                                      description text,
+                                      create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
-COMMENT ON TABLE public.cms_member_book_relation IS '用户与书籍的关系';
-
--- Column comments
-
-COMMENT ON COLUMN public.cms_member_book_relation."type" IS '用户与一言的关系类型：0->喜欢 ；1->收藏；2->不喜欢';
-COMMENT ON COLUMN public.cms_member_book_relation.create_time IS '创建时间';
 
 
--- public.cms_member_one_word_relation definition
+ALTER TABLE public.bms_publisher OWNER TO readio;
 
--- Drop table
+--
+-- TOC entry 4268 (class 0 OID 0)
+-- Dependencies: 279
+-- Name: TABLE bms_publisher; Type: COMMENT; Schema: public; Owner: readio
+--
 
--- DROP TABLE public.cms_member_one_word_relation;
+COMMENT ON TABLE public.bms_publisher IS '出版社';
 
-CREATE TABLE public.cms_member_one_word_relation (
-                                                     id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                     "type" int4 NOT NULL, -- 用户与一言的关系类型：0->喜欢 ；1->收藏；2->不喜欢
-                                                     member_id int4 NOT NULL,
-                                                     one_workd_id int4 NOT NULL,
-                                                     create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                                     CONSTRAINT cms_member_one_word_relation_pkey PRIMARY KEY (id),
-                                                     CONSTRAINT cms_member_one_word_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id),
-                                                     CONSTRAINT cms_member_one_word_relation_one_workd_id_fkey FOREIGN KEY (one_workd_id) REFERENCES public.bms_one_word(id)
+
+--
+-- TOC entry 4269 (class 0 OID 0)
+-- Dependencies: 279
+-- Name: COLUMN bms_publisher.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_publisher.name IS '出版社名称';
+
+
+--
+-- TOC entry 4270 (class 0 OID 0)
+-- Dependencies: 279
+-- Name: COLUMN bms_publisher.description; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.bms_publisher.description IS '出版社简介';
+
+
+--
+-- TOC entry 278 (class 1259 OID 16852)
+-- Name: bms_publisher_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.bms_publisher ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.bms_publisher_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 302 (class 1259 OID 16985)
+-- Name: cms_comment; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.cms_comment (
+                                    id integer NOT NULL,
+                                    type integer NOT NULL,
+                                    member_id integer NOT NULL,
+                                    book_id integer,
+                                    comment_id integer,
+                                    post_id integer,
+                                    select_id integer NOT NULL,
+                                    create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                    content text NOT NULL
 );
-COMMENT ON TABLE public.cms_member_one_word_relation IS '用户与一言的关系';
-
--- Column comments
-
-COMMENT ON COLUMN public.cms_member_one_word_relation."type" IS '用户与一言的关系类型：0->喜欢 ；1->收藏；2->不喜欢';
-COMMENT ON COLUMN public.cms_member_one_word_relation.create_time IS '创建时间';
 
 
--- public.cms_post definition
+ALTER TABLE public.cms_comment OWNER TO readio;
 
--- Drop table
+--
+-- TOC entry 4271 (class 0 OID 0)
+-- Dependencies: 302
+-- Name: TABLE cms_comment; Type: COMMENT; Schema: public; Owner: readio
+--
 
--- DROP TABLE public.cms_post;
+COMMENT ON TABLE public.cms_comment IS '评论';
+
+
+--
+-- TOC entry 4272 (class 0 OID 0)
+-- Dependencies: 302
+-- Name: COLUMN cms_comment.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_comment.type IS '评论类型：0->帖子评论；1->回复评论；2->书籍评论；3->选中段落评论';
+
+
+--
+-- TOC entry 4273 (class 0 OID 0)
+-- Dependencies: 302
+-- Name: COLUMN cms_comment.select_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_comment.select_id IS '选中段落id';
+
+
+--
+-- TOC entry 4274 (class 0 OID 0)
+-- Dependencies: 302
+-- Name: COLUMN cms_comment.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_comment.create_time IS '创建时间';
+
+
+--
+-- TOC entry 4275 (class 0 OID 0)
+-- Dependencies: 302
+-- Name: COLUMN cms_comment.content; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_comment.content IS '评论内容';
+
+
+--
+-- TOC entry 301 (class 1259 OID 16984)
+-- Name: cms_comment_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.cms_comment ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.cms_comment_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 312 (class 1259 OID 17048)
+-- Name: cms_member_prefer_book_list_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.cms_member_prefer_book_list_relation (
+                                                             id integer CONSTRAINT cms_member_book_list_relation_id_not_null NOT NULL,
+                                                             type integer CONSTRAINT cms_member_book_list_relation_type_not_null NOT NULL,
+                                                             member_id integer CONSTRAINT cms_member_book_list_relation_member_id_not_null NOT NULL,
+                                                             book_list_id integer CONSTRAINT cms_member_book_list_relation_book_list_id_not_null NOT NULL,
+                                                             create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP CONSTRAINT cms_member_book_list_relation_create_time_not_null NOT NULL
+);
+
+
+ALTER TABLE public.cms_member_prefer_book_list_relation OWNER TO readio;
+
+--
+-- TOC entry 4276 (class 0 OID 0)
+-- Dependencies: 312
+-- Name: TABLE cms_member_prefer_book_list_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.cms_member_prefer_book_list_relation IS '用户与书单的喜好关系';
+
+
+--
+-- TOC entry 4277 (class 0 OID 0)
+-- Dependencies: 312
+-- Name: COLUMN cms_member_prefer_book_list_relation.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_member_prefer_book_list_relation.type IS '用户喜好关系类型：0->喜欢 ；1->收藏；2->不喜欢';
+
+
+--
+-- TOC entry 4278 (class 0 OID 0)
+-- Dependencies: 312
+-- Name: COLUMN cms_member_prefer_book_list_relation.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_member_prefer_book_list_relation.create_time IS '创建时间';
+
+
+--
+-- TOC entry 311 (class 1259 OID 17047)
+-- Name: cms_member_book_list_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.cms_member_prefer_book_list_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.cms_member_book_list_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 308 (class 1259 OID 17024)
+-- Name: cms_member_prefer_book_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.cms_member_prefer_book_relation (
+                                                        id integer CONSTRAINT cms_member_book_relation_id_not_null NOT NULL,
+                                                        type integer CONSTRAINT cms_member_book_relation_type_not_null NOT NULL,
+                                                        member_id integer CONSTRAINT cms_member_book_relation_member_id_not_null NOT NULL,
+                                                        book_id integer CONSTRAINT cms_member_book_relation_book_id_not_null NOT NULL,
+                                                        create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP CONSTRAINT cms_member_book_relation_create_time_not_null NOT NULL
+);
+
+
+ALTER TABLE public.cms_member_prefer_book_relation OWNER TO readio;
+
+--
+-- TOC entry 4279 (class 0 OID 0)
+-- Dependencies: 308
+-- Name: TABLE cms_member_prefer_book_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.cms_member_prefer_book_relation IS '用户与书籍的喜好关系';
+
+
+--
+-- TOC entry 4280 (class 0 OID 0)
+-- Dependencies: 308
+-- Name: COLUMN cms_member_prefer_book_relation.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_member_prefer_book_relation.type IS '用户与喜好关系类型：0->喜欢 ；1->收藏；2->不喜欢';
+
+
+--
+-- TOC entry 4281 (class 0 OID 0)
+-- Dependencies: 308
+-- Name: COLUMN cms_member_prefer_book_relation.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_member_prefer_book_relation.create_time IS '创建时间';
+
+
+--
+-- TOC entry 307 (class 1259 OID 17023)
+-- Name: cms_member_book_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.cms_member_prefer_book_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.cms_member_book_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 306 (class 1259 OID 17012)
+-- Name: cms_member_prefer_comment_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.cms_member_prefer_comment_relation (
+                                                           id integer CONSTRAINT cms_member_comment_relation_id_not_null NOT NULL,
+                                                           type integer CONSTRAINT cms_member_comment_relation_type_not_null NOT NULL,
+                                                           member_id integer CONSTRAINT cms_member_comment_relation_member_id_not_null NOT NULL,
+                                                           comment_id integer CONSTRAINT cms_member_comment_relation_comment_id_not_null NOT NULL,
+                                                           create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP CONSTRAINT cms_member_comment_relation_create_time_not_null NOT NULL
+);
+
+
+ALTER TABLE public.cms_member_prefer_comment_relation OWNER TO readio;
+
+--
+-- TOC entry 4282 (class 0 OID 0)
+-- Dependencies: 306
+-- Name: TABLE cms_member_prefer_comment_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.cms_member_prefer_comment_relation IS '用户与评论的喜好关系';
+
+
+--
+-- TOC entry 4283 (class 0 OID 0)
+-- Dependencies: 306
+-- Name: COLUMN cms_member_prefer_comment_relation.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_member_prefer_comment_relation.type IS '用户喜好关系类型：0->喜欢 ；1->收藏；2->不喜欢';
+
+
+--
+-- TOC entry 4284 (class 0 OID 0)
+-- Dependencies: 306
+-- Name: COLUMN cms_member_prefer_comment_relation.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_member_prefer_comment_relation.create_time IS '创建时间';
+
+
+--
+-- TOC entry 305 (class 1259 OID 17011)
+-- Name: cms_member_comment_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.cms_member_prefer_comment_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.cms_member_comment_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 304 (class 1259 OID 17000)
+-- Name: cms_member_prefer_one_word_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.cms_member_prefer_one_word_relation (
+                                                            id integer CONSTRAINT cms_member_one_word_relation_id_not_null NOT NULL,
+                                                            type integer CONSTRAINT cms_member_one_word_relation_type_not_null NOT NULL,
+                                                            member_id integer CONSTRAINT cms_member_one_word_relation_member_id_not_null NOT NULL,
+                                                            one_workd_id integer CONSTRAINT cms_member_one_word_relation_one_workd_id_not_null NOT NULL,
+                                                            create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP CONSTRAINT cms_member_one_word_relation_create_time_not_null NOT NULL
+);
+
+
+ALTER TABLE public.cms_member_prefer_one_word_relation OWNER TO readio;
+
+--
+-- TOC entry 4285 (class 0 OID 0)
+-- Dependencies: 304
+-- Name: TABLE cms_member_prefer_one_word_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.cms_member_prefer_one_word_relation IS '用户与一言的喜好关系';
+
+
+--
+-- TOC entry 4286 (class 0 OID 0)
+-- Dependencies: 304
+-- Name: COLUMN cms_member_prefer_one_word_relation.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_member_prefer_one_word_relation.type IS '用户与一言的关系类型：0->喜欢 ；1->收藏；2->不喜欢';
+
+
+--
+-- TOC entry 4287 (class 0 OID 0)
+-- Dependencies: 304
+-- Name: COLUMN cms_member_prefer_one_word_relation.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_member_prefer_one_word_relation.create_time IS '创建时间';
+
+
+--
+-- TOC entry 303 (class 1259 OID 16999)
+-- Name: cms_member_one_word_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.cms_member_prefer_one_word_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.cms_member_one_word_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 310 (class 1259 OID 17036)
+-- Name: cms_member_prefer_post_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.cms_member_prefer_post_relation (
+                                                        id integer CONSTRAINT cms_member_post_relation_id_not_null NOT NULL,
+                                                        type integer CONSTRAINT cms_member_post_relation_type_not_null NOT NULL,
+                                                        member_id integer CONSTRAINT cms_member_post_relation_member_id_not_null NOT NULL,
+                                                        post_id integer CONSTRAINT cms_member_post_relation_post_id_not_null NOT NULL,
+                                                        create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP CONSTRAINT cms_member_post_relation_create_time_not_null NOT NULL
+);
+
+
+ALTER TABLE public.cms_member_prefer_post_relation OWNER TO readio;
+
+--
+-- TOC entry 4288 (class 0 OID 0)
+-- Dependencies: 310
+-- Name: TABLE cms_member_prefer_post_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.cms_member_prefer_post_relation IS '用户与帖子的喜好关系';
+
+
+--
+-- TOC entry 4289 (class 0 OID 0)
+-- Dependencies: 310
+-- Name: COLUMN cms_member_prefer_post_relation.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_member_prefer_post_relation.type IS '用户与一言的关系类型：0->喜欢 ；1->收藏；2->不喜欢';
+
+
+--
+-- TOC entry 4290 (class 0 OID 0)
+-- Dependencies: 310
+-- Name: COLUMN cms_member_prefer_post_relation.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_member_prefer_post_relation.create_time IS '创建时间';
+
+
+--
+-- TOC entry 309 (class 1259 OID 17035)
+-- Name: cms_member_post_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.cms_member_prefer_post_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.cms_member_post_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 293 (class 1259 OID 16931)
+-- Name: cms_post; Type: TABLE; Schema: public; Owner: readio
+--
 
 CREATE TABLE public.cms_post (
-                                 id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                 member_id int4 NOT NULL,
-                                 visible int4 NOT NULL, -- 可见类型：0->公开，1->私有；2->仅朋友可见（互相关注的人）
-                                 create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                 update_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 更新时间
-                                 publish_time date NULL, -- 发布时间
-                                 title text NOT NULL, -- 帖子标题
-                                 ip text NULL, -- 发送该帖子时用户所在的ip
-                                 address text NULL, -- 发送该帖子时用户所在的位置
-                                 CONSTRAINT cms_post_pkey PRIMARY KEY (id),
-                                 CONSTRAINT cms_post_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id)
+                                 id integer NOT NULL,
+                                 member_id integer NOT NULL,
+                                 visible integer NOT NULL,
+                                 create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                 update_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                 publish_time timestamp without time zone,
+                                 title text NOT NULL,
+                                 ip text,
+                                 address text
 );
+
+
+ALTER TABLE public.cms_post OWNER TO readio;
+
+--
+-- TOC entry 4291 (class 0 OID 0)
+-- Dependencies: 293
+-- Name: TABLE cms_post; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON TABLE public.cms_post IS '帖子';
 
--- Column comments
+
+--
+-- TOC entry 4292 (class 0 OID 0)
+-- Dependencies: 293
+-- Name: COLUMN cms_post.visible; Type: COMMENT; Schema: public; Owner: readio
+--
 
 COMMENT ON COLUMN public.cms_post.visible IS '可见类型：0->公开，1->私有；2->仅朋友可见（互相关注的人）';
+
+
+--
+-- TOC entry 4293 (class 0 OID 0)
+-- Dependencies: 293
+-- Name: COLUMN cms_post.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.cms_post.create_time IS '创建时间';
+
+
+--
+-- TOC entry 4294 (class 0 OID 0)
+-- Dependencies: 293
+-- Name: COLUMN cms_post.update_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.cms_post.update_time IS '更新时间';
+
+
+--
+-- TOC entry 4295 (class 0 OID 0)
+-- Dependencies: 293
+-- Name: COLUMN cms_post.publish_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.cms_post.publish_time IS '发布时间';
+
+
+--
+-- TOC entry 4296 (class 0 OID 0)
+-- Dependencies: 293
+-- Name: COLUMN cms_post.title; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.cms_post.title IS '帖子标题';
+
+
+--
+-- TOC entry 4297 (class 0 OID 0)
+-- Dependencies: 293
+-- Name: COLUMN cms_post.ip; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.cms_post.ip IS '发送该帖子时用户所在的ip';
+
+
+--
+-- TOC entry 4298 (class 0 OID 0)
+-- Dependencies: 293
+-- Name: COLUMN cms_post.address; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON COLUMN public.cms_post.address IS '发送该帖子时用户所在的位置';
 
 
--- public.cms_post_content_block definition
-
--- Drop table
-
--- DROP TABLE public.cms_post_content_block;
+--
+-- TOC entry 296 (class 1259 OID 16948)
+-- Name: cms_post_content_block; Type: TABLE; Schema: public; Owner: readio
+--
 
 CREATE TABLE public.cms_post_content_block (
-                                               id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                               "type" int4 NOT NULL, -- 帖子内容块类型：0 -> 文本；1->标签；2->书籍超链接；3->作者超链接；3->内容块超链接
-                                               post_id int4 NOT NULL,
-                                               "content" text NULL, -- 内容块内容
-                                               book_id int4 NULL,
-                                               author_id int4 NULL,
-                                               block_id int4 NULL,
-                                               "order" int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                               CONSTRAINT cms_post_content_block_order_key UNIQUE ("order"),
-                                               CONSTRAINT cms_post_content_block_pkey PRIMARY KEY (id),
-                                               CONSTRAINT cms_post_content_block_author_id_fkey FOREIGN KEY (author_id) REFERENCES public.bms_author(id),
-                                               CONSTRAINT cms_post_content_block_block_id_fkey FOREIGN KEY (block_id) REFERENCES public.bms_book_content_block(id),
-                                               CONSTRAINT cms_post_content_block_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id),
-                                               CONSTRAINT cms_post_content_block_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.cms_post(id)
+                                               id integer NOT NULL,
+                                               type integer NOT NULL,
+                                               post_id integer NOT NULL,
+                                               content text,
+                                               book_id integer,
+                                               author_id integer,
+                                               block_id integer,
+                                               "order" integer NOT NULL
 );
+
+
+ALTER TABLE public.cms_post_content_block OWNER TO readio;
+
+--
+-- TOC entry 4299 (class 0 OID 0)
+-- Dependencies: 296
+-- Name: TABLE cms_post_content_block; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON TABLE public.cms_post_content_block IS '帖子内容块';
 
--- Column comments
 
-COMMENT ON COLUMN public.cms_post_content_block."type" IS '帖子内容块类型：0 -> 文本；1->标签；2->书籍超链接；3->作者超链接；3->内容块超链接';
-COMMENT ON COLUMN public.cms_post_content_block."content" IS '内容块内容';
+--
+-- TOC entry 4300 (class 0 OID 0)
+-- Dependencies: 296
+-- Name: COLUMN cms_post_content_block.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_post_content_block.type IS '帖子内容块类型：0 -> 文本；1->标签；2->书籍超链接；3->作者超链接；3->内容块超链接';
 
 
--- public.cms_post_tag_relation definition
+--
+-- TOC entry 4301 (class 0 OID 0)
+-- Dependencies: 296
+-- Name: COLUMN cms_post_content_block.content; Type: COMMENT; Schema: public; Owner: readio
+--
 
--- Drop table
+COMMENT ON COLUMN public.cms_post_content_block.content IS '内容块内容';
 
--- DROP TABLE public.cms_post_tag_relation;
+
+--
+-- TOC entry 294 (class 1259 OID 16946)
+-- Name: cms_post_content_block_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.cms_post_content_block ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.cms_post_content_block_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 295 (class 1259 OID 16947)
+-- Name: cms_post_content_block_order_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.cms_post_content_block ALTER COLUMN "order" ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.cms_post_content_block_order_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 292 (class 1259 OID 16930)
+-- Name: cms_post_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.cms_post ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.cms_post_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 298 (class 1259 OID 16962)
+-- Name: cms_post_tag; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.cms_post_tag (
+                                     id integer NOT NULL,
+                                     name text NOT NULL,
+                                     create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.cms_post_tag OWNER TO readio;
+
+--
+-- TOC entry 4302 (class 0 OID 0)
+-- Dependencies: 298
+-- Name: TABLE cms_post_tag; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.cms_post_tag IS '帖子标签';
+
+
+--
+-- TOC entry 4303 (class 0 OID 0)
+-- Dependencies: 298
+-- Name: COLUMN cms_post_tag.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_post_tag.name IS '帖子标签名称';
+
+
+--
+-- TOC entry 4304 (class 0 OID 0)
+-- Dependencies: 298
+-- Name: COLUMN cms_post_tag.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.cms_post_tag.create_time IS '创建时间';
+
+
+--
+-- TOC entry 297 (class 1259 OID 16961)
+-- Name: cms_post_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.cms_post_tag ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.cms_post_tag_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 300 (class 1259 OID 16974)
+-- Name: cms_post_tag_relation; Type: TABLE; Schema: public; Owner: readio
+--
 
 CREATE TABLE public.cms_post_tag_relation (
-                                              id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                              post_id int4 NOT NULL,
-                                              tag_id int4 NOT NULL,
-                                              create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                              CONSTRAINT cms_post_tag_relation_pkey PRIMARY KEY (id),
-                                              CONSTRAINT cms_post_tag_relation_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.cms_post(id),
-                                              CONSTRAINT cms_post_tag_relation_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES public.cms_post_tag(id)
+                                              id integer NOT NULL,
+                                              post_id integer NOT NULL,
+                                              tag_id integer NOT NULL,
+                                              create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
+
+
+ALTER TABLE public.cms_post_tag_relation OWNER TO readio;
+
+--
+-- TOC entry 4305 (class 0 OID 0)
+-- Dependencies: 300
+-- Name: TABLE cms_post_tag_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
 COMMENT ON TABLE public.cms_post_tag_relation IS '帖子标签关系';
 
--- Column comments
+
+--
+-- TOC entry 4306 (class 0 OID 0)
+-- Dependencies: 300
+-- Name: COLUMN cms_post_tag_relation.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
 
 COMMENT ON COLUMN public.cms_post_tag_relation.create_time IS '创建时间';
 
 
--- public.cms_comment definition
+--
+-- TOC entry 299 (class 1259 OID 16973)
+-- Name: cms_post_tag_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
 
--- Drop table
+ALTER TABLE public.cms_post_tag_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.cms_post_tag_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
 
--- DROP TABLE public.cms_comment;
 
-CREATE TABLE public.cms_comment (
-                                    id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                    "type" int4 NOT NULL, -- 评论类型：0->帖子评论；1->回复评论；2->书籍评论；3->选中段落评论
-                                    member_id int4 NOT NULL,
-                                    book_id int4 NULL,
-                                    comment_id int4 NULL,
-                                    post_id int4 NULL,
-                                    select_id int4 NOT NULL, -- 选中段落id
-                                    create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                    "content" text NOT NULL, -- 评论内容
-                                    CONSTRAINT cms_comment_pkey PRIMARY KEY (id),
-                                    CONSTRAINT cms_comment_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id),
-                                    CONSTRAINT cms_comment_comment_id_fkey FOREIGN KEY (comment_id) REFERENCES public.cms_comment(id),
-                                    CONSTRAINT cms_comment_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id),
-                                    CONSTRAINT cms_comment_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.cms_post(id),
-                                    CONSTRAINT cms_comment_select_id_fkey FOREIGN KEY (select_id) REFERENCES public.bms_book_select_content(id)
+--
+-- TOC entry 315 (class 1259 OID 17377)
+-- Name: oms_order; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.oms_order (
+                                  id integer NOT NULL,
+                                  member_id integer NOT NULL,
+                                  coupon_id integer,
+                                  order_sn text NOT NULL,
+                                  create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                  member_username text NOT NULL,
+                                  total_amount numeric DEFAULT 0 NOT NULL,
+                                  pay_amount numeric DEFAULT 0 NOT NULL,
+                                  promotion_amount numeric DEFAULT 0 NOT NULL,
+                                  integration_amount numeric DEFAULT 0 NOT NULL,
+                                  coupon_amount numeric DEFAULT 0 NOT NULL,
+                                  pay_type integer DEFAULT 0 NOT NULL,
+                                  source_type integer DEFAULT 0 NOT NULL,
+                                  status integer DEFAULT 0 NOT NULL,
+                                  integration integer DEFAULT 0 NOT NULL,
+                                  growth integer DEFAULT 0 NOT NULL,
+                                  promotion_info text,
+                                  note text,
+                                  use_integration integer DEFAULT 0 NOT NULL,
+                                  product_id integer NOT NULL
 );
-COMMENT ON TABLE public.cms_comment IS '评论';
-
--- Column comments
-
-COMMENT ON COLUMN public.cms_comment."type" IS '评论类型：0->帖子评论；1->回复评论；2->书籍评论；3->选中段落评论';
-COMMENT ON COLUMN public.cms_comment.select_id IS '选中段落id';
-COMMENT ON COLUMN public.cms_comment.create_time IS '创建时间';
-COMMENT ON COLUMN public.cms_comment."content" IS '评论内容';
 
 
--- public.cms_member_comment_relation definition
+ALTER TABLE public.oms_order OWNER TO readio;
 
--- Drop table
+--
+-- TOC entry 4307 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: TABLE oms_order; Type: COMMENT; Schema: public; Owner: readio
+--
 
--- DROP TABLE public.cms_member_comment_relation;
+COMMENT ON TABLE public.oms_order IS '商品订单';
 
-CREATE TABLE public.cms_member_comment_relation (
-                                                    id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                    "type" int4 NOT NULL, -- 用户与一言的关系类型：0->喜欢 ；1->收藏；2->不喜欢
-                                                    member_id int4 NOT NULL,
-                                                    comment_id int4 NOT NULL,
-                                                    create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                                    CONSTRAINT cms_member_comment_relation_pkey PRIMARY KEY (id),
-                                                    CONSTRAINT cms_member_comment_relation_comment_id_fkey FOREIGN KEY (comment_id) REFERENCES public.cms_comment(id),
-                                                    CONSTRAINT cms_member_comment_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id)
+
+--
+-- TOC entry 4308 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.member_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.member_id IS '下该订单的用户';
+
+
+--
+-- TOC entry 4309 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.coupon_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.coupon_id IS '使用的优惠券ID';
+
+
+--
+-- TOC entry 4310 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.order_sn; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.order_sn IS '订单编号';
+
+
+--
+-- TOC entry 4311 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.create_time IS '订单创建时间';
+
+
+--
+-- TOC entry 4312 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.member_username; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.member_username IS '下订单的用户名';
+
+
+--
+-- TOC entry 4313 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.total_amount; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.total_amount IS '订单总金额';
+
+
+--
+-- TOC entry 4314 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.pay_amount; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.pay_amount IS '应付金额（实际支付金额）';
+
+
+--
+-- TOC entry 4315 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.promotion_amount; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.promotion_amount IS '促销优化金额（促销价、满减、阶梯价）';
+
+
+--
+-- TOC entry 4316 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.integration_amount; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.integration_amount IS '积分抵扣金额';
+
+
+--
+-- TOC entry 4317 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.coupon_amount; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.coupon_amount IS '优惠券抵扣金额';
+
+
+--
+-- TOC entry 4318 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.pay_type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.pay_type IS '支付方式：0->未支付；1->支付宝；2->微信';
+
+
+--
+-- TOC entry 4319 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.source_type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.source_type IS '订单来源：0->PC订单；1->app订单';
+
+
+--
+-- TOC entry 4320 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.status; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.status IS '订单状态：0->待付款；1->已完成；2->已关闭；3->无效订单';
+
+
+--
+-- TOC entry 4321 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.integration; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.integration IS '可以获得的积分';
+
+
+--
+-- TOC entry 4322 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.growth; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.growth IS '可以获得的成长值';
+
+
+--
+-- TOC entry 4323 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.promotion_info; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.promotion_info IS '活动信息';
+
+
+--
+-- TOC entry 4324 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.note; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.note IS '订单备注';
+
+
+--
+-- TOC entry 4325 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.use_integration; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.use_integration IS '下单时使用的积分';
+
+
+--
+-- TOC entry 4326 (class 0 OID 0)
+-- Dependencies: 315
+-- Name: COLUMN oms_order.product_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.oms_order.product_id IS '购买商品ID';
+
+
+--
+-- TOC entry 316 (class 1259 OID 17458)
+-- Name: pms_product; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.pms_product (
+                                    id integer NOT NULL,
+                                    name text NOT NULL,
+                                    product_category_id integer CONSTRAINT pms_product_type_not_null NOT NULL,
+                                    book_id integer,
+                                    chapter_id integer,
+                                    vip_duration integer,
+                                    create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                    price numeric DEFAULT 0 NOT NULL,
+                                    hidden boolean DEFAULT false NOT NULL
 );
-COMMENT ON TABLE public.cms_member_comment_relation IS '用户与评论的关系';
-
--- Column comments
-
-COMMENT ON COLUMN public.cms_member_comment_relation."type" IS '用户与一言的关系类型：0->喜欢 ；1->收藏；2->不喜欢';
-COMMENT ON COLUMN public.cms_member_comment_relation.create_time IS '创建时间';
 
 
--- public.cms_member_post_relation definition
+ALTER TABLE public.pms_product OWNER TO readio;
 
--- Drop table
+--
+-- TOC entry 4327 (class 0 OID 0)
+-- Dependencies: 316
+-- Name: TABLE pms_product; Type: COMMENT; Schema: public; Owner: readio
+--
 
--- DROP TABLE public.cms_member_post_relation;
+COMMENT ON TABLE public.pms_product IS '商品';
 
-CREATE TABLE public.cms_member_post_relation (
-                                                 id int4 GENERATED BY DEFAULT AS IDENTITY( INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1 NO CYCLE) NOT NULL,
-                                                 "type" int4 NOT NULL, -- 用户与一言的关系类型：0->喜欢 ；1->收藏；2->不喜欢
-                                                 member_id int4 NOT NULL,
-                                                 post_id int4 NOT NULL,
-                                                 create_time date DEFAULT CURRENT_TIMESTAMP NOT NULL, -- 创建时间
-                                                 CONSTRAINT cms_member_post_relation_pkey PRIMARY KEY (id),
-                                                 CONSTRAINT cms_member_post_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id),
-                                                 CONSTRAINT cms_member_post_relation_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.cms_post(id)
+
+--
+-- TOC entry 4328 (class 0 OID 0)
+-- Dependencies: 316
+-- Name: COLUMN pms_product.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.pms_product.name IS '商品名称';
+
+
+--
+-- TOC entry 4329 (class 0 OID 0)
+-- Dependencies: 316
+-- Name: COLUMN pms_product.product_category_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.pms_product.product_category_id IS '商品类型ID';
+
+
+--
+-- TOC entry 4330 (class 0 OID 0)
+-- Dependencies: 316
+-- Name: COLUMN pms_product.book_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.pms_product.book_id IS '书籍ID';
+
+
+--
+-- TOC entry 4331 (class 0 OID 0)
+-- Dependencies: 316
+-- Name: COLUMN pms_product.chapter_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.pms_product.chapter_id IS '书籍章节ID';
+
+
+--
+-- TOC entry 4332 (class 0 OID 0)
+-- Dependencies: 316
+-- Name: COLUMN pms_product.vip_duration; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.pms_product.vip_duration IS '会员时长（天）';
+
+
+--
+-- TOC entry 4333 (class 0 OID 0)
+-- Dependencies: 316
+-- Name: COLUMN pms_product.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.pms_product.create_time IS '创建时间';
+
+
+--
+-- TOC entry 4334 (class 0 OID 0)
+-- Dependencies: 316
+-- Name: COLUMN pms_product.price; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.pms_product.price IS '价格';
+
+
+--
+-- TOC entry 4335 (class 0 OID 0)
+-- Dependencies: 316
+-- Name: COLUMN pms_product.hidden; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.pms_product.hidden IS '是否隐藏';
+
+
+--
+-- TOC entry 323 (class 1259 OID 18246)
+-- Name: pms_product_category; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.pms_product_category (
+                                             id integer NOT NULL,
+                                             parent_id integer DEFAULT 0 NOT NULL,
+                                             name text NOT NULL,
+                                             level integer DEFAULT 0 NOT NULL,
+                                             description text,
+                                             create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                             type integer NOT NULL
 );
-COMMENT ON TABLE public.cms_member_post_relation IS '用户与帖子的关系';
 
--- Column comments
 
-COMMENT ON COLUMN public.cms_member_post_relation."type" IS '用户与一言的关系类型：0->喜欢 ；1->收藏；2->不喜欢';
-COMMENT ON COLUMN public.cms_member_post_relation.create_time IS '创建时间';
+ALTER TABLE public.pms_product_category OWNER TO readio;
+
+--
+-- TOC entry 4336 (class 0 OID 0)
+-- Dependencies: 323
+-- Name: TABLE pms_product_category; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.pms_product_category IS '商品类型表';
+
+
+--
+-- TOC entry 4337 (class 0 OID 0)
+-- Dependencies: 323
+-- Name: COLUMN pms_product_category.parent_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.pms_product_category.parent_id IS '上机分类的编号：0表示一级分类';
+
+
+--
+-- TOC entry 4338 (class 0 OID 0)
+-- Dependencies: 323
+-- Name: COLUMN pms_product_category.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.pms_product_category.name IS '分类名称';
+
+
+--
+-- TOC entry 4339 (class 0 OID 0)
+-- Dependencies: 323
+-- Name: COLUMN pms_product_category.level; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.pms_product_category.level IS '分类级别';
+
+
+--
+-- TOC entry 4340 (class 0 OID 0)
+-- Dependencies: 323
+-- Name: COLUMN pms_product_category.description; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.pms_product_category.description IS '类别表述';
+
+
+--
+-- TOC entry 4341 (class 0 OID 0)
+-- Dependencies: 323
+-- Name: COLUMN pms_product_category.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.pms_product_category.type IS '商品类型： 0->书籍；1->章节;  2->会员';
+
+
+--
+-- TOC entry 320 (class 1259 OID 18177)
+-- Name: sms_coupon; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.sms_coupon (
+                                   id integer NOT NULL,
+                                   type integer DEFAULT 0 NOT NULL,
+                                   name text NOT NULL,
+                                   count integer DEFAULT '-1'::integer NOT NULL,
+                                   amount numeric DEFAULT 0 NOT NULL,
+                                   per_limit integer DEFAULT '-1'::integer NOT NULL,
+                                   min_point numeric DEFAULT 0 NOT NULL,
+                                   start_time timestamp without time zone,
+                                   end_time timestamp without time zone,
+                                   use_type integer DEFAULT 0 NOT NULL,
+                                   note text,
+                                   publish_count integer DEFAULT 0 NOT NULL,
+                                   use_count integer DEFAULT 0 NOT NULL,
+                                   receive_count integer DEFAULT 0 NOT NULL,
+                                   code text NOT NULL,
+                                   member_level integer DEFAULT '-1'::integer NOT NULL
+);
+
+
+ALTER TABLE public.sms_coupon OWNER TO readio;
+
+--
+-- TOC entry 4342 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: TABLE sms_coupon; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.sms_coupon IS '优惠券表';
+
+
+--
+-- TOC entry 4343 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.type IS '优惠券类型；0->全场赠券；1->会员赠券；2->购物赠券；3->注册赠券';
+
+
+--
+-- TOC entry 4344 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.name IS '券名称';
+
+
+--
+-- TOC entry 4345 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.count IS '数量：-1表示没有限制';
+
+
+--
+-- TOC entry 4346 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.amount; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.amount IS '金额';
+
+
+--
+-- TOC entry 4347 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.per_limit; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.per_limit IS '每人限领张数: -1表示没有限制';
+
+
+--
+-- TOC entry 4348 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.min_point; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.min_point IS '使用门槛；0表示无门槛';
+
+
+--
+-- TOC entry 4349 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.start_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.start_time IS '开始时间';
+
+
+--
+-- TOC entry 4350 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.end_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.end_time IS '结束时间';
+
+
+--
+-- TOC entry 4351 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.use_type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.use_type IS '使用类型：0->全场通用；1->指定分类；2->指定商品';
+
+
+--
+-- TOC entry 4352 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.note; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.note IS '备注';
+
+
+--
+-- TOC entry 4353 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.publish_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.publish_count IS '已发行数量';
+
+
+--
+-- TOC entry 4354 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.use_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.use_count IS '已使用数量';
+
+
+--
+-- TOC entry 4355 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.receive_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.receive_count IS '领取数量';
+
+
+--
+-- TOC entry 4356 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.code; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.code IS '优惠码';
+
+
+--
+-- TOC entry 4357 (class 0 OID 0)
+-- Dependencies: 320
+-- Name: COLUMN sms_coupon.member_level; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon.member_level IS '可领取的会员类型: -1表示没有限制';
+
+
+--
+-- TOC entry 321 (class 1259 OID 18207)
+-- Name: sms_coupon_history; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.sms_coupon_history (
+                                           id integer NOT NULL,
+                                           coupon_id integer NOT NULL,
+                                           member_id integer NOT NULL,
+                                           coupon_code text,
+                                           member_username text NOT NULL,
+                                           get_type integer NOT NULL,
+                                           create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                           use_status integer DEFAULT 0 NOT NULL,
+                                           use_time timestamp without time zone,
+                                           order_id integer,
+                                           order_sn text
+);
+
+
+ALTER TABLE public.sms_coupon_history OWNER TO readio;
+
+--
+-- TOC entry 4358 (class 0 OID 0)
+-- Dependencies: 321
+-- Name: TABLE sms_coupon_history; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.sms_coupon_history IS '优惠券使用、领取历史表';
+
+
+--
+-- TOC entry 4359 (class 0 OID 0)
+-- Dependencies: 321
+-- Name: COLUMN sms_coupon_history.coupon_code; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon_history.coupon_code IS '优惠券码';
+
+
+--
+-- TOC entry 4360 (class 0 OID 0)
+-- Dependencies: 321
+-- Name: COLUMN sms_coupon_history.member_username; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon_history.member_username IS '领取人用户名';
+
+
+--
+-- TOC entry 4361 (class 0 OID 0)
+-- Dependencies: 321
+-- Name: COLUMN sms_coupon_history.get_type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon_history.get_type IS '获取类型：0->后台赠送；1->主动获取';
+
+
+--
+-- TOC entry 4362 (class 0 OID 0)
+-- Dependencies: 321
+-- Name: COLUMN sms_coupon_history.use_status; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon_history.use_status IS '使用状态：0->未使用；1->已使用；2->已过期';
+
+
+--
+-- TOC entry 4363 (class 0 OID 0)
+-- Dependencies: 321
+-- Name: COLUMN sms_coupon_history.use_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon_history.use_time IS '使用时间';
+
+
+--
+-- TOC entry 4364 (class 0 OID 0)
+-- Dependencies: 321
+-- Name: COLUMN sms_coupon_history.order_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon_history.order_id IS '订单ID';
+
+
+--
+-- TOC entry 4365 (class 0 OID 0)
+-- Dependencies: 321
+-- Name: COLUMN sms_coupon_history.order_sn; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_coupon_history.order_sn IS '订单编号';
+
+
+--
+-- TOC entry 322 (class 1259 OID 18238)
+-- Name: sms_coupon_product_category_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.sms_coupon_product_category_relation (
+                                                             id integer NOT NULL,
+                                                             coupon_id integer NOT NULL,
+                                                             product_category_id integer CONSTRAINT sms_coupon_product_category_relati_product_category_id_not_null NOT NULL,
+                                                             create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.sms_coupon_product_category_relation OWNER TO readio;
+
+--
+-- TOC entry 4366 (class 0 OID 0)
+-- Dependencies: 322
+-- Name: TABLE sms_coupon_product_category_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.sms_coupon_product_category_relation IS '优惠券和产品分类关系表';
+
+
+--
+-- TOC entry 324 (class 1259 OID 18275)
+-- Name: sms_coupon_product_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.sms_coupon_product_relation (
+                                                    id integer NOT NULL,
+                                                    coupon_id integer NOT NULL,
+                                                    product_id integer NOT NULL,
+                                                    create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.sms_coupon_product_relation OWNER TO readio;
+
+--
+-- TOC entry 4367 (class 0 OID 0)
+-- Dependencies: 324
+-- Name: TABLE sms_coupon_product_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.sms_coupon_product_relation IS '优惠券和产品的关系表';
+
+
+--
+-- TOC entry 325 (class 1259 OID 18311)
+-- Name: sms_flash_promotion; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.sms_flash_promotion (
+                                            id integer NOT NULL,
+                                            title text NOT NULL,
+                                            start_date timestamp without time zone,
+                                            end_date timestamp without time zone,
+                                            status boolean DEFAULT true NOT NULL,
+                                            create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.sms_flash_promotion OWNER TO readio;
+
+--
+-- TOC entry 4368 (class 0 OID 0)
+-- Dependencies: 325
+-- Name: TABLE sms_flash_promotion; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.sms_flash_promotion IS '限时购表';
+
+
+--
+-- TOC entry 4369 (class 0 OID 0)
+-- Dependencies: 325
+-- Name: COLUMN sms_flash_promotion.title; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion.title IS '秒杀时间段名称';
+
+
+--
+-- TOC entry 4370 (class 0 OID 0)
+-- Dependencies: 325
+-- Name: COLUMN sms_flash_promotion.start_date; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion.start_date IS '开始日期';
+
+
+--
+-- TOC entry 4371 (class 0 OID 0)
+-- Dependencies: 325
+-- Name: COLUMN sms_flash_promotion.end_date; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion.end_date IS '结束日期';
+
+
+--
+-- TOC entry 4372 (class 0 OID 0)
+-- Dependencies: 325
+-- Name: COLUMN sms_flash_promotion.status; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion.status IS '上下线状态';
+
+
+--
+-- TOC entry 326 (class 1259 OID 18325)
+-- Name: sms_flash_promotion_log; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.sms_flash_promotion_log (
+                                                id integer NOT NULL,
+                                                member_id integer NOT NULL,
+                                                product_id integer NOT NULL,
+                                                member_username text NOT NULL,
+                                                product_name text NOT NULL,
+                                                create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.sms_flash_promotion_log OWNER TO readio;
+
+--
+-- TOC entry 4373 (class 0 OID 0)
+-- Dependencies: 326
+-- Name: TABLE sms_flash_promotion_log; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.sms_flash_promotion_log IS '限时购通知记录';
+
+
+--
+-- TOC entry 4374 (class 0 OID 0)
+-- Dependencies: 326
+-- Name: COLUMN sms_flash_promotion_log.member_username; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion_log.member_username IS '参与限时购的用户名';
+
+
+--
+-- TOC entry 4375 (class 0 OID 0)
+-- Dependencies: 326
+-- Name: COLUMN sms_flash_promotion_log.product_name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion_log.product_name IS '参与活动的商品名';
+
+
+--
+-- TOC entry 327 (class 1259 OID 18349)
+-- Name: sms_flash_promotion_product_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.sms_flash_promotion_product_relation (
+                                                             id integer NOT NULL,
+                                                             flash_promotion_id integer CONSTRAINT sms_flash_promotion_product_relatio_flash_promotion_id_not_null NOT NULL,
+                                                             flash_promotion_session_id integer CONSTRAINT sms_flash_promotion_product_flash_promotion_session_id_not_null NOT NULL,
+                                                             product_id integer NOT NULL,
+                                                             flash_promotion_price numeric DEFAULT 0 CONSTRAINT sms_flash_promotion_product_rela_flash_promotion_price_not_null NOT NULL,
+                                                             flash_promotion_count integer DEFAULT '-1'::integer CONSTRAINT sms_flash_promotion_product_rela_flash_promotion_count_not_null NOT NULL,
+                                                             flash_promotion_limit integer DEFAULT '-1'::integer CONSTRAINT sms_flash_promotion_product_rela_flash_promotion_limit_not_null NOT NULL,
+                                                             create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.sms_flash_promotion_product_relation OWNER TO readio;
+
+--
+-- TOC entry 4376 (class 0 OID 0)
+-- Dependencies: 327
+-- Name: TABLE sms_flash_promotion_product_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.sms_flash_promotion_product_relation IS '商品限时购与商品关系表';
+
+
+--
+-- TOC entry 4377 (class 0 OID 0)
+-- Dependencies: 327
+-- Name: COLUMN sms_flash_promotion_product_relation.flash_promotion_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion_product_relation.flash_promotion_id IS '限时购ID';
+
+
+--
+-- TOC entry 4378 (class 0 OID 0)
+-- Dependencies: 327
+-- Name: COLUMN sms_flash_promotion_product_relation.flash_promotion_session_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion_product_relation.flash_promotion_session_id IS '限时购会话ID';
+
+
+--
+-- TOC entry 4379 (class 0 OID 0)
+-- Dependencies: 327
+-- Name: COLUMN sms_flash_promotion_product_relation.product_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion_product_relation.product_id IS '参与限时购的商品ID';
+
+
+--
+-- TOC entry 4380 (class 0 OID 0)
+-- Dependencies: 327
+-- Name: COLUMN sms_flash_promotion_product_relation.flash_promotion_price; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion_product_relation.flash_promotion_price IS '限时购商品价格';
+
+
+--
+-- TOC entry 4381 (class 0 OID 0)
+-- Dependencies: 327
+-- Name: COLUMN sms_flash_promotion_product_relation.flash_promotion_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion_product_relation.flash_promotion_count IS '限时购商品数量：-1表示无限制';
+
+
+--
+-- TOC entry 4382 (class 0 OID 0)
+-- Dependencies: 327
+-- Name: COLUMN sms_flash_promotion_product_relation.flash_promotion_limit; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion_product_relation.flash_promotion_limit IS '每人限时购商品数量限制： -1表示无限制';
+
+
+--
+-- TOC entry 328 (class 1259 OID 18378)
+-- Name: sms_flash_promotion_session; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.sms_flash_promotion_session (
+                                                    id integer NOT NULL,
+                                                    name text NOT NULL,
+                                                    start_time time without time zone,
+                                                    end_time time without time zone,
+                                                    status boolean DEFAULT true NOT NULL,
+                                                    create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.sms_flash_promotion_session OWNER TO readio;
+
+--
+-- TOC entry 4383 (class 0 OID 0)
+-- Dependencies: 328
+-- Name: TABLE sms_flash_promotion_session; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.sms_flash_promotion_session IS '限时购场次表';
+
+
+--
+-- TOC entry 4384 (class 0 OID 0)
+-- Dependencies: 328
+-- Name: COLUMN sms_flash_promotion_session.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion_session.name IS '场次名称';
+
+
+--
+-- TOC entry 4385 (class 0 OID 0)
+-- Dependencies: 328
+-- Name: COLUMN sms_flash_promotion_session.start_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion_session.start_time IS '每日开始时间';
+
+
+--
+-- TOC entry 4386 (class 0 OID 0)
+-- Dependencies: 328
+-- Name: COLUMN sms_flash_promotion_session.end_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion_session.end_time IS '每日结束时间';
+
+
+--
+-- TOC entry 4387 (class 0 OID 0)
+-- Dependencies: 328
+-- Name: COLUMN sms_flash_promotion_session.status; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.sms_flash_promotion_session.status IS '启用状态：false->不启用；true->启用';
+
+
+--
+-- TOC entry 220 (class 1259 OID 16413)
+-- Name: ums_admin; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_admin (
+                                  id integer NOT NULL,
+                                  member_level_id integer NOT NULL,
+                                  username text NOT NULL,
+                                  nickname text,
+                                  password text NOT NULL,
+                                  phone text,
+                                  email text NOT NULL,
+                                  status boolean DEFAULT true NOT NULL,
+                                  create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                  login_time timestamp without time zone,
+                                  icon text,
+                                  note text
+);
+
+
+ALTER TABLE public.ums_admin OWNER TO readio;
+
+--
+-- TOC entry 4388 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: TABLE ums_admin; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_admin IS '管理用户';
+
+
+--
+-- TOC entry 4389 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: COLUMN ums_admin.member_level_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_admin.member_level_id IS '用户等级';
+
+
+--
+-- TOC entry 4390 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: COLUMN ums_admin.username; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_admin.username IS '用户名
+';
+
+
+--
+-- TOC entry 4391 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: COLUMN ums_admin.password; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_admin.password IS '密码';
+
+
+--
+-- TOC entry 4392 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: COLUMN ums_admin.phone; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_admin.phone IS '手机';
+
+
+--
+-- TOC entry 4393 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: COLUMN ums_admin.email; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_admin.email IS '邮箱';
+
+
+--
+-- TOC entry 4394 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: COLUMN ums_admin.status; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_admin.status IS '用户状态，True表示启用，False表示禁用';
+
+
+--
+-- TOC entry 4395 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: COLUMN ums_admin.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_admin.create_time IS '注册时间';
+
+
+--
+-- TOC entry 4396 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: COLUMN ums_admin.login_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_admin.login_time IS '最后登录时间';
+
+
+--
+-- TOC entry 4397 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: COLUMN ums_admin.icon; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_admin.icon IS '用户头像';
+
+
+--
+-- TOC entry 4398 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: COLUMN ums_admin.note; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_admin.note IS '备注信息';
+
+
+--
+-- TOC entry 219 (class 1259 OID 16412)
+-- Name: ums_admin_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_admin ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_admin_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 222 (class 1259 OID 16436)
+-- Name: ums_admin_login_log; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_admin_login_log (
+                                            id integer NOT NULL,
+                                            admin_id integer NOT NULL,
+                                            ip text,
+                                            address text,
+                                            user_agent text,
+                                            create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.ums_admin_login_log OWNER TO readio;
+
+--
+-- TOC entry 4399 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: COLUMN ums_admin_login_log.ip; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_admin_login_log.ip IS '登陆时管理用户的ip地址';
+
+
+--
+-- TOC entry 4400 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: COLUMN ums_admin_login_log.address; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_admin_login_log.address IS '登陆时管理用户的地理位置';
+
+
+--
+-- TOC entry 221 (class 1259 OID 16435)
+-- Name: ums_admin_login_log_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_admin_login_log ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_admin_login_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 224 (class 1259 OID 16446)
+-- Name: ums_admin_permission_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_admin_permission_relation (
+                                                      id integer NOT NULL,
+                                                      admin_id integer NOT NULL,
+                                                      permission_id integer NOT NULL,
+                                                      type boolean NOT NULL,
+                                                      create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.ums_admin_permission_relation OWNER TO readio;
+
+--
+-- TOC entry 4401 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: TABLE ums_admin_permission_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_admin_permission_relation IS '后台用户和权限关系表(除角色中定义的权限以外的加减权限)';
+
+
+--
+-- TOC entry 223 (class 1259 OID 16445)
+-- Name: ums_admin_permission_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_admin_permission_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_admin_permission_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 226 (class 1259 OID 16456)
+-- Name: ums_admin_role_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_admin_role_relation (
+                                                id integer NOT NULL,
+                                                admin_id integer NOT NULL,
+                                                role_id integer NOT NULL,
+                                                create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.ums_admin_role_relation OWNER TO readio;
+
+--
+-- TOC entry 4402 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: TABLE ums_admin_role_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_admin_role_relation IS '后台用户和角色关系表';
+
+
+--
+-- TOC entry 225 (class 1259 OID 16455)
+-- Name: ums_admin_role_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_admin_role_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_admin_role_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 244 (class 1259 OID 16574)
+-- Name: ums_member; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_member (
+                                   id integer NOT NULL,
+                                   member_level_id integer NOT NULL,
+                                   username text NOT NULL,
+                                   nickname text,
+                                   password text NOT NULL,
+                                   phone text,
+                                   email text NOT NULL,
+                                   status boolean DEFAULT true NOT NULL,
+                                   create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                   icon text,
+                                   gender integer DEFAULT 0,
+                                   birthday date,
+                                   city text NOT NULL,
+                                   personalized_signature text,
+                                   integration integer DEFAULT 0 NOT NULL,
+                                   growth integer DEFAULT 0 NOT NULL,
+                                   source_type boolean,
+                                   luckey_count integer DEFAULT 0 NOT NULL,
+                                   history_integration integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public.ums_member OWNER TO readio;
+
+--
+-- TOC entry 4403 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: TABLE ums_member; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_member IS '会员表';
+
+
+--
+-- TOC entry 4404 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.member_level_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.member_level_id IS '用户等级';
+
+
+--
+-- TOC entry 4405 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.username; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.username IS '用户名
+';
+
+
+--
+-- TOC entry 4406 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.password; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.password IS '密码';
+
+
+--
+-- TOC entry 4407 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.phone; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.phone IS '手机';
+
+
+--
+-- TOC entry 4408 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.email; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.email IS '邮箱';
+
+
+--
+-- TOC entry 4409 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.status; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.status IS '用户状态，True表示启用，False表示禁用';
+
+
+--
+-- TOC entry 4410 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.create_time IS '注册时间';
+
+
+--
+-- TOC entry 4411 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.icon; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.icon IS '用户头像';
+
+
+--
+-- TOC entry 4412 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.gender; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.gender IS '用户性别，0未知，1女，2男';
+
+
+--
+-- TOC entry 4413 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.birthday; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.birthday IS '生日';
+
+
+--
+-- TOC entry 4414 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.city; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.city IS '用户所在城市';
+
+
+--
+-- TOC entry 4415 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.personalized_signature; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.personalized_signature IS '用户个性签名';
+
+
+--
+-- TOC entry 4416 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.integration; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.integration IS '用户积分';
+
+
+--
+-- TOC entry 4417 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.growth; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.growth IS '用户成长值';
+
+
+--
+-- TOC entry 4418 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.source_type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.source_type IS '用户来源';
+
+
+--
+-- TOC entry 4419 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.luckey_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.luckey_count IS '剩余抽奖次数';
+
+
+--
+-- TOC entry 4420 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: COLUMN ums_member.history_integration; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member.history_integration IS '历史积分数量';
+
+
+--
+-- TOC entry 254 (class 1259 OID 16668)
+-- Name: ums_member_book_category_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_member_book_category_relation (
+                                                          id integer NOT NULL,
+                                                          member_id integer NOT NULL,
+                                                          book_category_id integer NOT NULL,
+                                                          create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.ums_member_book_category_relation OWNER TO readio;
+
+--
+-- TOC entry 4421 (class 0 OID 0)
+-- Dependencies: 254
+-- Name: TABLE ums_member_book_category_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_member_book_category_relation IS '会员与书籍分类关系表（用户喜欢的书籍分类）';
+
+
+--
+-- TOC entry 253 (class 1259 OID 16667)
+-- Name: ums_member_book_category_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_member_book_category_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_member_book_category_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 314 (class 1259 OID 17060)
+-- Name: ums_member_follow_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_member_follow_relation (
+                                                   id integer NOT NULL,
+                                                   follower_id integer NOT NULL,
+                                                   flowee_id integer NOT NULL,
+                                                   create_time timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.ums_member_follow_relation OWNER TO readio;
+
+--
+-- TOC entry 4422 (class 0 OID 0)
+-- Dependencies: 314
+-- Name: COLUMN ums_member_follow_relation.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_follow_relation.create_time IS '创建时间';
+
+
+--
+-- TOC entry 313 (class 1259 OID 17059)
+-- Name: ums_member_follow_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_member_follow_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_member_follow_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 243 (class 1259 OID 16573)
+-- Name: ums_member_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_member ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_member_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 246 (class 1259 OID 16607)
+-- Name: ums_member_level; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_member_level (
+                                         id integer NOT NULL,
+                                         name text NOT NULL,
+                                         growth_point integer DEFAULT 0 NOT NULL,
+                                         default_status boolean DEFAULT false NOT NULL,
+                                         comment_growth_point integer DEFAULT 0 NOT NULL,
+                                         priviledge_sign_in boolean DEFAULT false NOT NULL,
+                                         priviledge_comment boolean DEFAULT false NOT NULL,
+                                         priviledge_promotion boolean DEFAULT false NOT NULL,
+                                         priviledge_member_price boolean DEFAULT false NOT NULL,
+                                         priviledge_birthday boolean DEFAULT false NOT NULL,
+                                         note text
+);
+
+
+ALTER TABLE public.ums_member_level OWNER TO readio;
+
+--
+-- TOC entry 4423 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: TABLE ums_member_level; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_member_level IS '会员等级表';
+
+
+--
+-- TOC entry 4424 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: COLUMN ums_member_level.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_level.name IS '等级名称';
+
+
+--
+-- TOC entry 4425 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: COLUMN ums_member_level.growth_point; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_level.growth_point IS '该级别所需成长点数';
+
+
+--
+-- TOC entry 4426 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: COLUMN ums_member_level.default_status; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_level.default_status IS '是否为默认等级：0->不是；1->是';
+
+
+--
+-- TOC entry 4427 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: COLUMN ums_member_level.comment_growth_point; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_level.comment_growth_point IS '每次评论获取的成长值';
+
+
+--
+-- TOC entry 4428 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: COLUMN ums_member_level.priviledge_sign_in; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_level.priviledge_sign_in IS '是否有签到特权';
+
+
+--
+-- TOC entry 4429 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: COLUMN ums_member_level.priviledge_comment; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_level.priviledge_comment IS '是否有评论获奖励特权';
+
+
+--
+-- TOC entry 4430 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: COLUMN ums_member_level.priviledge_promotion; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_level.priviledge_promotion IS '是否有专享活动特权';
+
+
+--
+-- TOC entry 4431 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: COLUMN ums_member_level.priviledge_member_price; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_level.priviledge_member_price IS '是否有会员价格特权';
+
+
+--
+-- TOC entry 4432 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: COLUMN ums_member_level.priviledge_birthday; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_level.priviledge_birthday IS '是否有生日特权';
+
+
+--
+-- TOC entry 4433 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: COLUMN ums_member_level.note; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_level.note IS '备注';
+
+
+--
+-- TOC entry 245 (class 1259 OID 16606)
+-- Name: ums_member_level_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_member_level ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_member_level_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 248 (class 1259 OID 16633)
+-- Name: ums_member_login_log; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_member_login_log (
+                                             id integer NOT NULL,
+                                             member_id integer NOT NULL,
+                                             create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                             ip text,
+                                             login_type integer,
+                                             province text,
+                                             city text
+);
+
+
+ALTER TABLE public.ums_member_login_log OWNER TO readio;
+
+--
+-- TOC entry 4434 (class 0 OID 0)
+-- Dependencies: 248
+-- Name: TABLE ums_member_login_log; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_member_login_log IS '会员登录记录';
+
+
+--
+-- TOC entry 4435 (class 0 OID 0)
+-- Dependencies: 248
+-- Name: COLUMN ums_member_login_log.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_login_log.create_time IS '创建时间';
+
+
+--
+-- TOC entry 4436 (class 0 OID 0)
+-- Dependencies: 248
+-- Name: COLUMN ums_member_login_log.ip; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_login_log.ip IS '登陆时的ip地址';
+
+
+--
+-- TOC entry 4437 (class 0 OID 0)
+-- Dependencies: 248
+-- Name: COLUMN ums_member_login_log.login_type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_login_log.login_type IS '登录类型：0->PC；1->android;2->ios;3->小程序';
+
+
+--
+-- TOC entry 4438 (class 0 OID 0)
+-- Dependencies: 248
+-- Name: COLUMN ums_member_login_log.province; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_login_log.province IS '登陆时所在省份';
+
+
+--
+-- TOC entry 4439 (class 0 OID 0)
+-- Dependencies: 248
+-- Name: COLUMN ums_member_login_log.city; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_login_log.city IS '登陆时所在的城市';
+
+
+--
+-- TOC entry 247 (class 1259 OID 16632)
+-- Name: ums_member_login_log_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_member_login_log ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_member_login_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 250 (class 1259 OID 16645)
+-- Name: ums_member_member_tag_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_member_member_tag_relation (
+                                                       id integer NOT NULL,
+                                                       member_id integer NOT NULL,
+                                                       tag_id integer NOT NULL,
+                                                       create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.ums_member_member_tag_relation OWNER TO readio;
+
+--
+-- TOC entry 4440 (class 0 OID 0)
+-- Dependencies: 250
+-- Name: TABLE ums_member_member_tag_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_member_member_tag_relation IS '用户和标签关系表';
+
+
+--
+-- TOC entry 249 (class 1259 OID 16644)
+-- Name: ums_member_member_tag_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_member_member_tag_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_member_member_tag_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 330 (class 1259 OID 18412)
+-- Name: ums_member_own_book_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_member_own_book_relation (
+                                                     id integer NOT NULL,
+                                                     member_id integer NOT NULL,
+                                                     book_id integer NOT NULL,
+                                                     duration integer DEFAULT '-1'::integer NOT NULL,
+                                                     create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.ums_member_own_book_relation OWNER TO readio;
+
+--
+-- TOC entry 4441 (class 0 OID 0)
+-- Dependencies: 330
+-- Name: TABLE ums_member_own_book_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_member_own_book_relation IS '用户拥有的书本表（特指通过活动，购买等方式获取到的书籍，拥有永久访问权限）';
+
+
+--
+-- TOC entry 4442 (class 0 OID 0)
+-- Dependencies: 330
+-- Name: COLUMN ums_member_own_book_relation.duration; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_own_book_relation.duration IS '拥有书籍的时间： -1表示无限制';
+
+
+--
+-- TOC entry 256 (class 1259 OID 16677)
+-- Name: ums_member_rule_setting; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_member_rule_setting (
+                                                id integer NOT NULL,
+                                                continue_sign_day integer DEFAULT 0,
+                                                continue_sign_point integer DEFAULT 0,
+                                                consume_per_point numeric DEFAULT 0,
+                                                low_order_amount numeric DEFAULT 0,
+                                                max_point_per_order integer DEFAULT 0,
+                                                type integer NOT NULL,
+                                                create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.ums_member_rule_setting OWNER TO readio;
+
+--
+-- TOC entry 4443 (class 0 OID 0)
+-- Dependencies: 256
+-- Name: TABLE ums_member_rule_setting; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_member_rule_setting IS '会员积分成长规则表';
+
+
+--
+-- TOC entry 4444 (class 0 OID 0)
+-- Dependencies: 256
+-- Name: COLUMN ums_member_rule_setting.continue_sign_day; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_rule_setting.continue_sign_day IS '连续签到天数';
+
+
+--
+-- TOC entry 4445 (class 0 OID 0)
+-- Dependencies: 256
+-- Name: COLUMN ums_member_rule_setting.continue_sign_point; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_rule_setting.continue_sign_point IS '连续签到赠送数量';
+
+
+--
+-- TOC entry 4446 (class 0 OID 0)
+-- Dependencies: 256
+-- Name: COLUMN ums_member_rule_setting.consume_per_point; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_rule_setting.consume_per_point IS '每消费多少元获取1个点';
+
+
+--
+-- TOC entry 4447 (class 0 OID 0)
+-- Dependencies: 256
+-- Name: COLUMN ums_member_rule_setting.low_order_amount; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_rule_setting.low_order_amount IS '最低获取点数的订单金额';
+
+
+--
+-- TOC entry 4448 (class 0 OID 0)
+-- Dependencies: 256
+-- Name: COLUMN ums_member_rule_setting.max_point_per_order; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_rule_setting.max_point_per_order IS '每笔订单最高获取点数';
+
+
+--
+-- TOC entry 4449 (class 0 OID 0)
+-- Dependencies: 256
+-- Name: COLUMN ums_member_rule_setting.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_rule_setting.type IS '类型：0->积分规则；1->成长值规则';
+
+
+--
+-- TOC entry 255 (class 1259 OID 16676)
+-- Name: ums_member_rule_setting_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_member_rule_setting ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_member_rule_setting_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 258 (class 1259 OID 16694)
+-- Name: ums_member_statistics_info; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_member_statistics_info (
+                                                   id integer NOT NULL,
+                                                   member_id integer NOT NULL,
+                                                   consume_amount integer DEFAULT 0 NOT NULL,
+                                                   order_count integer DEFAULT 0 NOT NULL,
+                                                   coupon_count integer DEFAULT 0 NOT NULL,
+                                                   comment_count integer DEFAULT 0 NOT NULL,
+                                                   login_count integer DEFAULT 0 NOT NULL,
+                                                   attend_count integer DEFAULT 0 NOT NULL,
+                                                   fans_count integer DEFAULT 0 NOT NULL,
+                                                   collect_book_num integer DEFAULT 0 NOT NULL,
+                                                   collect_topic_count integer DEFAULT 0 NOT NULL,
+                                                   collect_comment_count integer DEFAULT 0 NOT NULL,
+                                                   invite_friend_count integer DEFAULT 0 NOT NULL,
+                                                   recent_order_time timestamp without time zone,
+                                                   create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.ums_member_statistics_info OWNER TO readio;
+
+--
+-- TOC entry 4450 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: TABLE ums_member_statistics_info; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_member_statistics_info IS '会员统计信息';
+
+
+--
+-- TOC entry 4451 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: COLUMN ums_member_statistics_info.consume_amount; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_statistics_info.consume_amount IS '累计消费金额';
+
+
+--
+-- TOC entry 4452 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: COLUMN ums_member_statistics_info.order_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_statistics_info.order_count IS '订单数量';
+
+
+--
+-- TOC entry 4453 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: COLUMN ums_member_statistics_info.coupon_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_statistics_info.coupon_count IS '优惠券数量';
+
+
+--
+-- TOC entry 4454 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: COLUMN ums_member_statistics_info.comment_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_statistics_info.comment_count IS '评价数';
+
+
+--
+-- TOC entry 4455 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: COLUMN ums_member_statistics_info.login_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_statistics_info.login_count IS '登录次数';
+
+
+--
+-- TOC entry 4456 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: COLUMN ums_member_statistics_info.attend_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_statistics_info.attend_count IS '关注数量';
+
+
+--
+-- TOC entry 4457 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: COLUMN ums_member_statistics_info.fans_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_statistics_info.fans_count IS '粉丝数量';
+
+
+--
+-- TOC entry 4458 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: COLUMN ums_member_statistics_info.collect_book_num; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_statistics_info.collect_book_num IS '收藏的书籍数量';
+
+
+--
+-- TOC entry 4459 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: COLUMN ums_member_statistics_info.collect_topic_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_statistics_info.collect_topic_count IS '收藏主题数量';
+
+
+--
+-- TOC entry 4460 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: COLUMN ums_member_statistics_info.collect_comment_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_statistics_info.collect_comment_count IS '收藏评论数量';
+
+
+--
+-- TOC entry 4461 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: COLUMN ums_member_statistics_info.invite_friend_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_statistics_info.invite_friend_count IS '邀请朋友数量';
+
+
+--
+-- TOC entry 4462 (class 0 OID 0)
+-- Dependencies: 258
+-- Name: COLUMN ums_member_statistics_info.recent_order_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_statistics_info.recent_order_time IS '最后一次下订单时间';
+
+
+--
+-- TOC entry 257 (class 1259 OID 16693)
+-- Name: ums_member_statistics_info_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_member_statistics_info ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_member_statistics_info_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 252 (class 1259 OID 16654)
+-- Name: ums_member_tag; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_member_tag (
+                                       id integer NOT NULL,
+                                       name text NOT NULL,
+                                       create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.ums_member_tag OWNER TO readio;
+
+--
+-- TOC entry 4463 (class 0 OID 0)
+-- Dependencies: 252
+-- Name: TABLE ums_member_tag; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_member_tag IS '用户标签表';
+
+
+--
+-- TOC entry 4464 (class 0 OID 0)
+-- Dependencies: 252
+-- Name: COLUMN ums_member_tag.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_tag.name IS '标签名称';
+
+
+--
+-- TOC entry 251 (class 1259 OID 16653)
+-- Name: ums_member_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_member_tag ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_member_tag_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 260 (class 1259 OID 16724)
+-- Name: ums_member_task; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_member_task (
+                                        id integer NOT NULL,
+                                        name text NOT NULL,
+                                        growth integer DEFAULT 0 NOT NULL,
+                                        intergration integer DEFAULT 0 NOT NULL,
+                                        type integer,
+                                        create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.ums_member_task OWNER TO readio;
+
+--
+-- TOC entry 4465 (class 0 OID 0)
+-- Dependencies: 260
+-- Name: TABLE ums_member_task; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_member_task IS '会员任务表';
+
+
+--
+-- TOC entry 4466 (class 0 OID 0)
+-- Dependencies: 260
+-- Name: COLUMN ums_member_task.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_task.name IS '任务名称';
+
+
+--
+-- TOC entry 4467 (class 0 OID 0)
+-- Dependencies: 260
+-- Name: COLUMN ums_member_task.growth; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_task.growth IS '赠送成长值';
+
+
+--
+-- TOC entry 4468 (class 0 OID 0)
+-- Dependencies: 260
+-- Name: COLUMN ums_member_task.intergration; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_task.intergration IS '赠送积分';
+
+
+--
+-- TOC entry 4469 (class 0 OID 0)
+-- Dependencies: 260
+-- Name: COLUMN ums_member_task.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_task.type IS '任务类型：0->新手任务；1->日常任务';
+
+
+--
+-- TOC entry 259 (class 1259 OID 16723)
+-- Name: ums_member_task_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_member_task ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_member_task_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 329 (class 1259 OID 18396)
+-- Name: ums_member_vip_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_member_vip_relation (
+                                                id integer NOT NULL,
+                                                member_id integer NOT NULL,
+                                                create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                                duration integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public.ums_member_vip_relation OWNER TO readio;
+
+--
+-- TOC entry 4470 (class 0 OID 0)
+-- Dependencies: 329
+-- Name: TABLE ums_member_vip_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_member_vip_relation IS '用户VIP信息';
+
+
+--
+-- TOC entry 4471 (class 0 OID 0)
+-- Dependencies: 329
+-- Name: COLUMN ums_member_vip_relation.member_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_vip_relation.member_id IS '充值了VIP的用户';
+
+
+--
+-- TOC entry 4472 (class 0 OID 0)
+-- Dependencies: 329
+-- Name: COLUMN ums_member_vip_relation.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_vip_relation.create_time IS '创建时间';
+
+
+--
+-- TOC entry 4473 (class 0 OID 0)
+-- Dependencies: 329
+-- Name: COLUMN ums_member_vip_relation.duration; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_member_vip_relation.duration IS '会员时长';
+
+
+--
+-- TOC entry 234 (class 1259 OID 16501)
+-- Name: ums_menu; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_menu (
+                                 id integer NOT NULL,
+                                 parent_id integer,
+                                 create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                 title text NOT NULL,
+                                 level integer DEFAULT 0 NOT NULL,
+                                 sort integer DEFAULT 0 NOT NULL,
+                                 name text,
+                                 icon text,
+                                 hidden boolean DEFAULT false NOT NULL
+);
+
+
+ALTER TABLE public.ums_menu OWNER TO readio;
+
+--
+-- TOC entry 4474 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: TABLE ums_menu; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_menu IS '后台菜单表';
+
+
+--
+-- TOC entry 4475 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: COLUMN ums_menu.parent_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_menu.parent_id IS '父级ID';
+
+
+--
+-- TOC entry 4476 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: COLUMN ums_menu.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_menu.create_time IS '创建时间';
+
+
+--
+-- TOC entry 4477 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: COLUMN ums_menu.title; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_menu.title IS '菜单名称';
+
+
+--
+-- TOC entry 4478 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: COLUMN ums_menu.level; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_menu.level IS '菜单级数';
+
+
+--
+-- TOC entry 4479 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: COLUMN ums_menu.sort; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_menu.sort IS '菜单排序';
+
+
+--
+-- TOC entry 4480 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: COLUMN ums_menu.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_menu.name IS '菜单前端名称';
+
+
+--
+-- TOC entry 4481 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: COLUMN ums_menu.icon; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_menu.icon IS '菜单图标';
+
+
+--
+-- TOC entry 4482 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: COLUMN ums_menu.hidden; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_menu.hidden IS '菜单前端隐藏';
+
+
+--
+-- TOC entry 233 (class 1259 OID 16500)
+-- Name: ums_menu_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_menu ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_menu_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 236 (class 1259 OID 16519)
+-- Name: ums_permission; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_permission (
+                                       id integer NOT NULL,
+                                       parent_id integer,
+                                       name text NOT NULL,
+                                       value text NOT NULL,
+                                       icon text,
+                                       type integer NOT NULL,
+                                       uri text,
+                                       status boolean DEFAULT true NOT NULL,
+                                       create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                       sort integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public.ums_permission OWNER TO readio;
+
+--
+-- TOC entry 4483 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: TABLE ums_permission; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_permission IS '后台用户权限表';
+
+
+--
+-- TOC entry 4484 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: COLUMN ums_permission.parent_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_permission.parent_id IS '父级权限ID';
+
+
+--
+-- TOC entry 4485 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: COLUMN ums_permission.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_permission.name IS '权限名称';
+
+
+--
+-- TOC entry 4486 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: COLUMN ums_permission.value; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_permission.value IS '权限值';
+
+
+--
+-- TOC entry 4487 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: COLUMN ums_permission.icon; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_permission.icon IS '权限图标';
+
+
+--
+-- TOC entry 4488 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: COLUMN ums_permission.type; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_permission.type IS '权限类型：0->目录；1->菜单；2->按钮（接口绑定权限）';
+
+
+--
+-- TOC entry 4489 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: COLUMN ums_permission.uri; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_permission.uri IS '前端资源路径';
+
+
+--
+-- TOC entry 4490 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: COLUMN ums_permission.status; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_permission.status IS '启用状态；0->禁用；1->启用';
+
+
+--
+-- TOC entry 4491 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: COLUMN ums_permission.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_permission.create_time IS '创建时间';
+
+
+--
+-- TOC entry 4492 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: COLUMN ums_permission.sort; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_permission.sort IS '权限排序';
+
+
+--
+-- TOC entry 235 (class 1259 OID 16518)
+-- Name: ums_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_permission ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_permission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 238 (class 1259 OID 16537)
+-- Name: ums_resource; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_resource (
+                                     id integer NOT NULL,
+                                     create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                     name text NOT NULL,
+                                     url text NOT NULL,
+                                     description text,
+                                     category_id integer NOT NULL
+);
+
+
+ALTER TABLE public.ums_resource OWNER TO readio;
+
+--
+-- TOC entry 4493 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: TABLE ums_resource; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_resource IS '后台资源表';
+
+
+--
+-- TOC entry 4494 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: COLUMN ums_resource.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_resource.create_time IS '创建时间';
+
+
+--
+-- TOC entry 4495 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: COLUMN ums_resource.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_resource.name IS '资源名称';
+
+
+--
+-- TOC entry 4496 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: COLUMN ums_resource.url; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_resource.url IS '资源URL';
+
+
+--
+-- TOC entry 4497 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: COLUMN ums_resource.description; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_resource.description IS '描述';
+
+
+--
+-- TOC entry 4498 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: COLUMN ums_resource.category_id; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_resource.category_id IS '资源分类ID';
+
+
+--
+-- TOC entry 240 (class 1259 OID 16551)
+-- Name: ums_resource_category; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_resource_category (
+                                              id integer CONSTRAINT ums_resource_category_id_not_null1 NOT NULL,
+                                              create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                              name text NOT NULL,
+                                              sort integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public.ums_resource_category OWNER TO readio;
+
+--
+-- TOC entry 4499 (class 0 OID 0)
+-- Dependencies: 240
+-- Name: TABLE ums_resource_category; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_resource_category IS '资源分类表';
+
+
+--
+-- TOC entry 4500 (class 0 OID 0)
+-- Dependencies: 240
+-- Name: COLUMN ums_resource_category.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_resource_category.create_time IS '创建时间';
+
+
+--
+-- TOC entry 4501 (class 0 OID 0)
+-- Dependencies: 240
+-- Name: COLUMN ums_resource_category.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_resource_category.name IS '分类名称';
+
+
+--
+-- TOC entry 4502 (class 0 OID 0)
+-- Dependencies: 240
+-- Name: COLUMN ums_resource_category.sort; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_resource_category.sort IS '分类排序';
+
+
+--
+-- TOC entry 239 (class 1259 OID 16550)
+-- Name: ums_resource_category_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_resource_category ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_resource_category_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 237 (class 1259 OID 16536)
+-- Name: ums_resource_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_resource ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_resource_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 228 (class 1259 OID 16465)
+-- Name: ums_role; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_role (
+                                 id integer NOT NULL,
+                                 name text NOT NULL,
+                                 description text,
+                                 admin_count integer DEFAULT 0 NOT NULL,
+                                 create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+                                 status boolean DEFAULT true NOT NULL,
+                                 sort integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public.ums_role OWNER TO readio;
+
+--
+-- TOC entry 4503 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: TABLE ums_role; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_role IS '后台用户角色表';
+
+
+--
+-- TOC entry 4504 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: COLUMN ums_role.name; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_role.name IS '角色名称';
+
+
+--
+-- TOC entry 4505 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: COLUMN ums_role.description; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_role.description IS '角色描述';
+
+
+--
+-- TOC entry 4506 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: COLUMN ums_role.admin_count; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_role.admin_count IS '后台用户数量';
+
+
+--
+-- TOC entry 4507 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: COLUMN ums_role.create_time; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_role.create_time IS '创建时间';
+
+
+--
+-- TOC entry 4508 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: COLUMN ums_role.status; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON COLUMN public.ums_role.status IS '启用状态，True启用，False未启用';
+
+
+--
+-- TOC entry 227 (class 1259 OID 16464)
+-- Name: ums_role_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_role ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_role_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 230 (class 1259 OID 16483)
+-- Name: ums_role_menu_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_role_menu_relation (
+                                               id integer NOT NULL,
+                                               role_id integer NOT NULL,
+                                               menu_id integer NOT NULL,
+                                               create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.ums_role_menu_relation OWNER TO readio;
+
+--
+-- TOC entry 4509 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: TABLE ums_role_menu_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_role_menu_relation IS '后台角色菜单关系表';
+
+
+--
+-- TOC entry 229 (class 1259 OID 16482)
+-- Name: ums_role_menu_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_role_menu_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_role_menu_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 232 (class 1259 OID 16492)
+-- Name: ums_role_permission_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_role_permission_relation (
+                                                     id integer NOT NULL,
+                                                     role_id integer NOT NULL,
+                                                     permission_id integer NOT NULL,
+                                                     create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.ums_role_permission_relation OWNER TO readio;
+
+--
+-- TOC entry 4510 (class 0 OID 0)
+-- Dependencies: 232
+-- Name: TABLE ums_role_permission_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_role_permission_relation IS '后台用户角色和权限关系表';
+
+
+--
+-- TOC entry 231 (class 1259 OID 16491)
+-- Name: ums_role_permission_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_role_permission_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_role_permission_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 242 (class 1259 OID 16565)
+-- Name: ums_role_resource_relation; Type: TABLE; Schema: public; Owner: readio
+--
+
+CREATE TABLE public.ums_role_resource_relation (
+                                                   id integer NOT NULL,
+                                                   role_id integer NOT NULL,
+                                                   resource_id integer NOT NULL,
+                                                   create_time timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public.ums_role_resource_relation OWNER TO readio;
+
+--
+-- TOC entry 4511 (class 0 OID 0)
+-- Dependencies: 242
+-- Name: TABLE ums_role_resource_relation; Type: COMMENT; Schema: public; Owner: readio
+--
+
+COMMENT ON TABLE public.ums_role_resource_relation IS '后台角色资源关系表';
+
+
+--
+-- TOC entry 241 (class 1259 OID 16564)
+-- Name: ums_role_resource_relation_id_seq; Type: SEQUENCE; Schema: public; Owner: readio
+--
+
+ALTER TABLE public.ums_role_resource_relation ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.ums_role_resource_relation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    );
+
+
+--
+-- TOC entry 4151 (class 0 OID 16841)
+-- Dependencies: 277
+-- Data for Name: bms_author; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4138 (class 0 OID 16749)
+-- Dependencies: 264
+-- Data for Name: bms_book; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4136 (class 0 OID 16738)
+-- Dependencies: 262
+-- Data for Name: bms_book_category; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+INSERT INTO public.bms_book_category VALUES (1, '马克思主义、列宁主义、毛泽东思想、邓小平理论', 'A', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (2, '哲学、宗教', 'B', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (3, '社会科学总论', 'C', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (4, '政治、法律', 'D', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (5, '军事', 'E', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (6, '经济', 'F', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (7, '文化、科学、教育、体育', 'G', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (8, '语言、文字', 'H', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (9, '文学', 'I', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (10, '艺术', 'J', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (11, '历史、地理', 'K', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (12, '自然科学总论', 'N', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (13, '数理科学和化学', 'O', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (14, '天文学、地球科学', 'P', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (15, '生物科学', 'Q', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (16, '医学、卫生', 'R', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (17, '农业科学', 'S', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (18, '工业技术', 'T', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (19, '交通运输', 'U', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (20, '航空、航天', 'V', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (21, '环境科学、劳动保护科学', 'X', '2026-02-22 16:05:44.534471');
+INSERT INTO public.bms_book_category VALUES (22, '综合性图书', 'Z', '2026-02-22 16:05:44.534471');
+
+
+--
+-- TOC entry 4193 (class 0 OID 17799)
+-- Dependencies: 319
+-- Data for Name: bms_book_chapter; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4141 (class 0 OID 16772)
+-- Dependencies: 267
+-- Data for Name: bms_book_content_block; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4147 (class 0 OID 16813)
+-- Dependencies: 273
+-- Data for Name: bms_book_footnote; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4159 (class 0 OID 16884)
+-- Dependencies: 285
+-- Data for Name: bms_book_list; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4161 (class 0 OID 16896)
+-- Dependencies: 287
+-- Data for Name: bms_book_list_book_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4163 (class 0 OID 16907)
+-- Dependencies: 289
+-- Data for Name: bms_book_list_member_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4149 (class 0 OID 16829)
+-- Dependencies: 275
+-- Data for Name: bms_book_read_progress; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4143 (class 0 OID 16787)
+-- Dependencies: 269
+-- Data for Name: bms_book_select_content; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4145 (class 0 OID 16800)
+-- Dependencies: 271
+-- Data for Name: bms_book_select_content_item; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4155 (class 0 OID 16863)
+-- Dependencies: 281
+-- Data for Name: bms_book_shelf; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4157 (class 0 OID 16873)
+-- Dependencies: 283
+-- Data for Name: bms_book_shelf_book_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4165 (class 0 OID 16918)
+-- Dependencies: 291
+-- Data for Name: bms_one_word; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4153 (class 0 OID 16853)
+-- Dependencies: 279
+-- Data for Name: bms_publisher; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4176 (class 0 OID 16985)
+-- Dependencies: 302
+-- Data for Name: cms_comment; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4186 (class 0 OID 17048)
+-- Dependencies: 312
+-- Data for Name: cms_member_prefer_book_list_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4182 (class 0 OID 17024)
+-- Dependencies: 308
+-- Data for Name: cms_member_prefer_book_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4180 (class 0 OID 17012)
+-- Dependencies: 306
+-- Data for Name: cms_member_prefer_comment_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4178 (class 0 OID 17000)
+-- Dependencies: 304
+-- Data for Name: cms_member_prefer_one_word_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4184 (class 0 OID 17036)
+-- Dependencies: 310
+-- Data for Name: cms_member_prefer_post_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4167 (class 0 OID 16931)
+-- Dependencies: 293
+-- Data for Name: cms_post; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4170 (class 0 OID 16948)
+-- Dependencies: 296
+-- Data for Name: cms_post_content_block; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4172 (class 0 OID 16962)
+-- Dependencies: 298
+-- Data for Name: cms_post_tag; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4174 (class 0 OID 16974)
+-- Dependencies: 300
+-- Data for Name: cms_post_tag_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4189 (class 0 OID 17377)
+-- Dependencies: 315
+-- Data for Name: oms_order; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4190 (class 0 OID 17458)
+-- Dependencies: 316
+-- Data for Name: pms_product; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+INSERT INTO public.pms_product VALUES (1, '会员月卡', 2, NULL, NULL, 30, '2026-02-22 16:31:38.323063', 9.9, false);
+INSERT INTO public.pms_product VALUES (2, '会员季度卡', 2, NULL, NULL, 90, '2026-02-22 16:31:38.529386', 19.9, false);
+INSERT INTO public.pms_product VALUES (3, '会员年卡', 2, NULL, NULL, 365, '2026-02-22 16:31:38.598508', 39.9, false);
+
+
+--
+-- TOC entry 4197 (class 0 OID 18246)
+-- Dependencies: 323
+-- Data for Name: pms_product_category; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+INSERT INTO public.pms_product_category VALUES (1, 0, '书籍', 0, '普通书籍', '2026-02-22 16:28:46.703114', 0);
+INSERT INTO public.pms_product_category VALUES (2, 0, '会员', 0, '普通会员', '2026-02-22 16:28:46.776576', 2);
+
+
+--
+-- TOC entry 4194 (class 0 OID 18177)
+-- Dependencies: 320
+-- Data for Name: sms_coupon; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4195 (class 0 OID 18207)
+-- Dependencies: 321
+-- Data for Name: sms_coupon_history; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4196 (class 0 OID 18238)
+-- Dependencies: 322
+-- Data for Name: sms_coupon_product_category_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4198 (class 0 OID 18275)
+-- Dependencies: 324
+-- Data for Name: sms_coupon_product_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4199 (class 0 OID 18311)
+-- Dependencies: 325
+-- Data for Name: sms_flash_promotion; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4200 (class 0 OID 18325)
+-- Dependencies: 326
+-- Data for Name: sms_flash_promotion_log; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4201 (class 0 OID 18349)
+-- Dependencies: 327
+-- Data for Name: sms_flash_promotion_product_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4202 (class 0 OID 18378)
+-- Dependencies: 328
+-- Data for Name: sms_flash_promotion_session; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4094 (class 0 OID 16413)
+-- Dependencies: 220
+-- Data for Name: ums_admin; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4096 (class 0 OID 16436)
+-- Dependencies: 222
+-- Data for Name: ums_admin_login_log; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4098 (class 0 OID 16446)
+-- Dependencies: 224
+-- Data for Name: ums_admin_permission_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4100 (class 0 OID 16456)
+-- Dependencies: 226
+-- Data for Name: ums_admin_role_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4118 (class 0 OID 16574)
+-- Dependencies: 244
+-- Data for Name: ums_member; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4128 (class 0 OID 16668)
+-- Dependencies: 254
+-- Data for Name: ums_member_book_category_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4188 (class 0 OID 17060)
+-- Dependencies: 314
+-- Data for Name: ums_member_follow_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4120 (class 0 OID 16607)
+-- Dependencies: 246
+-- Data for Name: ums_member_level; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+INSERT INTO public.ums_member_level VALUES (1, '书童', 1, true, 5, true, true, true, false, false, NULL);
+INSERT INTO public.ums_member_level VALUES (2, '书生', 100, false, 10, true, true, true, true, true, NULL);
+INSERT INTO public.ums_member_level VALUES (3, '秀才', 500, false, 10, true, true, true, true, true, NULL);
+INSERT INTO public.ums_member_level VALUES (4, '举人', 1000, false, 15, true, true, true, true, true, NULL);
+INSERT INTO public.ums_member_level VALUES (5, '进士', 2000, false, 15, true, true, true, true, true, NULL);
+INSERT INTO public.ums_member_level VALUES (6, '翰林', 5000, false, 20, true, true, true, true, true, NULL);
+
+
+--
+-- TOC entry 4122 (class 0 OID 16633)
+-- Dependencies: 248
+-- Data for Name: ums_member_login_log; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4124 (class 0 OID 16645)
+-- Dependencies: 250
+-- Data for Name: ums_member_member_tag_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4204 (class 0 OID 18412)
+-- Dependencies: 330
+-- Data for Name: ums_member_own_book_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4130 (class 0 OID 16677)
+-- Dependencies: 256
+-- Data for Name: ums_member_rule_setting; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+INSERT INTO public.ums_member_rule_setting VALUES (1, NULL, NULL, 0.1, 0, 99999, 0, '2026-02-22 16:18:51.448482');
+INSERT INTO public.ums_member_rule_setting VALUES (2, 3, 20, NULL, NULL, NULL, 1, '2026-02-22 16:18:51.592999');
+INSERT INTO public.ums_member_rule_setting VALUES (3, 7, 50, NULL, NULL, NULL, 1, '2026-02-22 16:23:45.078817');
+INSERT INTO public.ums_member_rule_setting VALUES (4, 14, 200, 0, 0, 0, 1, '2026-02-22 16:23:45.078817');
+INSERT INTO public.ums_member_rule_setting VALUES (5, 21, 500, 0, 0, 0, 1, '2026-02-22 16:23:45.078817');
+INSERT INTO public.ums_member_rule_setting VALUES (6, 30, 1000, 0, 0, 0, 1, '2026-02-22 16:23:45.078817');
+INSERT INTO public.ums_member_rule_setting VALUES (7, 60, 1500, 0, 0, 0, 1, '2026-02-22 16:23:45.078817');
+INSERT INTO public.ums_member_rule_setting VALUES (8, 180, 2000, 0, 0, 0, 1, '2026-02-22 16:23:45.078817');
+INSERT INTO public.ums_member_rule_setting VALUES (9, 210, 2500, 0, 0, 0, 1, '2026-02-22 16:23:45.078817');
+INSERT INTO public.ums_member_rule_setting VALUES (10, 270, 3000, 0, 0, 0, 1, '2026-02-22 16:23:45.078817');
+INSERT INTO public.ums_member_rule_setting VALUES (11, 360, 5000, 0, 0, 0, 1, '2026-02-22 16:23:45.078817');
+
+
+--
+-- TOC entry 4132 (class 0 OID 16694)
+-- Dependencies: 258
+-- Data for Name: ums_member_statistics_info; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4126 (class 0 OID 16654)
+-- Dependencies: 252
+-- Data for Name: ums_member_tag; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4134 (class 0 OID 16724)
+-- Dependencies: 260
+-- Data for Name: ums_member_task; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+INSERT INTO public.ums_member_task VALUES (1, '每日签到', 10, 5, 1, '2026-02-22 00:00:00');
+
+
+--
+-- TOC entry 4203 (class 0 OID 18396)
+-- Dependencies: 329
+-- Data for Name: ums_member_vip_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4108 (class 0 OID 16501)
+-- Dependencies: 234
+-- Data for Name: ums_menu; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4110 (class 0 OID 16519)
+-- Dependencies: 236
+-- Data for Name: ums_permission; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4112 (class 0 OID 16537)
+-- Dependencies: 238
+-- Data for Name: ums_resource; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4114 (class 0 OID 16551)
+-- Dependencies: 240
+-- Data for Name: ums_resource_category; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4102 (class 0 OID 16465)
+-- Dependencies: 228
+-- Data for Name: ums_role; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4104 (class 0 OID 16483)
+-- Dependencies: 230
+-- Data for Name: ums_role_menu_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4106 (class 0 OID 16492)
+-- Dependencies: 232
+-- Data for Name: ums_role_permission_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4116 (class 0 OID 16565)
+-- Dependencies: 242
+-- Data for Name: ums_role_resource_relation; Type: TABLE DATA; Schema: public; Owner: readio
+--
+
+
+
+--
+-- TOC entry 4512 (class 0 OID 0)
+-- Dependencies: 276
+-- Name: bms_author_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_author_id_seq', 1, false);
+
+
+--
+-- TOC entry 4513 (class 0 OID 0)
+-- Dependencies: 261
+-- Name: bms_book_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_category_id_seq', 22, true);
+
+
+--
+-- TOC entry 4514 (class 0 OID 0)
+-- Dependencies: 317
+-- Name: bms_book_chapter_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_chapter_id_seq', 1, false);
+
+
+--
+-- TOC entry 4515 (class 0 OID 0)
+-- Dependencies: 318
+-- Name: bms_book_chapter_order_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_chapter_order_seq', 1, false);
+
+
+--
+-- TOC entry 4516 (class 0 OID 0)
+-- Dependencies: 265
+-- Name: bms_book_content_block_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_content_block_id_seq', 1, false);
+
+
+--
+-- TOC entry 4517 (class 0 OID 0)
+-- Dependencies: 266
+-- Name: bms_book_content_block_order_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_content_block_order_seq', 1, false);
+
+
+--
+-- TOC entry 4518 (class 0 OID 0)
+-- Dependencies: 272
+-- Name: bms_book_footnote_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_footnote_id_seq', 1, false);
+
+
+--
+-- TOC entry 4519 (class 0 OID 0)
+-- Dependencies: 263
+-- Name: bms_book_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_id_seq', 1, false);
+
+
+--
+-- TOC entry 4520 (class 0 OID 0)
+-- Dependencies: 286
+-- Name: bms_book_list_book_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_list_book_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4521 (class 0 OID 0)
+-- Dependencies: 284
+-- Name: bms_book_list_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_list_id_seq', 1, false);
+
+
+--
+-- TOC entry 4522 (class 0 OID 0)
+-- Dependencies: 288
+-- Name: bms_book_list_member_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_list_member_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4523 (class 0 OID 0)
+-- Dependencies: 274
+-- Name: bms_book_read_progress_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_read_progress_id_seq', 1, false);
+
+
+--
+-- TOC entry 4524 (class 0 OID 0)
+-- Dependencies: 268
+-- Name: bms_book_select_content_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_select_content_id_seq', 1, false);
+
+
+--
+-- TOC entry 4525 (class 0 OID 0)
+-- Dependencies: 270
+-- Name: bms_book_select_content_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_select_content_item_id_seq', 1, false);
+
+
+--
+-- TOC entry 4526 (class 0 OID 0)
+-- Dependencies: 282
+-- Name: bms_book_shelf_book_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_shelf_book_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4527 (class 0 OID 0)
+-- Dependencies: 280
+-- Name: bms_book_shelf_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_book_shelf_id_seq', 1, false);
+
+
+--
+-- TOC entry 4528 (class 0 OID 0)
+-- Dependencies: 290
+-- Name: bms_one_word_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_one_word_id_seq', 1, false);
+
+
+--
+-- TOC entry 4529 (class 0 OID 0)
+-- Dependencies: 278
+-- Name: bms_publisher_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.bms_publisher_id_seq', 1, false);
+
+
+--
+-- TOC entry 4530 (class 0 OID 0)
+-- Dependencies: 301
+-- Name: cms_comment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.cms_comment_id_seq', 1, false);
+
+
+--
+-- TOC entry 4531 (class 0 OID 0)
+-- Dependencies: 311
+-- Name: cms_member_book_list_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.cms_member_book_list_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4532 (class 0 OID 0)
+-- Dependencies: 307
+-- Name: cms_member_book_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.cms_member_book_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4533 (class 0 OID 0)
+-- Dependencies: 305
+-- Name: cms_member_comment_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.cms_member_comment_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4534 (class 0 OID 0)
+-- Dependencies: 303
+-- Name: cms_member_one_word_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.cms_member_one_word_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4535 (class 0 OID 0)
+-- Dependencies: 309
+-- Name: cms_member_post_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.cms_member_post_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4536 (class 0 OID 0)
+-- Dependencies: 294
+-- Name: cms_post_content_block_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.cms_post_content_block_id_seq', 1, false);
+
+
+--
+-- TOC entry 4537 (class 0 OID 0)
+-- Dependencies: 295
+-- Name: cms_post_content_block_order_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.cms_post_content_block_order_seq', 1, false);
+
+
+--
+-- TOC entry 4538 (class 0 OID 0)
+-- Dependencies: 292
+-- Name: cms_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.cms_post_id_seq', 1, false);
+
+
+--
+-- TOC entry 4539 (class 0 OID 0)
+-- Dependencies: 297
+-- Name: cms_post_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.cms_post_tag_id_seq', 1, false);
+
+
+--
+-- TOC entry 4540 (class 0 OID 0)
+-- Dependencies: 299
+-- Name: cms_post_tag_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.cms_post_tag_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4541 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: ums_admin_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_admin_id_seq', 1, false);
+
+
+--
+-- TOC entry 4542 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: ums_admin_login_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_admin_login_log_id_seq', 1, false);
+
+
+--
+-- TOC entry 4543 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: ums_admin_permission_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_admin_permission_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4544 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: ums_admin_role_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_admin_role_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4545 (class 0 OID 0)
+-- Dependencies: 253
+-- Name: ums_member_book_category_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_member_book_category_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4546 (class 0 OID 0)
+-- Dependencies: 313
+-- Name: ums_member_follow_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_member_follow_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4547 (class 0 OID 0)
+-- Dependencies: 243
+-- Name: ums_member_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_member_id_seq', 1, false);
+
+
+--
+-- TOC entry 4548 (class 0 OID 0)
+-- Dependencies: 245
+-- Name: ums_member_level_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_member_level_id_seq', 2, true);
+
+
+--
+-- TOC entry 4549 (class 0 OID 0)
+-- Dependencies: 247
+-- Name: ums_member_login_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_member_login_log_id_seq', 1, false);
+
+
+--
+-- TOC entry 4550 (class 0 OID 0)
+-- Dependencies: 249
+-- Name: ums_member_member_tag_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_member_member_tag_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4551 (class 0 OID 0)
+-- Dependencies: 255
+-- Name: ums_member_rule_setting_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_member_rule_setting_id_seq', 1, false);
+
+
+--
+-- TOC entry 4552 (class 0 OID 0)
+-- Dependencies: 257
+-- Name: ums_member_statistics_info_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_member_statistics_info_id_seq', 1, false);
+
+
+--
+-- TOC entry 4553 (class 0 OID 0)
+-- Dependencies: 251
+-- Name: ums_member_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_member_tag_id_seq', 1, false);
+
+
+--
+-- TOC entry 4554 (class 0 OID 0)
+-- Dependencies: 259
+-- Name: ums_member_task_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_member_task_id_seq', 1, false);
+
+
+--
+-- TOC entry 4555 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: ums_menu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_menu_id_seq', 1, false);
+
+
+--
+-- TOC entry 4556 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: ums_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_permission_id_seq', 1, false);
+
+
+--
+-- TOC entry 4557 (class 0 OID 0)
+-- Dependencies: 239
+-- Name: ums_resource_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_resource_category_id_seq', 1, false);
+
+
+--
+-- TOC entry 4558 (class 0 OID 0)
+-- Dependencies: 237
+-- Name: ums_resource_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_resource_id_seq', 1, false);
+
+
+--
+-- TOC entry 4559 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: ums_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_role_id_seq', 1, false);
+
+
+--
+-- TOC entry 4560 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: ums_role_menu_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_role_menu_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4561 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: ums_role_permission_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_role_permission_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 4562 (class 0 OID 0)
+-- Dependencies: 241
+-- Name: ums_role_resource_relation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: readio
+--
+
+SELECT pg_catalog.setval('public.ums_role_resource_relation_id_seq', 1, false);
+
+
+--
+-- TOC entry 3790 (class 2606 OID 16851)
+-- Name: bms_author bms_author_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_author
+    ADD CONSTRAINT bms_author_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3772 (class 2606 OID 16747)
+-- Name: bms_book_category bms_book_category_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_category
+    ADD CONSTRAINT bms_book_category_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3834 (class 2606 OID 17815)
+-- Name: bms_book_chapter bms_book_chapter_order_key; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_chapter
+    ADD CONSTRAINT bms_book_chapter_order_key UNIQUE ("order");
+
+
+--
+-- TOC entry 3836 (class 2606 OID 17813)
+-- Name: bms_book_chapter bms_book_chapter_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_chapter
+    ADD CONSTRAINT bms_book_chapter_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3776 (class 2606 OID 16785)
+-- Name: bms_book_content_block bms_book_content_block_order_key; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_content_block
+    ADD CONSTRAINT bms_book_content_block_order_key UNIQUE ("order");
+
+
+--
+-- TOC entry 3778 (class 2606 OID 16783)
+-- Name: bms_book_content_block bms_book_content_block_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_content_block
+    ADD CONSTRAINT bms_book_content_block_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3784 (class 2606 OID 16827)
+-- Name: bms_book_footnote bms_book_footnote_order_key; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_footnote
+    ADD CONSTRAINT bms_book_footnote_order_key UNIQUE ("order");
+
+
+--
+-- TOC entry 3786 (class 2606 OID 16825)
+-- Name: bms_book_footnote bms_book_footnote_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_footnote
+    ADD CONSTRAINT bms_book_footnote_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3800 (class 2606 OID 16905)
+-- Name: bms_book_list_book_relation bms_book_list_book_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_list_book_relation
+    ADD CONSTRAINT bms_book_list_book_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3802 (class 2606 OID 16916)
+-- Name: bms_book_list_member_relation bms_book_list_member_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_list_member_relation
+    ADD CONSTRAINT bms_book_list_member_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3798 (class 2606 OID 16894)
+-- Name: bms_book_list bms_book_list_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_list
+    ADD CONSTRAINT bms_book_list_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3774 (class 2606 OID 16763)
+-- Name: bms_book bms_book_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book
+    ADD CONSTRAINT bms_book_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3788 (class 2606 OID 16839)
+-- Name: bms_book_read_progress bms_book_read_progress_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_read_progress
+    ADD CONSTRAINT bms_book_read_progress_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3782 (class 2606 OID 16811)
+-- Name: bms_book_select_content_item bms_book_select_content_item_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_select_content_item
+    ADD CONSTRAINT bms_book_select_content_item_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3780 (class 2606 OID 16798)
+-- Name: bms_book_select_content bms_book_select_content_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_select_content
+    ADD CONSTRAINT bms_book_select_content_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3796 (class 2606 OID 16882)
+-- Name: bms_book_shelf_book_relation bms_book_shelf_book_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_shelf_book_relation
+    ADD CONSTRAINT bms_book_shelf_book_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3794 (class 2606 OID 16871)
+-- Name: bms_book_shelf bms_book_shelf_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_shelf
+    ADD CONSTRAINT bms_book_shelf_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3804 (class 2606 OID 16929)
+-- Name: bms_one_word bms_one_word_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_one_word
+    ADD CONSTRAINT bms_one_word_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3792 (class 2606 OID 16861)
+-- Name: bms_publisher bms_publisher_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_publisher
+    ADD CONSTRAINT bms_publisher_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3816 (class 2606 OID 16998)
+-- Name: cms_comment cms_comment_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_comment
+    ADD CONSTRAINT cms_comment_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3826 (class 2606 OID 17058)
+-- Name: cms_member_prefer_book_list_relation cms_member_book_list_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_book_list_relation
+    ADD CONSTRAINT cms_member_book_list_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3822 (class 2606 OID 17034)
+-- Name: cms_member_prefer_book_relation cms_member_book_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_book_relation
+    ADD CONSTRAINT cms_member_book_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3820 (class 2606 OID 17022)
+-- Name: cms_member_prefer_comment_relation cms_member_comment_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_comment_relation
+    ADD CONSTRAINT cms_member_comment_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3818 (class 2606 OID 17010)
+-- Name: cms_member_prefer_one_word_relation cms_member_one_word_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_one_word_relation
+    ADD CONSTRAINT cms_member_one_word_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3824 (class 2606 OID 17046)
+-- Name: cms_member_prefer_post_relation cms_member_post_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_post_relation
+    ADD CONSTRAINT cms_member_post_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3808 (class 2606 OID 16960)
+-- Name: cms_post_content_block cms_post_content_block_order_key; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_post_content_block
+    ADD CONSTRAINT cms_post_content_block_order_key UNIQUE ("order");
+
+
+--
+-- TOC entry 3810 (class 2606 OID 16958)
+-- Name: cms_post_content_block cms_post_content_block_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_post_content_block
+    ADD CONSTRAINT cms_post_content_block_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3806 (class 2606 OID 16945)
+-- Name: cms_post cms_post_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_post
+    ADD CONSTRAINT cms_post_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3812 (class 2606 OID 16972)
+-- Name: cms_post_tag cms_post_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_post_tag
+    ADD CONSTRAINT cms_post_tag_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3814 (class 2606 OID 16983)
+-- Name: cms_post_tag_relation cms_post_tag_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_post_tag_relation
+    ADD CONSTRAINT cms_post_tag_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3830 (class 2606 OID 17382)
+-- Name: oms_order oms_order_pk; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.oms_order
+    ADD CONSTRAINT oms_order_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3844 (class 2606 OID 18251)
+-- Name: pms_product_category pms_product_category_pk; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.pms_product_category
+    ADD CONSTRAINT pms_product_category_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3832 (class 2606 OID 17473)
+-- Name: pms_product pms_product_pk; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.pms_product
+    ADD CONSTRAINT pms_product_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3840 (class 2606 OID 18222)
+-- Name: sms_coupon_history sms_coupon_history_pk; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_coupon_history
+    ADD CONSTRAINT sms_coupon_history_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3838 (class 2606 OID 18206)
+-- Name: sms_coupon sms_coupon_pk; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_coupon
+    ADD CONSTRAINT sms_coupon_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3842 (class 2606 OID 18245)
+-- Name: sms_coupon_product_category_relation sms_coupon_product_category_relation_pk; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_coupon_product_category_relation
+    ADD CONSTRAINT sms_coupon_product_category_relation_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3846 (class 2606 OID 18284)
+-- Name: sms_coupon_product_relation sms_coupon_product_relation_pk; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_coupon_product_relation
+    ADD CONSTRAINT sms_coupon_product_relation_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3850 (class 2606 OID 18336)
+-- Name: sms_flash_promotion_log sms_flash_promotion_log_pk; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_flash_promotion_log
+    ADD CONSTRAINT sms_flash_promotion_log_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3848 (class 2606 OID 18323)
+-- Name: sms_flash_promotion sms_flash_promotion_pk; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_flash_promotion
+    ADD CONSTRAINT sms_flash_promotion_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3852 (class 2606 OID 18367)
+-- Name: sms_flash_promotion_product_relation sms_flash_promotion_product_relation_pk; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_flash_promotion_product_relation
+    ADD CONSTRAINT sms_flash_promotion_product_relation_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3854 (class 2606 OID 18390)
+-- Name: sms_flash_promotion_session sms_flash_promotion_session_pk; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_flash_promotion_session
+    ADD CONSTRAINT sms_flash_promotion_session_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3718 (class 2606 OID 16434)
+-- Name: ums_admin ums_admin_email_key; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_admin
+    ADD CONSTRAINT ums_admin_email_key UNIQUE (email);
+
+
+--
+-- TOC entry 3726 (class 2606 OID 16444)
+-- Name: ums_admin_login_log ums_admin_login_log_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_admin_login_log
+    ADD CONSTRAINT ums_admin_login_log_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3728 (class 2606 OID 16454)
+-- Name: ums_admin_permission_relation ums_admin_permission_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_admin_permission_relation
+    ADD CONSTRAINT ums_admin_permission_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3720 (class 2606 OID 16432)
+-- Name: ums_admin ums_admin_phone_key; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_admin
+    ADD CONSTRAINT ums_admin_phone_key UNIQUE (phone);
+
+
+--
+-- TOC entry 3722 (class 2606 OID 16428)
+-- Name: ums_admin ums_admin_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_admin
+    ADD CONSTRAINT ums_admin_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3730 (class 2606 OID 16463)
+-- Name: ums_admin_role_relation ums_admin_role_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_admin_role_relation
+    ADD CONSTRAINT ums_admin_role_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3724 (class 2606 OID 16430)
+-- Name: ums_admin ums_admin_username_key; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_admin
+    ADD CONSTRAINT ums_admin_username_key UNIQUE (username);
+
+
+--
+-- TOC entry 3764 (class 2606 OID 16675)
+-- Name: ums_member_book_category_relation ums_member_book_category_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_book_category_relation
+    ADD CONSTRAINT ums_member_book_category_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3748 (class 2606 OID 16605)
+-- Name: ums_member ums_member_email_key; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member
+    ADD CONSTRAINT ums_member_email_key UNIQUE (email);
+
+
+--
+-- TOC entry 3828 (class 2606 OID 17068)
+-- Name: ums_member_follow_relation ums_member_follow_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_follow_relation
+    ADD CONSTRAINT ums_member_follow_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3756 (class 2606 OID 16631)
+-- Name: ums_member_level ums_member_level_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_level
+    ADD CONSTRAINT ums_member_level_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3758 (class 2606 OID 16643)
+-- Name: ums_member_login_log ums_member_login_log_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_login_log
+    ADD CONSTRAINT ums_member_login_log_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3760 (class 2606 OID 16652)
+-- Name: ums_member_member_tag_relation ums_member_member_tag_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_member_tag_relation
+    ADD CONSTRAINT ums_member_member_tag_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3858 (class 2606 OID 18425)
+-- Name: ums_member_own_book_relation ums_member_own_book_relation_pk; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_own_book_relation
+    ADD CONSTRAINT ums_member_own_book_relation_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3750 (class 2606 OID 16603)
+-- Name: ums_member ums_member_phone_key; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member
+    ADD CONSTRAINT ums_member_phone_key UNIQUE (phone);
+
+
+--
+-- TOC entry 3752 (class 2606 OID 16599)
+-- Name: ums_member ums_member_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member
+    ADD CONSTRAINT ums_member_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3766 (class 2606 OID 16692)
+-- Name: ums_member_rule_setting ums_member_rule_setting_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_rule_setting
+    ADD CONSTRAINT ums_member_rule_setting_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3768 (class 2606 OID 16722)
+-- Name: ums_member_statistics_info ums_member_statistics_info_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_statistics_info
+    ADD CONSTRAINT ums_member_statistics_info_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3762 (class 2606 OID 16666)
+-- Name: ums_member_tag ums_member_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_tag
+    ADD CONSTRAINT ums_member_tag_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3770 (class 2606 OID 16736)
+-- Name: ums_member_task ums_member_task_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_task
+    ADD CONSTRAINT ums_member_task_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3754 (class 2606 OID 16601)
+-- Name: ums_member ums_member_username_key; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member
+    ADD CONSTRAINT ums_member_username_key UNIQUE (username);
+
+
+--
+-- TOC entry 3856 (class 2606 OID 18406)
+-- Name: ums_member_vip_relation ums_member_vip_relation_pk; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_vip_relation
+    ADD CONSTRAINT ums_member_vip_relation_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3738 (class 2606 OID 16517)
+-- Name: ums_menu ums_menu_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_menu
+    ADD CONSTRAINT ums_menu_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3740 (class 2606 OID 16535)
+-- Name: ums_permission ums_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_permission
+    ADD CONSTRAINT ums_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3744 (class 2606 OID 16563)
+-- Name: ums_resource_category ums_resource_category_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_resource_category
+    ADD CONSTRAINT ums_resource_category_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3742 (class 2606 OID 16549)
+-- Name: ums_resource ums_resource_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_resource
+    ADD CONSTRAINT ums_resource_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3734 (class 2606 OID 16490)
+-- Name: ums_role_menu_relation ums_role_menu_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_role_menu_relation
+    ADD CONSTRAINT ums_role_menu_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3736 (class 2606 OID 16499)
+-- Name: ums_role_permission_relation ums_role_permission_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_role_permission_relation
+    ADD CONSTRAINT ums_role_permission_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3732 (class 2606 OID 16481)
+-- Name: ums_role ums_role_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_role
+    ADD CONSTRAINT ums_role_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3746 (class 2606 OID 16572)
+-- Name: ums_role_resource_relation ums_role_resource_relation_pkey; Type: CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_role_resource_relation
+    ADD CONSTRAINT ums_role_resource_relation_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3878 (class 2606 OID 17159)
+-- Name: bms_book bms_book_author_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book
+    ADD CONSTRAINT bms_book_author_id_fkey FOREIGN KEY (author_id) REFERENCES public.bms_author(id);
+
+
+--
+-- TOC entry 3879 (class 2606 OID 17154)
+-- Name: bms_book bms_book_book_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book
+    ADD CONSTRAINT bms_book_book_category_id_fkey FOREIGN KEY (book_category_id) REFERENCES public.bms_book_category(id);
+
+
+--
+-- TOC entry 3930 (class 2606 OID 17981)
+-- Name: bms_book_chapter bms_book_chapter_book_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_chapter
+    ADD CONSTRAINT bms_book_chapter_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id);
+
+
+--
+-- TOC entry 3881 (class 2606 OID 17214)
+-- Name: bms_book_content_block bms_book_content_block_book_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_content_block
+    ADD CONSTRAINT bms_book_content_block_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id);
+
+
+--
+-- TOC entry 3882 (class 2606 OID 17986)
+-- Name: bms_book_content_block bms_book_content_block_chapter_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_content_block
+    ADD CONSTRAINT bms_book_content_block_chapter_id_fkey FOREIGN KEY (chapter_id) REFERENCES public.bms_book_chapter(id);
+
+
+--
+-- TOC entry 3883 (class 2606 OID 17224)
+-- Name: bms_book_content_block bms_book_content_block_footnote_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_content_block
+    ADD CONSTRAINT bms_book_content_block_footnote_id_fkey FOREIGN KEY (footnote_id) REFERENCES public.bms_book_footnote(id);
+
+
+--
+-- TOC entry 3887 (class 2606 OID 17229)
+-- Name: bms_book_footnote bms_book_footnote_book_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_footnote
+    ADD CONSTRAINT bms_book_footnote_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id);
+
+
+--
+-- TOC entry 3888 (class 2606 OID 18006)
+-- Name: bms_book_footnote bms_book_footnote_chapter_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_footnote
+    ADD CONSTRAINT bms_book_footnote_chapter_id_fkey FOREIGN KEY (chapter_id) REFERENCES public.bms_book_chapter(id);
+
+
+--
+-- TOC entry 3895 (class 2606 OID 17189)
+-- Name: bms_book_list_book_relation bms_book_list_book_relation_book_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_list_book_relation
+    ADD CONSTRAINT bms_book_list_book_relation_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id);
+
+
+--
+-- TOC entry 3896 (class 2606 OID 17184)
+-- Name: bms_book_list_book_relation bms_book_list_book_relation_book_list_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_list_book_relation
+    ADD CONSTRAINT bms_book_list_book_relation_book_list_id_fkey FOREIGN KEY (book_list_id) REFERENCES public.bms_book_list(id);
+
+
+--
+-- TOC entry 3897 (class 2606 OID 17194)
+-- Name: bms_book_list_member_relation bms_book_list_member_relation_book_list_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_list_member_relation
+    ADD CONSTRAINT bms_book_list_member_relation_book_list_id_fkey FOREIGN KEY (book_list_id) REFERENCES public.bms_book_list(id);
+
+
+--
+-- TOC entry 3898 (class 2606 OID 17199)
+-- Name: bms_book_list_member_relation bms_book_list_member_relation_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_list_member_relation
+    ADD CONSTRAINT bms_book_list_member_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3880 (class 2606 OID 17164)
+-- Name: bms_book bms_book_publisher_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book
+    ADD CONSTRAINT bms_book_publisher_id_fkey FOREIGN KEY (publisher_id) REFERENCES public.bms_publisher(id);
+
+
+--
+-- TOC entry 3889 (class 2606 OID 17234)
+-- Name: bms_book_read_progress bms_book_read_progress_book_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_read_progress
+    ADD CONSTRAINT bms_book_read_progress_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id);
+
+
+--
+-- TOC entry 3890 (class 2606 OID 17239)
+-- Name: bms_book_read_progress bms_book_read_progress_last_block_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_read_progress
+    ADD CONSTRAINT bms_book_read_progress_last_block_id_fkey FOREIGN KEY (last_block_id) REFERENCES public.bms_book_content_block(id);
+
+
+--
+-- TOC entry 3891 (class 2606 OID 17244)
+-- Name: bms_book_read_progress bms_book_read_progress_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_read_progress
+    ADD CONSTRAINT bms_book_read_progress_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3885 (class 2606 OID 17299)
+-- Name: bms_book_select_content_item bms_book_select_content_item_block_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_select_content_item
+    ADD CONSTRAINT bms_book_select_content_item_block_id_fkey FOREIGN KEY (block_id) REFERENCES public.bms_book_content_block(id);
+
+
+--
+-- TOC entry 3886 (class 2606 OID 17294)
+-- Name: bms_book_select_content_item bms_book_select_content_item_select_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_select_content_item
+    ADD CONSTRAINT bms_book_select_content_item_select_id_fkey FOREIGN KEY (select_id) REFERENCES public.bms_book_select_content(id);
+
+
+--
+-- TOC entry 3884 (class 2606 OID 18445)
+-- Name: bms_book_select_content bms_book_select_content_ums_member_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_select_content
+    ADD CONSTRAINT bms_book_select_content_ums_member_fk FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3893 (class 2606 OID 17179)
+-- Name: bms_book_shelf_book_relation bms_book_shelf_book_relation_book_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_shelf_book_relation
+    ADD CONSTRAINT bms_book_shelf_book_relation_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id);
+
+
+--
+-- TOC entry 3894 (class 2606 OID 17174)
+-- Name: bms_book_shelf_book_relation bms_book_shelf_book_relation_book_self_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_shelf_book_relation
+    ADD CONSTRAINT bms_book_shelf_book_relation_book_self_id_fkey FOREIGN KEY (book_self_id) REFERENCES public.bms_book_shelf(id);
+
+
+--
+-- TOC entry 3892 (class 2606 OID 17169)
+-- Name: bms_book_shelf bms_book_shelf_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_book_shelf
+    ADD CONSTRAINT bms_book_shelf_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3899 (class 2606 OID 17204)
+-- Name: bms_one_word bms_one_word_book_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.bms_one_word
+    ADD CONSTRAINT bms_one_word_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id);
+
+
+--
+-- TOC entry 3907 (class 2606 OID 17274)
+-- Name: cms_comment cms_comment_book_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_comment
+    ADD CONSTRAINT cms_comment_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id);
+
+
+--
+-- TOC entry 3908 (class 2606 OID 17279)
+-- Name: cms_comment cms_comment_comment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_comment
+    ADD CONSTRAINT cms_comment_comment_id_fkey FOREIGN KEY (comment_id) REFERENCES public.cms_comment(id);
+
+
+--
+-- TOC entry 3909 (class 2606 OID 17269)
+-- Name: cms_comment cms_comment_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_comment
+    ADD CONSTRAINT cms_comment_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3910 (class 2606 OID 17284)
+-- Name: cms_comment cms_comment_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_comment
+    ADD CONSTRAINT cms_comment_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.cms_post(id);
+
+
+--
+-- TOC entry 3911 (class 2606 OID 17289)
+-- Name: cms_comment cms_comment_select_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_comment
+    ADD CONSTRAINT cms_comment_select_id_fkey FOREIGN KEY (select_id) REFERENCES public.bms_book_select_content(id);
+
+
+--
+-- TOC entry 3920 (class 2606 OID 17354)
+-- Name: cms_member_prefer_book_list_relation cms_member_book_list_relation_book_list_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_book_list_relation
+    ADD CONSTRAINT cms_member_book_list_relation_book_list_id_fkey FOREIGN KEY (book_list_id) REFERENCES public.bms_book_list(id);
+
+
+--
+-- TOC entry 3921 (class 2606 OID 17359)
+-- Name: cms_member_prefer_book_list_relation cms_member_book_list_relation_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_book_list_relation
+    ADD CONSTRAINT cms_member_book_list_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3916 (class 2606 OID 17334)
+-- Name: cms_member_prefer_book_relation cms_member_book_relation_book_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_book_relation
+    ADD CONSTRAINT cms_member_book_relation_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id);
+
+
+--
+-- TOC entry 3917 (class 2606 OID 17339)
+-- Name: cms_member_prefer_book_relation cms_member_book_relation_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_book_relation
+    ADD CONSTRAINT cms_member_book_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3914 (class 2606 OID 17324)
+-- Name: cms_member_prefer_comment_relation cms_member_comment_relation_comment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_comment_relation
+    ADD CONSTRAINT cms_member_comment_relation_comment_id_fkey FOREIGN KEY (comment_id) REFERENCES public.cms_comment(id);
+
+
+--
+-- TOC entry 3915 (class 2606 OID 17329)
+-- Name: cms_member_prefer_comment_relation cms_member_comment_relation_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_comment_relation
+    ADD CONSTRAINT cms_member_comment_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3912 (class 2606 OID 17319)
+-- Name: cms_member_prefer_one_word_relation cms_member_one_word_relation_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_one_word_relation
+    ADD CONSTRAINT cms_member_one_word_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3913 (class 2606 OID 17314)
+-- Name: cms_member_prefer_one_word_relation cms_member_one_word_relation_one_workd_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_one_word_relation
+    ADD CONSTRAINT cms_member_one_word_relation_one_workd_id_fkey FOREIGN KEY (one_workd_id) REFERENCES public.bms_one_word(id);
+
+
+--
+-- TOC entry 3918 (class 2606 OID 17349)
+-- Name: cms_member_prefer_post_relation cms_member_post_relation_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_post_relation
+    ADD CONSTRAINT cms_member_post_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3919 (class 2606 OID 17344)
+-- Name: cms_member_prefer_post_relation cms_member_post_relation_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_member_prefer_post_relation
+    ADD CONSTRAINT cms_member_post_relation_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.cms_post(id);
+
+
+--
+-- TOC entry 3901 (class 2606 OID 17259)
+-- Name: cms_post_content_block cms_post_content_block_author_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_post_content_block
+    ADD CONSTRAINT cms_post_content_block_author_id_fkey FOREIGN KEY (author_id) REFERENCES public.bms_author(id);
+
+
+--
+-- TOC entry 3902 (class 2606 OID 17264)
+-- Name: cms_post_content_block cms_post_content_block_block_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_post_content_block
+    ADD CONSTRAINT cms_post_content_block_block_id_fkey FOREIGN KEY (block_id) REFERENCES public.bms_book_content_block(id);
+
+
+--
+-- TOC entry 3903 (class 2606 OID 17254)
+-- Name: cms_post_content_block cms_post_content_block_book_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_post_content_block
+    ADD CONSTRAINT cms_post_content_block_book_id_fkey FOREIGN KEY (book_id) REFERENCES public.bms_book(id);
+
+
+--
+-- TOC entry 3904 (class 2606 OID 17249)
+-- Name: cms_post_content_block cms_post_content_block_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_post_content_block
+    ADD CONSTRAINT cms_post_content_block_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.cms_post(id);
+
+
+--
+-- TOC entry 3900 (class 2606 OID 17209)
+-- Name: cms_post cms_post_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_post
+    ADD CONSTRAINT cms_post_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3905 (class 2606 OID 17304)
+-- Name: cms_post_tag_relation cms_post_tag_relation_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_post_tag_relation
+    ADD CONSTRAINT cms_post_tag_relation_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.cms_post(id);
+
+
+--
+-- TOC entry 3906 (class 2606 OID 17309)
+-- Name: cms_post_tag_relation cms_post_tag_relation_tag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.cms_post_tag_relation
+    ADD CONSTRAINT cms_post_tag_relation_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES public.cms_post_tag(id);
+
+
+--
+-- TOC entry 3924 (class 2606 OID 18172)
+-- Name: oms_order oms_order_pms_product_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.oms_order
+    ADD CONSTRAINT oms_order_pms_product_fk FOREIGN KEY (product_id) REFERENCES public.pms_product(id);
+
+
+--
+-- TOC entry 3925 (class 2606 OID 18452)
+-- Name: oms_order oms_order_sms_coupon_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.oms_order
+    ADD CONSTRAINT oms_order_sms_coupon_fk FOREIGN KEY (coupon_id) REFERENCES public.sms_coupon(id);
+
+
+--
+-- TOC entry 3926 (class 2606 OID 18167)
+-- Name: oms_order oms_order_ums_member_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.oms_order
+    ADD CONSTRAINT oms_order_ums_member_fk FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3927 (class 2606 OID 18162)
+-- Name: pms_product pms_product_bms_book_chapter_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.pms_product
+    ADD CONSTRAINT pms_product_bms_book_chapter_fk FOREIGN KEY (chapter_id) REFERENCES public.bms_book_chapter(id);
+
+
+--
+-- TOC entry 3928 (class 2606 OID 17474)
+-- Name: pms_product pms_product_bms_book_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.pms_product
+    ADD CONSTRAINT pms_product_bms_book_fk FOREIGN KEY (book_id) REFERENCES public.bms_book(id);
+
+
+--
+-- TOC entry 3929 (class 2606 OID 18262)
+-- Name: pms_product pms_product_pms_product_category_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.pms_product
+    ADD CONSTRAINT pms_product_pms_product_category_fk FOREIGN KEY (product_category_id) REFERENCES public.pms_product_category(id);
+
+
+--
+-- TOC entry 3931 (class 2606 OID 18233)
+-- Name: sms_coupon_history sms_coupon_history_oms_order_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_coupon_history
+    ADD CONSTRAINT sms_coupon_history_oms_order_fk FOREIGN KEY (order_id) REFERENCES public.oms_order(id);
+
+
+--
+-- TOC entry 3932 (class 2606 OID 18228)
+-- Name: sms_coupon_history sms_coupon_history_sms_coupon_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_coupon_history
+    ADD CONSTRAINT sms_coupon_history_sms_coupon_fk FOREIGN KEY (coupon_id) REFERENCES public.sms_coupon(id);
+
+
+--
+-- TOC entry 3933 (class 2606 OID 18223)
+-- Name: sms_coupon_history sms_coupon_history_ums_member_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_coupon_history
+    ADD CONSTRAINT sms_coupon_history_ums_member_fk FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3934 (class 2606 OID 18302)
+-- Name: sms_coupon_product_category_relation sms_coupon_product_category_relation_pms_product_category_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_coupon_product_category_relation
+    ADD CONSTRAINT sms_coupon_product_category_relation_pms_product_category_fk FOREIGN KEY (product_category_id) REFERENCES public.pms_product_category(id);
+
+
+--
+-- TOC entry 3935 (class 2606 OID 18297)
+-- Name: sms_coupon_product_category_relation sms_coupon_product_category_relation_sms_coupon_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_coupon_product_category_relation
+    ADD CONSTRAINT sms_coupon_product_category_relation_sms_coupon_fk FOREIGN KEY (coupon_id) REFERENCES public.sms_coupon(id);
+
+
+--
+-- TOC entry 3936 (class 2606 OID 18290)
+-- Name: sms_coupon_product_relation sms_coupon_product_relation_pms_product_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_coupon_product_relation
+    ADD CONSTRAINT sms_coupon_product_relation_pms_product_fk FOREIGN KEY (product_id) REFERENCES public.pms_product(id);
+
+
+--
+-- TOC entry 3937 (class 2606 OID 18285)
+-- Name: sms_coupon_product_relation sms_coupon_product_relation_sms_coupon_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_coupon_product_relation
+    ADD CONSTRAINT sms_coupon_product_relation_sms_coupon_fk FOREIGN KEY (coupon_id) REFERENCES public.sms_coupon(id);
+
+
+--
+-- TOC entry 3938 (class 2606 OID 18342)
+-- Name: sms_flash_promotion_log sms_flash_promotion_log_pms_product_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_flash_promotion_log
+    ADD CONSTRAINT sms_flash_promotion_log_pms_product_fk FOREIGN KEY (product_id) REFERENCES public.pms_product(id);
+
+
+--
+-- TOC entry 3939 (class 2606 OID 18337)
+-- Name: sms_flash_promotion_log sms_flash_promotion_log_ums_member_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_flash_promotion_log
+    ADD CONSTRAINT sms_flash_promotion_log_ums_member_fk FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3940 (class 2606 OID 18373)
+-- Name: sms_flash_promotion_product_relation sms_flash_promotion_product_relation_pms_product_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_flash_promotion_product_relation
+    ADD CONSTRAINT sms_flash_promotion_product_relation_pms_product_fk FOREIGN KEY (product_id) REFERENCES public.pms_product(id);
+
+
+--
+-- TOC entry 3941 (class 2606 OID 18368)
+-- Name: sms_flash_promotion_product_relation sms_flash_promotion_product_relation_sms_flash_promotion_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_flash_promotion_product_relation
+    ADD CONSTRAINT sms_flash_promotion_product_relation_sms_flash_promotion_fk FOREIGN KEY (flash_promotion_id) REFERENCES public.sms_flash_promotion(id);
+
+
+--
+-- TOC entry 3942 (class 2606 OID 18391)
+-- Name: sms_flash_promotion_product_relation sms_flash_promotion_product_relation_sms_flash_promotion_sessio; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.sms_flash_promotion_product_relation
+    ADD CONSTRAINT sms_flash_promotion_product_relation_sms_flash_promotion_sessio FOREIGN KEY (flash_promotion_session_id) REFERENCES public.sms_flash_promotion_session(id);
+
+
+--
+-- TOC entry 3859 (class 2606 OID 17069)
+-- Name: ums_admin_login_log ums_admin_login_log_admin_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_admin_login_log
+    ADD CONSTRAINT ums_admin_login_log_admin_id_fkey FOREIGN KEY (admin_id) REFERENCES public.ums_admin(id);
+
+
+--
+-- TOC entry 3860 (class 2606 OID 17074)
+-- Name: ums_admin_permission_relation ums_admin_permission_relation_admin_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_admin_permission_relation
+    ADD CONSTRAINT ums_admin_permission_relation_admin_id_fkey FOREIGN KEY (admin_id) REFERENCES public.ums_admin(id);
+
+
+--
+-- TOC entry 3861 (class 2606 OID 17841)
+-- Name: ums_admin_role_relation ums_admin_role_relation_admin_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_admin_role_relation
+    ADD CONSTRAINT ums_admin_role_relation_admin_id_fkey FOREIGN KEY (admin_id) REFERENCES public.ums_admin(id);
+
+
+--
+-- TOC entry 3862 (class 2606 OID 17079)
+-- Name: ums_admin_role_relation ums_admin_role_relation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_admin_role_relation
+    ADD CONSTRAINT ums_admin_role_relation_id_fkey FOREIGN KEY (id) REFERENCES public.ums_admin(id);
+
+
+--
+-- TOC entry 3863 (class 2606 OID 17846)
+-- Name: ums_admin_role_relation ums_admin_role_relation_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_admin_role_relation
+    ADD CONSTRAINT ums_admin_role_relation_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.ums_role(id);
+
+
+--
+-- TOC entry 3875 (class 2606 OID 17144)
+-- Name: ums_member_book_category_relation ums_member_book_category_relation_book_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_book_category_relation
+    ADD CONSTRAINT ums_member_book_category_relation_book_category_id_fkey FOREIGN KEY (book_category_id) REFERENCES public.bms_book_category(id);
+
+
+--
+-- TOC entry 3876 (class 2606 OID 17139)
+-- Name: ums_member_book_category_relation ums_member_book_category_relation_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_book_category_relation
+    ADD CONSTRAINT ums_member_book_category_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3922 (class 2606 OID 17369)
+-- Name: ums_member_follow_relation ums_member_follow_relation_flowee_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_follow_relation
+    ADD CONSTRAINT ums_member_follow_relation_flowee_id_fkey FOREIGN KEY (flowee_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3923 (class 2606 OID 17364)
+-- Name: ums_member_follow_relation ums_member_follow_relation_follower_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_follow_relation
+    ADD CONSTRAINT ums_member_follow_relation_follower_id_fkey FOREIGN KEY (follower_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3872 (class 2606 OID 17124)
+-- Name: ums_member_login_log ums_member_login_log_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_login_log
+    ADD CONSTRAINT ums_member_login_log_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3871 (class 2606 OID 17119)
+-- Name: ums_member ums_member_member_level_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member
+    ADD CONSTRAINT ums_member_member_level_id_fkey FOREIGN KEY (member_level_id) REFERENCES public.ums_member_level(id);
+
+
+--
+-- TOC entry 3873 (class 2606 OID 17129)
+-- Name: ums_member_member_tag_relation ums_member_member_tag_relation_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_member_tag_relation
+    ADD CONSTRAINT ums_member_member_tag_relation_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3874 (class 2606 OID 17134)
+-- Name: ums_member_member_tag_relation ums_member_member_tag_relation_tag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_member_tag_relation
+    ADD CONSTRAINT ums_member_member_tag_relation_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES public.ums_member_tag(id);
+
+
+--
+-- TOC entry 3944 (class 2606 OID 18436)
+-- Name: ums_member_own_book_relation ums_member_own_book_relation_bms_book_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_own_book_relation
+    ADD CONSTRAINT ums_member_own_book_relation_bms_book_fk FOREIGN KEY (book_id) REFERENCES public.bms_book(id);
+
+
+--
+-- TOC entry 3945 (class 2606 OID 18426)
+-- Name: ums_member_own_book_relation ums_member_own_book_relation_ums_member_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_own_book_relation
+    ADD CONSTRAINT ums_member_own_book_relation_ums_member_fk FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3877 (class 2606 OID 17149)
+-- Name: ums_member_statistics_info ums_member_statistics_info_member_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_statistics_info
+    ADD CONSTRAINT ums_member_statistics_info_member_id_fkey FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3943 (class 2606 OID 18407)
+-- Name: ums_member_vip_relation ums_member_vip_relation_ums_member_fk; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_member_vip_relation
+    ADD CONSTRAINT ums_member_vip_relation_ums_member_fk FOREIGN KEY (member_id) REFERENCES public.ums_member(id);
+
+
+--
+-- TOC entry 3868 (class 2606 OID 17104)
+-- Name: ums_resource ums_resource_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_resource
+    ADD CONSTRAINT ums_resource_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.ums_resource_category(id);
+
+
+--
+-- TOC entry 3864 (class 2606 OID 17094)
+-- Name: ums_role_menu_relation ums_role_menu_relation_menu_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_role_menu_relation
+    ADD CONSTRAINT ums_role_menu_relation_menu_id_fkey FOREIGN KEY (menu_id) REFERENCES public.ums_menu(id);
+
+
+--
+-- TOC entry 3865 (class 2606 OID 17084)
+-- Name: ums_role_menu_relation ums_role_menu_relation_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_role_menu_relation
+    ADD CONSTRAINT ums_role_menu_relation_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.ums_role(id);
+
+
+--
+-- TOC entry 3866 (class 2606 OID 17099)
+-- Name: ums_role_permission_relation ums_role_permission_relation_permission_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_role_permission_relation
+    ADD CONSTRAINT ums_role_permission_relation_permission_id_fkey FOREIGN KEY (permission_id) REFERENCES public.ums_permission(id);
+
+
+--
+-- TOC entry 3867 (class 2606 OID 17089)
+-- Name: ums_role_permission_relation ums_role_permission_relation_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_role_permission_relation
+    ADD CONSTRAINT ums_role_permission_relation_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.ums_role(id);
+
+
+--
+-- TOC entry 3869 (class 2606 OID 17109)
+-- Name: ums_role_resource_relation ums_role_resource_relation_resource_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_role_resource_relation
+    ADD CONSTRAINT ums_role_resource_relation_resource_id_fkey FOREIGN KEY (resource_id) REFERENCES public.ums_resource(id);
+
+
+--
+-- TOC entry 3870 (class 2606 OID 17114)
+-- Name: ums_role_resource_relation ums_role_resource_relation_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: readio
+--
+
+ALTER TABLE ONLY public.ums_role_resource_relation
+    ADD CONSTRAINT ums_role_resource_relation_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.ums_role(id);
+
+
+-- Completed on 2026-02-22 16:43:59 CST
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict kQEUZp7GjJ78GiALNQVezn86BgIMGH1IIoJq0ND15IMP5wOyq6b3z8mg5ZldWqw
+
