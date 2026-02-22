@@ -1,1 +1,3 @@
 rootProject.name = 'readio-gateway'
+// 单独构建 gateway 时引入同级模块 readio-common（在仓库根目录构建则无需此句）
+includeFlat 'readio-common'

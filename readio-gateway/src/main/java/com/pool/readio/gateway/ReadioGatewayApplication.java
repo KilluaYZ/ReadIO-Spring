@@ -1,4 +1,4 @@
-package com.pool.readio.readiogateway;
+package com.pool.readio.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
