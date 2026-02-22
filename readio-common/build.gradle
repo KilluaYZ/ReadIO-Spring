@@ -22,6 +22,17 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation("com.github.pagehelper:pagehelper-spring-boot-starter:2.1.1")
+    implementation("com.github.pagehelper:pagehelper:6.1.1")
+    implementation("com.github.xiaoymin:knife4j-gateway-spring-boot-starter:4.5.0")
+    implementation("com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:4.5.0")
+    implementation("net.logstash.logback:logstash-logback-encoder:9.0")
+    implementation("org.springframework.boot:spring-boot-starter-validation:4.1.0-M2")
+    implementation("org.springframework.data:spring-data-commons:4.1.0-M1")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis:4.1.0-M2")
+    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:5.0.1")
+    implementation("org.springframework.cloud:spring-cloud-starter-loadbalancer:5.0.1")
+    implementation("org.aspectj:aspectjweaver:1.9.25.1")
 }
 
 tasks.named('test') {
