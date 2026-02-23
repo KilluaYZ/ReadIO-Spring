@@ -1,1 +1,12 @@
 rootProject.name = 'readio-common'
+
+def rootCatalog = file("../gradle/libs.versions.toml")
+if (rootCatalog.exists()) {
+    dependencyResolutionManagement {
+        versionCatalogs {
+            libs {
+                from(files(rootCatalog))
+            }
+        }
+    }
+}

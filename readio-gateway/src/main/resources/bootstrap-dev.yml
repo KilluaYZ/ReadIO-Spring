@@ -3,6 +3,10 @@ spring:
     nacos:
       discovery:
         server-addr: http://localhost:8848
+        # Nacos 未启动或未就绪时仍允许应用启动，不因注册失败而退出
+        fail-fast: false
+        # 若本地未启动 Nacos 且不想看到重复的 ERROR 日志，可设为 false（届时 lb:// 路由将不可用）
+        # enabled: false
       config:
         server-addr: http://localhost:8848
         file-extension: yaml

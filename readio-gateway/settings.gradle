@@ -1,3 +1,15 @@
 rootProject.name = 'readio-gateway'
 // 单独构建 gateway 时引入同级模块 readio-common（在仓库根目录构建则无需此句）
 includeFlat 'readio-common'
+
+// 单独以 readio-gateway 为根同步时，使用仓库根的版本目录，否则 libs 不可用
+def rootCatalog = file("../gradle/libs.versions.toml")
+if (rootCatalog.exists()) {
+    dependencyResolutionManagement {
+        versionCatalogs {
+            libs {
+                from(files(rootCatalog))
+            }
+        }
+    }
+}

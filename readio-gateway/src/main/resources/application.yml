@@ -1,9 +1,18 @@
 server:
   port: 8201
 spring:
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+  application:
+    name: readio-gateway
+  main:
+    web-application-type: reactive
+  autoconfigure:
+    exclude:
+      - com.github.xiaoymin.knife4j.spring.gateway.Knife4jGatewayAutoConfiguration
+  datasource:
+    url: jdbc:postgresql://localhost:26001/readio?currentSchema=public
+    username: readio
+    password: readio
+    driver-class-name: org.postgresql.Driver
   cloud:
     gateway:
       server:
@@ -37,12 +46,16 @@ spring:
                 - Path=/readio-search/**
               filters:
                 - StripPrefix=1
+    nacos:
+      discovery:
+        server-addr: localhost:8848
   data:
     redis:
       database: 0
-      port: 6379
+      port: 26002
       host: localhost
-      password:
+      username: readio
+      password: readio
 secure:
   ignore:
     urls: #配置白名单路径
