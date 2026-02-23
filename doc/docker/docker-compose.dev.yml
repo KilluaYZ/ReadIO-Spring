@@ -33,23 +33,23 @@ services:
       timeout: 5s
       retries: 5
 
+  # 与本地 docker run 成功参数一致：standalone + 内嵌 Derby，无 MySQL
   nacos:
-    image: nacos/nacos-server:v2.3.0
+    image: nacos/nacos-server:latest
     container_name: readio-nacos-dev
+    hostname: nacos
     environment:
-      MODE: standalone
-      PREFER_HOST_MODE: hostname
-      SPRING_DATASOURCE_PLATFORM: ""
-      NACOS_AUTH_ENABLE: "false"
-      JVM_XMS: 256m
-      JVM_XMX: 512m
-      NACOS_SERVER_IP: 0.0.0.0
+      - MODE=standalone
+      - NACOS_AUTH_TOKEN=VGhpc0lzQVNlY3JldEtleUZvck5hY29zRGV2RW52aXJvbm1lbnQ=
+      - NACOS_AUTH_IDENTITY_KEY=readio-nacos-dev
+      - NACOS_AUTH_IDENTITY_VALUE=readio-nacos-dev
     ports:
+      - "8080:8080"
       - "8848:8848"
       - "9848:9848"
-      - "9849:9849"
     volumes:
-      - readio_nacos_data:/home/nacos
+      - readio_nacos_logs:/home/nacos/logs
+      - readio_nacos_data:/home/nacos/data
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -s http://127.0.0.1:8848/nacos/v1/console/health/readiness || exit 1"]
@@ -76,4 +76,5 @@ services:
 volumes:
   readio_postgres_data:
   readio_redis_data:
+  readio_nacos_logs:
   readio_nacos_data:

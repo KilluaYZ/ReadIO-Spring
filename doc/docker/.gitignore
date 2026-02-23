@@ -1,0 +1,6 @@
+logstash/
+nacos-conf/
+nacos-mysql/
+nacos-mysql.sql
+nacos/
+nacos-mysql-schema.sql
