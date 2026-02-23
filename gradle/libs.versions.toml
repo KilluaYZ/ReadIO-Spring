@@ -1,0 +1,98 @@
+# ReadIO 统一依赖版本目录
+# 子项目通过 implementation(libs.xxx) 引用，版本在此处统一维护
+# 文档: https://docs.gradle.org/current/userguide/platforms.html#sec:version_catalog
+
+[versions]
+# Spring
+spring-boot = "4.1.0-M2"
+spring-boot-bom = "4.0.3"
+spring-data-commons = "4.1.0-M1"
+spring-cloud-bootstrap = "5.0.1"
+spring-cloud-loadbalancer = "5.0.1"
+spring-cloud-gateway = "5.0.1"
+
+# 工具与框架
+lombok = "1.18.42"
+hutool = "5.8.43"
+pagehelper-spring-boot = "2.1.1"
+pagehelper = "6.1.1"
+mybatis = "3.5.19"
+mybatis-generator = "1.4.2"
+druid = "1.2.27"
+aspectjweaver = "1.9.25.1"
+commons-pool2 = "2.13.1"
+
+# Knife4j
+knife4j = "4.5.0"
+
+# 日志
+logstash-logback = "9.0"
+
+# Sa-Token
+sa-token = "1.44.0"
+
+# 阿里云 / Nacos
+nacos = "2025.1.0.0"
+aliyun-oss = "3.18.5"
+alipay-sdk = "4.40.658.ALL"
+
+# 其他
+minio = "8.6.0"
+postgresql = "42.7.10"
+spring-boot-admin = "4.0.1"
+gradle-dependency-management = "1.1.7"
+
+[libraries]
+# Spring Boot
+spring-boot-starter-webmvc = { group = "org.springframework.boot", name = "spring-boot-starter-webmvc", version.ref = "spring-boot" }
+spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "spring-boot" }
+spring-boot-starter-validation = { group = "org.springframework.boot", name = "spring-boot-starter-validation", version.ref = "spring-boot" }
+spring-boot-starter-data-redis = { group = "org.springframework.boot", name = "spring-boot-starter-data-redis", version.ref = "spring-boot" }
+spring-boot-starter-webmvc-test = { group = "org.springframework.boot", name = "spring-boot-starter-webmvc-test" }
+junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
+
+# Spring Data / Cloud
+spring-data-commons = { group = "org.springframework.data", name = "spring-data-commons", version.ref = "spring-data-commons" }
+spring-cloud-starter-bootstrap = { group = "org.springframework.cloud", name = "spring-cloud-starter-bootstrap", version.ref = "spring-cloud-bootstrap" }
+spring-cloud-starter-loadbalancer = { group = "org.springframework.cloud", name = "spring-cloud-starter-loadbalancer", version.ref = "spring-cloud-loadbalancer" }
+spring-cloud-starter-gateway = { group = "org.springframework.cloud", name = "spring-cloud-starter-gateway-server-webflux", version.ref = "spring-cloud-gateway" }
+
+# 工具
+lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
+hutool = { group = "cn.hutool", name = "hutool-all", version.ref = "hutool" }
+pagehelper-spring-boot-starter = { group = "com.github.pagehelper", name = "pagehelper-spring-boot-starter", version.ref = "pagehelper-spring-boot" }
+pagehelper = { group = "com.github.pagehelper", name = "pagehelper", version.ref = "pagehelper" }
+mybatis = { group = "org.mybatis", name = "mybatis", version.ref = "mybatis" }
+mybatis-generator-core = { group = "org.mybatis.generator", name = "mybatis-generator-core", version.ref = "mybatis-generator" }
+druid-spring-boot-starter = { group = "com.alibaba", name = "druid-spring-boot-starter", version.ref = "druid" }
+aspectjweaver = { group = "org.aspectj", name = "aspectjweaver", version.ref = "aspectjweaver" }
+commons-pool2 = { group = "org.apache.commons", name = "commons-pool2", version.ref = "commons-pool2" }
+
+# Knife4j
+knife4j-gateway = { group = "com.github.xiaoymin", name = "knife4j-gateway-spring-boot-starter", version.ref = "knife4j" }
+knife4j-openapi3-jakarta = { group = "com.github.xiaoymin", name = "knife4j-openapi3-jakarta-spring-boot-starter", version.ref = "knife4j" }
+
+# 日志
+logstash-logback-encoder = { group = "net.logstash.logback", name = "logstash-logback-encoder", version.ref = "logstash-logback" }
+
+# Sa-Token
+sa-token-reactor = { group = "cn.dev33", name = "sa-token-reactor-spring-boot3-starter", version.ref = "sa-token" }
+sa-token-redis-jackson = { group = "cn.dev33", name = "sa-token-redis-jackson", version.ref = "sa-token" }
+sa-token-jwt = { group = "cn.dev33", name = "sa-token-jwt", version.ref = "sa-token" }
+
+# Nacos
+nacos-discovery = { group = "com.alibaba.cloud", name = "spring-cloud-starter-alibaba-nacos-discovery", version.ref = "nacos" }
+nacos-config = { group = "com.alibaba.cloud", name = "spring-cloud-starter-alibaba-nacos-config", version.ref = "nacos" }
+
+# 其他
+aliyun-sdk-oss = { group = "com.aliyun.oss", name = "aliyun-sdk-oss", version.ref = "aliyun-oss" }
+alipay-sdk-java = { group = "com.alipay.sdk", name = "alipay-sdk-java", version.ref = "alipay-sdk" }
+minio = { group = "io.minio", name = "minio", version.ref = "minio" }
+postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
+spring-boot-admin-server = { group = "de.codecentric", name = "spring-boot-admin-starter-server", version.ref = "spring-boot-admin" }
+spring-boot-admin-client = { group = "de.codecentric", name = "spring-boot-admin-starter-client", version.ref = "spring-boot-admin" }
+
+[bundles]
+# 可选：把经常一起用的依赖打成 bundle，子项目可写 implementation(libs.bundles.xxx)
+# knife4j = ["knife4j-gateway", "knife4j-openapi3-jakarta"]
+# sa-token = ["sa-token-reactor", "sa-token-redis-jackson", "sa-token-jwt"]
