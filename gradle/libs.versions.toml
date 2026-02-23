@@ -10,6 +10,7 @@ spring-data-commons = "4.1.0-M1"
 spring-cloud-bootstrap = "5.0.1"
 spring-cloud-loadbalancer = "5.0.1"
 spring-cloud-gateway = "5.0.1"
+spring-cloud-openfeign = "5.0.1"
 
 # 工具与框架
 lombok = "1.18.42"
@@ -56,6 +57,7 @@ spring-data-commons = { group = "org.springframework.data", name = "spring-data-
 spring-cloud-starter-bootstrap = { group = "org.springframework.cloud", name = "spring-cloud-starter-bootstrap", version.ref = "spring-cloud-bootstrap" }
 spring-cloud-starter-loadbalancer = { group = "org.springframework.cloud", name = "spring-cloud-starter-loadbalancer", version.ref = "spring-cloud-loadbalancer" }
 spring-cloud-starter-gateway = { group = "org.springframework.cloud", name = "spring-cloud-starter-gateway-server-webflux", version.ref = "spring-cloud-gateway" }
+spring-cloud-starter-openfeign = { group = "org.springframework.cloud", name = "spring-cloud-starter-openfeign", version.ref = "spring-cloud-openfeign" }
 
 # 工具
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }

@@ -19,9 +19,22 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
-    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation project(':readio-common')
+        compileOnly libs.lombok
+        annotationProcessor libs.lombok
+        implementation libs.spring.boot.starter.data.redis
+        implementation libs.nacos.discovery
+        implementation libs.nacos.config
+        implementation libs.spring.cloud.starter.openfeign
+        implementation libs.spring.cloud.starter.loadbalancer
+        implementation libs.sa.token.reactor
+        implementation libs.sa.token.redis.jackson
+        implementation libs.commons.pool2
+        implementation libs.sa.token.jwt
+        implementation libs.spring.boot.admin.client
+        implementation libs.postgresql
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testRuntimeOnly libs.junit.platform.launcher
 }
 
 tasks.named('test') {
