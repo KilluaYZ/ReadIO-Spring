@@ -82,7 +82,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sms_coupon_history
+    from public.sms_coupon_history
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,21 +93,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from sms_coupon_history
+    from public.sms_coupon_history
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from sms_coupon_history
+    delete from public.sms_coupon_history
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.SmsCouponHistoryExample">
-    delete from sms_coupon_history
+    delete from public.sms_coupon_history
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.SmsCouponHistory" useGeneratedKeys="true">
-    insert into sms_coupon_history (coupon_id, member_id, coupon_code, 
+    insert into public.sms_coupon_history (coupon_id, member_id, coupon_code, 
       member_username, get_type, create_time, 
       use_status, use_time, order_id, 
       order_sn)
@@ -117,7 +117,7 @@
       #{orderSn,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.SmsCouponHistory" useGeneratedKeys="true">
-    insert into sms_coupon_history
+    insert into public.sms_coupon_history
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="couponId != null">
         coupon_id,
@@ -184,13 +184,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.SmsCouponHistoryExample" resultType="java.lang.Long">
-    select count(*) from sms_coupon_history
+    select count(*) from public.sms_coupon_history
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update sms_coupon_history
+    update public.sms_coupon_history
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -231,7 +231,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update sms_coupon_history
+    update public.sms_coupon_history
     set id = #{row.id,jdbcType=INTEGER},
       coupon_id = #{row.couponId,jdbcType=INTEGER},
       member_id = #{row.memberId,jdbcType=INTEGER},
@@ -248,7 +248,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.SmsCouponHistory">
-    update sms_coupon_history
+    update public.sms_coupon_history
     <set>
       <if test="couponId != null">
         coupon_id = #{couponId,jdbcType=INTEGER},
@@ -284,7 +284,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.SmsCouponHistory">
-    update sms_coupon_history
+    update public.sms_coupon_history
     set coupon_id = #{couponId,jdbcType=INTEGER},
       member_id = #{memberId,jdbcType=INTEGER},
       coupon_code = #{couponCode,jdbcType=VARCHAR},

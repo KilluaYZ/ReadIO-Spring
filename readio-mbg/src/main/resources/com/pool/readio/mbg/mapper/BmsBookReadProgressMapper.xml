@@ -76,7 +76,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from bms_book_read_progress
+    from public.bms_book_read_progress
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,27 +87,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from bms_book_read_progress
+    from public.bms_book_read_progress
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from bms_book_read_progress
+    delete from public.bms_book_read_progress
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.BmsBookReadProgressExample">
-    delete from bms_book_read_progress
+    delete from public.bms_book_read_progress
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBookReadProgress" useGeneratedKeys="true">
-    insert into bms_book_read_progress (member_id, book_id, last_block_id, 
+    insert into public.bms_book_read_progress (member_id, book_id, last_block_id, 
       update_time, is_finished)
     values (#{memberId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, #{lastBlockId,jdbcType=INTEGER}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{isFinished,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBookReadProgress" useGeneratedKeys="true">
-    insert into bms_book_read_progress
+    insert into public.bms_book_read_progress
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="memberId != null">
         member_id,
@@ -144,13 +144,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.BmsBookReadProgressExample" resultType="java.lang.Long">
-    select count(*) from bms_book_read_progress
+    select count(*) from public.bms_book_read_progress
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update bms_book_read_progress
+    update public.bms_book_read_progress
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -176,7 +176,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update bms_book_read_progress
+    update public.bms_book_read_progress
     set id = #{row.id,jdbcType=INTEGER},
       member_id = #{row.memberId,jdbcType=INTEGER},
       book_id = #{row.bookId,jdbcType=INTEGER},
@@ -188,7 +188,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.BmsBookReadProgress">
-    update bms_book_read_progress
+    update public.bms_book_read_progress
     <set>
       <if test="memberId != null">
         member_id = #{memberId,jdbcType=INTEGER},
@@ -209,7 +209,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.BmsBookReadProgress">
-    update bms_book_read_progress
+    update public.bms_book_read_progress
     set member_id = #{memberId,jdbcType=INTEGER},
       book_id = #{bookId,jdbcType=INTEGER},
       last_block_id = #{lastBlockId,jdbcType=INTEGER},

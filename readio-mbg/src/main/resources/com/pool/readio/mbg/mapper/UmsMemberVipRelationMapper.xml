@@ -74,7 +74,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_member_vip_relation
+    from public.ums_member_vip_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,27 +85,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_member_vip_relation
+    from public.ums_member_vip_relation
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from ums_member_vip_relation
+    delete from public.ums_member_vip_relation
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.UmsMemberVipRelationExample">
-    delete from ums_member_vip_relation
+    delete from public.ums_member_vip_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsMemberVipRelation" useGeneratedKeys="true">
-    insert into ums_member_vip_relation (member_id, create_time, duration
+    insert into public.ums_member_vip_relation (member_id, create_time, duration
       )
     values (#{memberId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{duration,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsMemberVipRelation" useGeneratedKeys="true">
-    insert into ums_member_vip_relation
+    insert into public.ums_member_vip_relation
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="memberId != null">
         member_id,
@@ -130,13 +130,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.UmsMemberVipRelationExample" resultType="java.lang.Long">
-    select count(*) from ums_member_vip_relation
+    select count(*) from public.ums_member_vip_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_member_vip_relation
+    update public.ums_member_vip_relation
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -156,7 +156,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_member_vip_relation
+    update public.ums_member_vip_relation
     set id = #{row.id,jdbcType=INTEGER},
       member_id = #{row.memberId,jdbcType=INTEGER},
       create_time = #{row.createTime,jdbcType=TIMESTAMP},
@@ -166,7 +166,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.UmsMemberVipRelation">
-    update ums_member_vip_relation
+    update public.ums_member_vip_relation
     <set>
       <if test="memberId != null">
         member_id = #{memberId,jdbcType=INTEGER},
@@ -181,7 +181,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.UmsMemberVipRelation">
-    update ums_member_vip_relation
+    update public.ums_member_vip_relation
     set member_id = #{memberId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       duration = #{duration,jdbcType=INTEGER}

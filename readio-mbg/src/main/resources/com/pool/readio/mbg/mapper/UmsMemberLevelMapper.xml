@@ -83,7 +83,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_member_level
+    from public.ums_member_level
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,21 +94,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_member_level
+    from public.ums_member_level
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from ums_member_level
+    delete from public.ums_member_level
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.UmsMemberLevelExample">
-    delete from ums_member_level
+    delete from public.ums_member_level
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsMemberLevel" useGeneratedKeys="true">
-    insert into ums_member_level (name, growth_point, default_status, 
+    insert into public.ums_member_level (name, growth_point, default_status, 
       comment_growth_point, priviledge_sign_in, priviledge_comment, 
       priviledge_promotion, priviledge_member_price, priviledge_birthday, 
       note)
@@ -118,7 +118,7 @@
       #{note,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsMemberLevel" useGeneratedKeys="true">
-    insert into ums_member_level
+    insert into public.ums_member_level
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="name != null">
         name,
@@ -185,13 +185,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.UmsMemberLevelExample" resultType="java.lang.Long">
-    select count(*) from ums_member_level
+    select count(*) from public.ums_member_level
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_member_level
+    update public.ums_member_level
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -232,7 +232,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_member_level
+    update public.ums_member_level
     set id = #{row.id,jdbcType=INTEGER},
       name = #{row.name,jdbcType=VARCHAR},
       growth_point = #{row.growthPoint,jdbcType=INTEGER},
@@ -249,7 +249,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.UmsMemberLevel">
-    update ums_member_level
+    update public.ums_member_level
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -285,7 +285,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.UmsMemberLevel">
-    update ums_member_level
+    update public.ums_member_level
     set name = #{name,jdbcType=VARCHAR},
       growth_point = #{growthPoint,jdbcType=INTEGER},
       default_status = #{defaultStatus,jdbcType=BIT},

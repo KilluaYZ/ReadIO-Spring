@@ -75,7 +75,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from bms_author
+    from public.bms_author
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,27 +86,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from bms_author
+    from public.bms_author
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from bms_author
+    delete from public.bms_author
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.BmsAuthorExample">
-    delete from bms_author
+    delete from public.bms_author
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsAuthor" useGeneratedKeys="true">
-    insert into bms_author (name, description, create_time, 
+    insert into public.bms_author (name, description, create_time, 
       icon)
     values (#{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{icon,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsAuthor" useGeneratedKeys="true">
-    insert into bms_author
+    insert into public.bms_author
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="name != null">
         name,
@@ -137,13 +137,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.BmsAuthorExample" resultType="java.lang.Long">
-    select count(*) from bms_author
+    select count(*) from public.bms_author
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update bms_author
+    update public.bms_author
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -166,7 +166,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update bms_author
+    update public.bms_author
     set id = #{row.id,jdbcType=INTEGER},
       name = #{row.name,jdbcType=VARCHAR},
       description = #{row.description,jdbcType=VARCHAR},
@@ -177,7 +177,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.BmsAuthor">
-    update bms_author
+    update public.bms_author
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -195,7 +195,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.BmsAuthor">
-    update bms_author
+    update public.bms_author
     set name = #{name,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

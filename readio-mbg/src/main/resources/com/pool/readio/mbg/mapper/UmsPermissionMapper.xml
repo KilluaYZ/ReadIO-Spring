@@ -80,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_permission
+    from public.ums_permission
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +91,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_permission
+    from public.ums_permission
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from ums_permission
+    delete from public.ums_permission
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.UmsPermissionExample">
-    delete from ums_permission
+    delete from public.ums_permission
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsPermission" useGeneratedKeys="true">
-    insert into ums_permission (parent_id, name, value, 
+    insert into public.ums_permission (parent_id, name, value, 
       icon, type, uri, status, 
       create_time, sort)
     values (#{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, 
@@ -113,7 +113,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{sort,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsPermission" useGeneratedKeys="true">
-    insert into ums_permission
+    insert into public.ums_permission
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="parentId != null">
         parent_id,
@@ -174,13 +174,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.UmsPermissionExample" resultType="java.lang.Long">
-    select count(*) from ums_permission
+    select count(*) from public.ums_permission
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_permission
+    update public.ums_permission
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -218,7 +218,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_permission
+    update public.ums_permission
     set id = #{row.id,jdbcType=INTEGER},
       parent_id = #{row.parentId,jdbcType=INTEGER},
       name = #{row.name,jdbcType=VARCHAR},
@@ -234,7 +234,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.UmsPermission">
-    update ums_permission
+    update public.ums_permission
     <set>
       <if test="parentId != null">
         parent_id = #{parentId,jdbcType=INTEGER},
@@ -267,7 +267,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.UmsPermission">
-    update ums_permission
+    update public.ums_permission
     set parent_id = #{parentId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       value = #{value,jdbcType=VARCHAR},

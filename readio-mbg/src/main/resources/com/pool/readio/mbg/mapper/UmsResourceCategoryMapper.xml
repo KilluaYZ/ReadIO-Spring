@@ -74,7 +74,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_resource_category
+    from public.ums_resource_category
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,27 +85,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_resource_category
+    from public.ums_resource_category
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from ums_resource_category
+    delete from public.ums_resource_category
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.UmsResourceCategoryExample">
-    delete from ums_resource_category
+    delete from public.ums_resource_category
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsResourceCategory" useGeneratedKeys="true">
-    insert into ums_resource_category (create_time, name, sort
+    insert into public.ums_resource_category (create_time, name, sort
       )
     values (#{createTime,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsResourceCategory" useGeneratedKeys="true">
-    insert into ums_resource_category
+    insert into public.ums_resource_category
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="createTime != null">
         create_time,
@@ -130,13 +130,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.UmsResourceCategoryExample" resultType="java.lang.Long">
-    select count(*) from ums_resource_category
+    select count(*) from public.ums_resource_category
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_resource_category
+    update public.ums_resource_category
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -156,7 +156,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_resource_category
+    update public.ums_resource_category
     set id = #{row.id,jdbcType=INTEGER},
       create_time = #{row.createTime,jdbcType=TIMESTAMP},
       name = #{row.name,jdbcType=VARCHAR},
@@ -166,7 +166,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.UmsResourceCategory">
-    update ums_resource_category
+    update public.ums_resource_category
     <set>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -181,7 +181,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.UmsResourceCategory">
-    update ums_resource_category
+    update public.ums_resource_category
     set create_time = #{createTime,jdbcType=TIMESTAMP},
       name = #{name,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=INTEGER}

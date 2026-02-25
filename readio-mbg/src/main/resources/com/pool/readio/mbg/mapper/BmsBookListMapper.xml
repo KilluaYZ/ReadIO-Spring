@@ -75,7 +75,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from bms_book_list
+    from public.bms_book_list
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,27 +86,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from bms_book_list
+    from public.bms_book_list
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from bms_book_list
+    delete from public.bms_book_list
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.BmsBookListExample">
-    delete from bms_book_list
+    delete from public.bms_book_list
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBookList" useGeneratedKeys="true">
-    insert into bms_book_list (name, hidden, description, 
+    insert into public.bms_book_list (name, hidden, description, 
       create_time)
     values (#{name,jdbcType=VARCHAR}, #{hidden,jdbcType=BIT}, #{description,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBookList" useGeneratedKeys="true">
-    insert into bms_book_list
+    insert into public.bms_book_list
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="name != null">
         name,
@@ -137,13 +137,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.BmsBookListExample" resultType="java.lang.Long">
-    select count(*) from bms_book_list
+    select count(*) from public.bms_book_list
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update bms_book_list
+    update public.bms_book_list
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -166,7 +166,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update bms_book_list
+    update public.bms_book_list
     set id = #{row.id,jdbcType=INTEGER},
       name = #{row.name,jdbcType=VARCHAR},
       hidden = #{row.hidden,jdbcType=BIT},
@@ -177,7 +177,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.BmsBookList">
-    update bms_book_list
+    update public.bms_book_list
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -195,7 +195,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.BmsBookList">
-    update bms_book_list
+    update public.bms_book_list
     set name = #{name,jdbcType=VARCHAR},
       hidden = #{hidden,jdbcType=BIT},
       description = #{description,jdbcType=VARCHAR},

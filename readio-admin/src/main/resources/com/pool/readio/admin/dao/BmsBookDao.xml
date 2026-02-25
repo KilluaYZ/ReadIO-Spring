@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.admin.dao.BmsBookDao">
+
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.BmsBook">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="book_category_id" jdbcType="INTEGER" property="bookCategoryId"/>
+    <result column="author_id" jdbcType="INTEGER" property="authorId"/>
+    <result column="publisher_id" jdbcType="INTEGER" property="publisherId"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="icon" jdbcType="VARCHAR" property="icon"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="pushlish_time" jdbcType="TIMESTAMP" property="pushlishTime"/>
+    <result column="isbn" jdbcType="VARCHAR" property="isbn"/>
+    <result column="word_count" jdbcType="INTEGER" property="wordCount"/>
+    <result column="description" jdbcType="VARCHAR" property="description"/>
+    <result column="language" jdbcType="VARCHAR" property="language"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, book_category_id, author_id, publisher_id, name, icon, create_time, pushlish_time,
+    isbn, word_count, description, language
+  </sql>
+
+  <!-- 可复用的查询条件：与 BmsBookQueryParam 对应 -->
+  <sql id="Query_Where_Clause">
+    <where>
+      <if test="queryParam.nameKeyword != null and queryParam.nameKeyword != ''">
+        AND name LIKE CONCAT('%', #{queryParam.nameKeyword}, '%')
+      </if>
+      <if test="queryParam.descriptionKeyword != null and queryParam.descriptionKeyword != ''">
+        AND description LIKE CONCAT('%', #{queryParam.descriptionKeyword}, '%')
+      </if>
+      <if test="queryParam.authorId != null">
+        AND author_id = #{queryParam.authorId}
+      </if>
+      <if test="queryParam.bookCategoryId != null">
+        AND book_category_id = #{queryParam.bookCategoryId}
+      </if>
+      <if test="queryParam.publisherId != null">
+        AND publisher_id = #{queryParam.publisherId}
+      </if>
+      <if test="queryParam.isbn != null and queryParam.isbn != ''">
+        AND isbn LIKE CONCAT('%', #{queryParam.isbn}, '%')
+      </if>
+      <if test="queryParam.language != null and queryParam.language != ''">
+        AND language = #{queryParam.language}
+      </if>
+      <if test="queryParam.createTime != null and queryParam.createTime != ''">
+        AND create_time::date::text LIKE CONCAT(#{queryParam.createTime}, '%')
+      </if>
+    </where>
+  </sql>
+
+  <select id="getList" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book
+    <include refid="Query_Where_Clause"/>
+    ORDER BY create_time DESC
+  </select>
+
+  <select id="countByCondition" resultType="java.lang.Long">
+    SELECT COUNT(*)
+    FROM public.bms_book
+    <include refid="Query_Where_Clause"/>
+  </select>
+
+  <select id="getById" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book
+    WHERE id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getByIsbn" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book
+    WHERE isbn = #{isbn,jdbcType=VARCHAR}
+    LIMIT 1
+  </select>
+
+  <select id="listByIds" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book
+    WHERE id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    ORDER BY create_time DESC
+  </select>
+
+  <select id="listByAuthorId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book
+    WHERE author_id = #{authorId,jdbcType=INTEGER}
+    ORDER BY create_time DESC
+  </select>
+
+  <select id="listByBookCategoryId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book
+    WHERE book_category_id = #{bookCategoryId,jdbcType=INTEGER}
+    ORDER BY create_time DESC
+  </select>
+
+  <select id="listByPublisherId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book
+    WHERE publisher_id = #{publisherId,jdbcType=INTEGER}
+    ORDER BY create_time DESC
+  </select>
+
+  <delete id="deleteByIds">
+    DELETE FROM public.bms_book
+    WHERE id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

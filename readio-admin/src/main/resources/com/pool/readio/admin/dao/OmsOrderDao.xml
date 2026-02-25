@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.admin.dao.OmsOrderDao">
+
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.OmsOrder">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="member_id" jdbcType="INTEGER" property="memberId"/>
+    <result column="coupon_id" jdbcType="INTEGER" property="couponId"/>
+    <result column="order_sn" jdbcType="VARCHAR" property="orderSn"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="member_username" jdbcType="VARCHAR" property="memberUsername"/>
+    <result column="total_amount" jdbcType="NUMERIC" property="totalAmount"/>
+    <result column="pay_amount" jdbcType="NUMERIC" property="payAmount"/>
+    <result column="promotion_amount" jdbcType="NUMERIC" property="promotionAmount"/>
+    <result column="integration_amount" jdbcType="NUMERIC" property="integrationAmount"/>
+    <result column="coupon_amount" jdbcType="NUMERIC" property="couponAmount"/>
+    <result column="pay_type" jdbcType="INTEGER" property="payType"/>
+    <result column="source_type" jdbcType="INTEGER" property="sourceType"/>
+    <result column="status" jdbcType="INTEGER" property="status"/>
+    <result column="integration" jdbcType="INTEGER" property="integration"/>
+    <result column="growth" jdbcType="INTEGER" property="growth"/>
+    <result column="promotion_info" jdbcType="VARCHAR" property="promotionInfo"/>
+    <result column="note" jdbcType="VARCHAR" property="note"/>
+    <result column="use_integration" jdbcType="INTEGER" property="useIntegration"/>
+    <result column="product_id" jdbcType="INTEGER" property="productId"/>
+  </resultMap>
+
+  <resultMap id="DetailResultMap" type="com.pool.readio.admin.dto.OmsOrderDetail" extends="BaseResultMap"/>
+
+  <sql id="Base_Column_List">
+    id, member_id, coupon_id, order_sn, create_time, member_username, total_amount, pay_amount,
+    promotion_amount, integration_amount, coupon_amount, pay_type, source_type, status,
+    integration, growth, promotion_info, note, use_integration, product_id
+  </sql>
+
+  <!-- 可复用的查询条件：与 OmsOrderQueryParam 对应 -->
+  <sql id="Query_Where_Clause">
+    <where>
+      <if test="queryParam.orderSn != null and queryParam.orderSn != ''">
+        AND order_sn LIKE CONCAT('%', #{queryParam.orderSn}, '%')
+      </if>
+      <if test="queryParam.receiverKeyword != null and queryParam.receiverKeyword != ''">
+        AND member_username LIKE CONCAT('%', #{queryParam.receiverKeyword}, '%')
+      </if>
+      <if test="queryParam.status != null">
+        AND status = #{queryParam.status}
+      </if>
+      <if test="queryParam.sourceType != null">
+        AND source_type = #{queryParam.sourceType}
+      </if>
+      <if test="queryParam.createTime != null and queryParam.createTime != ''">
+        AND create_time::date::text LIKE CONCAT(#{queryParam.createTime}, '%')
+      </if>
+    </where>
+  </sql>
+
+  <select id="getList" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.oms_order
+    <include refid="Query_Where_Clause"/>
+    ORDER BY create_time DESC
+  </select>
+
+  <select id="countByCondition" resultType="java.lang.Long">
+    SELECT COUNT(*)
+    FROM public.oms_order
+    <include refid="Query_Where_Clause"/>
+  </select>
+
+  <select id="getByOrderSn" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.oms_order
+    WHERE order_sn = #{orderSn,jdbcType=VARCHAR}
+    LIMIT 1
+  </select>
+
+  <select id="getDetail" resultMap="DetailResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.oms_order
+    WHERE id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="listByIds" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.oms_order
+    WHERE id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    ORDER BY create_time DESC
+  </select>
+
+  <select id="listByMemberId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.oms_order
+    WHERE member_id = #{memberId,jdbcType=BIGINT}
+    ORDER BY create_time DESC
+  </select>
+
+  <!-- 批量发货：当前表无物流字段，仅将状态更新为已完成(1)；若后续加物流字段可在此扩展 -->
+  <update id="delivery">
+    UPDATE public.oms_order
+    SET status = 1
+    WHERE id IN
+    <foreach collection="list" item="item" open="(" separator="," close=")">
+      #{item.orderId,jdbcType=BIGINT}
+    </foreach>
+  </update>
+
+  <update id="updateStatusByIds">
+    UPDATE public.oms_order
+    SET status = #{status,jdbcType=INTEGER}
+    WHERE id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <update id="updateStatusAndNoteByIds">
+    UPDATE public.oms_order
+    <set>
+      status = #{status,jdbcType=INTEGER},
+      <if test="note != null and note != ''">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </update>
+
+  <delete id="deleteByIds">
+    DELETE FROM public.oms_order
+    WHERE id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

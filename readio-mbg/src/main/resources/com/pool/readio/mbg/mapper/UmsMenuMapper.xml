@@ -79,7 +79,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_menu
+    from public.ums_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,21 +90,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_menu
+    from public.ums_menu
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from ums_menu
+    delete from public.ums_menu
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.UmsMenuExample">
-    delete from ums_menu
+    delete from public.ums_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsMenu" useGeneratedKeys="true">
-    insert into ums_menu (parent_id, create_time, title, 
+    insert into public.ums_menu (parent_id, create_time, title, 
       level, sort, name, 
       icon, hidden)
     values (#{parentId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
@@ -112,7 +112,7 @@
       #{icon,jdbcType=VARCHAR}, #{hidden,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsMenu" useGeneratedKeys="true">
-    insert into ums_menu
+    insert into public.ums_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="parentId != null">
         parent_id,
@@ -167,13 +167,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.UmsMenuExample" resultType="java.lang.Long">
-    select count(*) from ums_menu
+    select count(*) from public.ums_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_menu
+    update public.ums_menu
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -208,7 +208,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_menu
+    update public.ums_menu
     set id = #{row.id,jdbcType=INTEGER},
       parent_id = #{row.parentId,jdbcType=INTEGER},
       create_time = #{row.createTime,jdbcType=TIMESTAMP},
@@ -223,7 +223,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.UmsMenu">
-    update ums_menu
+    update public.ums_menu
     <set>
       <if test="parentId != null">
         parent_id = #{parentId,jdbcType=INTEGER},
@@ -253,7 +253,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.UmsMenu">
-    update ums_menu
+    update public.ums_menu
     set parent_id = #{parentId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       title = #{title,jdbcType=VARCHAR},

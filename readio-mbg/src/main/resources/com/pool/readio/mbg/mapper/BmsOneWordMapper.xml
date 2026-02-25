@@ -74,7 +74,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from bms_one_word
+    from public.bms_one_word
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,27 +85,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from bms_one_word
+    from public.bms_one_word
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from bms_one_word
+    delete from public.bms_one_word
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.BmsOneWordExample">
-    delete from bms_one_word
+    delete from public.bms_one_word
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsOneWord" useGeneratedKeys="true">
-    insert into bms_one_word (book_id, content, create_time
+    insert into public.bms_one_word (book_id, content, create_time
       )
     values (#{bookId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsOneWord" useGeneratedKeys="true">
-    insert into bms_one_word
+    insert into public.bms_one_word
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="bookId != null">
         book_id,
@@ -130,13 +130,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.BmsOneWordExample" resultType="java.lang.Long">
-    select count(*) from bms_one_word
+    select count(*) from public.bms_one_word
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update bms_one_word
+    update public.bms_one_word
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -156,7 +156,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update bms_one_word
+    update public.bms_one_word
     set id = #{row.id,jdbcType=INTEGER},
       book_id = #{row.bookId,jdbcType=INTEGER},
       content = #{row.content,jdbcType=VARCHAR},
@@ -166,7 +166,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.BmsOneWord">
-    update bms_one_word
+    update public.bms_one_word
     <set>
       <if test="bookId != null">
         book_id = #{bookId,jdbcType=INTEGER},
@@ -181,7 +181,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.BmsOneWord">
-    update bms_one_word
+    update public.bms_one_word
     set book_id = #{bookId,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}

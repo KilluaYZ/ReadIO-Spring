@@ -77,7 +77,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_role
+    from public.ums_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,21 +88,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_role
+    from public.ums_role
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from ums_role
+    delete from public.ums_role
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.UmsRoleExample">
-    delete from ums_role
+    delete from public.ums_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsRole" useGeneratedKeys="true">
-    insert into ums_role (name, description, admin_count, 
+    insert into public.ums_role (name, description, admin_count, 
       create_time, status, sort
       )
     values (#{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{adminCount,jdbcType=INTEGER}, 
@@ -110,7 +110,7 @@
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsRole" useGeneratedKeys="true">
-    insert into ums_role
+    insert into public.ums_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="name != null">
         name,
@@ -153,13 +153,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.UmsRoleExample" resultType="java.lang.Long">
-    select count(*) from ums_role
+    select count(*) from public.ums_role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_role
+    update public.ums_role
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -188,7 +188,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_role
+    update public.ums_role
     set id = #{row.id,jdbcType=INTEGER},
       name = #{row.name,jdbcType=VARCHAR},
       description = #{row.description,jdbcType=VARCHAR},
@@ -201,7 +201,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.UmsRole">
-    update ums_role
+    update public.ums_role
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -225,7 +225,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.UmsRole">
-    update ums_role
+    update public.ums_role
     set name = #{name,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       admin_count = #{adminCount,jdbcType=INTEGER},

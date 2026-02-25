@@ -75,7 +75,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from cms_member_prefer_post_relation
+    from public.cms_member_prefer_post_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,27 +86,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from cms_member_prefer_post_relation
+    from public.cms_member_prefer_post_relation
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cms_member_prefer_post_relation
+    delete from public.cms_member_prefer_post_relation
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.CmsMemberPreferPostRelationExample">
-    delete from cms_member_prefer_post_relation
+    delete from public.cms_member_prefer_post_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.CmsMemberPreferPostRelation" useGeneratedKeys="true">
-    insert into cms_member_prefer_post_relation (type, member_id, post_id, 
+    insert into public.cms_member_prefer_post_relation (type, member_id, post_id, 
       create_time)
     values (#{type,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{postId,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.CmsMemberPreferPostRelation" useGeneratedKeys="true">
-    insert into cms_member_prefer_post_relation
+    insert into public.cms_member_prefer_post_relation
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="type != null">
         type,
@@ -137,13 +137,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.CmsMemberPreferPostRelationExample" resultType="java.lang.Long">
-    select count(*) from cms_member_prefer_post_relation
+    select count(*) from public.cms_member_prefer_post_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update cms_member_prefer_post_relation
+    update public.cms_member_prefer_post_relation
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -166,7 +166,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update cms_member_prefer_post_relation
+    update public.cms_member_prefer_post_relation
     set id = #{row.id,jdbcType=INTEGER},
       type = #{row.type,jdbcType=INTEGER},
       member_id = #{row.memberId,jdbcType=INTEGER},
@@ -177,7 +177,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.CmsMemberPreferPostRelation">
-    update cms_member_prefer_post_relation
+    update public.cms_member_prefer_post_relation
     <set>
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
@@ -195,7 +195,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.CmsMemberPreferPostRelation">
-    update cms_member_prefer_post_relation
+    update public.cms_member_prefer_post_relation
     set type = #{type,jdbcType=INTEGER},
       member_id = #{memberId,jdbcType=INTEGER},
       post_id = #{postId,jdbcType=INTEGER},

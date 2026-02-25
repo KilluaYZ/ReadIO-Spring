@@ -76,7 +76,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_member_task
+    from public.ums_member_task
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,27 +87,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_member_task
+    from public.ums_member_task
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from ums_member_task
+    delete from public.ums_member_task
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.UmsMemberTaskExample">
-    delete from ums_member_task
+    delete from public.ums_member_task
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsMemberTask" useGeneratedKeys="true">
-    insert into ums_member_task (name, growth, intergration, 
+    insert into public.ums_member_task (name, growth, intergration, 
       type, create_time)
     values (#{name,jdbcType=VARCHAR}, #{growth,jdbcType=INTEGER}, #{intergration,jdbcType=INTEGER}, 
       #{type,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsMemberTask" useGeneratedKeys="true">
-    insert into ums_member_task
+    insert into public.ums_member_task
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="name != null">
         name,
@@ -144,13 +144,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.UmsMemberTaskExample" resultType="java.lang.Long">
-    select count(*) from ums_member_task
+    select count(*) from public.ums_member_task
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_member_task
+    update public.ums_member_task
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -176,7 +176,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_member_task
+    update public.ums_member_task
     set id = #{row.id,jdbcType=INTEGER},
       name = #{row.name,jdbcType=VARCHAR},
       growth = #{row.growth,jdbcType=INTEGER},
@@ -188,7 +188,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.UmsMemberTask">
-    update ums_member_task
+    update public.ums_member_task
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -209,7 +209,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.UmsMemberTask">
-    update ums_member_task
+    update public.ums_member_task
     set name = #{name,jdbcType=VARCHAR},
       growth = #{growth,jdbcType=INTEGER},
       intergration = #{intergration,jdbcType=INTEGER},

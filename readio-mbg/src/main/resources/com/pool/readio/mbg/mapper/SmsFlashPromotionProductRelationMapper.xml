@@ -79,7 +79,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sms_flash_promotion_product_relation
+    from public.sms_flash_promotion_product_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,21 +90,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from sms_flash_promotion_product_relation
+    from public.sms_flash_promotion_product_relation
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from sms_flash_promotion_product_relation
+    delete from public.sms_flash_promotion_product_relation
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.SmsFlashPromotionProductRelationExample">
-    delete from sms_flash_promotion_product_relation
+    delete from public.sms_flash_promotion_product_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.SmsFlashPromotionProductRelation" useGeneratedKeys="true">
-    insert into sms_flash_promotion_product_relation (flash_promotion_id, flash_promotion_session_id, 
+    insert into public.sms_flash_promotion_product_relation (flash_promotion_id, flash_promotion_session_id, 
       product_id, flash_promotion_price, flash_promotion_count, 
       flash_promotion_limit, create_time)
     values (#{flashPromotionId,jdbcType=INTEGER}, #{flashPromotionSessionId,jdbcType=INTEGER}, 
@@ -112,7 +112,7 @@
       #{flashPromotionLimit,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.SmsFlashPromotionProductRelation" useGeneratedKeys="true">
-    insert into sms_flash_promotion_product_relation
+    insert into public.sms_flash_promotion_product_relation
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="flashPromotionId != null">
         flash_promotion_id,
@@ -161,13 +161,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.SmsFlashPromotionProductRelationExample" resultType="java.lang.Long">
-    select count(*) from sms_flash_promotion_product_relation
+    select count(*) from public.sms_flash_promotion_product_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update sms_flash_promotion_product_relation
+    update public.sms_flash_promotion_product_relation
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -199,7 +199,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update sms_flash_promotion_product_relation
+    update public.sms_flash_promotion_product_relation
     set id = #{row.id,jdbcType=INTEGER},
       flash_promotion_id = #{row.flashPromotionId,jdbcType=INTEGER},
       flash_promotion_session_id = #{row.flashPromotionSessionId,jdbcType=INTEGER},
@@ -213,7 +213,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.SmsFlashPromotionProductRelation">
-    update sms_flash_promotion_product_relation
+    update public.sms_flash_promotion_product_relation
     <set>
       <if test="flashPromotionId != null">
         flash_promotion_id = #{flashPromotionId,jdbcType=INTEGER},
@@ -240,7 +240,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.SmsFlashPromotionProductRelation">
-    update sms_flash_promotion_product_relation
+    update public.sms_flash_promotion_product_relation
     set flash_promotion_id = #{flashPromotionId,jdbcType=INTEGER},
       flash_promotion_session_id = #{flashPromotionSessionId,jdbcType=INTEGER},
       product_id = #{productId,jdbcType=INTEGER},

@@ -79,7 +79,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from cms_post
+    from public.cms_post
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,21 +90,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from cms_post
+    from public.cms_post
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cms_post
+    delete from public.cms_post
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.CmsPostExample">
-    delete from cms_post
+    delete from public.cms_post
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.CmsPost" useGeneratedKeys="true">
-    insert into cms_post (member_id, visible, create_time, 
+    insert into public.cms_post (member_id, visible, create_time, 
       update_time, publish_time, title, 
       ip, address)
     values (#{memberId,jdbcType=INTEGER}, #{visible,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
@@ -112,7 +112,7 @@
       #{ip,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.CmsPost" useGeneratedKeys="true">
-    insert into cms_post
+    insert into public.cms_post
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="memberId != null">
         member_id,
@@ -167,13 +167,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.CmsPostExample" resultType="java.lang.Long">
-    select count(*) from cms_post
+    select count(*) from public.cms_post
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update cms_post
+    update public.cms_post
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -208,7 +208,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update cms_post
+    update public.cms_post
     set id = #{row.id,jdbcType=INTEGER},
       member_id = #{row.memberId,jdbcType=INTEGER},
       visible = #{row.visible,jdbcType=INTEGER},
@@ -223,7 +223,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.CmsPost">
-    update cms_post
+    update public.cms_post
     <set>
       <if test="memberId != null">
         member_id = #{memberId,jdbcType=INTEGER},
@@ -253,7 +253,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.CmsPost">
-    update cms_post
+    update public.cms_post
     set member_id = #{memberId,jdbcType=INTEGER},
       visible = #{visible,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},

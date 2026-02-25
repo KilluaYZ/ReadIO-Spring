@@ -79,7 +79,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_member_rule_setting
+    from public.ums_member_rule_setting
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,21 +90,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_member_rule_setting
+    from public.ums_member_rule_setting
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from ums_member_rule_setting
+    delete from public.ums_member_rule_setting
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.UmsMemberRuleSettingExample">
-    delete from ums_member_rule_setting
+    delete from public.ums_member_rule_setting
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsMemberRuleSetting" useGeneratedKeys="true">
-    insert into ums_member_rule_setting (continue_sign_day, continue_sign_point, 
+    insert into public.ums_member_rule_setting (continue_sign_day, continue_sign_point, 
       consume_per_point, low_order_amount, max_point_per_order, 
       type, create_time)
     values (#{continueSignDay,jdbcType=INTEGER}, #{continueSignPoint,jdbcType=INTEGER}, 
@@ -112,7 +112,7 @@
       #{type,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsMemberRuleSetting" useGeneratedKeys="true">
-    insert into ums_member_rule_setting
+    insert into public.ums_member_rule_setting
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="continueSignDay != null">
         continue_sign_day,
@@ -161,13 +161,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.UmsMemberRuleSettingExample" resultType="java.lang.Long">
-    select count(*) from ums_member_rule_setting
+    select count(*) from public.ums_member_rule_setting
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_member_rule_setting
+    update public.ums_member_rule_setting
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -199,7 +199,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_member_rule_setting
+    update public.ums_member_rule_setting
     set id = #{row.id,jdbcType=INTEGER},
       continue_sign_day = #{row.continueSignDay,jdbcType=INTEGER},
       continue_sign_point = #{row.continueSignPoint,jdbcType=INTEGER},
@@ -213,7 +213,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.UmsMemberRuleSetting">
-    update ums_member_rule_setting
+    update public.ums_member_rule_setting
     <set>
       <if test="continueSignDay != null">
         continue_sign_day = #{continueSignDay,jdbcType=INTEGER},
@@ -240,7 +240,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.UmsMemberRuleSetting">
-    update ums_member_rule_setting
+    update public.ums_member_rule_setting
     set continue_sign_day = #{continueSignDay,jdbcType=INTEGER},
       continue_sign_point = #{continueSignPoint,jdbcType=INTEGER},
       consume_per_point = #{consumePerPoint,jdbcType=NUMERIC},

@@ -79,7 +79,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from cms_comment
+    from public.cms_comment
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,21 +90,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from cms_comment
+    from public.cms_comment
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cms_comment
+    delete from public.cms_comment
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.CmsCommentExample">
-    delete from cms_comment
+    delete from public.cms_comment
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.CmsComment" useGeneratedKeys="true">
-    insert into cms_comment (type, member_id, book_id, 
+    insert into public.cms_comment (type, member_id, book_id, 
       comment_id, post_id, select_id, 
       create_time, content)
     values (#{type,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, 
@@ -112,7 +112,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.CmsComment" useGeneratedKeys="true">
-    insert into cms_comment
+    insert into public.cms_comment
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="type != null">
         type,
@@ -167,13 +167,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.CmsCommentExample" resultType="java.lang.Long">
-    select count(*) from cms_comment
+    select count(*) from public.cms_comment
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update cms_comment
+    update public.cms_comment
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -208,7 +208,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update cms_comment
+    update public.cms_comment
     set id = #{row.id,jdbcType=INTEGER},
       type = #{row.type,jdbcType=INTEGER},
       member_id = #{row.memberId,jdbcType=INTEGER},
@@ -223,7 +223,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.CmsComment">
-    update cms_comment
+    update public.cms_comment
     <set>
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
@@ -253,7 +253,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.CmsComment">
-    update cms_comment
+    update public.cms_comment
     set type = #{type,jdbcType=INTEGER},
       member_id = #{memberId,jdbcType=INTEGER},
       book_id = #{bookId,jdbcType=INTEGER},

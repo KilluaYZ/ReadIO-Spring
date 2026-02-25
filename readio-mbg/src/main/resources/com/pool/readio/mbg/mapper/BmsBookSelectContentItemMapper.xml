@@ -75,7 +75,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from bms_book_select_content_item
+    from public.bms_book_select_content_item
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,27 +86,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from bms_book_select_content_item
+    from public.bms_book_select_content_item
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from bms_book_select_content_item
+    delete from public.bms_book_select_content_item
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.BmsBookSelectContentItemExample">
-    delete from bms_book_select_content_item
+    delete from public.bms_book_select_content_item
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBookSelectContentItem" useGeneratedKeys="true">
-    insert into bms_book_select_content_item (select_id, block_id, offset, 
+    insert into public.bms_book_select_content_item (select_id, block_id, offset, 
       length)
     values (#{selectId,jdbcType=INTEGER}, #{blockId,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}, 
       #{length,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBookSelectContentItem" useGeneratedKeys="true">
-    insert into bms_book_select_content_item
+    insert into public.bms_book_select_content_item
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="selectId != null">
         select_id,
@@ -137,13 +137,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.BmsBookSelectContentItemExample" resultType="java.lang.Long">
-    select count(*) from bms_book_select_content_item
+    select count(*) from public.bms_book_select_content_item
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update bms_book_select_content_item
+    update public.bms_book_select_content_item
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -166,7 +166,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update bms_book_select_content_item
+    update public.bms_book_select_content_item
     set id = #{row.id,jdbcType=INTEGER},
       select_id = #{row.selectId,jdbcType=INTEGER},
       block_id = #{row.blockId,jdbcType=INTEGER},
@@ -177,7 +177,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.BmsBookSelectContentItem">
-    update bms_book_select_content_item
+    update public.bms_book_select_content_item
     <set>
       <if test="selectId != null">
         select_id = #{selectId,jdbcType=INTEGER},
@@ -195,7 +195,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.BmsBookSelectContentItem">
-    update bms_book_select_content_item
+    update public.bms_book_select_content_item
     set select_id = #{selectId,jdbcType=INTEGER},
       block_id = #{blockId,jdbcType=INTEGER},
       offset = #{offset,jdbcType=INTEGER},

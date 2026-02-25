@@ -78,7 +78,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from cms_post_content_block
+    from public.cms_post_content_block
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,21 +89,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from cms_post_content_block
+    from public.cms_post_content_block
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cms_post_content_block
+    delete from public.cms_post_content_block
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.CmsPostContentBlockExample">
-    delete from cms_post_content_block
+    delete from public.cms_post_content_block
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.CmsPostContentBlock" useGeneratedKeys="true">
-    insert into cms_post_content_block (type, post_id, content, 
+    insert into public.cms_post_content_block (type, post_id, content, 
       book_id, author_id, block_id, 
       order)
     values (#{type,jdbcType=INTEGER}, #{postId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
@@ -111,7 +111,7 @@
       #{order,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.CmsPostContentBlock" useGeneratedKeys="true">
-    insert into cms_post_content_block
+    insert into public.cms_post_content_block
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="type != null">
         type,
@@ -160,13 +160,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.CmsPostContentBlockExample" resultType="java.lang.Long">
-    select count(*) from cms_post_content_block
+    select count(*) from public.cms_post_content_block
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update cms_post_content_block
+    update public.cms_post_content_block
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -198,7 +198,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update cms_post_content_block
+    update public.cms_post_content_block
     set id = #{row.id,jdbcType=INTEGER},
       type = #{row.type,jdbcType=INTEGER},
       post_id = #{row.postId,jdbcType=INTEGER},
@@ -212,7 +212,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.CmsPostContentBlock">
-    update cms_post_content_block
+    update public.cms_post_content_block
     <set>
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
@@ -239,7 +239,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.CmsPostContentBlock">
-    update cms_post_content_block
+    update public.cms_post_content_block
     set type = #{type,jdbcType=INTEGER},
       post_id = #{postId,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},

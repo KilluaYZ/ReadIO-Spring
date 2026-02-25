@@ -80,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from pms_product
+    from public.pms_product
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,21 +91,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from pms_product
+    from public.pms_product
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from pms_product
+    delete from public.pms_product
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.PmsProductExample">
-    delete from pms_product
+    delete from public.pms_product
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.PmsProduct" useGeneratedKeys="true">
-    insert into pms_product (name, product_category_id, book_id, 
+    insert into public.pms_product (name, product_category_id, book_id, 
       chapter_id, vip_duration, create_time, 
       price, hidden)
     values (#{name,jdbcType=VARCHAR}, #{productCategoryId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, 
@@ -113,7 +113,7 @@
       #{price,jdbcType=NUMERIC}, #{hidden,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.PmsProduct" useGeneratedKeys="true">
-    insert into pms_product
+    insert into public.pms_product
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="name != null">
         name,
@@ -168,13 +168,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.PmsProductExample" resultType="java.lang.Long">
-    select count(*) from pms_product
+    select count(*) from public.pms_product
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update pms_product
+    update public.pms_product
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -209,7 +209,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update pms_product
+    update public.pms_product
     set id = #{row.id,jdbcType=INTEGER},
       name = #{row.name,jdbcType=VARCHAR},
       product_category_id = #{row.productCategoryId,jdbcType=INTEGER},
@@ -224,7 +224,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.PmsProduct">
-    update pms_product
+    update public.pms_product
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -254,7 +254,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.PmsProduct">
-    update pms_product
+    update public.pms_product
     set name = #{name,jdbcType=VARCHAR},
       product_category_id = #{productCategoryId,jdbcType=INTEGER},
       book_id = #{bookId,jdbcType=INTEGER},

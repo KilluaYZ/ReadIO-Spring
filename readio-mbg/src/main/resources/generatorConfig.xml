@@ -35,8 +35,8 @@
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.pool.readio.mbg.mapper"
                              targetProject="readio-mbg/src/main/java"/>
-        <!--生成全部表tableName设为%-->
-        <table tableName="%">
+        <!-- 只生成 public schema 下的表，避免生成 PostgreSQL 系统表（pg_catalog.pg_*）-->
+        <table schema="public" tableName="%">
             <!-- PostgreSQL IDENTITY 列使用 JDBC getGeneratedKeys -->
             <generatedKey column="id" sqlStatement="JDBC" identity="true"/>
         </table>

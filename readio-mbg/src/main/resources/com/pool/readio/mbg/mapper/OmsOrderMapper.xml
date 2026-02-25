@@ -92,7 +92,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from oms_order
+    from public.oms_order
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -103,21 +103,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from oms_order
+    from public.oms_order
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from oms_order
+    delete from public.oms_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.OmsOrderExample">
-    delete from oms_order
+    delete from public.oms_order
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.OmsOrder" useGeneratedKeys="true">
-    insert into oms_order (member_id, coupon_id, order_sn, 
+    insert into public.oms_order (member_id, coupon_id, order_sn, 
       create_time, member_username, total_amount, 
       pay_amount, promotion_amount, integration_amount, 
       coupon_amount, pay_type, source_type, 
@@ -133,7 +133,7 @@
       #{productId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.OmsOrder" useGeneratedKeys="true">
-    insert into oms_order
+    insert into public.oms_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="memberId != null">
         member_id,
@@ -254,13 +254,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.OmsOrderExample" resultType="java.lang.Long">
-    select count(*) from oms_order
+    select count(*) from public.oms_order
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update oms_order
+    update public.oms_order
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -328,7 +328,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update oms_order
+    update public.oms_order
     set id = #{row.id,jdbcType=INTEGER},
       member_id = #{row.memberId,jdbcType=INTEGER},
       coupon_id = #{row.couponId,jdbcType=INTEGER},
@@ -354,7 +354,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.OmsOrder">
-    update oms_order
+    update public.oms_order
     <set>
       <if test="memberId != null">
         member_id = #{memberId,jdbcType=INTEGER},
@@ -417,7 +417,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.OmsOrder">
-    update oms_order
+    update public.oms_order
     set member_id = #{memberId,jdbcType=INTEGER},
       coupon_id = #{couponId,jdbcType=INTEGER},
       order_sn = #{orderSn,jdbcType=VARCHAR},

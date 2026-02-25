@@ -76,7 +76,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sms_flash_promotion_log
+    from public.sms_flash_promotion_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,27 +87,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from sms_flash_promotion_log
+    from public.sms_flash_promotion_log
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from sms_flash_promotion_log
+    delete from public.sms_flash_promotion_log
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.SmsFlashPromotionLogExample">
-    delete from sms_flash_promotion_log
+    delete from public.sms_flash_promotion_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.SmsFlashPromotionLog" useGeneratedKeys="true">
-    insert into sms_flash_promotion_log (member_id, product_id, member_username, 
+    insert into public.sms_flash_promotion_log (member_id, product_id, member_username, 
       product_name, create_time)
     values (#{memberId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{memberUsername,jdbcType=VARCHAR}, 
       #{productName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.SmsFlashPromotionLog" useGeneratedKeys="true">
-    insert into sms_flash_promotion_log
+    insert into public.sms_flash_promotion_log
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="memberId != null">
         member_id,
@@ -144,13 +144,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.SmsFlashPromotionLogExample" resultType="java.lang.Long">
-    select count(*) from sms_flash_promotion_log
+    select count(*) from public.sms_flash_promotion_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update sms_flash_promotion_log
+    update public.sms_flash_promotion_log
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -176,7 +176,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update sms_flash_promotion_log
+    update public.sms_flash_promotion_log
     set id = #{row.id,jdbcType=INTEGER},
       member_id = #{row.memberId,jdbcType=INTEGER},
       product_id = #{row.productId,jdbcType=INTEGER},
@@ -188,7 +188,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.SmsFlashPromotionLog">
-    update sms_flash_promotion_log
+    update public.sms_flash_promotion_log
     <set>
       <if test="memberId != null">
         member_id = #{memberId,jdbcType=INTEGER},
@@ -209,7 +209,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.SmsFlashPromotionLog">
-    update sms_flash_promotion_log
+    update public.sms_flash_promotion_log
     set member_id = #{memberId,jdbcType=INTEGER},
       product_id = #{productId,jdbcType=INTEGER},
       member_username = #{memberUsername,jdbcType=VARCHAR},

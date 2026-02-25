@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.admin.dao.BmsBookSelectContentDao">
+
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.BmsBookSelectContent">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="member_id" jdbcType="INTEGER" property="memberId"/>
+    <result column="type" jdbcType="INTEGER" property="type"/>
+    <result column="mark_type" jdbcType="INTEGER" property="markType"/>
+    <result column="mark_color" jdbcType="VARCHAR" property="markColor"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    sc.id, sc.member_id, sc.type, sc.mark_type, sc.mark_color, sc.create_time
+  </sql>
+
+  <!-- 某本书下所有划线（通过 item -> block -> book_id 关联） -->
+  <select id="listByBookId" resultMap="BaseResultMap">
+    SELECT DISTINCT <include refid="Base_Column_List"/>
+    FROM public.bms_book_select_content sc
+    INNER JOIN public.bms_book_select_content_item it ON it.select_id = sc.id
+    INNER JOIN public.bms_book_content_block b ON b.id = it.block_id AND b.book_id = #{bookId,jdbcType=INTEGER}
+    ORDER BY sc.create_time DESC
+  </select>
+
+  <!-- 某用户在某本书上的划线 -->
+  <select id="listByMemberIdAndBookId" resultMap="BaseResultMap">
+    SELECT DISTINCT <include refid="Base_Column_List"/>
+    FROM public.bms_book_select_content sc
+    INNER JOIN public.bms_book_select_content_item it ON it.select_id = sc.id
+    INNER JOIN public.bms_book_content_block b ON b.id = it.block_id AND b.book_id = #{bookId,jdbcType=INTEGER}
+    WHERE sc.member_id = #{memberId,jdbcType=INTEGER}
+    ORDER BY sc.create_time DESC
+  </select>
+</mapper>

@@ -75,7 +75,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_member_own_book_relation
+    from public.ums_member_own_book_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,27 +86,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_member_own_book_relation
+    from public.ums_member_own_book_relation
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from ums_member_own_book_relation
+    delete from public.ums_member_own_book_relation
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.UmsMemberOwnBookRelationExample">
-    delete from ums_member_own_book_relation
+    delete from public.ums_member_own_book_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsMemberOwnBookRelation" useGeneratedKeys="true">
-    insert into ums_member_own_book_relation (member_id, book_id, duration, 
+    insert into public.ums_member_own_book_relation (member_id, book_id, duration, 
       create_time)
     values (#{memberId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, #{duration,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsMemberOwnBookRelation" useGeneratedKeys="true">
-    insert into ums_member_own_book_relation
+    insert into public.ums_member_own_book_relation
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="memberId != null">
         member_id,
@@ -137,13 +137,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.UmsMemberOwnBookRelationExample" resultType="java.lang.Long">
-    select count(*) from ums_member_own_book_relation
+    select count(*) from public.ums_member_own_book_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_member_own_book_relation
+    update public.ums_member_own_book_relation
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -166,7 +166,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_member_own_book_relation
+    update public.ums_member_own_book_relation
     set id = #{row.id,jdbcType=INTEGER},
       member_id = #{row.memberId,jdbcType=INTEGER},
       book_id = #{row.bookId,jdbcType=INTEGER},
@@ -177,7 +177,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.UmsMemberOwnBookRelation">
-    update ums_member_own_book_relation
+    update public.ums_member_own_book_relation
     <set>
       <if test="memberId != null">
         member_id = #{memberId,jdbcType=INTEGER},
@@ -195,7 +195,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.UmsMemberOwnBookRelation">
-    update ums_member_own_book_relation
+    update public.ums_member_own_book_relation
     set member_id = #{memberId,jdbcType=INTEGER},
       book_id = #{bookId,jdbcType=INTEGER},
       duration = #{duration,jdbcType=INTEGER},

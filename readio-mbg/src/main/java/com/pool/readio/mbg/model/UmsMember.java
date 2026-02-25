@@ -13,6 +13,7 @@ public class UmsMember implements Serializable {
     @Schema(title = "用户名")
     private String username;
 
+    @Schema(title = "用户昵称")
     private String nickname;
 
     @Schema(title = "密码")

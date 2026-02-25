@@ -76,7 +76,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_admin_login_log
+    from public.ums_admin_login_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,27 +87,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_admin_login_log
+    from public.ums_admin_login_log
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from ums_admin_login_log
+    delete from public.ums_admin_login_log
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.UmsAdminLoginLogExample">
-    delete from ums_admin_login_log
+    delete from public.ums_admin_login_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsAdminLoginLog" useGeneratedKeys="true">
-    insert into ums_admin_login_log (admin_id, ip, address, 
+    insert into public.ums_admin_login_log (admin_id, ip, address, 
       user_agent, create_time)
     values (#{adminId,jdbcType=INTEGER}, #{ip,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{userAgent,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsAdminLoginLog" useGeneratedKeys="true">
-    insert into ums_admin_login_log
+    insert into public.ums_admin_login_log
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="adminId != null">
         admin_id,
@@ -144,13 +144,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.UmsAdminLoginLogExample" resultType="java.lang.Long">
-    select count(*) from ums_admin_login_log
+    select count(*) from public.ums_admin_login_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_admin_login_log
+    update public.ums_admin_login_log
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -176,7 +176,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_admin_login_log
+    update public.ums_admin_login_log
     set id = #{row.id,jdbcType=INTEGER},
       admin_id = #{row.adminId,jdbcType=INTEGER},
       ip = #{row.ip,jdbcType=VARCHAR},
@@ -188,7 +188,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.UmsAdminLoginLog">
-    update ums_admin_login_log
+    update public.ums_admin_login_log
     <set>
       <if test="adminId != null">
         admin_id = #{adminId,jdbcType=INTEGER},
@@ -209,7 +209,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.UmsAdminLoginLog">
-    update ums_admin_login_log
+    update public.ums_admin_login_log
     set admin_id = #{adminId,jdbcType=INTEGER},
       ip = #{ip,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},

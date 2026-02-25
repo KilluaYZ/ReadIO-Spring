@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.admin.dao.BmsAuthorDao">
+
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.BmsAuthor">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="description" jdbcType="VARCHAR" property="description"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="icon" jdbcType="VARCHAR" property="icon"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, name, description, create_time, icon
+  </sql>
+
+  <!-- 可复用的查询条件：与 BmsAuthorQueryParam 对应 -->
+  <sql id="Query_Where_Clause">
+    <where>
+      <if test="queryParam.nameKeyword != null and queryParam.nameKeyword != ''">
+        AND name LIKE CONCAT('%', #{queryParam.nameKeyword}, '%')
+      </if>
+      <if test="queryParam.descriptionKeyword != null and queryParam.descriptionKeyword != ''">
+        AND description LIKE CONCAT('%', #{queryParam.descriptionKeyword}, '%')
+      </if>
+      <if test="queryParam.createTime != null and queryParam.createTime != ''">
+        AND create_time::date::text LIKE CONCAT(#{queryParam.createTime}, '%')
+      </if>
+    </where>
+  </sql>
+
+  <select id="getList" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_author
+    <include refid="Query_Where_Clause"/>
+    ORDER BY create_time DESC
+  </select>
+
+  <select id="countByCondition" resultType="java.lang.Long">
+    SELECT COUNT(*)
+    FROM public.bms_author
+    <include refid="Query_Where_Clause"/>
+  </select>
+
+  <select id="getById" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_author
+    WHERE id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getByName" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_author
+    WHERE name = #{name,jdbcType=VARCHAR}
+    LIMIT 1
+  </select>
+
+  <select id="listByIds" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_author
+    WHERE id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    ORDER BY create_time DESC
+  </select>
+
+  <delete id="deleteByIds">
+    DELETE FROM public.bms_author
+    WHERE id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

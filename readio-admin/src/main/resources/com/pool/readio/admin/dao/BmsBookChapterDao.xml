@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.admin.dao.BmsBookChapterDao">
+
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.BmsBookChapter">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="book_id" jdbcType="INTEGER" property="bookId"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="order" jdbcType="INTEGER" property="order"/>
+    <result column="word_count" jdbcType="INTEGER" property="wordCount"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+  </resultMap>
+
+  <!-- PostgreSQL 中 order 为保留字，列名需加双引号 -->
+  <sql id="Base_Column_List">
+    id, book_id, name, "order", word_count, create_time
+  </sql>
+
+  <sql id="Query_Where_Clause">
+    <where>
+      <if test="queryParam.bookId != null">
+        AND book_id = #{queryParam.bookId}
+      </if>
+      <if test="queryParam.nameKeyword != null and queryParam.nameKeyword != ''">
+        AND name LIKE CONCAT('%', #{queryParam.nameKeyword}, '%')
+      </if>
+      <if test="queryParam.createTime != null and queryParam.createTime != ''">
+        AND create_time::date::text LIKE CONCAT(#{queryParam.createTime}, '%')
+      </if>
+    </where>
+  </sql>
+
+  <select id="getList" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book_chapter
+    <include refid="Query_Where_Clause"/>
+    ORDER BY "order" ASC, create_time DESC
+  </select>
+
+  <select id="countByCondition" resultType="java.lang.Long">
+    SELECT COUNT(*)
+    FROM public.bms_book_chapter
+    <include refid="Query_Where_Clause"/>
+  </select>
+
+  <select id="getById" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book_chapter
+    WHERE id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="listByBookId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book_chapter
+    WHERE book_id = #{bookId,jdbcType=INTEGER}
+    ORDER BY "order" ASC
+  </select>
+
+  <select id="listByIds" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book_chapter
+    WHERE id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    ORDER BY "order" ASC
+  </select>
+
+  <delete id="deleteByIds">
+    DELETE FROM public.bms_book_chapter
+    WHERE id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

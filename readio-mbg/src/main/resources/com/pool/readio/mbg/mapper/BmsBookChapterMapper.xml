@@ -76,7 +76,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from bms_book_chapter
+    from public.bms_book_chapter
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,27 +87,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from bms_book_chapter
+    from public.bms_book_chapter
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from bms_book_chapter
+    delete from public.bms_book_chapter
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.BmsBookChapterExample">
-    delete from bms_book_chapter
+    delete from public.bms_book_chapter
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBookChapter" useGeneratedKeys="true">
-    insert into bms_book_chapter (book_id, name, order, 
+    insert into public.bms_book_chapter (book_id, name, order, 
       word_count, create_time)
     values (#{bookId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{order,jdbcType=INTEGER}, 
       #{wordCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBookChapter" useGeneratedKeys="true">
-    insert into bms_book_chapter
+    insert into public.bms_book_chapter
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="bookId != null">
         book_id,
@@ -144,13 +144,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.BmsBookChapterExample" resultType="java.lang.Long">
-    select count(*) from bms_book_chapter
+    select count(*) from public.bms_book_chapter
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update bms_book_chapter
+    update public.bms_book_chapter
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -176,7 +176,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update bms_book_chapter
+    update public.bms_book_chapter
     set id = #{row.id,jdbcType=INTEGER},
       book_id = #{row.bookId,jdbcType=INTEGER},
       name = #{row.name,jdbcType=VARCHAR},
@@ -188,7 +188,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.BmsBookChapter">
-    update bms_book_chapter
+    update public.bms_book_chapter
     <set>
       <if test="bookId != null">
         book_id = #{bookId,jdbcType=INTEGER},
@@ -209,7 +209,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.BmsBookChapter">
-    update bms_book_chapter
+    update public.bms_book_chapter
     set book_id = #{bookId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       order = #{order,jdbcType=INTEGER},

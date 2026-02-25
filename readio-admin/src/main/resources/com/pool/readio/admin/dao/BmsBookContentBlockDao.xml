@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.admin.dao.BmsBookContentBlockDao">
+
+  <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.BmsBookContentBlock">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="chapter_id" jdbcType="INTEGER" property="chapterId"/>
+    <result column="footnote_id" jdbcType="INTEGER" property="footnoteId"/>
+    <result column="book_id" jdbcType="INTEGER" property="bookId"/>
+    <result column="type" jdbcType="INTEGER" property="type"/>
+    <result column="order" jdbcType="INTEGER" property="order"/>
+    <result column="content" jdbcType="VARCHAR" property="content"/>
+    <result column="image" jdbcType="VARCHAR" property="image"/>
+    <result column="newline" jdbcType="BIT" property="newline"/>
+  </resultMap>
+
+  <!-- PostgreSQL 中 order 为保留字，列名需加双引号 -->
+  <sql id="Base_Column_List">
+    id, chapter_id, footnote_id, book_id, type, "order", content, image, newline
+  </sql>
+
+  <sql id="Query_Where_Clause">
+    <where>
+      <if test="queryParam.bookId != null">
+        AND book_id = #{queryParam.bookId}
+      </if>
+      <if test="queryParam.chapterId != null">
+        AND chapter_id = #{queryParam.chapterId}
+      </if>
+      <if test="queryParam.footnoteId != null">
+        AND footnote_id = #{queryParam.footnoteId}
+      </if>
+      <if test="queryParam.type != null">
+        AND type = #{queryParam.type}
+      </if>
+      <if test="queryParam.contentKeyword != null and queryParam.contentKeyword != ''">
+        AND content LIKE CONCAT('%', #{queryParam.contentKeyword}, '%')
+      </if>
+    </where>
+  </sql>
+
+  <select id="getList" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book_content_block
+    <include refid="Query_Where_Clause"/>
+    ORDER BY "order" ASC
+  </select>
+
+  <select id="countByCondition" resultType="java.lang.Long">
+    SELECT COUNT(*)
+    FROM public.bms_book_content_block
+    <include refid="Query_Where_Clause"/>
+  </select>
+
+  <select id="getById" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book_content_block
+    WHERE id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="listByBookId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book_content_block
+    WHERE book_id = #{bookId,jdbcType=INTEGER}
+    ORDER BY "order" ASC
+  </select>
+
+  <select id="listByChapterId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book_content_block
+    WHERE chapter_id = #{chapterId,jdbcType=INTEGER}
+    ORDER BY "order" ASC
+  </select>
+
+  <select id="listByFootnoteId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book_content_block
+    WHERE footnote_id = #{footnoteId,jdbcType=INTEGER}
+    ORDER BY "order" ASC
+  </select>
+
+  <select id="listByIds" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM public.bms_book_content_block
+    WHERE id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+    ORDER BY "order" ASC
+  </select>
+
+  <delete id="deleteByIds">
+    DELETE FROM public.bms_book_content_block
+    WHERE id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

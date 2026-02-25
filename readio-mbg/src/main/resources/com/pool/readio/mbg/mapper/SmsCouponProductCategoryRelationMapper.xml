@@ -74,7 +74,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sms_coupon_product_category_relation
+    from public.sms_coupon_product_category_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,27 +85,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from sms_coupon_product_category_relation
+    from public.sms_coupon_product_category_relation
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from sms_coupon_product_category_relation
+    delete from public.sms_coupon_product_category_relation
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.pool.readio.mbg.model.SmsCouponProductCategoryRelationExample">
-    delete from sms_coupon_product_category_relation
+    delete from public.sms_coupon_product_category_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.SmsCouponProductCategoryRelation" useGeneratedKeys="true">
-    insert into sms_coupon_product_category_relation (coupon_id, product_category_id, create_time
+    insert into public.sms_coupon_product_category_relation (coupon_id, product_category_id, create_time
       )
     values (#{couponId,jdbcType=INTEGER}, #{productCategoryId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.SmsCouponProductCategoryRelation" useGeneratedKeys="true">
-    insert into sms_coupon_product_category_relation
+    insert into public.sms_coupon_product_category_relation
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="couponId != null">
         coupon_id,
@@ -130,13 +130,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.pool.readio.mbg.model.SmsCouponProductCategoryRelationExample" resultType="java.lang.Long">
-    select count(*) from sms_coupon_product_category_relation
+    select count(*) from public.sms_coupon_product_category_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update sms_coupon_product_category_relation
+    update public.sms_coupon_product_category_relation
     <set>
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
@@ -156,7 +156,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update sms_coupon_product_category_relation
+    update public.sms_coupon_product_category_relation
     set id = #{row.id,jdbcType=INTEGER},
       coupon_id = #{row.couponId,jdbcType=INTEGER},
       product_category_id = #{row.productCategoryId,jdbcType=INTEGER},
@@ -166,7 +166,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.SmsCouponProductCategoryRelation">
-    update sms_coupon_product_category_relation
+    update public.sms_coupon_product_category_relation
     <set>
       <if test="couponId != null">
         coupon_id = #{couponId,jdbcType=INTEGER},
@@ -181,7 +181,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.SmsCouponProductCategoryRelation">
-    update sms_coupon_product_category_relation
+    update public.sms_coupon_product_category_relation
     set coupon_id = #{couponId,jdbcType=INTEGER},
       product_category_id = #{productCategoryId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
