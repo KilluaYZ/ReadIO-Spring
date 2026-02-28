@@ -16,37 +16,35 @@ spring:
     driver-class-name: org.postgresql.Driver
   cloud:
     gateway:
-      server:
-        webflux:
-          discovery:
-            locator:
-              enabled: true
-              lower-case-service-id: true
-          routes: #配置路由路径
-            - id: readio-auth
-              uri: lb://readio-auth
-              predicates:
-                - Path=/readio-auth/**
-              filters:
-                - StripPrefix=1
-            - id: readio-admin
-              uri: lb://readio-admin
-              predicates:
-                - Path=/readio-admin/**
-              filters:
-                - StripPrefix=1
-            - id: readio-portal
-              uri: lb://readio-portal
-              predicates:
-                - Path=/readio-portal/**
-              filters:
-                - StripPrefix=1
-            - id: readio-search
-              uri: lb://readio-search
-              predicates:
-                - Path=/readio-search/**
-              filters:
-                - StripPrefix=1
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes: # 路由需在 spring.cloud.gateway.routes 下，不能放在 server.webflux.discovery 下
+        - id: readio-auth
+          uri: lb://readio-auth
+          predicates:
+            - Path=/readio-auth/**
+          filters:
+            - StripPrefix=1
+        - id: readio-admin
+          uri: lb://readio-admin
+          predicates:
+            - Path=/readio-admin/**
+          filters:
+            - StripPrefix=1
+        - id: readio-portal
+          uri: lb://readio-portal
+          predicates:
+            - Path=/readio-portal/**
+          filters:
+            - StripPrefix=1
+        - id: readio-search
+          uri: lb://readio-search
+          predicates:
+            - Path=/readio-search/**
+          filters:
+            - StripPrefix=1
     nacos:
       discovery:
         server-addr: localhost:8848

@@ -13,12 +13,14 @@ import cn.hutool.core.convert.Convert;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ServerWebExchange;
 
 import java.util.*;
@@ -36,10 +38,11 @@ public class SaTokenConfig {
     private RedisTemplate<String, Object> redisTemplate;
 
     /**
-     * 注册Sa-Token全局过滤器
+     * 注册Sa-Token全局过滤器（必须为 @Bean 才会被 Spring 注册进 WebFilter 链）
      * @param ignoreUrlsConfig
      * @return
      */
+    @Bean
     public SaReactorFilter getSaReactorFilter(IgnoreUrlsConfig ignoreUrlsConfig) {
         return new SaReactorFilter()
                 // 拦截地址
@@ -86,18 +89,22 @@ public class SaTokenConfig {
      * @return
      */
     private CommonResult handleException(Throwable e) {
-        // 设置错误返回格式为Json
         ServerWebExchange exchange = SaReactorSyncHolder.getExchange();
-        HttpHeaders headers = exchange.getRequest().getHeaders();
+        // 设置响应头与状态码（必须用 response，不能改 request）
+        ServerHttpResponse response = exchange.getResponse();
+        HttpHeaders headers = response.getHeaders();
         headers.set("Content-Type", "application/json;charset=UTF-8");
         headers.set("Access-Control-Allow-Origin", "*");
         headers.set("Cache-Control", "no-cache");
-        CommonResult result = null;
+        CommonResult result;
         if (e instanceof NotLoginException) {
+            response.setStatusCode(HttpStatus.UNAUTHORIZED);
             result = CommonResult.unauthorized(null);
         } else if (e instanceof NotPermissionException) {
+            response.setStatusCode(HttpStatus.FORBIDDEN);
             result = CommonResult.forbidden(null);
         } else {
+            response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
             result = CommonResult.failed(e.getMessage());
         }
         return result;
