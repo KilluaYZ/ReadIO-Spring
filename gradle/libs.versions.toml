@@ -18,6 +18,7 @@ hutool = "5.8.43"
 pagehelper-spring-boot = "2.1.1"
 pagehelper = "6.1.1"
 mybatis = "3.5.19"
+mybatis-spring = "3.0.4"
 mybatis-generator = "1.4.2"
 druid = "1.2.27"
 aspectjweaver = "1.9.25.1"
@@ -65,6 +66,7 @@ hutool = { group = "cn.hutool", name = "hutool-all", version.ref = "hutool" }
 pagehelper-spring-boot-starter = { group = "com.github.pagehelper", name = "pagehelper-spring-boot-starter", version.ref = "pagehelper-spring-boot" }
 pagehelper = { group = "com.github.pagehelper", name = "pagehelper", version.ref = "pagehelper" }
 mybatis = { group = "org.mybatis", name = "mybatis", version.ref = "mybatis" }
+mybatis-spring = { group = "org.mybatis", name = "mybatis-spring", version.ref = "mybatis-spring" }
 mybatis-generator-core = { group = "org.mybatis.generator", name = "mybatis-generator-core", version.ref = "mybatis-generator" }
 druid-spring-boot-starter = { group = "com.alibaba", name = "druid-spring-boot-starter", version.ref = "druid" }
 aspectjweaver = { group = "org.aspectj", name = "aspectjweaver", version.ref = "aspectjweaver" }

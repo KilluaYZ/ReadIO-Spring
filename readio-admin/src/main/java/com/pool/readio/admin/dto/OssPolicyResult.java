@@ -23,4 +23,10 @@ public class OssPolicyResult {
     private String host;
     @Schema(title = "上传成功后的回调设置")
     private String callback;
+    @Schema(title = "MinIO/S3: x-amz-algorithm")
+    private String xAmzAlgorithm;
+    @Schema(title = "MinIO/S3: x-amz-credential")
+    private String xAmzCredential;
+    @Schema(title = "MinIO/S3: x-amz-date")
+    private String xAmzDate;
 }

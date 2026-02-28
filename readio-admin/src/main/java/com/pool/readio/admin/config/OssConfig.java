@@ -1,24 +1,28 @@
 package com.pool.readio.admin.config;
 
-import com.aliyun.oss.OSSClient;
+import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * OSS对象存储相关配置
- * Created by macro on 2018/5/17.
+ * MinIO 对象存储配置（S3 兼容）
  */
 @Configuration
 public class OssConfig {
-    @Value("${aliyun.oss.endpoint}")
-    private String ALIYUN_OSS_ENDPOINT;
-    @Value("${aliyun.oss.accessKeyId}")
-    private String ALIYUN_OSS_ACCESSKEYID;
-    @Value("${aliyun.oss.accessKeySecret}")
-    private String ALIYUN_OSS_ACCESSKEYSECRET;
+
+    @Value("${minio.endpoint}")
+    private String endpoint;
+    @Value("${minio.access-key}")
+    private String accessKey;
+    @Value("${minio.secret-key}")
+    private String secretKey;
+
     @Bean
-    public OSSClient ossClient(){
-        return new OSSClient(ALIYUN_OSS_ENDPOINT,ALIYUN_OSS_ACCESSKEYID,ALIYUN_OSS_ACCESSKEYSECRET);
+    public MinioClient minioClient() {
+        return MinioClient.builder()
+                .endpoint(endpoint)
+                .credentials(accessKey, secretKey)
+                .build();
     }
 }

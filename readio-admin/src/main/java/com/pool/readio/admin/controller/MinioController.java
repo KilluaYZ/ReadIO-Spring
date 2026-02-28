@@ -31,11 +31,11 @@ public class MinioController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MinioController.class);
     @Value("${minio.endpoint}")
     private String ENDPOINT;
-    @Value("${minio.bucketName}")
+    @Value("${minio.bucket}")
     private String BUCKET_NAME;
-    @Value("${minio.accessKey}")
+    @Value("${minio.access-key}")
     private String ACCESS_KEY;
-    @Value("${minio.secretKey}")
+    @Value("${minio.secret-key}")
     private String SECRET_KEY;
 
     @Operation(summary = "文件上传")

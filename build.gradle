@@ -27,6 +27,7 @@ subprojects {
         implementation libs.pagehelper.spring.boot.starter
         implementation libs.pagehelper
         implementation libs.mybatis
+        implementation libs.mybatis.spring
         implementation libs.druid.spring.boot.starter
         implementation libs.knife4j.gateway
         implementation libs.knife4j.openapi3.jakarta
