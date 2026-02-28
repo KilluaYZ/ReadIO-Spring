@@ -24,13 +24,13 @@ public class SmsCouponHistoryServiceImpl implements SmsCouponHistoryService {
         PageHelper.startPage(pageNum,pageSize);
         SmsCouponHistoryExample example = new SmsCouponHistoryExample();
         SmsCouponHistoryExample.Criteria criteria = example.createCriteria();
-        if(couponId!=null){
+        if (couponId != null) {
             criteria.andCouponIdEqualTo(couponId.intValue());
         }
-        if(useStatus!=null){
+        if (useStatus != null) {
             criteria.andUseStatusEqualTo(useStatus);
         }
-        if(!StringUtils.isEmpty(orderSn)){
+        if (StringUtils.hasText(orderSn)) {
             criteria.andOrderSnEqualTo(orderSn);
         }
         return historyMapper.selectByExample(example);

@@ -12,9 +12,39 @@ import java.util.List;
  */
 public interface OmsOrderService {
     /**
-     * 订单查询
+     * 订单查询（分页）
      */
     List<OmsOrder> list(OmsOrderQueryParam queryParam, Integer pageSize, Integer pageNum);
+
+    /**
+     * 列出所有订单（不分页）
+     */
+    List<OmsOrder> listAll();
+
+    /**
+     * 根据会员 ID 列出该用户的所有订单（不分页）
+     */
+    List<OmsOrder> listByMemberId(Long memberId);
+
+    /**
+     * 根据会员 ID 分页列出订单
+     */
+    List<OmsOrder> listByMemberId(Long memberId, Integer pageSize, Integer pageNum);
+
+    /**
+     * 新增订单
+     */
+    int create(OmsOrder order);
+
+    /**
+     * 修改订单
+     */
+    int update(Long id, OmsOrder order);
+
+    /**
+     * 删除单个订单
+     */
+    int deleteById(Long id);
 
     /**
      * 批量发货

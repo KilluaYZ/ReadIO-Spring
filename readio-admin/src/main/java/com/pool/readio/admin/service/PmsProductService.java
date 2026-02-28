@@ -12,14 +12,38 @@ import java.util.List;
 
 /**
  * 商品管理Service
- * Created by macro on 2018/4/26.
  */
 public interface PmsProductService {
     /**
+     * 列出所有商品（不分页）
+     */
+    List<PmsProduct> listAll();
+
+    /**
+     * 分页查询商品
+     */
+    List<PmsProduct> list(PmsProductQueryParam productQueryParam, Integer pageSize, Integer pageNum);
+
+    /**
+     * 根据分类ID列出该分类下所有商品（不分页）
+     */
+    List<PmsProduct> listByCategoryId(Long categoryId);
+
+    /**
+     * 根据分类ID分页列出商品
+     */
+    List<PmsProduct> listByCategoryId(Long categoryId, Integer pageSize, Integer pageNum);
+
+    /**
      * 创建商品
      */
-    @Transactional(isolation = Isolation.DEFAULT,propagation = Propagation.REQUIRED)
+    @Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
     int create(PmsProductParam productParam);
+
+    /**
+     * 根据商品ID获取详情
+     */
+    PmsProduct getById(Long id);
 
     /**
      * 根据商品编号获取更新信息
@@ -33,41 +57,17 @@ public interface PmsProductService {
     int update(Long id, PmsProductParam productParam);
 
     /**
-     * 分页查询商品
+     * 删除单个商品
      */
-    List<PmsProduct> list(PmsProductQueryParam productQueryParam, Integer pageSize, Integer pageNum);
-
-    /**
-     * 批量修改审核状态
-     * @param ids 产品id
-     * @param verifyStatus 审核状态
-     * @param detail 审核详情
-     */
-    @Transactional
-    int updateVerifyStatus(List<Long> ids, Integer verifyStatus, String detail);
-
-    /**
-     * 批量修改商品上架状态
-     */
-    int updatePublishStatus(List<Long> ids, Integer publishStatus);
-
-    /**
-     * 批量修改商品推荐状态
-     */
-    int updateRecommendStatus(List<Long> ids, Integer recommendStatus);
-
-    /**
-     * 批量修改新品状态
-     */
-    int updateNewStatus(List<Long> ids, Integer newStatus);
+    int deleteById(Long id);
 
     /**
      * 批量删除商品
      */
-    int updateDeleteStatus(List<Long> ids, Integer deleteStatus);
+    int delete(List<Long> ids);
 
     /**
-     * 根据商品名称或者货号模糊查询
+     * 根据商品名称模糊查询
      */
     List<PmsProduct> list(String keyword);
 }

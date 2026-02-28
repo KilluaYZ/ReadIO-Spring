@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 后台资源管理Service
- * Created by macro on 2020/2/2.
+ * 后台资源管理 Service，对应 ums_resource
  */
 public interface UmsResourceService {
     /**
@@ -18,22 +17,27 @@ public interface UmsResourceService {
     /**
      * 修改资源
      */
-    int update(Long id, UmsResource umsResource);
+    int update(Integer id, UmsResource umsResource);
 
     /**
-     * 获取资源详情
+     * 根据ID获取资源详情
      */
-    UmsResource getItem(Long id);
+    UmsResource getById(Integer id);
 
     /**
      * 删除资源
      */
-    int delete(Long id);
+    int deleteById(Integer id);
 
     /**
-     * 分页查询资源
+     * 批量删除资源
      */
-    List<UmsResource> list(Long categoryId, String nameKeyword, String urlKeyword, Integer pageSize, Integer pageNum);
+    int deleteByIds(List<Integer> ids);
+
+    /**
+     * 分页条件查询资源
+     */
+    List<UmsResource> list(Integer categoryId, String nameKeyword, String urlKeyword, Integer pageNum, Integer pageSize);
 
     /**
      * 查询全部资源
@@ -41,7 +45,7 @@ public interface UmsResourceService {
     List<UmsResource> listAll();
 
     /**
-     * 初始化路径与资源访问规则
+     * 初始化路径与资源访问规则（写入 Redis）
      */
-    Map<String,String> initPathResourceMap();
+    Map<String, String> initPathResourceMap();
 }

@@ -40,16 +40,6 @@ public interface PmsProductCategoryService {
     PmsProductCategory getItem(Long id);
 
     /**
-     * 批量修改导航状态
-     */
-    int updateNavStatus(List<Long> ids, Integer navStatus);
-
-    /**
-     * 批量修改显示状态
-     */
-    int updateShowStatus(List<Long> ids, Integer showStatus);
-
-    /**
      * 以层级形式获取商品分类
      */
     List<PmsProductCategoryWithChildrenItem> listWithChildren();

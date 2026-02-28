@@ -5,7 +5,8 @@ import com.github.pagehelper.PageHelper;
 import com.pool.readio.common.constant.AuthConstant;
 import com.pool.readio.common.service.RedisService;
 import com.pool.readio.mbg.mapper.UmsResourceMapper;
-import com.pool.readio.mbg.model.*;
+import com.pool.readio.mbg.model.UmsResource;
+import com.pool.readio.mbg.model.UmsResourceExample;
 import com.pool.readio.admin.service.UmsResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,32 +38,44 @@ public class UmsResourceServiceImpl implements UmsResourceService {
     }
 
     @Override
-    public int update(Long id, UmsResource umsResource) {
-        umsResource.setId(id.intValue());
+    public int update(Integer id, UmsResource umsResource) {
+        umsResource.setId(id);
         int count = resourceMapper.updateByPrimaryKeySelective(umsResource);
         initPathResourceMap();
         return count;
     }
 
     @Override
-    public UmsResource getItem(Long id) {
-        return resourceMapper.selectByPrimaryKey(id.intValue());
+    public UmsResource getById(Integer id) {
+        return resourceMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    public int delete(Long id) {
-        int count = resourceMapper.deleteByPrimaryKey(id.intValue());
+    public int deleteById(Integer id) {
+        int count = resourceMapper.deleteByPrimaryKey(id);
         initPathResourceMap();
         return count;
     }
 
     @Override
-    public List<UmsResource> list(Long categoryId, String nameKeyword, String urlKeyword, Integer pageSize, Integer pageNum) {
-        PageHelper.startPage(pageNum,pageSize);
+    public int deleteByIds(List<Integer> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return 0;
+        }
+        UmsResourceExample example = new UmsResourceExample();
+        example.createCriteria().andIdIn(ids);
+        int count = resourceMapper.deleteByExample(example);
+        initPathResourceMap();
+        return count;
+    }
+
+    @Override
+    public List<UmsResource> list(Integer categoryId, String nameKeyword, String urlKeyword, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         UmsResourceExample example = new UmsResourceExample();
         UmsResourceExample.Criteria criteria = example.createCriteria();
-        if(categoryId!=null){
-            criteria.andCategoryIdEqualTo(categoryId.intValue());
+        if (categoryId != null) {
+            criteria.andCategoryIdEqualTo(categoryId);
         }
         if(StrUtil.isNotEmpty(nameKeyword)){
             criteria.andNameLike('%'+nameKeyword+'%');

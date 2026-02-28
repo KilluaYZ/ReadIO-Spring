@@ -3,13 +3,16 @@ package com.pool.readio.admin.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.pool.readio.admin.dao.SmsFlashPromotionProductRelationDao;
 import com.pool.readio.admin.dto.SmsFlashPromotionProduct;
+import com.pool.readio.mbg.mapper.PmsProductMapper;
 import com.pool.readio.mbg.mapper.SmsFlashPromotionProductRelationMapper;
+import com.pool.readio.mbg.model.PmsProduct;
 import com.pool.readio.mbg.model.SmsFlashPromotionProductRelation;
 import com.pool.readio.mbg.model.SmsFlashPromotionProductRelationExample;
 import com.pool.readio.admin.service.SmsFlashPromotionProductRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +25,8 @@ public class SmsFlashPromotionProductRelationServiceImpl implements SmsFlashProm
     private SmsFlashPromotionProductRelationMapper relationMapper;
     @Autowired
     private SmsFlashPromotionProductRelationDao relationDao;
+    @Autowired
+    private PmsProductMapper pmsProductMapper;
     @Override
     public int create(List<SmsFlashPromotionProductRelation> relationList) {
         for (SmsFlashPromotionProductRelation relation : relationList) {
@@ -59,5 +64,32 @@ public class SmsFlashPromotionProductRelationServiceImpl implements SmsFlashProm
                 .andFlashPromotionIdEqualTo(flashPromotionId.intValue())
                 .andFlashPromotionSessionIdEqualTo(flashPromotionSessionId.intValue());
         return relationMapper.countByExample(example);
+    }
+
+    @Override
+    public List<SmsFlashPromotionProduct> listByPromotionId(Long flashPromotionId, Integer pageSize, Integer pageNum) {
+        PageHelper.startPage(pageNum, pageSize);
+        SmsFlashPromotionProductRelationExample example = new SmsFlashPromotionProductRelationExample();
+        example.createCriteria().andFlashPromotionIdEqualTo(flashPromotionId.intValue());
+        example.setOrderByClause("create_time DESC");
+        List<SmsFlashPromotionProductRelation> relations = relationMapper.selectByExample(example);
+        List<SmsFlashPromotionProduct> result = new ArrayList<>();
+        for (SmsFlashPromotionProductRelation relation : relations) {
+            SmsFlashPromotionProduct item = new SmsFlashPromotionProduct();
+            item.setId(relation.getId());
+            item.setFlashPromotionId(relation.getFlashPromotionId());
+            item.setFlashPromotionSessionId(relation.getFlashPromotionSessionId());
+            item.setProductId(relation.getProductId());
+            item.setFlashPromotionPrice(relation.getFlashPromotionPrice());
+            item.setFlashPromotionCount(relation.getFlashPromotionCount());
+            item.setFlashPromotionLimit(relation.getFlashPromotionLimit());
+            item.setCreateTime(relation.getCreateTime());
+            if (relation.getProductId() != null) {
+                PmsProduct product = pmsProductMapper.selectByPrimaryKey(relation.getProductId());
+                item.setProduct(product);
+            }
+            result.add(item);
+        }
+        return result;
     }
 }

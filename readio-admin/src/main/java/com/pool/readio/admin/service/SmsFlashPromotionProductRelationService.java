@@ -47,4 +47,9 @@ public interface SmsFlashPromotionProductRelationService {
      * @return
      */
     long getCount(Long flashPromotionId,Long flashPromotionSessionId);
+
+    /**
+     * 根据限时购活动id分页查询该活动下所有场次的商品及促销信息
+     */
+    List<SmsFlashPromotionProduct> listByPromotionId(Long flashPromotionId, Integer pageSize, Integer pageNum);
 }

@@ -11,6 +11,11 @@ public interface UmsMemberService {
 
     List<UmsMember> listAll();
 
+    /**
+     * 分页查询，支持按用户名或昵称模糊搜索
+     */
+    List<UmsMember> list(String keyword, Integer pageSize, Integer pageNum);
+
     UmsMember getById(Integer id);
 
     int create(UmsMember record);
@@ -18,4 +23,9 @@ public interface UmsMemberService {
     int updateById(Integer id, UmsMember record);
 
     int deleteById(Integer id);
+
+    /**
+     * 修改会员启用状态
+     */
+    int updateStatus(Integer id, Integer status);
 }

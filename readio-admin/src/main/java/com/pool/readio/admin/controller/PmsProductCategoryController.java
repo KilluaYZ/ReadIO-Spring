@@ -83,30 +83,6 @@ public class PmsProductCategoryController {
         }
     }
 
-    @Operation(summary = "修改导航栏显示状态")
-    @RequestMapping(value = "/update/navStatus", method = RequestMethod.POST)
-    @ResponseBody
-    public CommonResult updateNavStatus(@RequestParam("ids") List<Long> ids, @RequestParam("navStatus") Integer navStatus) {
-        int count = productCategoryService.updateNavStatus(ids, navStatus);
-        if (count > 0) {
-            return CommonResult.success(count);
-        } else {
-            return CommonResult.failed();
-        }
-    }
-
-    @Operation(summary = "修改显示状态")
-    @RequestMapping(value = "/update/showStatus", method = RequestMethod.POST)
-    @ResponseBody
-    public CommonResult updateShowStatus(@RequestParam("ids") List<Long> ids, @RequestParam("showStatus") Integer showStatus) {
-        int count = productCategoryService.updateShowStatus(ids, showStatus);
-        if (count > 0) {
-            return CommonResult.success(count);
-        } else {
-            return CommonResult.failed();
-        }
-    }
-
     @Operation(summary = "查询所有一级分类及子分类")
     @RequestMapping(value = "/list/withChildren", method = RequestMethod.GET)
     @ResponseBody

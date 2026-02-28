@@ -32,6 +32,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * UmsAdminService实现类
@@ -116,16 +118,24 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     }
 
     /**
-     * 添加登录记录
+     * 添加登录记录到 ums_admin_login_log
      */
     private void insertLoginLog(UmsAdmin admin) {
-        if(admin==null) return;
+        if (admin == null) return;
         UmsAdminLoginLog loginLog = new UmsAdminLoginLog();
         loginLog.setAdminId(admin.getId());
         loginLog.setCreateTime(new Date());
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-        loginLog.setIp(request.getRemoteAddr());
+        if (attributes != null) {
+            HttpServletRequest request = attributes.getRequest();
+            if (request != null) {
+                loginLog.setIp(request.getRemoteAddr());
+                String userAgent = request.getHeader("User-Agent");
+                if (StrUtil.isNotEmpty(userAgent)) {
+                    loginLog.setUserAgent(userAgent);
+                }
+            }
+        }
         loginLogMapper.insert(loginLog);
     }
 
@@ -208,6 +218,46 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     @Override
     public List<UmsRole> getRoleList(Long adminId) {
         return adminRoleRelationDao.getRoleList(adminId);
+    }
+
+    @Override
+    public int addRolesToAdmin(Long adminId, List<Long> roleIds) {
+        if (adminId == null || roleIds == null || roleIds.isEmpty()) {
+            return 0;
+        }
+        int adminIdInt = adminId.intValue();
+        List<Integer> roleIdInts = roleIds.stream().map(Long::intValue).collect(Collectors.toList());
+        UmsAdminRoleRelationExample example = new UmsAdminRoleRelationExample();
+        example.createCriteria().andAdminIdEqualTo(adminIdInt).andRoleIdIn(roleIdInts);
+        List<UmsAdminRoleRelation> existing = adminRoleRelationMapper.selectByExample(example);
+        Set<Integer> existingRoleIds = existing.stream()
+                .map(UmsAdminRoleRelation::getRoleId)
+                .collect(Collectors.toSet());
+        int added = 0;
+        for (Long roleIdLong : roleIds) {
+            int roleId = roleIdLong.intValue();
+            if (existingRoleIds.contains(roleId)) {
+                continue;
+            }
+            UmsAdminRoleRelation relation = new UmsAdminRoleRelation();
+            relation.setAdminId(adminIdInt);
+            relation.setRoleId(roleId);
+            adminRoleRelationMapper.insert(relation);
+            existingRoleIds.add(roleId);
+            added++;
+        }
+        return added;
+    }
+
+    @Override
+    public int removeRolesFromAdmin(Long adminId, List<Long> roleIds) {
+        if (adminId == null || roleIds == null || roleIds.isEmpty()) {
+            return 0;
+        }
+        List<Integer> roleIdInts = roleIds.stream().map(Long::intValue).collect(Collectors.toList());
+        UmsAdminRoleRelationExample example = new UmsAdminRoleRelationExample();
+        example.createCriteria().andAdminIdEqualTo(adminId.intValue()).andRoleIdIn(roleIdInts);
+        return adminRoleRelationMapper.deleteByExample(example);
     }
 
     @Override

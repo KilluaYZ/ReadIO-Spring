@@ -22,8 +22,13 @@ public class UmsResourceCategoryServiceImpl implements UmsResourceCategoryServic
     @Override
     public List<UmsResourceCategory> listAll() {
         UmsResourceCategoryExample example = new UmsResourceCategoryExample();
-        example.setOrderByClause("sort desc");
+        example.setOrderByClause("sort ASC, id ASC");
         return resourceCategoryMapper.selectByExample(example);
+    }
+
+    @Override
+    public UmsResourceCategory getById(Integer id) {
+        return resourceCategoryMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -33,13 +38,23 @@ public class UmsResourceCategoryServiceImpl implements UmsResourceCategoryServic
     }
 
     @Override
-    public int update(Long id, UmsResourceCategory umsResourceCategory) {
-        umsResourceCategory.setId(id.intValue());
+    public int update(Integer id, UmsResourceCategory umsResourceCategory) {
+        umsResourceCategory.setId(id);
         return resourceCategoryMapper.updateByPrimaryKeySelective(umsResourceCategory);
     }
 
     @Override
-    public int delete(Long id) {
-        return resourceCategoryMapper.deleteByPrimaryKey(id.intValue());
+    public int deleteById(Integer id) {
+        return resourceCategoryMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int deleteByIds(List<Integer> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return 0;
+        }
+        UmsResourceCategoryExample example = new UmsResourceCategoryExample();
+        example.createCriteria().andIdIn(ids);
+        return resourceCategoryMapper.deleteByExample(example);
     }
 }

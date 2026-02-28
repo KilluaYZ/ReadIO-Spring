@@ -51,15 +51,27 @@ public interface UmsAdminService {
     int delete(Long id);
 
     /**
-     * 修改用户角色关系
+     * 获取用户拥有的角色（查）
+     */
+    List<UmsRole> getRoleList(Long adminId);
+
+    /**
+     * 设置用户拥有的角色（改：全量覆盖）
      */
     @Transactional
     int updateRole(Long adminId, List<Long> roleIds);
 
     /**
-     * 获取用户对于角色
+     * 为用户增加角色（增：在现有基础上追加，已存在则跳过）
      */
-    List<UmsRole> getRoleList(Long adminId);
+    @Transactional
+    int addRolesToAdmin(Long adminId, List<Long> roleIds);
+
+    /**
+     * 从用户移除角色（删）
+     */
+    @Transactional
+    int removeRolesFromAdmin(Long adminId, List<Long> roleIds);
 
     /**
      * 获取指定用户的可访问资源

@@ -29,11 +29,50 @@ public class PmsProductServiceImpl implements PmsProductService {
     private PmsProductCategoryMapper productCategoryMapper;
 
     @Override
+    public List<PmsProduct> listAll() {
+        PmsProductExample example = new PmsProductExample();
+        example.setOrderByClause("create_time DESC");
+        return productMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<PmsProduct> listByCategoryId(Long categoryId) {
+        if (categoryId == null) {
+            return java.util.Collections.emptyList();
+        }
+        PmsProductExample example = new PmsProductExample();
+        example.setOrderByClause("create_time DESC");
+        example.createCriteria().andProductCategoryIdEqualTo(categoryId.intValue());
+        return productMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<PmsProduct> listByCategoryId(Long categoryId, Integer pageSize, Integer pageNum) {
+        if (categoryId == null) {
+            return java.util.Collections.emptyList();
+        }
+        PageHelper.startPage(pageNum, pageSize);
+        PmsProductExample example = new PmsProductExample();
+        example.setOrderByClause("create_time DESC");
+        example.createCriteria().andProductCategoryIdEqualTo(categoryId.intValue());
+        return productMapper.selectByExample(example);
+    }
+
+    @Override
     public int create(PmsProductParam productParam) {
         PmsProduct product = new PmsProduct();
         BeanUtils.copyProperties(productParam, product);
         product.setId(null);
-        return productMapper.insertSelective(product);
+        int rows = productMapper.insertSelective(product);
+        return rows > 0 && product.getId() != null ? product.getId() : 0;
+    }
+
+    @Override
+    public PmsProduct getById(Long id) {
+        if (id == null) {
+            return null;
+        }
+        return productMapper.selectByPrimaryKey(id.intValue());
     }
 
     @Override
@@ -82,36 +121,25 @@ public class PmsProductServiceImpl implements PmsProductService {
     }
 
     @Override
-    public int updateVerifyStatus(List<Long> ids, Integer verifyStatus, String detail) {
-        // 当前模型无审核状态字段，仅做兼容
-        return ids.size();
+    public int deleteById(Long id) {
+        if (id == null) {
+            return 0;
+        }
+        return productMapper.deleteByPrimaryKey(id.intValue());
     }
 
     @Override
-    public int updatePublishStatus(List<Long> ids, Integer publishStatus) {
-        // 当前模型无上架状态字段，仅做兼容
-        return ids.size();
-    }
-
-    @Override
-    public int updateRecommendStatus(List<Long> ids, Integer recommendStatus) {
-        // 当前模型无推荐状态字段，仅做兼容
-        return ids.size();
-    }
-
-    @Override
-    public int updateNewStatus(List<Long> ids, Integer newStatus) {
-        // 当前模型无新品状态字段，仅做兼容
-        return ids.size();
-    }
-
-    @Override
-    public int updateDeleteStatus(List<Long> ids, Integer deleteStatus) {
-        PmsProduct record = new PmsProduct();
-        record.setHidden(deleteStatus != null && deleteStatus != 0);
-        PmsProductExample example = new PmsProductExample();
-        example.createCriteria().andIdIn(ids.stream().map(Long::intValue).toList());
-        return productMapper.updateByExampleSelective(record, example);
+    public int delete(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return 0;
+        }
+        int count = 0;
+        for (Long id : ids) {
+            if (id != null) {
+                count += productMapper.deleteByPrimaryKey(id.intValue());
+            }
+        }
+        return count;
     }
 
     @Override

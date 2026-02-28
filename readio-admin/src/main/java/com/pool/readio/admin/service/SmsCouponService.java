@@ -1,6 +1,8 @@
 package com.pool.readio.admin.service;
 
 import com.pool.readio.admin.dto.SmsCouponParam;
+import com.pool.readio.mbg.model.PmsProduct;
+import com.pool.readio.mbg.model.PmsProductCategory;
 import com.pool.readio.mbg.model.SmsCoupon;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,7 +10,6 @@ import java.util.List;
 
 /**
  * 优惠券管理Service
- * Created by macro on 2018/8/28.
  */
 public interface SmsCouponService {
     /**
@@ -36,7 +37,32 @@ public interface SmsCouponService {
 
     /**
      * 获取优惠券详情
-     * @param id 优惠券表id
      */
     SmsCouponParam getItem(Long id);
+
+    // --------------- 优惠券与商品/商品类型绑定 ---------------
+
+    /** (1) 增加优惠券与某一个商品类型的绑定 */
+    int addCouponProductCategoryBinding(Long couponId, Long productCategoryId);
+
+    /** (2) 增加优惠券与某一个商品的绑定 */
+    int addCouponProductBinding(Long couponId, Long productId);
+
+    /** (3) 删除优惠券与某一个商品类型的绑定 */
+    int removeCouponProductCategoryBinding(Long couponId, Long productCategoryId);
+
+    /** (4) 删除优惠券与某一个商品的绑定 */
+    int removeCouponProductBinding(Long couponId, Long productId);
+
+    /** (5) 查看某一个优惠券适用于哪些商品 */
+    List<PmsProduct> listProductsByCouponId(Long couponId);
+
+    /** (6) 查看某一个优惠券适用于哪些商品类型 */
+    List<PmsProductCategory> listProductCategoriesByCouponId(Long couponId);
+
+    /** (7) 查看一个商品上可以使用哪些优惠券 */
+    List<SmsCoupon> listCouponsByProductId(Long productId);
+
+    /** (8) 查看一个商品类型上可以使用哪些优惠券 */
+    List<SmsCoupon> listCouponsByProductCategoryId(Long productCategoryId);
 }

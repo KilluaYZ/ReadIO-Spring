@@ -25,69 +25,61 @@ public class SmsFlashPromotionSessionController {
     private SmsFlashPromotionSessionService flashPromotionSessionService;
 
     @Operation(summary = "添加场次")
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @PostMapping("/create")
     @ResponseBody
-    public CommonResult create(@RequestBody SmsFlashPromotionSession promotionSession) {
+    public CommonResult<Integer> create(@RequestBody SmsFlashPromotionSession promotionSession) {
         int count = flashPromotionSessionService.create(promotionSession);
-        if (count > 0) {
-            return CommonResult.success(count);
-        }
-        return CommonResult.failed();
+        return count > 0 ? CommonResult.success(count) : CommonResult.failed("添加失败");
     }
 
     @Operation(summary = "修改场次")
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    @PostMapping("/update/{id}")
     @ResponseBody
-    public CommonResult update(@PathVariable Long id, @RequestBody SmsFlashPromotionSession promotionSession) {
+    public CommonResult<Integer> update(@PathVariable Long id, @RequestBody SmsFlashPromotionSession promotionSession) {
         int count = flashPromotionSessionService.update(id, promotionSession);
-        if (count > 0) {
-            return CommonResult.success(count);
-        }
-        return CommonResult.failed();
+        return count > 0 ? CommonResult.success(count) : CommonResult.failed("更新失败");
     }
 
     @Operation(summary = "修改启用状态")
-    @RequestMapping(value = "/update/status/{id}", method = RequestMethod.POST)
+    @PostMapping("/update/status/{id}")
     @ResponseBody
-    public CommonResult updateStatus(@PathVariable Long id, Integer status) {
+    public CommonResult<Integer> updateStatus(@PathVariable Long id, @RequestParam("status") Integer status) {
         int count = flashPromotionSessionService.updateStatus(id, status);
-        if (count > 0) {
-            return CommonResult.success(count);
-        }
-        return CommonResult.failed();
+        return count > 0 ? CommonResult.success(count) : CommonResult.failed("更新失败");
     }
 
     @Operation(summary = "删除场次")
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    @PostMapping("/delete/{id}")
     @ResponseBody
-    public CommonResult delete(@PathVariable Long id) {
+    public CommonResult<Integer> delete(@PathVariable Long id) {
         int count = flashPromotionSessionService.delete(id);
-        if (count > 0) {
-            return CommonResult.success(count);
-        }
-        return CommonResult.failed();
+        return count > 0 ? CommonResult.success(count) : CommonResult.failed("删除失败");
     }
 
     @Operation(summary = "获取场次详情")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
     @ResponseBody
     public CommonResult<SmsFlashPromotionSession> getItem(@PathVariable Long id) {
         SmsFlashPromotionSession promotionSession = flashPromotionSessionService.getItem(id);
+        if (promotionSession == null) {
+            return CommonResult.failed("场次不存在");
+        }
         return CommonResult.success(promotionSession);
     }
 
     @Operation(summary = "获取全部场次")
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @GetMapping("/list")
     @ResponseBody
     public CommonResult<List<SmsFlashPromotionSession>> list() {
         List<SmsFlashPromotionSession> promotionSessionList = flashPromotionSessionService.list();
         return CommonResult.success(promotionSessionList);
     }
 
-    @Operation(summary = "获取全部可选场次及其数量")
-    @RequestMapping(value = "/selectList", method = RequestMethod.GET)
+    @Operation(summary = "获取全部可选场次及其数量（按指定限时购活动统计各场次商品数）")
+    @GetMapping("/selectList")
     @ResponseBody
-    public CommonResult<List<SmsFlashPromotionSessionDetail>> selectList(Long flashPromotionId) {
+    public CommonResult<List<SmsFlashPromotionSessionDetail>> selectList(
+            @RequestParam("flashPromotionId") Long flashPromotionId) {
         List<SmsFlashPromotionSessionDetail> promotionSessionList = flashPromotionSessionService.selectList(flashPromotionId);
         return CommonResult.success(promotionSessionList);
     }

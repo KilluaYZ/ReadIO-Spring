@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * PmsProductCategoryService实现类
@@ -49,7 +48,7 @@ public class PmsProductCategoryServiceImpl implements PmsProductCategoryService 
     public List<PmsProductCategory> getList(Long parentId, Integer pageSize, Integer pageNum) {
         PageHelper.startPage(pageNum, pageSize);
         PmsProductCategoryExample example = new PmsProductCategoryExample();
-        example.setOrderByClause("sort desc");
+        example.setOrderByClause("create_time DESC");
         example.createCriteria().andParentIdEqualTo(parentId.intValue());
         return productCategoryMapper.selectByExample(example);
     }
@@ -62,26 +61,6 @@ public class PmsProductCategoryServiceImpl implements PmsProductCategoryService 
     @Override
     public PmsProductCategory getItem(Long id) {
         return productCategoryMapper.selectByPrimaryKey(id.intValue());
-    }
-
-    @Override
-    public int updateNavStatus(List<Long> ids, Integer navStatus) {
-        // MBG model PmsProductCategory has no navStatus field
-        if (ids == null || ids.isEmpty()) return 0;
-        List<Integer> idList = ids.stream().map(Long::intValue).collect(Collectors.toList());
-        PmsProductCategoryExample example = new PmsProductCategoryExample();
-        example.createCriteria().andIdIn(idList);
-        return productCategoryMapper.updateByExampleSelective(new PmsProductCategory(), example);
-    }
-
-    @Override
-    public int updateShowStatus(List<Long> ids, Integer showStatus) {
-        // MBG model PmsProductCategory has no showStatus field
-        if (ids == null || ids.isEmpty()) return 0;
-        List<Integer> idList = ids.stream().map(Long::intValue).collect(Collectors.toList());
-        PmsProductCategoryExample example = new PmsProductCategoryExample();
-        example.createCriteria().andIdIn(idList);
-        return productCategoryMapper.updateByExampleSelective(new PmsProductCategory(), example);
     }
 
     @Override

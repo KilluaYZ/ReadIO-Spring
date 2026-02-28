@@ -43,6 +43,58 @@ public class OmsOrderServiceImpl implements OmsOrderService {
     }
 
     @Override
+    public List<OmsOrder> listAll() {
+        OmsOrderExample example = new OmsOrderExample();
+        example.setOrderByClause("create_time DESC");
+        return orderMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<OmsOrder> listByMemberId(Long memberId) {
+        if (memberId == null) {
+            return java.util.Collections.emptyList();
+        }
+        OmsOrderExample example = new OmsOrderExample();
+        example.setOrderByClause("create_time DESC");
+        example.createCriteria().andMemberIdEqualTo(memberId.intValue());
+        return orderMapper.selectByExample(example);
+    }
+
+    @Override
+    public List<OmsOrder> listByMemberId(Long memberId, Integer pageSize, Integer pageNum) {
+        if (memberId == null) {
+            return java.util.Collections.emptyList();
+        }
+        PageHelper.startPage(pageNum, pageSize);
+        OmsOrderExample example = new OmsOrderExample();
+        example.setOrderByClause("create_time DESC");
+        example.createCriteria().andMemberIdEqualTo(memberId.intValue());
+        return orderMapper.selectByExample(example);
+    }
+
+    @Override
+    public int create(OmsOrder order) {
+        return orderMapper.insertSelective(order);
+    }
+
+    @Override
+    public int update(Long id, OmsOrder order) {
+        if (id == null) {
+            return 0;
+        }
+        order.setId(id.intValue());
+        return orderMapper.updateByPrimaryKeySelective(order);
+    }
+
+    @Override
+    public int deleteById(Long id) {
+        if (id == null) {
+            return 0;
+        }
+        return orderMapper.deleteByPrimaryKey(id.intValue());
+    }
+
+    @Override
     public int delivery(List<OmsOrderDeliveryParam> deliveryParamList) {
         int count = 0;
         for (OmsOrderDeliveryParam param : deliveryParamList) {
