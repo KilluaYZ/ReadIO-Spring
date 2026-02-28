@@ -73,8 +73,29 @@ services:
       - ./logstash/readio.conf:/usr/share/logstash/pipeline/readio.conf:ro
     restart: unless-stopped
 
+  minio:
+    image: minio/minio:latest
+    container_name: readio-minio-dev
+    environment:
+      MINIO_ROOT_USER: readio
+      MINIO_ROOT_PASSWORD: readio123
+    ports:
+      - "26003:9000"   # API
+      - "26004:9001"   # Console 控制台（固定端口，避免每次随机）
+    volumes:
+      - readio_minio_data:/data
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
 volumes:
   readio_postgres_data:
   readio_redis_data:
   readio_nacos_logs:
   readio_nacos_data:
+  readio_minio_data:
