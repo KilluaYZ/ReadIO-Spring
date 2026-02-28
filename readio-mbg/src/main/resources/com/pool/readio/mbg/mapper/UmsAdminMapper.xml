@@ -3,7 +3,6 @@
 <mapper namespace="com.pool.readio.mbg.mapper.UmsAdminMapper">
   <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.UmsAdmin">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="member_level_id" jdbcType="INTEGER" property="memberLevelId" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="password" jdbcType="VARCHAR" property="password" />
@@ -74,8 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, member_level_id, username, nickname, password, phone, email, status, create_time, 
-    login_time, icon, note
+    id, username, nickname, password, phone, email, status, create_time, login_time, 
+    icon, note
   </sql>
   <select id="selectByExample" parameterType="com.pool.readio.mbg.model.UmsAdminExample" resultMap="BaseResultMap">
     select
@@ -108,21 +107,18 @@
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsAdmin" useGeneratedKeys="true">
-    insert into public.ums_admin (member_level_id, username, nickname, 
-      password, phone, email, 
-      status, create_time, login_time, 
-      icon, note)
-    values (#{memberLevelId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{status,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{loginTime,jdbcType=TIMESTAMP}, 
-      #{icon,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR})
+    insert into public.ums_admin (username, nickname, password, 
+      phone, email, status, create_time, 
+      login_time, icon, note
+      )
+    values (#{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{loginTime,jdbcType=TIMESTAMP}, #{icon,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.UmsAdmin" useGeneratedKeys="true">
     insert into public.ums_admin
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="memberLevelId != null">
-        member_level_id,
-      </if>
       <if test="username != null">
         username,
       </if>
@@ -155,9 +151,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="memberLevelId != null">
-        #{memberLevelId,jdbcType=INTEGER},
-      </if>
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
       </if>
@@ -202,9 +195,6 @@
       <if test="row.id != null">
         id = #{row.id,jdbcType=INTEGER},
       </if>
-      <if test="row.memberLevelId != null">
-        member_level_id = #{row.memberLevelId,jdbcType=INTEGER},
-      </if>
       <if test="row.username != null">
         username = #{row.username,jdbcType=VARCHAR},
       </if>
@@ -243,7 +233,6 @@
   <update id="updateByExample" parameterType="map">
     update public.ums_admin
     set id = #{row.id,jdbcType=INTEGER},
-      member_level_id = #{row.memberLevelId,jdbcType=INTEGER},
       username = #{row.username,jdbcType=VARCHAR},
       nickname = #{row.nickname,jdbcType=VARCHAR},
       password = #{row.password,jdbcType=VARCHAR},
@@ -261,9 +250,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.pool.readio.mbg.model.UmsAdmin">
     update public.ums_admin
     <set>
-      <if test="memberLevelId != null">
-        member_level_id = #{memberLevelId,jdbcType=INTEGER},
-      </if>
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
       </if>
@@ -299,8 +285,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.UmsAdmin">
     update public.ums_admin
-    set member_level_id = #{memberLevelId,jdbcType=INTEGER},
-      username = #{username,jdbcType=VARCHAR},
+    set username = #{username,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},

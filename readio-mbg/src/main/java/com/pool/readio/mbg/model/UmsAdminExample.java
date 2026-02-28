@@ -165,66 +165,6 @@ public class UmsAdminExample {
             return (Criteria) this;
         }
 
-        public Criteria andMemberLevelIdIsNull() {
-            addCriterion("member_level_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMemberLevelIdIsNotNull() {
-            addCriterion("member_level_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMemberLevelIdEqualTo(Integer value) {
-            addCriterion("member_level_id =", value, "memberLevelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMemberLevelIdNotEqualTo(Integer value) {
-            addCriterion("member_level_id <>", value, "memberLevelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMemberLevelIdGreaterThan(Integer value) {
-            addCriterion("member_level_id >", value, "memberLevelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMemberLevelIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("member_level_id >=", value, "memberLevelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMemberLevelIdLessThan(Integer value) {
-            addCriterion("member_level_id <", value, "memberLevelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMemberLevelIdLessThanOrEqualTo(Integer value) {
-            addCriterion("member_level_id <=", value, "memberLevelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMemberLevelIdIn(List<Integer> values) {
-            addCriterion("member_level_id in", values, "memberLevelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMemberLevelIdNotIn(List<Integer> values) {
-            addCriterion("member_level_id not in", values, "memberLevelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMemberLevelIdBetween(Integer value1, Integer value2) {
-            addCriterion("member_level_id between", value1, value2, "memberLevelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMemberLevelIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("member_level_id not between", value1, value2, "memberLevelId");
-            return (Criteria) this;
-        }
-
         public Criteria andUsernameIsNull() {
             addCriterion("username is null");
             return (Criteria) this;

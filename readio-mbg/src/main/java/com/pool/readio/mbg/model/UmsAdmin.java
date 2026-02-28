@@ -7,9 +7,6 @@ import java.util.Date;
 public class UmsAdmin implements Serializable {
     private Integer id;
 
-    @Schema(title = "用户等级")
-    private Integer memberLevelId;
-
     @Schema(title = "用户名")
     private String username;
 
@@ -47,14 +44,6 @@ public class UmsAdmin implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getMemberLevelId() {
-        return memberLevelId;
-    }
-
-    public void setMemberLevelId(Integer memberLevelId) {
-        this.memberLevelId = memberLevelId;
     }
 
     public String getUsername() {
@@ -144,7 +133,6 @@ public class UmsAdmin implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", memberLevelId=").append(memberLevelId);
         sb.append(", username=").append(username);
         sb.append(", nickname=").append(nickname);
         sb.append(", password=").append(password);
