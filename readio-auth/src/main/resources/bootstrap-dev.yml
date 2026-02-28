@@ -1,3 +1,5 @@
+# Nacos 配置中心：本地开发环境
+# 从 Nacos 拉取的 Data ID 默认为 ${spring.application.name}.yaml 与 ${spring.application.name}-${profile}.yaml
 spring:
   cloud:
     nacos:
@@ -6,6 +8,7 @@ spring:
       config:
         server-addr: http://localhost:8848
         file-extension: yaml
+        refresh-enabled: true
 logging:
   level:
     root: debug

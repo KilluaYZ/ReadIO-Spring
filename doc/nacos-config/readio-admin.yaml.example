@@ -1,10 +1,11 @@
-# 本地默认配置；若已接入 Nacos 配置中心，Nacos 中 readio-admin.yaml 的同名项会覆盖此处（见 doc/nacos-config/README.md）
+# 在 Nacos 中创建配置：Data ID = readio-admin.yaml，Group = DEFAULT_GROUP，格式 = YAML
+# 以下内容可粘贴到 Nacos 配置内容中，按环境修改数据库、Redis、MinIO 等地址与密钥
+
 server:
   port: 8402
 spring:
   application:
     name: readio-admin
-  # 排除 MyBatis 自动配置：2.3.x 引用 Spring Boot 2/3 的 DataSourceAutoConfiguration，在 Spring Boot 4 中该类已迁移导致 ClassNotFoundException；readio-admin 已用 DataSourceConfig 显式提供 DataSource 与 SqlSessionFactory
   autoconfigure:
     exclude:
       - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
@@ -23,17 +24,14 @@ spring:
       host: localhost
       username: readio
       password: readio
-# 业务用 Redis 键前缀与过期时间（UmsAdminCacheServiceImpl 等使用，与 spring.data.redis 不同）
 redis:
   database: "0"
   expire:
     common: 86400
   key:
     admin: admin
-# Sa-Token（与网关一致，UmsAdminController 等使用）
 sa-token:
   token-prefix: Bearer
-# MinIO 对象存储（本地开发；docker-compose.dev 中端口为 26003，则 endpoint 填 http://localhost:26003）
 minio:
   endpoint: http://localhost:9000
   access-key: readio
@@ -49,29 +47,25 @@ management:
   endpoints:
     web:
       exposure:
-        include: '*' #暴露Actuator的监控端点
+        include: '*'
   endpoint:
     health:
-      show-details: always #显示健康的详细信息
+      show-details: always
     env:
-      show-values: always #默认Actuator的环境变量会以****显示，这里开启显示
+      show-values: always
     configprops:
-      show-values: always #默认Actuator的配置属性会以****显示，这里开启显示
+      show-values: always
     info:
       enabled: true
 springdoc:
   swagger-ui:
-    # 修改Swagger UI路径
     path: /swagger-ui.html
-    # 开启Swagger UI界面
     enabled: true
     tags-sorter: alpha
     operations-sorter: alpha
     show-extensions: true
   api-docs:
-    # 修改api-docs路径
     path: /v3/api-docs
-    # 开启api-docs
     enabled: true
   group-configs:
     - group: 'default'

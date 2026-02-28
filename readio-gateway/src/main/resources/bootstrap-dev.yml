@@ -1,12 +1,12 @@
+# Nacos 配置中心：本地开发环境
+# 从 Nacos 拉取的 Data ID 默认为 ${spring.application.name}.yaml 与 ${spring.application.name}-${profile}.yaml
 spring:
   cloud:
     nacos:
       discovery:
         server-addr: http://localhost:8848
-        # Nacos 未启动或未就绪时仍允许应用启动，不因注册失败而退出
         fail-fast: false
-        # 若本地未启动 Nacos 且不想看到重复的 ERROR 日志，可设为 false（届时 lb:// 路由将不可用）
-        # enabled: false
       config:
         server-addr: http://localhost:8848
         file-extension: yaml
+        refresh-enabled: true
