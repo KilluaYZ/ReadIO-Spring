@@ -18,6 +18,11 @@ repositories {
     mavenCentral()
 }
 
+// 父项目对 subprojects 统一加了 sa-token-reactor，readio-admin 使用 Servlet 需用 spring-boot3-starter，排除 reactor 避免重复注册 saTokenContextFilterForServlet
+configurations.all {
+    exclude group: 'cn.dev33', module: 'sa-token-reactor-spring-boot3-starter'
+}
+
 dependencies {
     implementation project(':readio-mbg')
     implementation project(':readio-common')
@@ -29,7 +34,7 @@ dependencies {
     implementation libs.nacos.config
     implementation libs.spring.cloud.starter.openfeign
     implementation libs.spring.cloud.starter.loadbalancer
-    implementation libs.sa.token.reactor
+    implementation libs.sa.token.spring.boot3.starter
     implementation libs.sa.token.redis.jackson
     implementation libs.commons.pool2
     implementation libs.sa.token.jwt
@@ -37,6 +42,9 @@ dependencies {
     implementation libs.postgresql
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly libs.junit.platform.launcher
+    implementation libs.hutool
+    implementation libs.lombok
+    implementation libs.minio
 }
 
 tasks.named('test') {

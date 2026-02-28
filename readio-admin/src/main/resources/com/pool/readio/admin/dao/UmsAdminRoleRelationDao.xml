@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pool.readio.admin.dao.UmsAdminRoleRelationDao">
+
+  <resultMap id="UmsResourceResultMap" type="com.pool.readio.mbg.model.UmsResource">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="url" jdbcType="VARCHAR" property="url"/>
+    <result column="description" jdbcType="VARCHAR" property="description"/>
+    <result column="category_id" jdbcType="INTEGER" property="categoryId"/>
+  </resultMap>
+
+  <resultMap id="UmsRoleResultMap" type="com.pool.readio.mbg.model.UmsRole">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="description" jdbcType="VARCHAR" property="description"/>
+    <result column="admin_count" jdbcType="INTEGER" property="adminCount"/>
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    <result column="status" jdbcType="BIT" property="status"/>
+    <result column="sort" jdbcType="INTEGER" property="sort"/>
+  </resultMap>
+
+  <!-- 批量插入用户角色关系 -->
+  <insert id="insertList" parameterType="list">
+    INSERT INTO public.ums_admin_role_relation (admin_id, role_id, create_time)
+    VALUES
+    <foreach collection="list" item="item" separator=",">
+      (#{item.adminId,jdbcType=INTEGER}, #{item.roleId,jdbcType=INTEGER}, #{item.createTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+
+  <!-- 获取用户所有角色 -->
+  <select id="getRoleList" resultMap="UmsRoleResultMap">
+    SELECT r.id, r.name, r.description, r.admin_count, r.create_time, r.status, r.sort
+    FROM public.ums_role r
+    INNER JOIN public.ums_admin_role_relation arr ON r.id = arr.role_id
+    WHERE arr.admin_id = #{adminId,jdbcType=BIGINT}
+  </select>
+
+  <!-- 获取用户所有可访问资源（通过 admin -> admin_role_relation -> role -> role_resource_relation -> resource） -->
+  <select id="getResourceList" resultMap="UmsResourceResultMap">
+    SELECT DISTINCT res.id, res.create_time, res.name, res.url, res.description, res.category_id
+    FROM public.ums_resource res
+    INNER JOIN public.ums_role_resource_relation rrr ON res.id = rrr.resource_id
+    INNER JOIN public.ums_admin_role_relation arr ON rrr.role_id = arr.role_id
+    WHERE arr.admin_id = #{adminId,jdbcType=BIGINT}
+  </select>
+
+  <!-- 获取资源相关用户ID列表 -->
+  <select id="getAdminIdList" resultType="java.lang.Long">
+    SELECT DISTINCT arr.admin_id
+    FROM public.ums_admin_role_relation arr
+    INNER JOIN public.ums_role_resource_relation rrr ON arr.role_id = rrr.role_id
+    WHERE rrr.resource_id = #{resourceId,jdbcType=BIGINT}
+  </select>
+</mapper>

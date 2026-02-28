@@ -6,9 +6,6 @@ spring:
     name: readio-gateway
   main:
     web-application-type: reactive
-  autoconfigure:
-    exclude:
-      - com.github.xiaoymin.knife4j.spring.gateway.Knife4jGatewayAutoConfiguration
   datasource:
     url: jdbc:postgresql://localhost:26001/readio?currentSchema=public
     username: readio
@@ -84,6 +81,8 @@ management:
       exposure:
         include: '*' #暴露Actuator的监控端点
   endpoint:
+    gateway:
+      access: read-only # 启用 /actuator/gateway/routes 等端点（默认关闭），read-only 仅查看不修改路由
     health:
       show-details: always #显示健康的详细信息
     env:
@@ -99,7 +98,7 @@ knife4j:
     discover:
       version: openapi3 #配置OpenAPI3规范
       enabled: true #配置开启服务发现
-      excluded-services: readio-monitor #排除监控服务
+      excluded-services: readio-monitor,readio-gateway #排除监控服务与网关自身（网关不暴露 /v3/api-docs）
     tags-sorter: order #配置tag排序规则
     operations-sorter: order #配置operation排序规则
 sa-token:
@@ -125,4 +124,3 @@ sa-token:
   token-prefix: Bearer
   # 是否打印banner
   is-print: false
-

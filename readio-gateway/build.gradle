@@ -29,6 +29,8 @@ dependencies {
     implementation project(':readio-common')
     compileOnly libs.lombok
     annotationProcessor libs.lombok
+    implementation libs.hutool
+    implementation libs.lombok
     implementation libs.spring.boot.starter.data.redis
     implementation libs.nacos.discovery
     implementation libs.nacos.config
@@ -41,8 +43,16 @@ dependencies {
     implementation libs.postgresql
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly libs.junit.platform.launcher
+    implementation libs.knife4j.gateway
+    implementation libs.knife4j.openapi3.jakarta
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+// Java 25+：启用 native access，避免 Netty/Nacos 启动时的 UnsupportedOperationException 与 "Restricted methods" 警告
+// 若在 IDE 中运行，请在 Run Configuration 的 VM options 中加入：--enable-native-access=ALL-UNNAMED
+tasks.named('bootRun') {
+    jvmArgs '--enable-native-access=ALL-UNNAMED'
 }

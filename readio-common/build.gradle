@@ -21,6 +21,8 @@ repositories {
 dependencies {
     compileOnly libs.lombok
     annotationProcessor libs.lombok
+    implementation libs.hutool
+    implementation libs.lombok
     implementation libs.spring.boot.starter.webmvc
     testImplementation libs.spring.boot.starter.webmvc.test
     testRuntimeOnly libs.junit.platform.launcher
@@ -35,6 +37,8 @@ dependencies {
     implementation libs.spring.cloud.starter.bootstrap
     implementation libs.spring.cloud.starter.loadbalancer
     implementation libs.aspectjweaver
+    implementation libs.knife4j.gateway
+    implementation libs.knife4j.openapi3.jakarta
 }
 
 tasks.named('test') {

@@ -81,6 +81,7 @@ logstash-logback-encoder = { group = "net.logstash.logback", name = "logstash-lo
 
 # Sa-Token
 sa-token-reactor = { group = "cn.dev33", name = "sa-token-reactor-spring-boot3-starter", version.ref = "sa-token" }
+sa-token-spring-boot3-starter = { group = "cn.dev33", name = "sa-token-spring-boot3-starter", version.ref = "sa-token" }
 sa-token-redis-jackson = { group = "cn.dev33", name = "sa-token-redis-jackson", version.ref = "sa-token" }
 sa-token-jwt = { group = "cn.dev33", name = "sa-token-jwt", version.ref = "sa-token" }
 

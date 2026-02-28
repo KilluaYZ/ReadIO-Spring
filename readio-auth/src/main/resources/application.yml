@@ -35,6 +35,8 @@ management:
     info:
       enabled: true
 springdoc:
+  servers:
+    server-url: http://station.killuayz.top:8401
   swagger-ui:
     # 修改Swagger UI路径
     path: /swagger-ui.html

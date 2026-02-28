@@ -51,3 +51,34 @@ bootstrap 中已开启 `refresh-enabled: true`。对需要**运行时生效**的
 
 - 公共配置：放在 `readio-xxx.yaml`。
 - 环境专属：新建 `readio-xxx-dev.yaml`、`readio-xxx-prod.yaml`，启动时通过 `spring.profiles.active=dev/prod` 自动拉取对应 profile 的配置。
+
+## 7. Gateway 路由 404 排查
+
+修改 Nacos 中 `readio-gateway.yaml` 后若访问 `/readio-admin/**` 仍返回 404，可按以下步骤排查：
+
+1. **确认路由已加载**  
+   请求：`GET http://<gateway-host>:8201/actuator/gateway/routes`  
+   响应中应包含 `id: readio-admin`、`uri: lb://readio-admin`、`predicates: Path=/readio-admin/**`。若没有，说明网关未加载到 Nacos 中的 `spring.cloud.gateway.routes`。
+
+2. **修改 Nacos 后触发刷新**  
+   - 方式一：`POST http://<gateway-host>:8201/actuator/refresh`（需网关已开启 `refresh-enabled: true`）。  
+   - 方式二：重启 readio-gateway 进程，确保重新拉取 Nacos 配置。
+
+3. **确认 readio-admin 已注册到同一 Nacos**  
+   在 Nacos 控制台 → 服务管理 → 服务列表，查看是否有 `readio-admin` 且为健康状态。网关通过 `lb://readio-admin` 从 Nacos 发现实例，若没有实例或未注册，会无法转发。
+
+4. **确认网关能访问 readio-admin**  
+   若网关与 readio-admin 不在同一台机，需保证网关所在机器能访问 Nacos 中 readio-admin 实例的地址（IP:端口）。
+
+## 8. readio-gateway 在 Java 25 下启动报错
+
+使用 **Java 25** 运行 readio-gateway 时，可能看到 `UnsupportedOperationException: sun.misc.Unsafe unavailable`、`Native access (restricted methods) is not enabled` 以及 “Restricted methods will be blocked” 等日志。这是 Java 24+ 对受限 API 的约束导致的，Netty/Nacos 需要显式开启 native access。
+
+**处理方式**：在启动 readio-gateway 的 JVM 参数中加入：
+
+```text
+--enable-native-access=ALL-UNNAMED
+```
+
+- **命令行 / Gradle**：`readio-gateway/build.gradle` 中已为 `bootRun` 配置该参数，直接执行 `./gradlew :readio-gateway:bootRun` 即可。
+- **IDE（IDEA / Cursor）**：在 Run Configuration 里找到 readio-gateway，在 **VM options** 中加上上述参数后重新运行。

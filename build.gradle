@@ -22,26 +22,26 @@ repositories {
 subprojects {
     apply plugin: 'java'
     dependencies {
-        implementation libs.hutool
-        implementation libs.lombok
-        implementation libs.pagehelper.spring.boot.starter
-        implementation libs.pagehelper
-        implementation libs.mybatis
-        implementation libs.mybatis.spring
-        implementation libs.druid.spring.boot.starter
-        implementation libs.knife4j.gateway
-        implementation libs.knife4j.openapi3.jakarta
-        implementation libs.mybatis.generator.core
-        implementation libs.spring.data.commons
-        implementation libs.aliyun.sdk.oss
-        implementation libs.logstash.logback.encoder
-        implementation libs.spring.boot.admin.server
-        implementation libs.spring.boot.admin.client
-        implementation libs.minio
-        implementation libs.alipay.sdk.java
-        implementation libs.sa.token.reactor
-        implementation libs.sa.token.redis.jackson
-        implementation libs.sa.token.jwt
-        implementation libs.postgresql
+         implementation libs.hutool
+         implementation libs.lombok
+         implementation libs.pagehelper.spring.boot.starter
+        // implementation libs.pagehelper
+         implementation libs.mybatis
+         implementation libs.mybatis.spring
+        // implementation libs.druid.spring.boot.starter
+         implementation libs.knife4j.gateway
+         implementation libs.knife4j.openapi3.jakarta
+         implementation libs.mybatis.generator.core
+        // implementation libs.spring.data.commons
+        // implementation libs.aliyun.sdk.oss
+        // implementation libs.logstash.logback.encoder
+        // implementation libs.spring.boot.admin.server
+        // implementation libs.spring.boot.admin.client
+        // implementation libs.minio
+        // implementation libs.alipay.sdk.java
+        // implementation libs.sa.token.reactor
+        // implementation libs.sa.token.redis.jackson
+        // implementation libs.sa.token.jwt
+        // implementation libs.postgresql
     }
 }

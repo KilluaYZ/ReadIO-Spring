@@ -7,9 +7,6 @@ spring:
     name: readio-gateway
   main:
     web-application-type: reactive
-  autoconfigure:
-    exclude:
-      - com.github.xiaoymin.knife4j.spring.gateway.Knife4jGatewayAutoConfiguration
   datasource:
     url: jdbc:postgresql://localhost:26001/readio?currentSchema=public
     username: readio
@@ -17,37 +14,35 @@ spring:
     driver-class-name: org.postgresql.Driver
   cloud:
     gateway:
-      server:
-        webflux:
-          discovery:
-            locator:
-              enabled: true
-              lower-case-service-id: true
-          routes:
-            - id: readio-auth
-              uri: lb://readio-auth
-              predicates:
-                - Path=/readio-auth/**
-              filters:
-                - StripPrefix=1
-            - id: readio-admin
-              uri: lb://readio-admin
-              predicates:
-                - Path=/readio-admin/**
-              filters:
-                - StripPrefix=1
-            - id: readio-portal
-              uri: lb://readio-portal
-              predicates:
-                - Path=/readio-portal/**
-              filters:
-                - StripPrefix=1
-            - id: readio-search
-              uri: lb://readio-search
-              predicates:
-                - Path=/readio-search/**
-              filters:
-                - StripPrefix=1
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: readio-auth
+          uri: lb://readio-auth
+          predicates:
+            - Path=/readio-auth/**
+          filters:
+            - StripPrefix=1
+        - id: readio-admin
+          uri: lb://readio-admin
+          predicates:
+            - Path=/readio-admin/**
+          filters:
+            - StripPrefix=1
+        - id: readio-portal
+          uri: lb://readio-portal
+          predicates:
+            - Path=/readio-portal/**
+          filters:
+            - StripPrefix=1
+        - id: readio-search
+          uri: lb://readio-search
+          predicates:
+            - Path=/readio-search/**
+          filters:
+            - StripPrefix=1
     nacos:
       discovery:
         server-addr: localhost:8848
@@ -87,6 +82,8 @@ management:
       exposure:
         include: '*'
   endpoint:
+    gateway:
+      access: read-only
     health:
       show-details: always
     env:
@@ -102,7 +99,7 @@ knife4j:
     discover:
       version: openapi3
       enabled: true
-      excluded-services: readio-monitor
+      excluded-services: readio-monitor,readio-gateway
     tags-sorter: order
     operations-sorter: order
 sa-token:
