@@ -49,17 +49,20 @@ public class UmsAdminLoginLogController {
     }
 
     @Operation(summary = "批量删除登录日志")
-    @PostMapping("/delete/many")
+    @PostMapping("/delete/batch")
     @ResponseBody
-    public CommonResult<Integer> deleteMany(@RequestParam("ids") List<Long> ids) {
+    public CommonResult<Integer> deleteBatch(@RequestBody List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return CommonResult.failed("请选择要删除的日志");
+        }
         int count = loginLogService.delete(ids);
         return count > 0 ? CommonResult.success(count) : CommonResult.failed("删除失败");
     }
 
     @Operation(summary = "根据ID获取登录日志详情")
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     @ResponseBody
-    public CommonResult<UmsAdminLoginLog> getItem(@PathVariable Long id) {
+    public CommonResult<UmsAdminLoginLog> getById(@PathVariable Long id) {
         UmsAdminLoginLog log = loginLogService.getItem(id);
         if (log == null) {
             return CommonResult.failed("记录不存在");

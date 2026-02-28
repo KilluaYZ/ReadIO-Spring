@@ -64,11 +64,10 @@ public class OmsOrderController {
         return CommonResult.success(CommonPage.restPage(orderList));
     }
 
-    // (5) add 新增订单
     @Operation(summary = "新增订单")
-    @PostMapping("/add")
+    @PostMapping("/create")
     @ResponseBody
-    public CommonResult<Integer> add(@RequestBody OmsOrder order) {
+    public CommonResult<Integer> create(@RequestBody OmsOrder order) {
         int count = orderService.create(order);
         return count > 0 ? CommonResult.success(order.getId()) : CommonResult.failed("新增失败");
     }
@@ -92,20 +91,21 @@ public class OmsOrderController {
         return count > 0 ? CommonResult.success(null) : CommonResult.failed("删除失败");
     }
 
-    // (8) delete/many 批量删除订单
     @Operation(summary = "批量删除订单")
-    @PostMapping("/delete/many")
+    @PostMapping("/delete/batch")
     @ResponseBody
-    public CommonResult<Integer> deleteMany(@RequestParam("ids") List<Long> ids) {
+    public CommonResult<Integer> deleteBatch(@RequestBody List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return CommonResult.failed("请选择要删除的订单");
+        }
         int count = orderService.delete(ids);
         return count > 0 ? CommonResult.success(count) : CommonResult.failed("删除失败");
     }
 
-    // (9) get 获取订单的详细信息
     @Operation(summary = "获取订单详情")
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     @ResponseBody
-    public CommonResult<OmsOrderDetail> get(@PathVariable("id") Long id) {
+    public CommonResult<OmsOrderDetail> getById(@PathVariable("id") Long id) {
         OmsOrderDetail orderDetailResult = orderService.detail(id);
         if (orderDetailResult == null) {
             return CommonResult.failed("订单不存在");

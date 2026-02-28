@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +23,7 @@ import java.util.Date;
  * Created by macro on 2019/12/25.
  */
 @Tag(name = "MinioController", description = "MinIO对象存储管理")
-@Controller
+@RestController
 @RequestMapping("/minio")
 public class MinioController {
 
@@ -39,9 +38,8 @@ public class MinioController {
     private String SECRET_KEY;
 
     @Operation(summary = "文件上传")
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @ResponseBody
-    public CommonResult upload(@RequestPart("file") MultipartFile file) {
+    @PostMapping("/upload")
+    public CommonResult<MinioUploadDto> upload(@RequestPart("file") MultipartFile file) {
         try {
             //创建一个MinIO的Java客户端
             MinioClient minioClient =MinioClient.builder()
@@ -97,9 +95,8 @@ public class MinioController {
     }
 
     @Operation(summary = "文件删除")
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    @ResponseBody
-    public CommonResult delete(@RequestParam("objectName") String objectName) {
+    @PostMapping("/delete")
+    public CommonResult<Void> delete(@RequestParam("objectName") String objectName) {
         try {
             MinioClient minioClient = MinioClient.builder()
                     .endpoint(ENDPOINT)

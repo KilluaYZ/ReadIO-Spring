@@ -25,14 +25,11 @@ public class SpringDocConfig implements WebMvcConfigurer {
     @Bean
     public OpenAPI mallAdminOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title("mall后台系统")
-                        .description("mall后台相关接口文档")
+                .info(new Info().title("readio-admin后台系统")
+                        .description("readio-admin后台相关接口文档")
                         .version("v1.0.0")
                         .license(new License().name("Apache 2.0")
-                                .url("https://github.com/macrozheng/mall-learning")))
-                .externalDocs(new ExternalDocumentation()
-                        .description("SpringBoot实战电商项目mall（60K+Star）全套文档")
-                        .url("http://www.macrozheng.com"))
+                                .url("https://github.com/KilluaYZ/ReadIO-Spring")))
                 .addSecurityItem(new SecurityRequirement().addList(SECURITY_SCHEME_NAME))
                 .components(new Components()
                         .addSecuritySchemes(SECURITY_SCHEME_NAME,

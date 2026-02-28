@@ -49,17 +49,20 @@ public class SmsFlashPromotionLogController {
     }
 
     @Operation(summary = "批量删除通知记录")
-    @PostMapping("/delete/many")
+    @PostMapping("/delete/batch")
     @ResponseBody
-    public CommonResult<Integer> deleteMany(@RequestParam("ids") List<Long> ids) {
+    public CommonResult<Integer> deleteBatch(@RequestBody List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return CommonResult.failed("请选择要删除的记录");
+        }
         int count = logService.delete(ids);
         return count > 0 ? CommonResult.success(count) : CommonResult.failed("删除失败");
     }
 
     @Operation(summary = "根据ID获取通知记录详情")
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     @ResponseBody
-    public CommonResult<SmsFlashPromotionLog> getItem(@PathVariable Long id) {
+    public CommonResult<SmsFlashPromotionLog> getById(@PathVariable Long id) {
         SmsFlashPromotionLog log = logService.getItem(id);
         if (log == null) {
             return CommonResult.failed("记录不存在");

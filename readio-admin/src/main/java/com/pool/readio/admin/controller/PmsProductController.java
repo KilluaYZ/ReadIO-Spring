@@ -46,11 +46,10 @@ public class PmsProductController {
         return CommonResult.success(CommonPage.restPage(list));
     }
 
-    /** (3) /get：获取一个商品的详细信息（类型、创建时间、价格等，与数据库字段对应） */
     @Operation(summary = "获取商品详细信息")
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     @ResponseBody
-    public CommonResult<PmsProduct> get(@PathVariable("id") Long id) {
+    public CommonResult<PmsProduct> getById(@PathVariable("id") Long id) {
         PmsProduct product = productService.getById(id);
         if (product == null) {
             return CommonResult.failed("商品不存在");
@@ -58,20 +57,21 @@ public class PmsProductController {
         return CommonResult.success(product);
     }
 
-    /** (4) /add：创建新商品 */
     @Operation(summary = "创建新商品")
-    @PostMapping("/add")
+    @PostMapping("/create")
     @ResponseBody
-    public CommonResult<Integer> add(@RequestBody PmsProductParam productParam) {
+    public CommonResult<Integer> create(@RequestBody PmsProductParam productParam) {
         int count = productService.create(productParam);
         return count > 0 ? CommonResult.success(count) : CommonResult.failed("新增失败");
     }
 
-    /** (5) /delete：批量删除商品 */
     @Operation(summary = "批量删除商品")
-    @PostMapping("/delete")
+    @PostMapping("/delete/batch")
     @ResponseBody
-    public CommonResult<Integer> delete(@RequestParam("ids") List<Long> ids) {
+    public CommonResult<Integer> deleteBatch(@RequestBody List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return CommonResult.failed("请选择要删除的商品");
+        }
         int count = productService.delete(ids);
         return count > 0 ? CommonResult.success(count) : CommonResult.failed("删除失败");
     }
