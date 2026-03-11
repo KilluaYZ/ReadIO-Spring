@@ -8,6 +8,7 @@ spring:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
       - org.springframework.boot.jdbc.autoconfigure.health.DataSourceHealthContributorAutoConfiguration
+      - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -18,6 +19,11 @@ spring:
       host: localhost
       username: readio
       password: readio
+  datasource:
+    url: jdbc:postgresql://localhost:26001/readio?currentSchema=public
+    username: readio
+    password: readio
+    driver-class-name: org.postgresql.Driver
   security:
     user:
       name: admin

@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
     implementation project(':readio-common')
+    implementation project(':readio-mbg')
     compileOnly libs.lombok
     annotationProcessor libs.lombok
     // Web & Security
