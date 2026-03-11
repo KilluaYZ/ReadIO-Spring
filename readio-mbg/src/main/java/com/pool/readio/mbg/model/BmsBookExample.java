@@ -545,63 +545,63 @@ public class BmsBookExample {
             return (Criteria) this;
         }
 
-        public Criteria andPushlishTimeIsNull() {
-            addCriterion("pushlish_time is null");
+        public Criteria andPublishTimeIsNull() {
+            addCriterion("publish_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andPushlishTimeIsNotNull() {
-            addCriterion("pushlish_time is not null");
+        public Criteria andPublishTimeIsNotNull() {
+            addCriterion("publish_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPushlishTimeEqualTo(Date value) {
-            addCriterion("pushlish_time =", value, "pushlishTime");
+        public Criteria andPublishTimeEqualTo(Date value) {
+            addCriterion("publish_time =", value, "publishTime");
             return (Criteria) this;
         }
 
-        public Criteria andPushlishTimeNotEqualTo(Date value) {
-            addCriterion("pushlish_time <>", value, "pushlishTime");
+        public Criteria andPublishTimeNotEqualTo(Date value) {
+            addCriterion("publish_time <>", value, "publishTime");
             return (Criteria) this;
         }
 
-        public Criteria andPushlishTimeGreaterThan(Date value) {
-            addCriterion("pushlish_time >", value, "pushlishTime");
+        public Criteria andPublishTimeGreaterThan(Date value) {
+            addCriterion("publish_time >", value, "publishTime");
             return (Criteria) this;
         }
 
-        public Criteria andPushlishTimeGreaterThanOrEqualTo(Date value) {
-            addCriterion("pushlish_time >=", value, "pushlishTime");
+        public Criteria andPublishTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("publish_time >=", value, "publishTime");
             return (Criteria) this;
         }
 
-        public Criteria andPushlishTimeLessThan(Date value) {
-            addCriterion("pushlish_time <", value, "pushlishTime");
+        public Criteria andPublishTimeLessThan(Date value) {
+            addCriterion("publish_time <", value, "publishTime");
             return (Criteria) this;
         }
 
-        public Criteria andPushlishTimeLessThanOrEqualTo(Date value) {
-            addCriterion("pushlish_time <=", value, "pushlishTime");
+        public Criteria andPublishTimeLessThanOrEqualTo(Date value) {
+            addCriterion("publish_time <=", value, "publishTime");
             return (Criteria) this;
         }
 
-        public Criteria andPushlishTimeIn(List<Date> values) {
-            addCriterion("pushlish_time in", values, "pushlishTime");
+        public Criteria andPublishTimeIn(List<Date> values) {
+            addCriterion("publish_time in", values, "publishTime");
             return (Criteria) this;
         }
 
-        public Criteria andPushlishTimeNotIn(List<Date> values) {
-            addCriterion("pushlish_time not in", values, "pushlishTime");
+        public Criteria andPublishTimeNotIn(List<Date> values) {
+            addCriterion("publish_time not in", values, "publishTime");
             return (Criteria) this;
         }
 
-        public Criteria andPushlishTimeBetween(Date value1, Date value2) {
-            addCriterion("pushlish_time between", value1, value2, "pushlishTime");
+        public Criteria andPublishTimeBetween(Date value1, Date value2) {
+            addCriterion("publish_time between", value1, value2, "publishTime");
             return (Criteria) this;
         }
 
-        public Criteria andPushlishTimeNotBetween(Date value1, Date value2) {
-            addCriterion("pushlish_time not between", value1, value2, "pushlishTime");
+        public Criteria andPublishTimeNotBetween(Date value1, Date value2) {
+            addCriterion("publish_time not between", value1, value2, "publishTime");
             return (Criteria) this;
         }
 

@@ -9,7 +9,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="pushlish_time" jdbcType="TIMESTAMP" property="pushlishTime" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
     <result column="isbn" jdbcType="VARCHAR" property="isbn" />
     <result column="word_count" jdbcType="INTEGER" property="wordCount" />
     <result column="description" jdbcType="VARCHAR" property="description" />
@@ -74,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, book_category_id, author_id, publisher_id, name, icon, create_time, pushlish_time, 
+    id, book_category_id, author_id, publisher_id, name, icon, create_time, publish_time, 
     isbn, word_count, description, language
   </sql>
   <select id="selectByExample" parameterType="com.pool.readio.mbg.model.BmsBookExample" resultMap="BaseResultMap">
@@ -110,11 +110,11 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBook" useGeneratedKeys="true">
     insert into public.bms_book (book_category_id, author_id, publisher_id, 
       name, icon, create_time, 
-      pushlish_time, isbn, word_count, 
+      publish_time, isbn, word_count, 
       description, language)
     values (#{bookCategoryId,jdbcType=INTEGER}, #{authorId,jdbcType=INTEGER}, #{publisherId,jdbcType=INTEGER}, 
       #{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{pushlishTime,jdbcType=TIMESTAMP}, #{isbn,jdbcType=VARCHAR}, #{wordCount,jdbcType=INTEGER}, 
+      #{publishTime,jdbcType=TIMESTAMP}, #{isbn,jdbcType=VARCHAR}, #{wordCount,jdbcType=INTEGER}, 
       #{description,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBook" useGeneratedKeys="true">
@@ -138,8 +138,8 @@
       <if test="createTime != null">
         create_time,
       </if>
-      <if test="pushlishTime != null">
-        pushlish_time,
+      <if test="publishTime != null">
+        publish_time,
       </if>
       <if test="isbn != null">
         isbn,
@@ -173,8 +173,8 @@
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="pushlishTime != null">
-        #{pushlishTime,jdbcType=TIMESTAMP},
+      <if test="publishTime != null">
+        #{publishTime,jdbcType=TIMESTAMP},
       </if>
       <if test="isbn != null">
         #{isbn,jdbcType=VARCHAR},
@@ -220,8 +220,8 @@
       <if test="row.createTime != null">
         create_time = #{row.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="row.pushlishTime != null">
-        pushlish_time = #{row.pushlishTime,jdbcType=TIMESTAMP},
+      <if test="row.publishTime != null">
+        publish_time = #{row.publishTime,jdbcType=TIMESTAMP},
       </if>
       <if test="row.isbn != null">
         isbn = #{row.isbn,jdbcType=VARCHAR},
@@ -249,7 +249,7 @@
       name = #{row.name,jdbcType=VARCHAR},
       icon = #{row.icon,jdbcType=VARCHAR},
       create_time = #{row.createTime,jdbcType=TIMESTAMP},
-      pushlish_time = #{row.pushlishTime,jdbcType=TIMESTAMP},
+      publish_time = #{row.publishTime,jdbcType=TIMESTAMP},
       isbn = #{row.isbn,jdbcType=VARCHAR},
       word_count = #{row.wordCount,jdbcType=INTEGER},
       description = #{row.description,jdbcType=VARCHAR},
@@ -279,8 +279,8 @@
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="pushlishTime != null">
-        pushlish_time = #{pushlishTime,jdbcType=TIMESTAMP},
+      <if test="publishTime != null">
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
       </if>
       <if test="isbn != null">
         isbn = #{isbn,jdbcType=VARCHAR},
@@ -305,7 +305,7 @@
       name = #{name,jdbcType=VARCHAR},
       icon = #{icon,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      pushlish_time = #{pushlishTime,jdbcType=TIMESTAMP},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP},
       isbn = #{isbn,jdbcType=VARCHAR},
       word_count = #{wordCount,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},

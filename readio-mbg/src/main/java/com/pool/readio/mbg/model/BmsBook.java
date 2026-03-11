@@ -25,7 +25,7 @@ public class BmsBook implements Serializable {
     private Date createTime;
 
     @Schema(title = "出版日期")
-    private Date pushlishTime;
+    private Date publishTime;
 
     @Schema(title = "书籍ISBN码")
     private String isbn;
@@ -97,12 +97,12 @@ public class BmsBook implements Serializable {
         this.createTime = createTime;
     }
 
-    public Date getPushlishTime() {
-        return pushlishTime;
+    public Date getPublishTime() {
+        return publishTime;
     }
 
-    public void setPushlishTime(Date pushlishTime) {
-        this.pushlishTime = pushlishTime;
+    public void setPublishTime(Date publishTime) {
+        this.publishTime = publishTime;
     }
 
     public String getIsbn() {
@@ -150,7 +150,7 @@ public class BmsBook implements Serializable {
         sb.append(", name=").append(name);
         sb.append(", icon=").append(icon);
         sb.append(", createTime=").append(createTime);
-        sb.append(", pushlishTime=").append(pushlishTime);
+        sb.append(", publishTime=").append(publishTime);
         sb.append(", isbn=").append(isbn);
         sb.append(", wordCount=").append(wordCount);
         sb.append(", description=").append(description);
