@@ -1,0 +1,1 @@
+./gradlew :readio-admin:compileJava

@@ -18,10 +18,26 @@ repositories {
     mavenCentral()
 }
 
+configurations.all {
+    exclude group: 'cn.dev33', module: 'sa-token-reactor-spring-boot3-starter'
+}
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    implementation project(':readio-admin')
+    implementation project(':readio-mbg')
+    implementation project(':readio-common')
+    implementation libs.spring.boot.starter.web
+    implementation libs.spring.boot.starter.validation
+    implementation libs.postgresql
+    implementation libs.sa.token.spring.boot3.starter
+    implementation libs.sa.token.redis.jackson
+    implementation libs.sa.token.jwt
+    implementation libs.spring.boot.starter.data.redis
+    implementation libs.commons.pool2
+    implementation libs.hutool
+    implementation libs.lombok
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testRuntimeOnly libs.junit.platform.launcher
 }
 
 tasks.named('test') {

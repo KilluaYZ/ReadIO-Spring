@@ -1,0 +1,32 @@
+# Portal 业务层配置（可与 Nacos 等配置中心叠加）
+server:
+  port: 8403
+spring:
+  application:
+    name: readio-portal
+  autoconfigure:
+    exclude:
+      - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: jdbc:postgresql://localhost:26001/readio?currentSchema=public
+    username: readio
+    password: readio
+    driver-class-name: org.postgresql.Driver
+  data:
+    redis:
+      database: 0
+      port: 26002
+      host: localhost
+      username: readio
+      password: readio
+sa-token:
+  token-prefix: Bearer
+  jwt-secret-key: readio-portal-jwt-secret
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
