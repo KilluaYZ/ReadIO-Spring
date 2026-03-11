@@ -5,7 +5,7 @@ Portal 面向 C 端用户，复用 admin 的 Service/DAO，仅暴露业务所需
 ## 接口前缀与端口
 
 - 基础路径：`/portal/**`
-- 默认端口：`8403`（与 admin `8402` 区分）
+- 默认端口：`8404`（与 admin `8402` 区分；若 8403 被占用也可用 8404）
 
 ## 分类说明
 
@@ -53,6 +53,8 @@ Portal 面向 C 端用户，复用 admin 的 Service/DAO，仅暴露业务所需
 
 若产品还有 **下单购买（商品、订单、支付）** 或 **用户资料（注册、登录、个人资料）**，需在订单/用户等模块另行提供或由网关转发到对应服务。
 
+更细的**业务闭环**与**安全风险**分析（含 memberId 越权、划线/书架归属校验、阅读权限等）见：[doc/portal-api-analysis.md](doc/portal-api-analysis.md)。
+
 ### 3. 当前用户与 memberId
 
 需要“当前登录用户”的接口（喜好、阅读进度、划线等）目前通过 **请求参数 `memberId`** 传入，便于联调和网关注入。
@@ -65,7 +67,8 @@ Portal 面向 C 端用户，复用 admin 的 Service/DAO，仅暴露业务所需
 ## 运行与依赖
 
 - 依赖：`readio-admin`（仅使用其 Service/DAO/Config）、`readio-mbg`、`readio-common`。
-- 启动时会扫描 `com.pool.readio.admin`，但 **排除** `com.pool.readio.admin.controller`，故不会加载后台管理接口。
+- 启动时 **不扫描** `com.pool.readio.admin.controller`：通过 `@Import(AdminSharedConfig.class)` 只加载 admin 的 config、dao、service、component、validator，**不会注册任何 admin 的 Controller**，因此接口与 Swagger 文档中仅会出现 `/portal/**`。
+- API 文档标题为「ReadIO Portal」，由 `PortalSpringDocConfig` 提供并覆盖 admin 的文档配置。
 - 需配置与 admin 相同的数据库、Redis（见 `src/main/resources/application.yml`），可按需接 Nacos 等配置中心。
 
 ## 编译与启动
@@ -77,3 +80,21 @@ Portal 面向 C 端用户，复用 admin 的 Service/DAO，仅暴露业务所需
 # 启动（需先启动 DB、Redis）
 ./gradlew :readio-portal:bootRun
 ```
+
+**端口占用**：若启动报错 `BindException: 地址已在使用`，说明默认端口 8404 被占用。可先停止占用该端口的进程（如之前的 Portal 实例），或在 `application.yml` 中修改 `server.port`（如改为 8405）。
+
+## 确认端口与 API 文档
+
+**1. 确认 Portal 实际监听端口**  
+启动后请在控制台查看日志，应出现类似：`Tomcat started on port(s): 8404 (http)`。若这里是其它端口（如 8403），请用该端口访问。
+
+**2. API 文档地址（请按实际端口替换 `8404`）**
+
+| 地址 | 说明 |
+|------|------|
+| `http://localhost:8404/doc.html` | **Knife4j 文档页**（推荐，项目使用 Knife4j） |
+| `http://localhost:8404/swagger-ui.html` | SpringDoc 配置的 UI 入口 |
+| `http://localhost:8404/swagger-ui/index.html` | Swagger UI 静态页 |
+| `http://localhost:8404/v3/api-docs` | OpenAPI JSON，用于确认服务与文档是否正常 |
+
+若 `http://localhost:8404/v3/api-docs` 能打开并返回 JSON，说明服务在 8404 且文档已生成，请优先试 **`/doc.html`**。若以上都打不开，请确认 Portal 已成功启动且日志中的端口与访问端口一致。

@@ -1,6 +1,7 @@
 # Portal 业务层配置（可与 Nacos 等配置中心叠加）
+# 默认 8404，避免与占用 8403 的进程冲突；若需用 8403 可改回并先释放该端口
 server:
-  port: 8403
+  port: 8404
 spring:
   application:
     name: readio-portal
@@ -22,11 +23,52 @@ spring:
       host: localhost
       username: readio
       password: readio
+# 业务用 Redis 键前缀与过期（与 admin 一致，避免复用 admin 的 Service 时占位符缺失）
+redis:
+  database: "0"
+  expire:
+    common: 86400
+  key:
+    admin: admin
 sa-token:
   token-prefix: Bearer
   jwt-secret-key: readio-portal-jwt-secret
+# MinIO（Portal 复用 admin 的 OssConfig，需提供占位符；若 Portal 不用 OSS 可仅保留 endpoint/access-key/secret-key）
+minio:
+  endpoint: http://localhost:9000
+  access-key: readio
+  secret-key: readio123
+  bucket: readio
+  dir:
+    prefix: readio/
+  policy:
+    expire: 3600
+  maxSize: 10
+  callback: http://localhost:8401/aliyun/oss/callback
 management:
   endpoints:
     web:
       exposure:
         include: '*'
+
+# 文档中展示的 API 服务地址（Knife4j 网关聚合时显示的 host），不配置则使用当前请求 host
+springdoc:
+  servers:
+    server-url: http://station.killuayz.top:8404
+  swagger-ui:
+    # 修改Swagger UI路径
+    path: /swagger-ui.html
+    # 开启Swagger UI界面
+    enabled: true
+    tags-sorter: alpha
+    operations-sorter: alpha
+    show-extensions: true
+  api-docs:
+    # 修改api-docs路径
+    path: /v3/api-docs
+    # 开启api-docs
+    enabled: true
+  group-configs:
+    - group: 'default'
+      packages-to-scan: com.pool.readio.portal.controller
+  default-flat-param-object: false

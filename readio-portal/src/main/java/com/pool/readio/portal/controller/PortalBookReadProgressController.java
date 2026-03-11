@@ -1,4 +1,4 @@
-package com.pool.readio.readioportal.controller;
+package com.pool.readio.portal.controller;
 
 import com.pool.readio.admin.service.BmsBookReadProgressService;
 import com.pool.readio.common.api.CommonPage;

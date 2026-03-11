@@ -35,7 +35,8 @@ dependencies {
     implementation libs.spring.boot.starter.data.redis
     implementation libs.commons.pool2
     implementation libs.hutool
-    implementation libs.lombok
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testRuntimeOnly libs.junit.platform.launcher
 }
