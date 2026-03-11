@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:latest
+    image: docker.io/library/postgres:latest
     container_name: readio-postgres-dev
     environment:
       POSTGRES_USER: readio
@@ -18,7 +18,7 @@ services:
       retries: 5
 
   redis:
-    image: redis:7-alpine
+    image: docker.io/library/redis:7-alpine
     container_name: readio-redis-dev
     command: redis-server /usr/local/etc/redis/redis.conf
     ports:
@@ -35,7 +35,7 @@ services:
 
   # 与本地 docker run 成功参数一致：standalone + 内嵌 Derby，无 MySQL
   nacos:
-    image: nacos/nacos-server:latest
+    image: docker.io/nacos/nacos-server:latest
     container_name: readio-nacos-dev
     hostname: nacos
     environment:
@@ -74,7 +74,7 @@ services:
     restart: unless-stopped
 
   minio:
-    image: minio/minio:latest
+    image: docker.io/minio/minio:latest
     container_name: readio-minio-dev
     environment:
       MINIO_ROOT_USER: readio
