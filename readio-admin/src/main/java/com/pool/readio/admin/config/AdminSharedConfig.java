@@ -18,10 +18,18 @@ import org.springframework.context.annotation.FilterType;
         "com.pool.readio.admin.component",
         "com.pool.readio.admin.validator"
     },
-    excludeFilters = @ComponentScan.Filter(
-        type = FilterType.ASSIGNABLE_TYPE,
-        classes = AdminSharedConfig.class
-    )
+    excludeFilters = {
+        @ComponentScan.Filter(
+            type = FilterType.ASSIGNABLE_TYPE,
+            classes = AdminSharedConfig.class
+        ),
+        // 在 readio-portal 中通过 AdminSharedConfig 复用 admin 的 bean 时，排除 admin 自己的 SecurityConfig，
+        // 避免与 portal.config.SecurityConfig 同名冲突。
+        @ComponentScan.Filter(
+            type = FilterType.ASSIGNABLE_TYPE,
+            classes = SecurityConfig.class
+        )
+    }
 )
 public class AdminSharedConfig {
 }

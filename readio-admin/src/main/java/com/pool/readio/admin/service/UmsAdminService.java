@@ -1,6 +1,4 @@
 package com.pool.readio.admin.service;
-
-import cn.dev33.satoken.stp.SaTokenInfo;
 import com.pool.readio.admin.dto.UmsAdminParam;
 import com.pool.readio.admin.dto.UpdateAdminPasswordParam;
 import com.pool.readio.mbg.model.*;
@@ -22,13 +20,6 @@ public interface UmsAdminService {
      * 注册功能
      */
     UmsAdmin register(UmsAdminParam umsAdminParam);
-
-    /**
-     * 登录功能
-     * @param username 用户名
-     * @param password 密码
-     */
-    SaTokenInfo login(String username, String password);
 
     /**
      * 根据用户id获取用户

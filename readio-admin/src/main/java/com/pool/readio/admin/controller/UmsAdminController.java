@@ -1,6 +1,5 @@
 package com.pool.readio.admin.controller;
 
-import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.hutool.core.collection.CollUtil;
 import com.pool.readio.common.api.CommonPage;
 import com.pool.readio.common.api.CommonResult;
@@ -15,7 +14,6 @@ import com.pool.readio.admin.service.UmsRoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +35,6 @@ public class UmsAdminController {
     private UmsAdminService adminService;
     @Autowired
     private UmsRoleService roleService;
-    @Value("${sa-token.token-prefix}")
-    private String tokenHead;
 
     @Operation(summary = "用户注册")
     @PostMapping("/register")
@@ -46,20 +42,6 @@ public class UmsAdminController {
     public CommonResult<UmsAdmin> register(@Validated @RequestBody UmsAdminParam umsAdminParam) {
         UmsAdmin umsAdmin = adminService.register(umsAdminParam);
         return umsAdmin != null ? CommonResult.success(umsAdmin) : CommonResult.failed("注册失败");
-    }
-
-    @Operation(summary = "登录以后返回token")
-    @PostMapping("/login")
-    @ResponseBody
-    public CommonResult<Map<String, String>> login(@Validated @RequestBody UmsAdminLoginParam umsAdminLoginParam) {
-        SaTokenInfo saTokenInfo = adminService.login(umsAdminLoginParam.getUsername(), umsAdminLoginParam.getPassword());
-        if (saTokenInfo == null) {
-            return CommonResult.validateFailed("用户名或密码错误");
-        }
-        Map<String, String> tokenMap = new HashMap<>();
-        tokenMap.put("token", saTokenInfo.getTokenValue());
-        tokenMap.put("tokenHead", tokenHead + " ");
-        return CommonResult.success(tokenMap);
     }
 
     @Operation(summary = "获取当前登录用户信息")
@@ -82,13 +64,7 @@ public class UmsAdminController {
         return CommonResult.success(data);
     }
 
-    @Operation(summary = "登出功能")
-    @PostMapping("/logout")
-    @ResponseBody
-    public CommonResult<Void> logout() {
-        adminService.logout();
-        return CommonResult.success(null);
-    }
+    // 登录与登出统一交给 OAuth2 + Gateway 处理，此处不再提供 token 登录/登出接口
 
     @Operation(summary = "根据用户名或姓名分页获取用户列表")
     @GetMapping("/list")

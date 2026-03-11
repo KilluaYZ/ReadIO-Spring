@@ -35,10 +35,10 @@ dependencies {
     implementation libs.nacos.discovery
     implementation libs.nacos.config
     implementation libs.spring.cloud.starter.gateway
-    implementation libs.sa.token.reactor
-    implementation libs.sa.token.redis.jackson
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation libs.commons.pool2
-    implementation libs.sa.token.jwt
     implementation libs.spring.boot.admin.client
     implementation libs.postgresql
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

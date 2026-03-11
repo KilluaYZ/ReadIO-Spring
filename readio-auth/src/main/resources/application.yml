@@ -1,18 +1,16 @@
 # 本地默认配置；若已接入 Nacos 配置中心，Nacos 中 readio-auth.yaml 的同名项会覆盖此处（见 doc/nacos-config/README.md）
 server:
-  port: 8401
+  port: 9401
 spring:
   application:
     name: readio-auth
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-      - org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
       - org.springframework.boot.jdbc.autoconfigure.health.DataSourceHealthContributorAutoConfiguration
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-  # readio-auth 不连数据库，仅通过 Feign 调用 readio-admin/readio-portal，此处不配置 datasource
   data:
     redis:
       database: 0
@@ -20,6 +18,29 @@ spring:
       host: localhost
       username: readio
       password: readio
+  security:
+    user:
+      name: admin
+      password: "{noop}123456"
+    oauth2:
+      authorizationserver:
+        client:
+          readio-gateway:
+            registration:
+              client-id: "readio-gateway"
+              client-secret: "{noop}123456"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              redirect-uris:
+                - "http://127.0.0.1:9100/login/oauth2/code/readio-gateway-oidc"
+              scopes:
+                - "openid"
+                - "admin"
+                - "portal"
+            require-authorization-consent: true
 management:
   endpoints:
     web:

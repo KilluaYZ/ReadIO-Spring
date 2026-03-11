@@ -22,23 +22,26 @@ dependencies {
     implementation project(':readio-common')
     compileOnly libs.lombok
     annotationProcessor libs.lombok
+    // Web & Security
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // OAuth2 Authorization Server
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
+    // 基础设施（可按需精简）
     implementation libs.spring.boot.starter.data.redis
     implementation libs.nacos.discovery
     implementation libs.nacos.config
     implementation libs.spring.cloud.starter.openfeign
     implementation libs.spring.cloud.starter.loadbalancer
-    implementation libs.sa.token.reactor
-    implementation libs.sa.token.redis.jackson
     implementation libs.commons.pool2
-    implementation libs.sa.token.jwt
     implementation libs.spring.boot.admin.client
     implementation libs.postgresql
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly libs.junit.platform.launcher
-    implementation libs.knife4j.gateway
-    implementation libs.knife4j.openapi3.jakarta
     implementation libs.hutool
     implementation libs.lombok
+    implementation libs.knife4j.gateway
+    implementation libs.knife4j.openapi3.jakarta
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly libs.junit.platform.launcher
 }
 
 tasks.named('test') {

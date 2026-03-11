@@ -2,11 +2,13 @@ package com.pool.readio.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration;
+import org.springframework.boot.jdbc.autoconfigure.health.DataSourceHealthContributorAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication(excludeName = {
-        "org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration",
-        "org.springframework.boot.jdbc.autoconfigure.health.DataSourceHealthContributorAutoConfiguration"
+@SpringBootApplication(exclude = {
+        DataSourceAutoConfiguration.class,
+        DataSourceHealthContributorAutoConfiguration.class
 })
 @EnableFeignClients
 public class ReadioAuthApplication {
@@ -16,3 +18,4 @@ public class ReadioAuthApplication {
     }
 
 }
+

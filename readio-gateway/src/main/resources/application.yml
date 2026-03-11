@@ -1,6 +1,6 @@
 # 本地默认配置；若已接入 Nacos 配置中心，Nacos 中 readio-gateway.yaml 的同名项会覆盖此处（见 doc/nacos-config/README.md）
 server:
-  port: 8201
+  port: 9100
 spring:
   application:
     name: readio-gateway
@@ -42,6 +42,8 @@ spring:
             - Path=/readio-search/**
           filters:
             - StripPrefix=1
+      default-filters:
+        - TokenRelay=
     nacos:
       discovery:
         server-addr: localhost:8848
@@ -52,6 +54,28 @@ spring:
       host: localhost
       username: readio
       password: readio
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://127.0.0.1:9401
+      client:
+        provider:
+          readio-auth:
+            issuer-uri: http://127.0.0.1:9401
+        registration:
+          readio-gateway-oidc:
+            provider: readio-auth
+            client-name: readio-gateway
+            client-id: readio-gateway
+            client-secret: 123456
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: authorization_code
+            redirect-uri: http://127.0.0.1:9100/login/oauth2/code/readio-gateway-oidc
+            scope:
+              - openid
+              - admin
+              - portal
 secure:
   ignore:
     urls: #配置白名单路径
@@ -101,23 +125,6 @@ knife4j:
       excluded-services: readio-monitor,readio-gateway #排除监控服务与网关自身（网关不暴露 /v3/api-docs）
     tags-sorter: order #配置tag排序规则
     operations-sorter: order #配置operation排序规则
-sa-token:
-  # token名称 (同时也是cookie名称)
-  token-name: Authorization
-  # token有效期，单位秒，-1代表永不过期
-  timeout: 2592000
-  # token临时有效期 (指定时间内无操作就视为token过期)，单位秒
-  active-timeout: -1
-  # 是否允许同一账号并发登录 (为false时新登录挤掉旧登录)
-  is-concurrent: true
-  # 在多人登录同一账号时，是否共用一个token (为false时每次登录新建一个token)
-  is-share: false
-  # token风格
-  token-style: uuid
-  # 是否输出操作日志
-  is-log: false
-  # 是否从cookie中读取token
-  is-read-cookie: false
   # 是否从head中读取token
   is-read-header: true
   # token前缀

@@ -27,11 +27,10 @@ dependencies {
     implementation project(':readio-mbg')
     implementation project(':readio-common')
     implementation libs.spring.boot.starter.web
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation libs.spring.boot.starter.validation
     implementation libs.postgresql
-    implementation libs.sa.token.spring.boot3.starter
-    implementation libs.sa.token.redis.jackson
-    implementation libs.sa.token.jwt
     implementation libs.spring.boot.starter.data.redis
     implementation libs.commons.pool2
     implementation libs.hutool

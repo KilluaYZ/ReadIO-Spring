@@ -1,7 +1,4 @@
 package com.pool.readio.admin.service.impl;
-
-import cn.dev33.satoken.stp.SaTokenInfo;
-import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.BCrypt;
@@ -84,38 +81,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         return umsAdmin;
     }
 
-    @Override
-    public SaTokenInfo login(String username, String password) {
-        if(StrUtil.isEmpty(username)||StrUtil.isEmpty(password)){
-            Asserts.fall("用户名或密码不能为空！");
-        }
-        UmsAdmin admin = getAdminByUsername(username);
-        if(admin==null){
-            Asserts.fall("找不到该用户！");
-        }
-        if (!BCrypt.checkpw(password, admin.getPassword())) {
-            Asserts.fall("密码不正确！");
-        }
-        if(!Boolean.TRUE.equals(admin.getStatus())){
-            Asserts.fall("该账号已被禁用！");
-        }
-        // 登录校验成功后，一行代码实现登录
-        StpUtil.login(admin.getId());
-        UserDto userDto = new UserDto();
-        userDto.setId(admin.getId().longValue());
-        userDto.setUsername(admin.getUsername());
-        userDto.setClientId(AuthConstant.ADMIN_CLIENT_ID);
-        List<UmsResource> resourceList = getResourceList(admin.getId().longValue());
-        List<String> permissionList = resourceList.stream().map(item -> item.getId() + ":" + item.getName()).toList();
-        userDto.setPermissionList(permissionList);
-        // 将用户信息存储到Session中
-        StpUtil.getSession().set(AuthConstant.STP_ADMIN_INFO,userDto);
-        // 获取当前登录用户Token信息
-        SaTokenInfo saTokenInfo = StpUtil.getTokenInfo();
-//        updateLoginTimeByUsername(username);
-        insertLoginLog(admin);
-        return saTokenInfo;
-    }
+    // 登录逻辑由 OAuth2 + Gateway 统一处理，此处不再负责发放 token
 
     /**
      * 添加登录记录到 ums_admin_login_log
@@ -290,20 +256,13 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     @Override
     public UmsAdmin getCurrentAdmin() {
-        UserDto userDto = (UserDto) StpUtil.getSession().get(AuthConstant.STP_ADMIN_INFO);
-        UmsAdmin admin = adminCacheService.getAdmin(userDto.getId());
-        if (admin == null) {
-            admin = adminMapper.selectByPrimaryKey(userDto.getId().intValue());
-            adminCacheService.setAdmin(admin);
-        }
-        return admin;
+        // 后续可根据 JWT 中的用户名/ID 获取当前管理员信息；
+        // 目前简单返回 null，表示无会话上下文（依赖上游网关做鉴权）
+        return null;
     }
+
     @Override
     public void logout() {
-        //先清空缓存
-        UserDto userDto = (UserDto) StpUtil.getSession().get(AuthConstant.STP_ADMIN_INFO);
-        adminCacheService.delAdmin(userDto.getId());
-        //再调用sa-token的登出方法
-        StpUtil.logout();
+        // 登出改由 OAuth2 + Gateway 完成，这里留空实现
     }
 }

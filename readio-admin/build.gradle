@@ -27,6 +27,8 @@ dependencies {
     implementation project(':readio-mbg')
     implementation project(':readio-common')
     implementation libs.spring.boot.starter.web
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     compileOnly libs.lombok
     annotationProcessor libs.lombok
     implementation libs.spring.boot.starter.data.redis
@@ -34,10 +36,7 @@ dependencies {
     implementation libs.nacos.config
     implementation libs.spring.cloud.starter.openfeign
     implementation libs.spring.cloud.starter.loadbalancer
-    implementation libs.sa.token.spring.boot3.starter
-    implementation libs.sa.token.redis.jackson
     implementation libs.commons.pool2
-    implementation libs.sa.token.jwt
     implementation libs.spring.boot.admin.client
     implementation libs.postgresql
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
