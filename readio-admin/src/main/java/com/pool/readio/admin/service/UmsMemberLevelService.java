@@ -10,8 +10,26 @@ import java.util.List;
  */
 public interface UmsMemberLevelService {
     /**
-     * 获取所有会员登录
-     * @param defaultStatus 是否为默认会员
+     * 获取所有会员等级（可按是否默认筛选）
+     * @param defaultStatus 是否为默认等级，null 表示不过滤
      */
     List<UmsMemberLevel> list(Integer defaultStatus);
+
+    /**
+     * 获取全部会员等级（不分页、不筛选）
+     */
+    List<UmsMemberLevel> listAll();
+
+    UmsMemberLevel getById(Integer id);
+
+    int create(UmsMemberLevel record);
+
+    int updateById(Integer id, UmsMemberLevel record);
+
+    int deleteById(Integer id);
+
+    /**
+     * 将指定等级设为默认等级（其他等级会取消默认）
+     */
+    int setDefaultLevel(Integer id);
 }

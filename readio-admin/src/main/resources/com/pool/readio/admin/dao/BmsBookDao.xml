@@ -10,7 +10,7 @@
     <result column="name" jdbcType="VARCHAR" property="name"/>
     <result column="icon" jdbcType="VARCHAR" property="icon"/>
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-    <result column="pushlish_time" jdbcType="TIMESTAMP" property="pushlishTime"/>
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime"/>
     <result column="isbn" jdbcType="VARCHAR" property="isbn"/>
     <result column="word_count" jdbcType="INTEGER" property="wordCount"/>
     <result column="description" jdbcType="VARCHAR" property="description"/>
@@ -18,7 +18,7 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, book_category_id, author_id, publisher_id, name, icon, create_time, pushlish_time,
+    id, book_category_id, author_id, publisher_id, name, icon, create_time, publish_time,
     isbn, word_count, description, language
   </sql>
 

@@ -20,12 +20,15 @@ public class SmsCouponHistoryServiceImpl implements SmsCouponHistoryService {
     @Autowired
     private SmsCouponHistoryMapper historyMapper;
     @Override
-    public List<SmsCouponHistory> list(Long couponId, Integer useStatus, String orderSn, Integer pageSize, Integer pageNum) {
-        PageHelper.startPage(pageNum,pageSize);
+    public List<SmsCouponHistory> list(Long couponId, Long memberId, Integer useStatus, String orderSn, Integer pageSize, Integer pageNum) {
+        PageHelper.startPage(pageNum, pageSize);
         SmsCouponHistoryExample example = new SmsCouponHistoryExample();
         SmsCouponHistoryExample.Criteria criteria = example.createCriteria();
         if (couponId != null) {
             criteria.andCouponIdEqualTo(couponId.intValue());
+        }
+        if (memberId != null) {
+            criteria.andMemberIdEqualTo(memberId.intValue());
         }
         if (useStatus != null) {
             criteria.andUseStatusEqualTo(useStatus);
@@ -33,6 +36,12 @@ public class SmsCouponHistoryServiceImpl implements SmsCouponHistoryService {
         if (StringUtils.hasText(orderSn)) {
             criteria.andOrderSnEqualTo(orderSn);
         }
+        example.setOrderByClause("create_time DESC");
         return historyMapper.selectByExample(example);
+    }
+
+    @Override
+    public SmsCouponHistory getById(Integer id) {
+        return id == null ? null : historyMapper.selectByPrimaryKey(id);
     }
 }

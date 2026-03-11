@@ -1,9 +1,13 @@
 package com.pool.readio.admin.controller;
 
+import com.pool.readio.admin.dto.MemberBookReadPermissionDto;
+import com.pool.readio.admin.dto.MemberIntegrationGrowthDto;
+import com.pool.readio.admin.dto.UmsMemberVipStatusDto;
 import com.pool.readio.admin.service.UmsMemberService;
 import com.pool.readio.common.api.CommonPage;
 import com.pool.readio.common.api.CommonResult;
 import com.pool.readio.mbg.model.UmsMember;
+import com.pool.readio.mbg.model.UmsMemberOwnBookRelation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,5 +72,53 @@ public class UmsMemberController {
     public CommonResult<Integer> delete(@PathVariable Integer id) {
         int n = umsMemberService.deleteById(id);
         return n > 0 ? CommonResult.success(n) : CommonResult.failed("删除失败");
+    }
+
+    @Operation(summary = "获取会员已购/拥有的书籍列表（阅读权限）")
+    @GetMapping("/{id}/ownedBooks")
+    public CommonResult<List<UmsMemberOwnBookRelation>> getOwnedBooks(@PathVariable Integer id) {
+        List<UmsMemberOwnBookRelation> list = umsMemberService.getOwnedBookRelations(id);
+        return CommonResult.success(list);
+    }
+
+    @Operation(summary = "获取会员 VIP 状态（是否有效、到期时间、剩余天数）")
+    @GetMapping("/{id}/vipStatus")
+    public CommonResult<UmsMemberVipStatusDto> getVipStatus(@PathVariable Integer id) {
+        UmsMemberVipStatusDto status = umsMemberService.getVipStatus(id);
+        return CommonResult.success(status);
+    }
+
+    @Operation(summary = "阅读权限校验：判断会员是否有权阅读指定书籍（已购/有效期内或有效 VIP）")
+    @GetMapping("/{memberId}/readPermission/{bookId}")
+    public CommonResult<MemberBookReadPermissionDto> checkBookReadPermission(
+            @PathVariable Integer memberId,
+            @PathVariable Integer bookId) {
+        MemberBookReadPermissionDto result = umsMemberService.checkBookReadPermission(memberId, bookId);
+        return CommonResult.success(result);
+    }
+
+    @Operation(summary = "查询会员积分与成长值汇总（统计用）")
+    @GetMapping("/{id}/integrationGrowth")
+    public CommonResult<MemberIntegrationGrowthDto> getIntegrationGrowth(@PathVariable Integer id) {
+        MemberIntegrationGrowthDto dto = umsMemberService.getIntegrationGrowth(id);
+        return CommonResult.success(dto);
+    }
+
+    @Operation(summary = "后台调整会员积分（正数增加、负数扣减）")
+    @PostMapping("/{id}/adjustIntegration")
+    public CommonResult<Integer> adjustIntegration(
+            @PathVariable Integer id,
+            @RequestParam("delta") int delta) {
+        Integer result = umsMemberService.adjustIntegration(id, delta);
+        return result != null ? CommonResult.success(result) : CommonResult.failed("调整失败或会员不存在");
+    }
+
+    @Operation(summary = "后台调整会员成长值（正数增加、负数扣减）")
+    @PostMapping("/{id}/adjustGrowth")
+    public CommonResult<Integer> adjustGrowth(
+            @PathVariable Integer id,
+            @RequestParam("delta") int delta) {
+        Integer result = umsMemberService.adjustGrowth(id, delta);
+        return result != null ? CommonResult.success(result) : CommonResult.failed("调整失败或会员不存在");
     }
 }

@@ -17,9 +17,9 @@ import java.util.List;
  * 对应数据表 ums_permission
  */
 @RestController
-@Tag(name = "UmsPermissonController", description = "后台权限管理")
+@Tag(name = "UmsPermissionController", description = "后台权限管理")
 @RequestMapping("/permission")
-public class UmsPermissonController {
+public class UmsPermissionController {
 
     @Autowired
     private UmsPermissionService umsPermissionService;

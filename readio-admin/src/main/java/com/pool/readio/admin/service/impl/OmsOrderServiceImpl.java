@@ -6,21 +6,28 @@ import com.pool.readio.mbg.mapper.OmsOrderMapper;
 import com.pool.readio.mbg.model.OmsOrder;
 import com.pool.readio.mbg.model.OmsOrderExample;
 import com.pool.readio.admin.service.OmsOrderService;
+import com.pool.readio.admin.service.OrderEntitlementService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 /**
  * 订单管理Service实现类
- * Created by macro on 2018/10/11.
+ * 订单状态变为「已完成」(status=1) 时，会触发权益下发（已购书籍 / VIP 时长）
  */
 @Service
 public class OmsOrderServiceImpl implements OmsOrderService {
+    private static final int ORDER_STATUS_COMPLETED = 1;
+
     @Autowired
     private OmsOrderMapper orderMapper;
+
+    @Autowired
+    private OrderEntitlementService orderEntitlementService;
 
     @Override
     public List<OmsOrder> list(OmsOrderQueryParam queryParam, Integer pageSize, Integer pageNum) {
@@ -78,12 +85,19 @@ public class OmsOrderServiceImpl implements OmsOrderService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int update(Long id, OmsOrder order) {
         if (id == null) {
             return 0;
         }
+        OmsOrder existing = orderMapper.selectByPrimaryKey(id.intValue());
         order.setId(id.intValue());
-        return orderMapper.updateByPrimaryKeySelective(order);
+        int updated = orderMapper.updateByPrimaryKeySelective(order);
+        if (updated > 0 && order.getStatus() != null && order.getStatus() == ORDER_STATUS_COMPLETED
+                && (existing == null || existing.getStatus() == null || existing.getStatus() != ORDER_STATUS_COMPLETED)) {
+            orderEntitlementService.grantEntitlementForCompletedOrder(id);
+        }
+        return updated;
     }
 
     @Override
@@ -95,13 +109,19 @@ public class OmsOrderServiceImpl implements OmsOrderService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int delivery(List<OmsOrderDeliveryParam> deliveryParamList) {
         int count = 0;
         for (OmsOrderDeliveryParam param : deliveryParamList) {
-            OmsOrder order = new OmsOrder();
-            order.setId(param.getOrderId().intValue());
-            order.setStatus(1); // 1->已完成（当前模型无“已发货”状态）
-            count += orderMapper.updateByPrimaryKeySelective(order);
+            Long orderId = param.getOrderId();
+            OmsOrder existing = orderMapper.selectByPrimaryKey(orderId.intValue());
+            if (existing != null && (existing.getStatus() == null || existing.getStatus() != ORDER_STATUS_COMPLETED)) {
+                OmsOrder order = new OmsOrder();
+                order.setId(orderId.intValue());
+                order.setStatus(ORDER_STATUS_COMPLETED);
+                count += orderMapper.updateByPrimaryKeySelective(order);
+                orderEntitlementService.grantEntitlementForCompletedOrder(orderId);
+            }
         }
         return count;
     }
@@ -159,13 +179,20 @@ public class OmsOrderServiceImpl implements OmsOrderService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int updateNote(Long id, String note, Integer status) {
+        OmsOrder existing = orderMapper.selectByPrimaryKey(id.intValue());
         OmsOrder order = new OmsOrder();
         order.setId(id.intValue());
         order.setNote(note);
         if (status != null) {
             order.setStatus(status);
         }
-        return orderMapper.updateByPrimaryKeySelective(order);
+        int updated = orderMapper.updateByPrimaryKeySelective(order);
+        if (updated > 0 && status != null && status == ORDER_STATUS_COMPLETED
+                && (existing == null || existing.getStatus() == null || existing.getStatus() != ORDER_STATUS_COMPLETED)) {
+            orderEntitlementService.grantEntitlementForCompletedOrder(id);
+        }
+        return updated;
     }
 }

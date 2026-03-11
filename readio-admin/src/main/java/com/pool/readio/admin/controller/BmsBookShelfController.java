@@ -18,9 +18,9 @@ import java.util.List;
  * 对应 bms_book_shelf、bms_book_shelf_book_relation
  */
 @RestController
-@Tag(name = "BmsBookSelfController", description = "用户书架管理")
+@Tag(name = "BmsBookShelfController", description = "用户书架管理")
 @RequestMapping("/bookShelf")
-public class BmsBookSelfController {
+public class BmsBookShelfController {
 
     @Autowired
     private BmsBookShelfService bmsBookShelfService;
@@ -92,7 +92,7 @@ public class BmsBookSelfController {
             return CommonResult.failed("书架ID和书籍ID列表不能为空");
         }
         int n = bmsBookShelfService.addBooksToShelf(param);
-        return CommonResult.success(n);
+        return n > 0 ? CommonResult.success(n) : CommonResult.failed("添加失败");
     }
 
     @Operation(summary = "批量从书架移除书籍")
@@ -102,7 +102,7 @@ public class BmsBookSelfController {
             return CommonResult.failed("书架ID和书籍ID列表不能为空");
         }
         int n = bmsBookShelfService.removeBooksFromShelf(param);
-        return CommonResult.success(n);
+        return n > 0 ? CommonResult.success(n) : CommonResult.failed("移除失败");
     }
 
     @Operation(summary = "获取书架中的书籍列表（全部）")
