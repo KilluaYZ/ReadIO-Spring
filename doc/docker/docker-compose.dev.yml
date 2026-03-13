@@ -93,9 +93,62 @@ services:
       retries: 5
       start_period: 10s
 
+  milvus-etcd:
+    image: quay.io/coreos/etcd:v3.5.25
+    container_name: readio-milvus-etcd-dev
+    environment:
+      ETCD_AUTO_COMPACTION_MODE: revision
+      ETCD_AUTO_COMPACTION_RETENTION: "1000"
+      ETCD_QUOTA_BACKEND_BYTES: "8589934592"
+      ETCD_SNAPSHOT_COUNT: "50000"
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_ADVERTISE_CLIENT_URLS: http://readio-milvus-etcd-dev:2379
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: http://readio-milvus-etcd-dev:2380
+      ETCD_INITIAL_CLUSTER: readio-milvus-etcd-dev=http://readio-milvus-etcd-dev:2380
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCD_NAME: readio-milvus-etcd-dev
+    volumes:
+      - readio_milvus_etcd_data:/etcd
+    restart: unless-stopped
+
+  milvus-minio:
+    image: docker.io/minio/minio:latest
+    container_name: readio-milvus-minio-dev
+    environment:
+      MINIO_ROOT_USER: milvusadmin
+      MINIO_ROOT_PASSWORD: milvusadmin
+    volumes:
+      - readio_milvus_minio_data:/minio_data
+    command: server /minio_data
+    restart: unless-stopped
+
+  milvus:
+    image: docker.io/milvusdb/milvus:v2.6.11
+    container_name: readio-milvus-dev
+    command: ["milvus", "run", "standalone"]
+    environment:
+      ETCD_ENDPOINTS: readio-milvus-etcd-dev:2379
+      MINIO_ADDRESS: readio-milvus-minio-dev:9000
+      MINIO_ACCESS_KEY: milvusadmin
+      MINIO_SECRET_KEY: milvusadmin
+      MINIO_BUCKET_NAME: milvus-bucket
+    ports:
+      - "26005:19530" # Milvus gRPC
+      - "26006:9091" # Milvus HTTP / metrics
+    volumes:
+      - readio_milvus_data:/var/lib/milvus
+    depends_on:
+      - milvus-etcd
+      - milvus-minio
+    restart: unless-stopped
+
 volumes:
   readio_postgres_data:
   readio_redis_data:
   readio_nacos_logs:
   readio_nacos_data:
   readio_minio_data:
+  readio_milvus_etcd_data:
+  readio_milvus_minio_data:
+  readio_milvus_data:
