@@ -13,13 +13,14 @@ import com.pool.readio.mbg.mapper.UmsAdminLoginLogMapper;
 import com.pool.readio.mbg.mapper.UmsAdminMapper;
 import com.pool.readio.mbg.mapper.UmsAdminRoleRelationMapper;
 import com.pool.readio.mbg.model.*;
-import com.pool.readio.admin.service.UmsAdminCacheService;
 import com.pool.readio.admin.service.UmsAdminService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -47,10 +48,9 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     private UmsAdminRoleRelationDao adminRoleRelationDao;
     @Autowired
     private UmsAdminLoginLogMapper loginLogMapper;
-    @Autowired
-    private UmsAdminCacheService adminCacheService;
 
     @Override
+    @Cacheable(cacheNames = "umsAdminByUsername", key = "#username")
     public UmsAdmin getAdminByUsername(String username) {
         UmsAdminExample example = new UmsAdminExample();
         example.createCriteria().andUsernameEqualTo(username);
@@ -117,6 +117,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     }
 
     @Override
+    @Cacheable(cacheNames = "umsAdmin", key = "#id")
     public UmsAdmin getItem(Long id) {
         return adminMapper.selectByPrimaryKey(id.intValue());
     }
@@ -134,6 +135,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     }
 
     @Override
+    @CacheEvict(cacheNames = {"umsAdmin", "umsAdminByUsername"}, allEntries = true)
     public int update(Long id, UmsAdmin admin) {
         admin.setId(id.intValue());
         UmsAdmin rawAdmin = adminMapper.selectByPrimaryKey(id.intValue());
@@ -149,14 +151,13 @@ public class UmsAdminServiceImpl implements UmsAdminService {
             }
         }
         int count = adminMapper.updateByPrimaryKeySelective(admin);
-        adminCacheService.delAdmin(id);
         return count;
     }
 
     @Override
+    @CacheEvict(cacheNames = {"umsAdmin", "umsAdminByUsername"}, allEntries = true)
     public int delete(Long id) {
         int count = adminMapper.deleteByPrimaryKey(id.intValue());
-        adminCacheService.delAdmin(id);
         return count;
     }
 
@@ -232,6 +233,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     }
 
     @Override
+    @CacheEvict(cacheNames = {"umsAdmin", "umsAdminByUsername"}, allEntries = true)
     public int updatePassword(UpdateAdminPasswordParam param) {
         if(StrUtil.isEmpty(param.getUsername())
                 ||StrUtil.isEmpty(param.getOldPassword())
@@ -250,7 +252,6 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         }
         umsAdmin.setPassword(BCrypt.hashpw(param.getNewPassword()));
         adminMapper.updateByPrimaryKey(umsAdmin);
-        adminCacheService.delAdmin(umsAdmin.getId().longValue());
         return 1;
     }
 

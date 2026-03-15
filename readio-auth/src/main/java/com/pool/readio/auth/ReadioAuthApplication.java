@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration;
 import org.springframework.boot.jdbc.autoconfigure.health.DataSourceHealthContributorAutoConfiguration;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication(exclude = {
@@ -11,6 +12,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
         DataSourceHealthContributorAutoConfiguration.class
 })
 @EnableFeignClients
+@EnableCaching
 public class ReadioAuthApplication {
 
     public static void main(String[] args) {
