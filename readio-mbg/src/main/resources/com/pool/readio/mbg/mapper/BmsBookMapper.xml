@@ -4,7 +4,6 @@
   <resultMap id="BaseResultMap" type="com.pool.readio.mbg.model.BmsBook">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="book_category_id" jdbcType="INTEGER" property="bookCategoryId" />
-    <result column="author_id" jdbcType="INTEGER" property="authorId" />
     <result column="publisher_id" jdbcType="INTEGER" property="publisherId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
@@ -74,8 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, book_category_id, author_id, publisher_id, name, icon, create_time, publish_time, 
-    isbn, word_count, description, language
+    id, book_category_id, publisher_id, name, icon, create_time, publish_time, isbn, 
+    word_count, description, language
   </sql>
   <select id="selectByExample" parameterType="com.pool.readio.mbg.model.BmsBookExample" resultMap="BaseResultMap">
     select
@@ -108,23 +107,20 @@
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBook" useGeneratedKeys="true">
-    insert into public.bms_book (book_category_id, author_id, publisher_id, 
-      name, icon, create_time, 
-      publish_time, isbn, word_count, 
-      description, language)
-    values (#{bookCategoryId,jdbcType=INTEGER}, #{authorId,jdbcType=INTEGER}, #{publisherId,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{publishTime,jdbcType=TIMESTAMP}, #{isbn,jdbcType=VARCHAR}, #{wordCount,jdbcType=INTEGER}, 
-      #{description,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR})
+    insert into public.bms_book (book_category_id, publisher_id, name, 
+      icon, create_time, publish_time, 
+      isbn, word_count, description, 
+      language)
+    values (#{bookCategoryId,jdbcType=INTEGER}, #{publisherId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{publishTime,jdbcType=TIMESTAMP}, 
+      #{isbn,jdbcType=VARCHAR}, #{wordCount,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
+      #{language,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBook" useGeneratedKeys="true">
     insert into public.bms_book
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="bookCategoryId != null">
         book_category_id,
-      </if>
-      <if test="authorId != null">
-        author_id,
       </if>
       <if test="publisherId != null">
         publisher_id,
@@ -157,9 +153,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="bookCategoryId != null">
         #{bookCategoryId,jdbcType=INTEGER},
-      </if>
-      <if test="authorId != null">
-        #{authorId,jdbcType=INTEGER},
       </if>
       <if test="publisherId != null">
         #{publisherId,jdbcType=INTEGER},
@@ -205,9 +198,6 @@
       <if test="row.bookCategoryId != null">
         book_category_id = #{row.bookCategoryId,jdbcType=INTEGER},
       </if>
-      <if test="row.authorId != null">
-        author_id = #{row.authorId,jdbcType=INTEGER},
-      </if>
       <if test="row.publisherId != null">
         publisher_id = #{row.publisherId,jdbcType=INTEGER},
       </if>
@@ -244,7 +234,6 @@
     update public.bms_book
     set id = #{row.id,jdbcType=INTEGER},
       book_category_id = #{row.bookCategoryId,jdbcType=INTEGER},
-      author_id = #{row.authorId,jdbcType=INTEGER},
       publisher_id = #{row.publisherId,jdbcType=INTEGER},
       name = #{row.name,jdbcType=VARCHAR},
       icon = #{row.icon,jdbcType=VARCHAR},
@@ -263,9 +252,6 @@
     <set>
       <if test="bookCategoryId != null">
         book_category_id = #{bookCategoryId,jdbcType=INTEGER},
-      </if>
-      <if test="authorId != null">
-        author_id = #{authorId,jdbcType=INTEGER},
       </if>
       <if test="publisherId != null">
         publisher_id = #{publisherId,jdbcType=INTEGER},
@@ -300,7 +286,6 @@
   <update id="updateByPrimaryKey" parameterType="com.pool.readio.mbg.model.BmsBook">
     update public.bms_book
     set book_category_id = #{bookCategoryId,jdbcType=INTEGER},
-      author_id = #{authorId,jdbcType=INTEGER},
       publisher_id = #{publisherId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       icon = #{icon,jdbcType=VARCHAR},

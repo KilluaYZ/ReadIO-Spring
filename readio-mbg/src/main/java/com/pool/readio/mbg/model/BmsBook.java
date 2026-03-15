@@ -10,9 +10,6 @@ public class BmsBook implements Serializable {
     @Schema(title = "书籍类型ID")
     private Integer bookCategoryId;
 
-    @Schema(title = "作者ID")
-    private Integer authorId;
-
     private Integer publisherId;
 
     @Schema(title = "书籍名称")
@@ -55,14 +52,6 @@ public class BmsBook implements Serializable {
 
     public void setBookCategoryId(Integer bookCategoryId) {
         this.bookCategoryId = bookCategoryId;
-    }
-
-    public Integer getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Integer authorId) {
-        this.authorId = authorId;
     }
 
     public Integer getPublisherId() {
@@ -145,7 +134,6 @@ public class BmsBook implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", bookCategoryId=").append(bookCategoryId);
-        sb.append(", authorId=").append(authorId);
         sb.append(", publisherId=").append(publisherId);
         sb.append(", name=").append(name);
         sb.append(", icon=").append(icon);
