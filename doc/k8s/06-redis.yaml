@@ -1,0 +1,66 @@
+# 可选：集群内 Redis。若使用外部 Redis，删除本文件并修改 ConfigMap 中 SPRING_DATA_REDIS_HOST
+# 数据持久化挂载到 /data，与 docker-compose 中 readio_redis_data:/data 一致
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readio-redis
+  namespace: readio
+  labels:
+    app: readio-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readio-redis
+  template:
+    metadata:
+      labels:
+        app: readio-redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7-alpine
+          command: ["redis-server", "--requirepass", "readio"]
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          readinessProbe:
+            exec:
+              command: ["redis-cli", "-a", "readio", "ping"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["redis-cli", "-a", "readio", "ping"]
+            initialDelaySeconds: 10
+            periodSeconds: 10
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: readio-redis-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: readio-redis-pvc
+  namespace: readio
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readio-redis
+  namespace: readio
+spec:
+  selector:
+    app: readio-redis
+  ports:
+    - port: 6379
+      targetPort: 6379
+  type: ClusterIP

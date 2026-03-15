@@ -1,0 +1,27 @@
+# 非敏感配置，供各服务通过 env 覆盖 application.yml
+# 部署前请根据集群实际修改：数据库、Redis、Nacos 的地址（若用集群内服务则用 K8s 服务名）
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: readio-config
+  namespace: readio
+data:
+  # 使用 prod profile，bootstrap 会从 Nacos 拉取 readio-xxx.yaml（若已配置）
+  SPRING_PROFILES_ACTIVE: "prod"
+  # 数据库（若 PostgreSQL 在集群内，改为 readio-postgres 或对应 Service 名）
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://readio-postgres:5432/readio?currentSchema=public"
+  SPRING_DATASOURCE_USERNAME: "readio"
+  # Redis（若在集群内，改为 readio-redis）
+  SPRING_DATA_REDIS_HOST: "readio-redis"
+  SPRING_DATA_REDIS_PORT: "6379"
+  SPRING_DATA_REDIS_USERNAME: "readio"
+  # Nacos 服务发现（网关与各微服务均需）
+  SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR: "readio-nacos:8848"
+  # 容器内统一用 8080，便于 K8s Service 暴露
+  SERVER_PORT: "8080"
+  # OAuth2 Issuer：网关与 admin/portal 需能访问 auth（集群内用 Service 名）
+  SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: "http://readio-auth:8080"
+  # Auth 内 OAuth2 客户端 redirect-uri（网关登录回调；集群内用 Service，对外需改为 Ingress/域名）
+  SPRING_SECURITY_OAUTH2_AUTHORIZATIONSERVER_CLIENT_READIO_GATEWAY_REGISTRATION_REDIRECT_URIS: "http://readio-gateway:8080/login/oauth2/code/readio-gateway-oidc"
+  # 网关侧 OAuth2 issuer 与 redirect（与上面一致；对外暴露时改为 https://你的域名/...）
+  SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_READIO_AUTH_ISSUER_URI: "http://readio-auth:8080"

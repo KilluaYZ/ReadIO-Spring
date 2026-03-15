@@ -1,0 +1,102 @@
+# Nacos 单机模式，供网关与各微服务做服务发现
+# 若使用外部 Nacos，可删除本文件并修改 ConfigMap 中 SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR
+# 日志与数据持久化挂载，与 docker-compose 中 readio_nacos_logs、readio_nacos_data 一致
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readio-nacos
+  namespace: readio
+  labels:
+    app: readio-nacos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readio-nacos
+  template:
+    metadata:
+      labels:
+        app: readio-nacos
+    spec:
+      containers:
+        - name: nacos
+          image: nacos/nacos-server:latest
+          ports:
+            - containerPort: 8848
+              name: client
+            - containerPort: 9848
+              name: client-rpc
+            - containerPort: 9849
+              name: raft-rpc
+          env:
+            - name: MODE
+              value: "standalone"
+            - name: NACOS_AUTH_ENABLE
+              value: "false"
+            - name: JVM_XMS
+              value: "256m"
+            - name: JVM_XMX
+              value: "512m"
+          volumeMounts:
+            - name: nacos-logs
+              mountPath: /home/nacos/logs
+            - name: nacos-data
+              mountPath: /home/nacos/data
+          readinessProbe:
+            httpGet:
+              path: /nacos/v1/console/health/readiness
+              port: 8848
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /nacos/v1/console/health/liveness
+              port: 8848
+            initialDelaySeconds: 60
+            periodSeconds: 15
+      volumes:
+        - name: nacos-logs
+          persistentVolumeClaim:
+            claimName: readio-nacos-logs-pvc
+        - name: nacos-data
+          persistentVolumeClaim:
+            claimName: readio-nacos-data-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: readio-nacos-logs-pvc
+  namespace: readio
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: readio-nacos-data-pvc
+  namespace: readio
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readio-nacos
+  namespace: readio
+spec:
+  selector:
+    app: readio-nacos
+  ports:
+    - port: 8848
+      targetPort: 8848
+      name: client
+    - port: 9848
+      targetPort: 9848
+      name: client-rpc
+  type: ClusterIP

@@ -1,0 +1,499 @@
+# ReadIO 一键部署：Namespace + ConfigMap + Secret + 基础设施 + 四个微服务
+# 用法: kubectl apply -f doc/k8s/all-in-one.yaml
+# 部署前请先构建并加载镜像（见 deploy.sh 或 doc/k8s-podman.md）
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: readio
+  labels:
+    app.kubernetes.io/name: readio
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: readio-config
+  namespace: readio
+data:
+  SPRING_PROFILES_ACTIVE: "prod"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://readio-postgres:5432/readio?currentSchema=public"
+  SPRING_DATASOURCE_USERNAME: "readio"
+  SPRING_DATA_REDIS_HOST: "readio-redis"
+  SPRING_DATA_REDIS_PORT: "6379"
+  SPRING_DATA_REDIS_USERNAME: "readio"
+  SPRING_CLOUD_NACOS_DISCOVERY_SERVER_ADDR: "readio-nacos:8848"
+  SERVER_PORT: "8080"
+  SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: "http://readio-auth:8080"
+  SPRING_SECURITY_OAUTH2_AUTHORIZATIONSERVER_CLIENT_READIO_GATEWAY_REGISTRATION_REDIRECT_URIS: "http://readio-gateway:8080/login/oauth2/code/readio-gateway-oidc"
+  SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_READIO_AUTH_ISSUER_URI: "http://readio-auth:8080"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: readio-secret
+  namespace: readio
+type: Opaque
+stringData:
+  SPRING_DATASOURCE_PASSWORD: "readio"
+  SPRING_DATA_REDIS_PASSWORD: "readio"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readio-postgres
+  namespace: readio
+  labels:
+    app: readio-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readio-postgres
+  template:
+    metadata:
+      labels:
+        app: readio-postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: readio-config
+                  key: SPRING_DATASOURCE_USERNAME
+            - name: POSTGRES_DB
+              value: "readio"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: readio-secret
+                  key: SPRING_DATASOURCE_PASSWORD
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "readio", "-d", "readio"]
+            initialDelaySeconds: 10
+            periodSeconds: 5
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: readio-postgres-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: readio-postgres-pvc
+  namespace: readio
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readio-postgres
+  namespace: readio
+spec:
+  selector:
+    app: readio-postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readio-redis
+  namespace: readio
+  labels:
+    app: readio-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readio-redis
+  template:
+    metadata:
+      labels:
+        app: readio-redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7-alpine
+          command: ["redis-server", "--requirepass", "readio"]
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          readinessProbe:
+            exec:
+              command: ["redis-cli", "-a", "readio", "ping"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["redis-cli", "-a", "readio", "ping"]
+            initialDelaySeconds: 10
+            periodSeconds: 10
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: readio-redis-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: readio-redis-pvc
+  namespace: readio
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readio-redis
+  namespace: readio
+spec:
+  selector:
+    app: readio-redis
+  ports:
+    - port: 6379
+      targetPort: 6379
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readio-nacos
+  namespace: readio
+  labels:
+    app: readio-nacos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readio-nacos
+  template:
+    metadata:
+      labels:
+        app: readio-nacos
+    spec:
+      containers:
+        - name: nacos
+          image: nacos/nacos-server:latest
+          ports:
+            - containerPort: 8848
+              name: client
+            - containerPort: 9848
+              name: client-rpc
+            - containerPort: 9849
+              name: raft-rpc
+          env:
+            - name: MODE
+              value: "standalone"
+            - name: NACOS_AUTH_ENABLE
+              value: "false"
+            - name: JVM_XMS
+              value: "256m"
+            - name: JVM_XMX
+              value: "512m"
+          volumeMounts:
+            - name: nacos-logs
+              mountPath: /home/nacos/logs
+            - name: nacos-data
+              mountPath: /home/nacos/data
+          readinessProbe:
+            httpGet:
+              path: /nacos/v1/console/health/readiness
+              port: 8848
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /nacos/v1/console/health/liveness
+              port: 8848
+            initialDelaySeconds: 60
+            periodSeconds: 15
+      volumes:
+        - name: nacos-logs
+          persistentVolumeClaim:
+            claimName: readio-nacos-logs-pvc
+        - name: nacos-data
+          persistentVolumeClaim:
+            claimName: readio-nacos-data-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: readio-nacos-logs-pvc
+  namespace: readio
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: readio-nacos-data-pvc
+  namespace: readio
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readio-nacos
+  namespace: readio
+spec:
+  selector:
+    app: readio-nacos
+  ports:
+    - port: 8848
+      targetPort: 8848
+      name: client
+    - port: 9848
+      targetPort: 9848
+      name: client-rpc
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readio-auth
+  namespace: readio
+  labels:
+    app: readio-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readio-auth
+  template:
+    metadata:
+      labels:
+        app: readio-auth
+    spec:
+      containers:
+        - name: readio-auth
+          image: readio-auth:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          envFrom:
+            - configMapRef:
+                name: readio-config
+            - secretRef:
+                name: readio-secret
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readio-auth
+  namespace: readio
+spec:
+  selector:
+    app: readio-auth
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readio-admin
+  namespace: readio
+  labels:
+    app: readio-admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readio-admin
+  template:
+    metadata:
+      labels:
+        app: readio-admin
+    spec:
+      containers:
+        - name: readio-admin
+          image: readio-admin:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          envFrom:
+            - configMapRef:
+                name: readio-config
+            - secretRef:
+                name: readio-secret
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readio-admin
+  namespace: readio
+spec:
+  selector:
+    app: readio-admin
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readio-portal
+  namespace: readio
+  labels:
+    app: readio-portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readio-portal
+  template:
+    metadata:
+      labels:
+        app: readio-portal
+    spec:
+      containers:
+        - name: readio-portal
+          image: readio-portal:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          envFrom:
+            - configMapRef:
+                name: readio-config
+            - secretRef:
+                name: readio-secret
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readio-portal
+  namespace: readio
+spec:
+  selector:
+    app: readio-portal
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readio-gateway
+  namespace: readio
+  labels:
+    app: readio-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readio-gateway
+  template:
+    metadata:
+      labels:
+        app: readio-gateway
+    spec:
+      containers:
+        - name: readio-gateway
+          image: readio-gateway:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          envFrom:
+            - configMapRef:
+                name: readio-config
+            - secretRef:
+                name: readio-secret
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 45
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readio-gateway
+  namespace: readio
+spec:
+  selector:
+    app: readio-gateway
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
+  type: ClusterIP

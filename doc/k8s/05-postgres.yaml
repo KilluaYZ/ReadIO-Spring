@@ -1,0 +1,72 @@
+# 可选：集群内 PostgreSQL。若使用外部数据库，删除本文件并修改 ConfigMap 中 SPRING_DATASOURCE_URL
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readio-postgres
+  namespace: readio
+  labels:
+    app: readio-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readio-postgres
+  template:
+    metadata:
+      labels:
+        app: readio-postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: readio-config
+                  key: SPRING_DATASOURCE_USERNAME
+            - name: POSTGRES_DB
+              value: "readio"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: readio-secret
+                  key: SPRING_DATASOURCE_PASSWORD
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "readio", "-d", "readio"]
+            initialDelaySeconds: 10
+            periodSeconds: 5
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: readio-postgres-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: readio-postgres-pvc
+  namespace: readio
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readio-postgres
+  namespace: readio
+spec:
+  selector:
+    app: readio-postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
+  type: ClusterIP

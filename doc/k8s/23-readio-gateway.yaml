@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readio-gateway
+  namespace: readio
+  labels:
+    app: readio-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readio-gateway
+  template:
+    metadata:
+      labels:
+        app: readio-gateway
+    spec:
+      containers:
+        - name: readio-gateway
+          image: readio-gateway:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          envFrom:
+            - configMapRef:
+                name: readio-config
+            - secretRef:
+                name: readio-secret
+          # Gateway 需要 --enable-native-access=ALL-UNNAMED，已在镜像中通过 JAVA_TOOL_OPTIONS 设置
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 45
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readio-gateway
+  namespace: readio
+spec:
+  selector:
+    app: readio-gateway
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
+  type: ClusterIP

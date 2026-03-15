@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: readio-portal
+  namespace: readio
+  labels:
+    app: readio-portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: readio-portal
+  template:
+    metadata:
+      labels:
+        app: readio-portal
+    spec:
+      containers:
+        - name: readio-portal
+          image: readio-portal:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          envFrom:
+            - configMapRef:
+                name: readio-config
+            - secretRef:
+                name: readio-secret
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readio-portal
+  namespace: readio
+spec:
+  selector:
+    app: readio-portal
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
+  type: ClusterIP
