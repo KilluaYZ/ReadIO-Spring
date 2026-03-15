@@ -26,6 +26,15 @@ public class BmsBookChapterController {
         return CommonResult.success(bmsBookChapterService.listAll());
     }
 
+    @Operation(summary = "根据书籍ID获取该书所有章节（按顺序排列）")
+    @GetMapping("/listByBook/{bookId}")
+    public CommonResult<List<BmsBookChapter>> listByBookId(@PathVariable Integer bookId) {
+        if (bookId == null) {
+            return CommonResult.failed("书籍ID不能为空");
+        }
+        return CommonResult.success(bmsBookChapterService.listByBookId(bookId));
+    }
+
     @Operation(summary = "分页条件查询书籍章节列表")
     @GetMapping("/list")
     public CommonResult<CommonPage<BmsBookChapter>> list(BmsBookChapterQueryParam queryParam,

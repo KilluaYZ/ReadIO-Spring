@@ -8,7 +8,7 @@
     <result column="footnote_id" jdbcType="INTEGER" property="footnoteId"/>
     <result column="book_id" jdbcType="INTEGER" property="bookId"/>
     <result column="type" jdbcType="INTEGER" property="type"/>
-    <result column="order" jdbcType="INTEGER" property="order"/>
+    <result column="order_id" jdbcType="INTEGER" property="orderId"/>
     <result column="content" jdbcType="VARCHAR" property="content"/>
     <result column="image" jdbcType="VARCHAR" property="image"/>
     <result column="newline" jdbcType="BIT" property="newline"/>
@@ -16,7 +16,7 @@
 
   <!-- PostgreSQL 中 order 为保留字，列名需加双引号 -->
   <sql id="Base_Column_List">
-    id, chapter_id, footnote_id, book_id, type, "order", content, image, newline
+    id, chapter_id, footnote_id, book_id, type, order_id, content, image, newline
   </sql>
 
   <sql id="Query_Where_Clause">
@@ -43,7 +43,7 @@
     SELECT <include refid="Base_Column_List"/>
     FROM public.bms_book_content_block
     <include refid="Query_Where_Clause"/>
-    ORDER BY "order" ASC
+    ORDER BY order_id ASC
   </select>
 
   <select id="countByCondition" resultType="java.lang.Long">
@@ -62,21 +62,21 @@
     SELECT <include refid="Base_Column_List"/>
     FROM public.bms_book_content_block
     WHERE book_id = #{bookId,jdbcType=INTEGER}
-    ORDER BY "order" ASC
+    ORDER BY order_id ASC
   </select>
 
   <select id="listByChapterId" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/>
     FROM public.bms_book_content_block
     WHERE chapter_id = #{chapterId,jdbcType=INTEGER}
-    ORDER BY "order" ASC
+    ORDER BY order_id ASC
   </select>
 
   <select id="listByFootnoteId" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/>
     FROM public.bms_book_content_block
     WHERE footnote_id = #{footnoteId,jdbcType=INTEGER}
-    ORDER BY "order" ASC
+    ORDER BY order_id ASC
   </select>
 
   <select id="listByIds" resultMap="BaseResultMap">
@@ -86,7 +86,7 @@
     <foreach collection="ids" item="id" open="(" separator="," close=")">
       #{id}
     </foreach>
-    ORDER BY "order" ASC
+    ORDER BY order_id ASC
   </select>
 
   <delete id="deleteByIds">

@@ -13,7 +13,7 @@ public class BmsBookChapter implements Serializable {
     private String name;
 
     @Schema(title = "章节顺序")
-    private Integer order;
+    private Integer orderId;
 
     @Schema(title = "章节字数")
     private Integer wordCount;
@@ -47,12 +47,12 @@ public class BmsBookChapter implements Serializable {
         this.name = name;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     public Integer getWordCount() {
@@ -80,7 +80,7 @@ public class BmsBookChapter implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", bookId=").append(bookId);
         sb.append(", name=").append(name);
-        sb.append(", order=").append(order);
+        sb.append(", orderId=").append(orderId);
         sb.append(", wordCount=").append(wordCount);
         sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);

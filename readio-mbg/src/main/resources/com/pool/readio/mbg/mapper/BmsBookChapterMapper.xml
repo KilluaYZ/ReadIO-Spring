@@ -5,7 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="book_id" jdbcType="INTEGER" property="bookId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="order" jdbcType="INTEGER" property="order" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
     <result column="word_count" jdbcType="INTEGER" property="wordCount" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
@@ -68,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, book_id, name, order, word_count, create_time
+    id, book_id, name, order_id, word_count, create_time
   </sql>
   <select id="selectByExample" parameterType="com.pool.readio.mbg.model.BmsBookChapterExample" resultMap="BaseResultMap">
     select
@@ -101,9 +101,9 @@
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBookChapter" useGeneratedKeys="true">
-    insert into public.bms_book_chapter (book_id, name, order, 
+    insert into public.bms_book_chapter (book_id, name, order_id, 
       word_count, create_time)
-    values (#{bookId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{order,jdbcType=INTEGER}, 
+    values (#{bookId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{orderId,jdbcType=INTEGER}, 
       #{wordCount,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBookChapter" useGeneratedKeys="true">
@@ -115,8 +115,8 @@
       <if test="name != null">
         name,
       </if>
-      <if test="order != null">
-        order,
+      <if test="orderId != null">
+        order_id,
       </if>
       <if test="wordCount != null">
         word_count,
@@ -132,8 +132,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="order != null">
-        #{order,jdbcType=INTEGER},
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
       </if>
       <if test="wordCount != null">
         #{wordCount,jdbcType=INTEGER},
@@ -161,8 +161,8 @@
       <if test="row.name != null">
         name = #{row.name,jdbcType=VARCHAR},
       </if>
-      <if test="row.order != null">
-        order = #{row.order,jdbcType=INTEGER},
+      <if test="row.orderId != null">
+        order_id = #{row.orderId,jdbcType=INTEGER},
       </if>
       <if test="row.wordCount != null">
         word_count = #{row.wordCount,jdbcType=INTEGER},
@@ -180,7 +180,7 @@
     set id = #{row.id,jdbcType=INTEGER},
       book_id = #{row.bookId,jdbcType=INTEGER},
       name = #{row.name,jdbcType=VARCHAR},
-      order = #{row.order,jdbcType=INTEGER},
+      order_id = #{row.orderId,jdbcType=INTEGER},
       word_count = #{row.wordCount,jdbcType=INTEGER},
       create_time = #{row.createTime,jdbcType=TIMESTAMP}
     <if test="example != null">
@@ -196,8 +196,8 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="order != null">
-        order = #{order,jdbcType=INTEGER},
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
       </if>
       <if test="wordCount != null">
         word_count = #{wordCount,jdbcType=INTEGER},
@@ -212,7 +212,7 @@
     update public.bms_book_chapter
     set book_id = #{bookId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
-      order = #{order,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER},
       word_count = #{wordCount,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

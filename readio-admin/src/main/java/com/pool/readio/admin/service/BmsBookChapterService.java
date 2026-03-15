@@ -13,6 +13,11 @@ public interface BmsBookChapterService {
     List<BmsBookChapter> listAll();
 
     /**
+     * 根据书籍ID获取该书所有章节，按顺序排列
+     */
+    List<BmsBookChapter> listByBookId(Integer bookId);
+
+    /**
      * 分页条件查询书籍章节列表
      */
     List<BmsBookChapter> list(BmsBookChapterQueryParam queryParam, Integer pageNum, Integer pageSize);

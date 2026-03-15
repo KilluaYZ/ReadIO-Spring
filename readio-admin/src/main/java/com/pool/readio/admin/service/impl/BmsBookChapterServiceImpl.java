@@ -27,10 +27,21 @@ public class BmsBookChapterServiceImpl implements BmsBookChapterService {
     }
 
     @Override
+    public List<BmsBookChapter> listByBookId(Integer bookId) {
+        if (bookId == null) {
+            return List.of();
+        }
+        BmsBookChapterExample example = new BmsBookChapterExample();
+        example.createCriteria().andBookIdEqualTo(bookId);
+        example.setOrderByClause("order_id ASC, id ASC");
+        return bmsBookChapterMapper.selectByExample(example);
+    }
+
+    @Override
     public List<BmsBookChapter> list(BmsBookChapterQueryParam queryParam, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         BmsBookChapterExample example = new BmsBookChapterExample();
-        example.setOrderByClause("\"order\" ASC, id DESC");
+        example.setOrderByClause("order_id ASC, id DESC");
         BmsBookChapterExample.Criteria criteria = example.createCriteria();
         if (queryParam != null) {
             if (queryParam.getBookId() != null) {

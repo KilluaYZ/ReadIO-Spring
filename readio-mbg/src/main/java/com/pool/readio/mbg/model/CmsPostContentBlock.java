@@ -20,7 +20,7 @@ public class CmsPostContentBlock implements Serializable {
 
     private Integer blockId;
 
-    private Integer order;
+    private Integer orderId;
 
     private static final long serialVersionUID = 1L;
 
@@ -80,12 +80,12 @@ public class CmsPostContentBlock implements Serializable {
         this.blockId = blockId;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     @Override
@@ -101,7 +101,7 @@ public class CmsPostContentBlock implements Serializable {
         sb.append(", bookId=").append(bookId);
         sb.append(", authorId=").append(authorId);
         sb.append(", blockId=").append(blockId);
-        sb.append(", order=").append(order);
+        sb.append(", orderId=").append(orderId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

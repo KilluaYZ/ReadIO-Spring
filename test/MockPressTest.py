@@ -38,8 +38,7 @@ def fake_author_payload() -> dict:
 
 def fake_publisher_payload() -> dict:
     """
-    按字段语义模拟 BmsPublisher：
-    - name: 出版社名称
+    按字段语义模拟 BmsPublisher： - name: 出版社名称
     - description: 简要介绍
     """
     return {
@@ -78,8 +77,10 @@ def fake_member_payload() -> dict:
     - phone/email: 联系方式
     - memberLevelId: 会员等级（必填）
     - city: 城市（对应 ums_member.city，必填）
+    压测时对 username 加时间戳+随机后缀，避免高并发下 faker.user_name() 重复导致唯一约束冲突。
     """
-    username = faker.user_name()
+    suffix = f"{int(time.time() * 1000)}_{''.join(random.choices(string.ascii_lowercase + string.digits, k=6))}"
+    username = f"{faker.user_name()}_{suffix}"
     return {
         "username": username,
         "nickname": faker.name(),
@@ -139,6 +140,47 @@ def fake_comment_payload(member_id: int, select_id: int | None = None,
         payload["bookId"] = book_id
     if select_id is not None:
         payload["selectId"] = select_id
+    return payload
+
+
+def fake_chapter_payload(book_id: int, order_id: int | None = None) -> dict:
+    """
+    按字段语义模拟 BmsBookChapter 新增：
+    - bookId: 所属书籍（必填）
+    - name: 章节名
+    - orderId: 章节顺序；不传则随机
+    - wordCount: 章节字数（可选）
+    """
+    payload = {
+        "bookId": book_id,
+        "name": random_title(4),
+        "orderId": order_id if order_id is not None else random.randint(1, 999),
+        "wordCount": random.randint(100, 5000),
+    }
+    return payload
+
+
+def fake_content_block_payload(
+    chapter_id: int,
+    book_id: int,
+    order_id: int | None = None,
+) -> dict:
+    """
+    按字段语义模拟 BmsBookContentBlock 新增：
+    - chapterId, bookId: 所属章节与书籍（必填）
+    - type: 0 文本；1 图片等
+    - orderId: 内容块顺序；不传则随机
+    - content: 正文（可选）
+    - newline: 是否换行（可选）
+    """
+    payload = {
+        "chapterId": chapter_id,
+        "bookId": book_id,
+        "type": random.choice([0, 1]),
+        "orderId": order_id if order_id is not None else random.randint(1, 999),
+        "content": random_description(200),
+        "newline": random.choice([True, False]),
+    }
     return payload
 
 
@@ -498,4 +540,129 @@ class ReadioAdminUser(HttpUser):
             return random.choice(posts).get("id")
         except Exception:
             return None
+
+    def _pick_any_book_id(self) -> int | None:
+        """
+        尝试从 /book/list 接口里拿一个已有的 bookId。
+        """
+        try:
+            headers = self._headers()
+            resp = self.client.get(
+                "/book/list",
+                params={"pageNum": 1, "pageSize": 20},
+                headers=headers,
+                name="book.list.forId[GET]",
+            )
+            if not resp.ok:
+                return None
+            data = resp.json().get("data", {})
+            books = data.get("list") or data.get("records") or []
+            if not books:
+                return None
+            return random.choice(books).get("id")
+        except Exception:
+            return None
+
+    def _pick_any_chapter_id(self, book_id: int | None = None) -> int | None:
+        """
+        尝试获取一个已有的 chapterId。
+        若传入 book_id 则从该书章节列表中取；否则先取一个 book_id 再取章节。
+        """
+        try:
+            headers = self._headers()
+            bid = book_id
+            if bid is None:
+                bid = self._pick_any_book_id()
+            if bid is None:
+                return None
+            resp = self.client.get(
+                f"/bookChapter/listByBook/{bid}",
+                headers=headers,
+                name="bookChapter.listByBook.forId[GET]",
+            )
+            if not resp.ok:
+                return None
+            data = resp.json().get("data") or []
+            if not isinstance(data, list) or not data:
+                return None
+            return random.choice(data).get("id")
+        except Exception:
+            return None
+
+    # -------- 书籍章节 & 内容块相关 --------
+
+    @tag("book-chapter", "write")
+    @task(1)
+    def create_chapter_for_book(self) -> None:
+        """
+        压测：向已有书籍添加新章节。先取一个 bookId，再 POST /bookChapter/create。
+        """
+        headers = self._headers()
+        book_id = self._pick_any_book_id()
+        if book_id is None:
+            return
+        payload = fake_chapter_payload(book_id=book_id)
+        self.client.post(
+            "/bookChapter/create",
+            json=payload,
+            headers=headers,
+            name="bookChapter.create[POST]",
+        )
+
+    @tag("book-content-block", "write")
+    @task(1)
+    def create_content_block_for_chapter(self) -> None:
+        """
+        压测：向已有章节添加新内容块。先取 bookId，再取该书的 chapterId，再 POST /bookContentBlock/create。
+        """
+        headers = self._headers()
+        book_id = self._pick_any_book_id()
+        if book_id is None:
+            return
+        chapter_id = self._pick_any_chapter_id(book_id=book_id)
+        if chapter_id is None:
+            return
+        payload = fake_content_block_payload(chapter_id=chapter_id, book_id=book_id)
+        self.client.post(
+            "/bookContentBlock/create",
+            json=payload,
+            headers=headers,
+            name="bookContentBlock.create[POST]",
+        )
+
+    @tag("book-chapter", "book-content-block", "read")
+    @task(2)
+    def list_chapters_and_content_blocks_by_book(self) -> None:
+        """
+        压测：根据 bookId 获取章节列表、根据 chapterId 获取内容块、根据 bookId 获取章节+内容块树。
+        """
+        headers = self._headers()
+        book_id = self._pick_any_book_id()
+        if book_id is None:
+            # 无书籍时仍可压测接口（部分接口可能返回空列表）
+            book_id = 1
+        chapters_resp = self.client.get(
+            f"/bookChapter/listByBook/{book_id}",
+            headers=headers,
+            name="bookChapter.listByBook[GET]",
+        )
+        chapter_id = None
+        if chapters_resp.ok:
+            try:
+                data = chapters_resp.json().get("data") or []
+                if isinstance(data, list) and data:
+                    chapter_id = random.choice(data).get("id")
+            except Exception:
+                pass
+        if chapter_id is not None:
+            self.client.get(
+                f"/bookContentBlock/listByChapter/{chapter_id}",
+                headers=headers,
+                name="bookContentBlock.listByChapter[GET]",
+            )
+        self.client.get(
+            f"/bookContentBlock/listChaptersWithBlocksByBook/{book_id}",
+            headers=headers,
+            name="bookContentBlock.listChaptersWithBlocksByBook[GET]",
+        )
 

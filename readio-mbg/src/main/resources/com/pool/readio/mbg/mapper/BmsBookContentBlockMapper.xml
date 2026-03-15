@@ -7,7 +7,7 @@
     <result column="footnote_id" jdbcType="INTEGER" property="footnoteId" />
     <result column="book_id" jdbcType="INTEGER" property="bookId" />
     <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="order" jdbcType="INTEGER" property="order" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="image" jdbcType="VARCHAR" property="image" />
     <result column="newline" jdbcType="BIT" property="newline" />
@@ -71,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, chapter_id, footnote_id, book_id, type, order, content, image, newline
+    id, chapter_id, footnote_id, book_id, type, order_id, content, image, newline
   </sql>
   <select id="selectByExample" parameterType="com.pool.readio.mbg.model.BmsBookContentBlockExample" resultMap="BaseResultMap">
     select
@@ -105,10 +105,10 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBookContentBlock" useGeneratedKeys="true">
     insert into public.bms_book_content_block (chapter_id, footnote_id, book_id, 
-      type, order, content, 
+      type, order_id, content, 
       image, newline)
     values (#{chapterId,jdbcType=INTEGER}, #{footnoteId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, 
-      #{type,jdbcType=INTEGER}, #{order,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
       #{image,jdbcType=VARCHAR}, #{newline,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.BmsBookContentBlock" useGeneratedKeys="true">
@@ -126,8 +126,8 @@
       <if test="type != null">
         type,
       </if>
-      <if test="order != null">
-        order,
+      <if test="orderId != null">
+        order_id,
       </if>
       <if test="content != null">
         content,
@@ -152,8 +152,8 @@
       <if test="type != null">
         #{type,jdbcType=INTEGER},
       </if>
-      <if test="order != null">
-        #{order,jdbcType=INTEGER},
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
@@ -190,8 +190,8 @@
       <if test="row.type != null">
         type = #{row.type,jdbcType=INTEGER},
       </if>
-      <if test="row.order != null">
-        order = #{row.order,jdbcType=INTEGER},
+      <if test="row.orderId != null">
+        order_id = #{row.orderId,jdbcType=INTEGER},
       </if>
       <if test="row.content != null">
         content = #{row.content,jdbcType=VARCHAR},
@@ -214,7 +214,7 @@
       footnote_id = #{row.footnoteId,jdbcType=INTEGER},
       book_id = #{row.bookId,jdbcType=INTEGER},
       type = #{row.type,jdbcType=INTEGER},
-      order = #{row.order,jdbcType=INTEGER},
+      order_id = #{row.orderId,jdbcType=INTEGER},
       content = #{row.content,jdbcType=VARCHAR},
       image = #{row.image,jdbcType=VARCHAR},
       newline = #{row.newline,jdbcType=BIT}
@@ -237,8 +237,8 @@
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
       </if>
-      <if test="order != null">
-        order = #{order,jdbcType=INTEGER},
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
@@ -258,7 +258,7 @@
       footnote_id = #{footnoteId,jdbcType=INTEGER},
       book_id = #{bookId,jdbcType=INTEGER},
       type = #{type,jdbcType=INTEGER},
-      order = #{order,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
       image = #{image,jdbcType=VARCHAR},
       newline = #{newline,jdbcType=BIT}

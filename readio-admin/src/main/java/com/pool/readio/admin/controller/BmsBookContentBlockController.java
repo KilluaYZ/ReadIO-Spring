@@ -1,5 +1,6 @@
 package com.pool.readio.admin.controller;
 
+import com.pool.readio.admin.dto.BmsBookChapterWithBlocksDto;
 import com.pool.readio.admin.dto.BmsBookContentBlockQueryParam;
 import com.pool.readio.admin.service.BmsBookContentBlockService;
 import com.pool.readio.common.api.CommonPage;
@@ -24,6 +25,24 @@ public class BmsBookContentBlockController {
     @GetMapping("/listAll")
     public CommonResult<List<BmsBookContentBlock>> listAll() {
         return CommonResult.success(bmsBookContentBlockService.listAll());
+    }
+
+    @Operation(summary = "根据章节ID获取该章节所有内容块（按顺序排列）")
+    @GetMapping("/listByChapter/{chapterId}")
+    public CommonResult<List<BmsBookContentBlock>> listByChapterId(@PathVariable Integer chapterId) {
+        if (chapterId == null) {
+            return CommonResult.failed("章节ID不能为空");
+        }
+        return CommonResult.success(bmsBookContentBlockService.listByChapterId(chapterId));
+    }
+
+    @Operation(summary = "根据书籍ID获取该书所有章节及内容块（章节与内容块均按顺序排列）")
+    @GetMapping("/listChaptersWithBlocksByBook/{bookId}")
+    public CommonResult<List<BmsBookChapterWithBlocksDto>> listChaptersWithBlocksByBookId(@PathVariable Integer bookId) {
+        if (bookId == null) {
+            return CommonResult.failed("书籍ID不能为空");
+        }
+        return CommonResult.success(bmsBookContentBlockService.listChaptersWithBlocksByBookId(bookId));
     }
 
     @Operation(summary = "分页条件查询书籍内容块列表")

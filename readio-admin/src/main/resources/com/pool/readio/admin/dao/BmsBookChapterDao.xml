@@ -6,14 +6,13 @@
     <id column="id" jdbcType="INTEGER" property="id"/>
     <result column="book_id" jdbcType="INTEGER" property="bookId"/>
     <result column="name" jdbcType="VARCHAR" property="name"/>
-    <result column="order" jdbcType="INTEGER" property="order"/>
+    <result column="order_id" jdbcType="INTEGER" property="orderId"/>
     <result column="word_count" jdbcType="INTEGER" property="wordCount"/>
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
   </resultMap>
 
-  <!-- PostgreSQL 中 order 为保留字，列名需加双引号 -->
   <sql id="Base_Column_List">
-    id, book_id, name, "order", word_count, create_time
+    id, book_id, name, order_id, word_count, create_time
   </sql>
 
   <sql id="Query_Where_Clause">
@@ -34,7 +33,7 @@
     SELECT <include refid="Base_Column_List"/>
     FROM public.bms_book_chapter
     <include refid="Query_Where_Clause"/>
-    ORDER BY "order" ASC, create_time DESC
+    ORDER BY order_id ASC, create_time DESC
   </select>
 
   <select id="countByCondition" resultType="java.lang.Long">
@@ -53,7 +52,7 @@
     SELECT <include refid="Base_Column_List"/>
     FROM public.bms_book_chapter
     WHERE book_id = #{bookId,jdbcType=INTEGER}
-    ORDER BY "order" ASC
+    ORDER BY order_id ASC
   </select>
 
   <select id="listByIds" resultMap="BaseResultMap">
@@ -63,7 +62,7 @@
     <foreach collection="ids" item="id" open="(" separator="," close=")">
       #{id}
     </foreach>
-    ORDER BY "order" ASC
+    ORDER BY order_id ASC
   </select>
 
   <delete id="deleteByIds">

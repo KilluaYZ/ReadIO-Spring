@@ -16,7 +16,7 @@ public class BmsBookContentBlock implements Serializable {
     private Integer type;
 
     @Schema(title = "内容块顺序")
-    private Integer order;
+    private Integer orderId;
 
     @Schema(title = "内容块内容")
     private String content;
@@ -68,12 +68,12 @@ public class BmsBookContentBlock implements Serializable {
         this.type = type;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     public String getContent() {
@@ -111,7 +111,7 @@ public class BmsBookContentBlock implements Serializable {
         sb.append(", footnoteId=").append(footnoteId);
         sb.append(", bookId=").append(bookId);
         sb.append(", type=").append(type);
-        sb.append(", order=").append(order);
+        sb.append(", orderId=").append(orderId);
         sb.append(", content=").append(content);
         sb.append(", image=").append(image);
         sb.append(", newline=").append(newline);

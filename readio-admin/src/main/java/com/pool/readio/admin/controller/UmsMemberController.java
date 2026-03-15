@@ -11,6 +11,7 @@ import com.pool.readio.mbg.model.UmsMemberOwnBookRelation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,8 +50,12 @@ public class UmsMemberController {
     @Operation(summary = "新增会员")
     @PostMapping("/create")
     public CommonResult<Integer> create(@RequestBody UmsMember record) {
-        int n = umsMemberService.create(record);
-        return n > 0 ? CommonResult.success(record.getId()) : CommonResult.failed("新增失败");
+        try {
+            int n = umsMemberService.create(record);
+            return n > 0 ? CommonResult.success(record.getId()) : CommonResult.failed("新增失败");
+        } catch (DuplicateKeyException e) {
+            return CommonResult.failed("用户名已存在");
+        }
     }
 
     @Operation(summary = "更新会员")

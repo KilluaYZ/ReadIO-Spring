@@ -30,7 +30,7 @@ public class BmsBookFootnoteServiceImpl implements BmsBookFootnoteService {
     public List<BmsBookFootnote> list(BmsBookFootnoteQueryParam queryParam, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         BmsBookFootnoteExample example = new BmsBookFootnoteExample();
-        example.setOrderByClause("\"order\" ASC, id DESC");
+        example.setOrderByClause("order_id ASC, id DESC");
         BmsBookFootnoteExample.Criteria criteria = example.createCriteria();
         if (queryParam != null) {
             if (queryParam.getBookId() != null) {

@@ -64,7 +64,7 @@ management:
 # 文档中展示的 API 服务地址（Knife4j 网关聚合时显示的 host），不配置则使用当前请求 host
 springdoc:
   servers:
-    server-url: http://station.killuayz.top:8402
+    server-url: http://localhost:8402
   swagger-ui:
     # 修改Swagger UI路径
     path: /swagger-ui.html
