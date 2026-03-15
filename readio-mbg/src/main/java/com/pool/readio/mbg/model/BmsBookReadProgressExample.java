@@ -225,126 +225,6 @@ public class BmsBookReadProgressExample {
             return (Criteria) this;
         }
 
-        public Criteria andBookIdIsNull() {
-            addCriterion("book_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andBookIdIsNotNull() {
-            addCriterion("book_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andBookIdEqualTo(Integer value) {
-            addCriterion("book_id =", value, "bookId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBookIdNotEqualTo(Integer value) {
-            addCriterion("book_id <>", value, "bookId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBookIdGreaterThan(Integer value) {
-            addCriterion("book_id >", value, "bookId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBookIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("book_id >=", value, "bookId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBookIdLessThan(Integer value) {
-            addCriterion("book_id <", value, "bookId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBookIdLessThanOrEqualTo(Integer value) {
-            addCriterion("book_id <=", value, "bookId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBookIdIn(List<Integer> values) {
-            addCriterion("book_id in", values, "bookId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBookIdNotIn(List<Integer> values) {
-            addCriterion("book_id not in", values, "bookId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBookIdBetween(Integer value1, Integer value2) {
-            addCriterion("book_id between", value1, value2, "bookId");
-            return (Criteria) this;
-        }
-
-        public Criteria andBookIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("book_id not between", value1, value2, "bookId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastBlockIdIsNull() {
-            addCriterion("last_block_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastBlockIdIsNotNull() {
-            addCriterion("last_block_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastBlockIdEqualTo(Integer value) {
-            addCriterion("last_block_id =", value, "lastBlockId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastBlockIdNotEqualTo(Integer value) {
-            addCriterion("last_block_id <>", value, "lastBlockId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastBlockIdGreaterThan(Integer value) {
-            addCriterion("last_block_id >", value, "lastBlockId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastBlockIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("last_block_id >=", value, "lastBlockId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastBlockIdLessThan(Integer value) {
-            addCriterion("last_block_id <", value, "lastBlockId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastBlockIdLessThanOrEqualTo(Integer value) {
-            addCriterion("last_block_id <=", value, "lastBlockId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastBlockIdIn(List<Integer> values) {
-            addCriterion("last_block_id in", values, "lastBlockId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastBlockIdNotIn(List<Integer> values) {
-            addCriterion("last_block_id not in", values, "lastBlockId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastBlockIdBetween(Integer value1, Integer value2) {
-            addCriterion("last_block_id between", value1, value2, "lastBlockId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLastBlockIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("last_block_id not between", value1, value2, "lastBlockId");
-            return (Criteria) this;
-        }
-
         public Criteria andUpdateTimeIsNull() {
             addCriterion("update_time is null");
             return (Criteria) this;
@@ -462,6 +342,126 @@ public class BmsBookReadProgressExample {
 
         public Criteria andIsFinishedNotBetween(Boolean value1, Boolean value2) {
             addCriterion("is_finished not between", value1, value2, "isFinished");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookIdIsNull() {
+            addCriterion("book_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookIdIsNotNull() {
+            addCriterion("book_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookIdEqualTo(Integer value) {
+            addCriterion("book_id =", value, "bookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookIdNotEqualTo(Integer value) {
+            addCriterion("book_id <>", value, "bookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookIdGreaterThan(Integer value) {
+            addCriterion("book_id >", value, "bookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("book_id >=", value, "bookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookIdLessThan(Integer value) {
+            addCriterion("book_id <", value, "bookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookIdLessThanOrEqualTo(Integer value) {
+            addCriterion("book_id <=", value, "bookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookIdIn(List<Integer> values) {
+            addCriterion("book_id in", values, "bookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookIdNotIn(List<Integer> values) {
+            addCriterion("book_id not in", values, "bookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookIdBetween(Integer value1, Integer value2) {
+            addCriterion("book_id between", value1, value2, "bookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("book_id not between", value1, value2, "bookId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOffsetIsNull() {
+            addCriterion("offset is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOffsetIsNotNull() {
+            addCriterion("offset is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOffsetEqualTo(Integer value) {
+            addCriterion("offset =", value, "offset");
+            return (Criteria) this;
+        }
+
+        public Criteria andOffsetNotEqualTo(Integer value) {
+            addCriterion("offset <>", value, "offset");
+            return (Criteria) this;
+        }
+
+        public Criteria andOffsetGreaterThan(Integer value) {
+            addCriterion("offset >", value, "offset");
+            return (Criteria) this;
+        }
+
+        public Criteria andOffsetGreaterThanOrEqualTo(Integer value) {
+            addCriterion("offset >=", value, "offset");
+            return (Criteria) this;
+        }
+
+        public Criteria andOffsetLessThan(Integer value) {
+            addCriterion("offset <", value, "offset");
+            return (Criteria) this;
+        }
+
+        public Criteria andOffsetLessThanOrEqualTo(Integer value) {
+            addCriterion("offset <=", value, "offset");
+            return (Criteria) this;
+        }
+
+        public Criteria andOffsetIn(List<Integer> values) {
+            addCriterion("offset in", values, "offset");
+            return (Criteria) this;
+        }
+
+        public Criteria andOffsetNotIn(List<Integer> values) {
+            addCriterion("offset not in", values, "offset");
+            return (Criteria) this;
+        }
+
+        public Criteria andOffsetBetween(Integer value1, Integer value2) {
+            addCriterion("offset between", value1, value2, "offset");
+            return (Criteria) this;
+        }
+
+        public Criteria andOffsetNotBetween(Integer value1, Integer value2) {
+            addCriterion("offset not between", value1, value2, "offset");
             return (Criteria) this;
         }
     }

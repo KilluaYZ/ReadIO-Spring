@@ -143,6 +143,25 @@ services:
       - milvus-minio
     restart: unless-stopped
 
+  mongodb:
+    image: docker.io/library/mongo:latest
+    container_name: readio-mongodb-dev
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: readio
+      MONGO_INITDB_ROOT_PASSWORD: readio
+      MONGO_INITDB_DATABASE: readio
+    ports:
+      - "26007:27017"
+    volumes:
+      - readio_mongodb_data:/data/db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
 volumes:
   readio_postgres_data:
   readio_redis_data:
@@ -152,3 +171,4 @@ volumes:
   readio_milvus_etcd_data:
   readio_milvus_minio_data:
   readio_milvus_data:
+  readio_mongodb_data:

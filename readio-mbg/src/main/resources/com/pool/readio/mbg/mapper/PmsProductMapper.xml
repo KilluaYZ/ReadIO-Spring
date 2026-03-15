@@ -6,7 +6,6 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="product_category_id" jdbcType="INTEGER" property="productCategoryId" />
     <result column="book_id" jdbcType="INTEGER" property="bookId" />
-    <result column="chapter_id" jdbcType="INTEGER" property="chapterId" />
     <result column="vip_duration" jdbcType="INTEGER" property="vipDuration" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="price" jdbcType="NUMERIC" property="price" />
@@ -71,8 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, product_category_id, book_id, chapter_id, vip_duration, create_time, price, 
-    hidden
+    id, name, product_category_id, book_id, vip_duration, create_time, price, hidden
   </sql>
   <select id="selectByExample" parameterType="com.pool.readio.mbg.model.PmsProductExample" resultMap="BaseResultMap">
     select
@@ -106,11 +104,11 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.PmsProduct" useGeneratedKeys="true">
     insert into public.pms_product (name, product_category_id, book_id, 
-      chapter_id, vip_duration, create_time, 
-      price, hidden)
+      vip_duration, create_time, price, 
+      hidden)
     values (#{name,jdbcType=VARCHAR}, #{productCategoryId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, 
-      #{chapterId,jdbcType=INTEGER}, #{vipDuration,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{price,jdbcType=NUMERIC}, #{hidden,jdbcType=BIT})
+      #{vipDuration,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{price,jdbcType=NUMERIC}, 
+      #{hidden,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pool.readio.mbg.model.PmsProduct" useGeneratedKeys="true">
     insert into public.pms_product
@@ -123,9 +121,6 @@
       </if>
       <if test="bookId != null">
         book_id,
-      </if>
-      <if test="chapterId != null">
-        chapter_id,
       </if>
       <if test="vipDuration != null">
         vip_duration,
@@ -149,9 +144,6 @@
       </if>
       <if test="bookId != null">
         #{bookId,jdbcType=INTEGER},
-      </if>
-      <if test="chapterId != null">
-        #{chapterId,jdbcType=INTEGER},
       </if>
       <if test="vipDuration != null">
         #{vipDuration,jdbcType=INTEGER},
@@ -188,9 +180,6 @@
       <if test="row.bookId != null">
         book_id = #{row.bookId,jdbcType=INTEGER},
       </if>
-      <if test="row.chapterId != null">
-        chapter_id = #{row.chapterId,jdbcType=INTEGER},
-      </if>
       <if test="row.vipDuration != null">
         vip_duration = #{row.vipDuration,jdbcType=INTEGER},
       </if>
@@ -214,7 +203,6 @@
       name = #{row.name,jdbcType=VARCHAR},
       product_category_id = #{row.productCategoryId,jdbcType=INTEGER},
       book_id = #{row.bookId,jdbcType=INTEGER},
-      chapter_id = #{row.chapterId,jdbcType=INTEGER},
       vip_duration = #{row.vipDuration,jdbcType=INTEGER},
       create_time = #{row.createTime,jdbcType=TIMESTAMP},
       price = #{row.price,jdbcType=NUMERIC},
@@ -234,9 +222,6 @@
       </if>
       <if test="bookId != null">
         book_id = #{bookId,jdbcType=INTEGER},
-      </if>
-      <if test="chapterId != null">
-        chapter_id = #{chapterId,jdbcType=INTEGER},
       </if>
       <if test="vipDuration != null">
         vip_duration = #{vipDuration,jdbcType=INTEGER},
@@ -258,7 +243,6 @@
     set name = #{name,jdbcType=VARCHAR},
       product_category_id = #{productCategoryId,jdbcType=INTEGER},
       book_id = #{bookId,jdbcType=INTEGER},
-      chapter_id = #{chapterId,jdbcType=INTEGER},
       vip_duration = #{vipDuration,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       price = #{price,jdbcType=NUMERIC},

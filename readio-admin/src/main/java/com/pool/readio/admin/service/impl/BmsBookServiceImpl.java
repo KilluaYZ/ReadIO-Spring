@@ -58,9 +58,7 @@ public class BmsBookServiceImpl implements BmsBookService {
             if (StringUtils.hasText(queryParam.getDescriptionKeyword())) {
                 criteria.andDescriptionLike("%" + queryParam.getDescriptionKeyword().trim() + "%");
             }
-            if (queryParam.getAuthorId() != null) {
-                criteria.andAuthorIdEqualTo(queryParam.getAuthorId());
-            }
+            // 书籍-作者为多对多关系（bms_book_author_relation），按作者筛选需通过 Dao 层实现
             if (queryParam.getBookCategoryId() != null) {
                 criteria.andBookCategoryIdEqualTo(queryParam.getBookCategoryId());
             }

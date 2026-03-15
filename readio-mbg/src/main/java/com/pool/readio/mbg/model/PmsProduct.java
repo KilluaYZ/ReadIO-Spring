@@ -16,9 +16,6 @@ public class PmsProduct implements Serializable {
     @Schema(title = "书籍ID")
     private Integer bookId;
 
-    @Schema(title = "书籍章节ID")
-    private Integer chapterId;
-
     @Schema(title = "会员时长（天）")
     private Integer vipDuration;
 
@@ -65,14 +62,6 @@ public class PmsProduct implements Serializable {
         this.bookId = bookId;
     }
 
-    public Integer getChapterId() {
-        return chapterId;
-    }
-
-    public void setChapterId(Integer chapterId) {
-        this.chapterId = chapterId;
-    }
-
     public Integer getVipDuration() {
         return vipDuration;
     }
@@ -115,7 +104,6 @@ public class PmsProduct implements Serializable {
         sb.append(", name=").append(name);
         sb.append(", productCategoryId=").append(productCategoryId);
         sb.append(", bookId=").append(bookId);
-        sb.append(", chapterId=").append(chapterId);
         sb.append(", vipDuration=").append(vipDuration);
         sb.append(", createTime=").append(createTime);
         sb.append(", price=").append(price);
