@@ -5,7 +5,6 @@ import com.pool.readio.mbg.mapper.SmsCouponHistoryMapper;
 import com.pool.readio.mbg.model.SmsCouponHistory;
 import com.pool.readio.mbg.model.SmsCouponHistoryExample;
 import com.pool.readio.admin.service.SmsCouponHistoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -17,8 +16,12 @@ import java.util.List;
  */
 @Service
 public class SmsCouponHistoryServiceImpl implements SmsCouponHistoryService {
-    @Autowired
-    private SmsCouponHistoryMapper historyMapper;
+
+    private final SmsCouponHistoryMapper historyMapper;
+
+    public SmsCouponHistoryServiceImpl(SmsCouponHistoryMapper historyMapper) {
+        this.historyMapper = historyMapper;
+    }
     @Override
     public List<SmsCouponHistory> list(Long couponId, Long memberId, Integer useStatus, String orderSn, Integer pageSize, Integer pageNum) {
         PageHelper.startPage(pageNum, pageSize);

@@ -12,7 +12,6 @@ import com.pool.readio.mbg.model.CmsMemberPreferOneWordRelation;
 import com.pool.readio.mbg.model.CmsMemberPreferOneWordRelationExample;
 import com.pool.readio.mbg.model.UmsMember;
 import com.pool.readio.mbg.model.UmsMemberExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -25,14 +24,17 @@ import java.util.stream.Collectors;
 @Service
 public class BmsOneWordServiceImpl implements BmsOneWordService {
 
-    @Autowired
-    private BmsOneWordMapper bmsOneWordMapper;
+    private final BmsOneWordMapper bmsOneWordMapper;
+    private final CmsMemberPreferOneWordRelationMapper cmsMemberPreferOneWordRelationMapper;
+    private final UmsMemberMapper umsMemberMapper;
 
-    @Autowired
-    private CmsMemberPreferOneWordRelationMapper cmsMemberPreferOneWordRelationMapper;
-
-    @Autowired
-    private UmsMemberMapper umsMemberMapper;
+    public BmsOneWordServiceImpl(BmsOneWordMapper bmsOneWordMapper,
+                                 CmsMemberPreferOneWordRelationMapper cmsMemberPreferOneWordRelationMapper,
+                                 UmsMemberMapper umsMemberMapper) {
+        this.bmsOneWordMapper = bmsOneWordMapper;
+        this.cmsMemberPreferOneWordRelationMapper = cmsMemberPreferOneWordRelationMapper;
+        this.umsMemberMapper = umsMemberMapper;
+    }
 
     @Override
     public List<BmsOneWord> listAll() {

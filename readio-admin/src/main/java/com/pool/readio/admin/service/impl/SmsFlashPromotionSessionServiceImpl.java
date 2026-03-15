@@ -7,7 +7,6 @@ import com.pool.readio.mbg.model.SmsFlashPromotionSessionExample;
 import com.pool.readio.admin.service.SmsFlashPromotionProductRelationService;
 import com.pool.readio.admin.service.SmsFlashPromotionSessionService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,10 +19,15 @@ import java.util.List;
  */
 @Service
 public class SmsFlashPromotionSessionServiceImpl implements SmsFlashPromotionSessionService {
-    @Autowired
-    private SmsFlashPromotionSessionMapper promotionSessionMapper;
-    @Autowired
-    private SmsFlashPromotionProductRelationService relationService;
+
+    private final SmsFlashPromotionSessionMapper promotionSessionMapper;
+    private final SmsFlashPromotionProductRelationService relationService;
+
+    public SmsFlashPromotionSessionServiceImpl(SmsFlashPromotionSessionMapper promotionSessionMapper,
+                                               SmsFlashPromotionProductRelationService relationService) {
+        this.promotionSessionMapper = promotionSessionMapper;
+        this.relationService = relationService;
+    }
 
     @Override
     public int create(SmsFlashPromotionSession promotionSession) {

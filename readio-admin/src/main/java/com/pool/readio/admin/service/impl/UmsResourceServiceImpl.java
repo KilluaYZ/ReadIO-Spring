@@ -8,7 +8,6 @@ import com.pool.readio.mbg.mapper.UmsResourceMapper;
 import com.pool.readio.mbg.model.UmsResource;
 import com.pool.readio.mbg.model.UmsResourceExample;
 import com.pool.readio.admin.service.UmsResourceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +22,17 @@ import java.util.TreeMap;
  */
 @Service
 public class UmsResourceServiceImpl implements UmsResourceService {
-    @Autowired
-    private UmsResourceMapper resourceMapper;
-    @Autowired
-    private RedisService redisService;
+
+    private final UmsResourceMapper resourceMapper;
+    private final RedisService redisService;
+
     @Value("${spring.application.name}")
     private String applicationName;
+
+    public UmsResourceServiceImpl(UmsResourceMapper resourceMapper, RedisService redisService) {
+        this.resourceMapper = resourceMapper;
+        this.redisService = redisService;
+    }
     @Override
     public int create(UmsResource umsResource) {
         umsResource.setCreateTime(new Date());

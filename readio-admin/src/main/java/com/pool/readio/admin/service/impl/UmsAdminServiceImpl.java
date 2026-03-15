@@ -18,7 +18,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -40,14 +39,21 @@ import java.util.stream.Collectors;
 @Service
 public class UmsAdminServiceImpl implements UmsAdminService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UmsAdminServiceImpl.class);
-    @Autowired
-    private UmsAdminMapper adminMapper;
-    @Autowired
-    private UmsAdminRoleRelationMapper adminRoleRelationMapper;
-    @Autowired
-    private UmsAdminRoleRelationDao adminRoleRelationDao;
-    @Autowired
-    private UmsAdminLoginLogMapper loginLogMapper;
+
+    private final UmsAdminMapper adminMapper;
+    private final UmsAdminRoleRelationMapper adminRoleRelationMapper;
+    private final UmsAdminRoleRelationDao adminRoleRelationDao;
+    private final UmsAdminLoginLogMapper loginLogMapper;
+
+    public UmsAdminServiceImpl(UmsAdminMapper adminMapper,
+                               UmsAdminRoleRelationMapper adminRoleRelationMapper,
+                               UmsAdminRoleRelationDao adminRoleRelationDao,
+                               UmsAdminLoginLogMapper loginLogMapper) {
+        this.adminMapper = adminMapper;
+        this.adminRoleRelationMapper = adminRoleRelationMapper;
+        this.adminRoleRelationDao = adminRoleRelationDao;
+        this.loginLogMapper = loginLogMapper;
+    }
 
     @Override
     @Cacheable(cacheNames = "umsAdminByUsername", key = "#username")

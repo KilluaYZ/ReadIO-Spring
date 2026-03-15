@@ -10,7 +10,6 @@ import com.pool.readio.admin.service.SmsCouponService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +23,12 @@ import java.util.List;
 @Tag(name = "SmsCouponController", description = "优惠券管理")
 @RequestMapping("/coupon")
 public class SmsCouponController {
-    @Autowired
-    private SmsCouponService couponService;
+
+    private final SmsCouponService couponService;
+
+    public SmsCouponController(SmsCouponService couponService) {
+        this.couponService = couponService;
+    }
     @Operation(summary = "添加优惠券")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody

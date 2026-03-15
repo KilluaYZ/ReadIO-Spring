@@ -12,7 +12,6 @@ import com.pool.readio.mbg.mapper.SmsCouponProductCategoryRelationMapper;
 import com.pool.readio.mbg.mapper.SmsCouponProductRelationMapper;
 import com.pool.readio.mbg.model.*;
 import com.pool.readio.admin.service.SmsCouponService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -28,22 +27,33 @@ import java.util.stream.Collectors;
  */
 @Service
 public class SmsCouponServiceImpl implements SmsCouponService {
-    @Autowired
-    private SmsCouponMapper couponMapper;
-    @Autowired
-    private SmsCouponProductRelationMapper productRelationMapper;
-    @Autowired
-    private SmsCouponProductCategoryRelationMapper productCategoryRelationMapper;
-    @Autowired
-    private SmsCouponProductRelationDao productRelationDao;
-    @Autowired
-    private SmsCouponProductCategoryRelationDao productCategoryRelationDao;
-    @Autowired
-    private SmsCouponDao couponDao;
-    @Autowired
-    private PmsProductMapper pmsProductMapper;
-    @Autowired
-    private PmsProductCategoryMapper pmsProductCategoryMapper;
+
+    private final SmsCouponMapper couponMapper;
+    private final SmsCouponProductRelationMapper productRelationMapper;
+    private final SmsCouponProductCategoryRelationMapper productCategoryRelationMapper;
+    private final SmsCouponProductRelationDao productRelationDao;
+    private final SmsCouponProductCategoryRelationDao productCategoryRelationDao;
+    private final SmsCouponDao couponDao;
+    private final PmsProductMapper pmsProductMapper;
+    private final PmsProductCategoryMapper pmsProductCategoryMapper;
+
+    public SmsCouponServiceImpl(SmsCouponMapper couponMapper,
+                               SmsCouponProductRelationMapper productRelationMapper,
+                               SmsCouponProductCategoryRelationMapper productCategoryRelationMapper,
+                               SmsCouponProductRelationDao productRelationDao,
+                               SmsCouponProductCategoryRelationDao productCategoryRelationDao,
+                               SmsCouponDao couponDao,
+                               PmsProductMapper pmsProductMapper,
+                               PmsProductCategoryMapper pmsProductCategoryMapper) {
+        this.couponMapper = couponMapper;
+        this.productRelationMapper = productRelationMapper;
+        this.productCategoryRelationMapper = productCategoryRelationMapper;
+        this.productRelationDao = productRelationDao;
+        this.productCategoryRelationDao = productCategoryRelationDao;
+        this.couponDao = couponDao;
+        this.pmsProductMapper = pmsProductMapper;
+        this.pmsProductCategoryMapper = pmsProductCategoryMapper;
+    }
 
     @Override
     public int create(SmsCouponParam couponParam) {

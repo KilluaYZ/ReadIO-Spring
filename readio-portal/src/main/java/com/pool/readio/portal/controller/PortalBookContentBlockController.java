@@ -7,7 +7,6 @@ import com.pool.readio.common.api.CommonResult;
 import com.pool.readio.mbg.model.BmsBookContentBlock;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +19,11 @@ import java.util.List;
 @RequestMapping("/portal/bookContentBlock")
 public class PortalBookContentBlockController {
 
-    @Autowired
-    private BmsBookContentBlockService bmsBookContentBlockService;
+    private final BmsBookContentBlockService bmsBookContentBlockService;
+
+    public PortalBookContentBlockController(BmsBookContentBlockService bmsBookContentBlockService) {
+        this.bmsBookContentBlockService = bmsBookContentBlockService;
+    }
 
     @Operation(summary = "获取所有书籍内容块")
     @GetMapping("/listAll")

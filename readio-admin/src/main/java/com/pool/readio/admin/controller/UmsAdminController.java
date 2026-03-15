@@ -13,7 +13,6 @@ import com.pool.readio.admin.service.UmsRoleService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +30,14 @@ import java.util.stream.Collectors;
 @Tag(name = "UmsAdminController", description = "后台用户管理")
 @RequestMapping("/admin")
 public class UmsAdminController {
-    @Autowired
-    private UmsAdminService adminService;
-    @Autowired
-    private UmsRoleService roleService;
+
+    private final UmsAdminService adminService;
+    private final UmsRoleService roleService;
+
+    public UmsAdminController(UmsAdminService adminService, UmsRoleService roleService) {
+        this.adminService = adminService;
+        this.roleService = roleService;
+    }
 
     @Operation(summary = "用户注册")
     @PostMapping("/register")

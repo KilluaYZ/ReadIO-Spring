@@ -6,7 +6,6 @@ import com.pool.readio.common.api.CommonResult;
 import com.pool.readio.mbg.model.BmsBookReadProgress;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +18,11 @@ import java.util.List;
 @RequestMapping("/portal/bookReadProgress")
 public class PortalBookReadProgressController {
 
-    @Autowired
-    private BmsBookReadProgressService bmsBookReadProgressService;
+    private final BmsBookReadProgressService bmsBookReadProgressService;
+
+    public PortalBookReadProgressController(BmsBookReadProgressService bmsBookReadProgressService) {
+        this.bmsBookReadProgressService = bmsBookReadProgressService;
+    }
 
     @Operation(summary = "根据用户ID和书籍ID查询该用户对某本书的阅读进度")
     @GetMapping("/byMemberAndBook")

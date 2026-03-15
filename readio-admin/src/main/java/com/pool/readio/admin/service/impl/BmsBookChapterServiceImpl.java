@@ -6,7 +6,6 @@ import com.pool.readio.admin.service.BmsBookChapterService;
 import com.pool.readio.mbg.mapper.BmsBookChapterMapper;
 import com.pool.readio.mbg.model.BmsBookChapter;
 import com.pool.readio.mbg.model.BmsBookChapterExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -18,8 +17,11 @@ import java.util.List;
 @Service
 public class BmsBookChapterServiceImpl implements BmsBookChapterService {
 
-    @Autowired
-    private BmsBookChapterMapper bmsBookChapterMapper;
+    private final BmsBookChapterMapper bmsBookChapterMapper;
+
+    public BmsBookChapterServiceImpl(BmsBookChapterMapper bmsBookChapterMapper) {
+        this.bmsBookChapterMapper = bmsBookChapterMapper;
+    }
 
     @Override
     public List<BmsBookChapter> listAll() {

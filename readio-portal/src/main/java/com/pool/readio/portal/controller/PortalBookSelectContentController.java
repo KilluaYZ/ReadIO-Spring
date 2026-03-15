@@ -6,7 +6,6 @@ import com.pool.readio.common.api.CommonPage;
 import com.pool.readio.common.api.CommonResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +18,11 @@ import java.util.List;
 @RequestMapping("/portal/bookSelectContent")
 public class PortalBookSelectContentController {
 
-    @Autowired
-    private BmsBookSelectContentService bmsBookSelectContentService;
+    private final BmsBookSelectContentService bmsBookSelectContentService;
+
+    public PortalBookSelectContentController(BmsBookSelectContentService bmsBookSelectContentService) {
+        this.bmsBookSelectContentService = bmsBookSelectContentService;
+    }
 
     @Operation(summary = "新增划线")
     @PostMapping("/create")

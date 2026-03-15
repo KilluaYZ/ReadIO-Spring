@@ -9,7 +9,6 @@ import com.pool.readio.admin.service.PmsProductCategoryService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +23,12 @@ import java.util.List;
 @Tag(name = "PmsProductCategoryController", description = "商品分类管理")
 @RequestMapping("/productCategory")
 public class PmsProductCategoryController {
-    @Autowired
-    private PmsProductCategoryService productCategoryService;
+
+    private final PmsProductCategoryService productCategoryService;
+
+    public PmsProductCategoryController(PmsProductCategoryService productCategoryService) {
+        this.productCategoryService = productCategoryService;
+    }
 
     @Operation(summary = "添加产品分类")
     @RequestMapping(value = "/create", method = RequestMethod.POST)

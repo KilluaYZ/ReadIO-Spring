@@ -6,7 +6,6 @@ import com.pool.readio.mbg.model.UmsMember;
 import com.pool.readio.admin.service.UmsMemberFollowRelationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +19,11 @@ import java.util.List;
 @RequestMapping("/memberFollow")
 public class UmsMemberFollowRelationController {
 
-    @Autowired
-    private UmsMemberFollowRelationService followRelationService;
+    private final UmsMemberFollowRelationService followRelationService;
+
+    public UmsMemberFollowRelationController(UmsMemberFollowRelationService followRelationService) {
+        this.followRelationService = followRelationService;
+    }
 
     @Operation(summary = "关注：当前用户关注目标用户")
     @PostMapping("/follow")

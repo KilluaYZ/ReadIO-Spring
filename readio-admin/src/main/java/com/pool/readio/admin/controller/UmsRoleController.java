@@ -9,7 +9,6 @@ import com.pool.readio.mbg.model.UmsRole;
 import com.pool.readio.admin.service.UmsRoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +22,11 @@ import java.util.List;
 @RequestMapping("/role")
 public class UmsRoleController {
 
-    @Autowired
-    private UmsRoleService roleService;
+    private final UmsRoleService roleService;
+
+    public UmsRoleController(UmsRoleService roleService) {
+        this.roleService = roleService;
+    }
 
     @Operation(summary = "获取所有角色")
     @GetMapping("/listAll")

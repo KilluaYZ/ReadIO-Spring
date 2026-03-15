@@ -8,7 +8,6 @@ import com.pool.readio.admin.service.OmsOrderService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +20,12 @@ import java.util.List;
 @Tag(name = "OmsOrderController", description = "订单管理")
 @RequestMapping("/order")
 public class OmsOrderController {
-    @Autowired
-    private OmsOrderService orderService;
+
+    private final OmsOrderService orderService;
+
+    public OmsOrderController(OmsOrderService orderService) {
+        this.orderService = orderService;
+    }
 
     // (1) listAll 列出所有的订单（不分页）
     @Operation(summary = "列出所有订单")

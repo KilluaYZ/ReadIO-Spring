@@ -9,7 +9,6 @@ import com.pool.readio.mbg.model.PmsProduct;
 import com.pool.readio.mbg.model.SmsFlashPromotionProductRelation;
 import com.pool.readio.mbg.model.SmsFlashPromotionProductRelationExample;
 import com.pool.readio.admin.service.SmsFlashPromotionProductRelationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,12 +20,18 @@ import java.util.List;
  */
 @Service
 public class SmsFlashPromotionProductRelationServiceImpl implements SmsFlashPromotionProductRelationService {
-    @Autowired
-    private SmsFlashPromotionProductRelationMapper relationMapper;
-    @Autowired
-    private SmsFlashPromotionProductRelationDao relationDao;
-    @Autowired
-    private PmsProductMapper pmsProductMapper;
+
+    private final SmsFlashPromotionProductRelationMapper relationMapper;
+    private final SmsFlashPromotionProductRelationDao relationDao;
+    private final PmsProductMapper pmsProductMapper;
+
+    public SmsFlashPromotionProductRelationServiceImpl(SmsFlashPromotionProductRelationMapper relationMapper,
+                                                       SmsFlashPromotionProductRelationDao relationDao,
+                                                       PmsProductMapper pmsProductMapper) {
+        this.relationMapper = relationMapper;
+        this.relationDao = relationDao;
+        this.pmsProductMapper = pmsProductMapper;
+    }
     @Override
     public int create(List<SmsFlashPromotionProductRelation> relationList) {
         for (SmsFlashPromotionProductRelation relation : relationList) {

@@ -6,7 +6,6 @@ import com.pool.readio.admin.service.UmsPermissionService;
 import com.pool.readio.mbg.mapper.UmsPermissionMapper;
 import com.pool.readio.mbg.model.UmsPermission;
 import com.pool.readio.mbg.model.UmsPermissionExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -18,8 +17,11 @@ import java.util.List;
 @Service
 public class UmsPermissionServiceImpl implements UmsPermissionService {
 
-    @Autowired
-    private UmsPermissionMapper umsPermissionMapper;
+    private final UmsPermissionMapper umsPermissionMapper;
+
+    public UmsPermissionServiceImpl(UmsPermissionMapper umsPermissionMapper) {
+        this.umsPermissionMapper = umsPermissionMapper;
+    }
 
     @Override
     public List<UmsPermission> listAll() {

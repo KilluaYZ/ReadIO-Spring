@@ -4,7 +4,6 @@ import com.pool.readio.mbg.mapper.UmsMemberLevelMapper;
 import com.pool.readio.mbg.model.UmsMemberLevel;
 import com.pool.readio.mbg.model.UmsMemberLevelExample;
 import com.pool.readio.admin.service.UmsMemberLevelService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +15,12 @@ import java.util.List;
  */
 @Service
 public class UmsMemberLevelServiceImpl implements UmsMemberLevelService {
-    @Autowired
-    private UmsMemberLevelMapper memberLevelMapper;
+
+    private final UmsMemberLevelMapper memberLevelMapper;
+
+    public UmsMemberLevelServiceImpl(UmsMemberLevelMapper memberLevelMapper) {
+        this.memberLevelMapper = memberLevelMapper;
+    }
 
     @Override
     public List<UmsMemberLevel> list(Integer defaultStatus) {

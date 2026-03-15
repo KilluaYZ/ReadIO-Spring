@@ -9,7 +9,6 @@ import com.pool.readio.admin.service.SmsFlashPromotionProductRelationService;
 import com.pool.readio.admin.service.SmsFlashPromotionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,10 +23,15 @@ import java.util.List;
 @Tag(name = "SmsFlashPromotionController", description = "限时购活动管理")
 @RequestMapping("/flash")
 public class SmsFlashPromotionController {
-    @Autowired
-    private SmsFlashPromotionService flashPromotionService;
-    @Autowired
-    private SmsFlashPromotionProductRelationService flashProductRelationService;
+
+    private final SmsFlashPromotionService flashPromotionService;
+    private final SmsFlashPromotionProductRelationService flashProductRelationService;
+
+    public SmsFlashPromotionController(SmsFlashPromotionService flashPromotionService,
+                                       SmsFlashPromotionProductRelationService flashProductRelationService) {
+        this.flashPromotionService = flashPromotionService;
+        this.flashProductRelationService = flashProductRelationService;
+    }
 
     @Operation(summary = "添加活动")
     @PostMapping("/create")

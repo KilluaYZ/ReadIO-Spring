@@ -5,7 +5,6 @@ import com.pool.readio.mbg.model.UmsResourceCategory;
 import com.pool.readio.admin.service.UmsResourceCategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +18,11 @@ import java.util.List;
 @RequestMapping("/resourceCategory")
 public class UmsResourceCategoryController {
 
-    @Autowired
-    private UmsResourceCategoryService resourceCategoryService;
+    private final UmsResourceCategoryService resourceCategoryService;
+
+    public UmsResourceCategoryController(UmsResourceCategoryService resourceCategoryService) {
+        this.resourceCategoryService = resourceCategoryService;
+    }
 
     @Operation(summary = "获取所有资源分类")
     @GetMapping("/listAll")

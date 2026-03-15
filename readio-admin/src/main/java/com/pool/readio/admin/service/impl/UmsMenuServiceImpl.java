@@ -6,7 +6,6 @@ import com.pool.readio.mbg.mapper.UmsMenuMapper;
 import com.pool.readio.mbg.model.*;
 import com.pool.readio.admin.service.UmsMenuService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -19,8 +18,12 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UmsMenuServiceImpl implements UmsMenuService {
-    @Autowired
-    private UmsMenuMapper menuMapper;
+
+    private final UmsMenuMapper menuMapper;
+
+    public UmsMenuServiceImpl(UmsMenuMapper menuMapper) {
+        this.menuMapper = menuMapper;
+    }
 
     @Override
     public int create(UmsMenu umsMenu) {

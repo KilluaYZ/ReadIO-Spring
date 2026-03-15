@@ -6,7 +6,6 @@ import com.pool.readio.admin.service.BmsBookFootnoteService;
 import com.pool.readio.mbg.mapper.BmsBookFootnoteMapper;
 import com.pool.readio.mbg.model.BmsBookFootnote;
 import com.pool.readio.mbg.model.BmsBookFootnoteExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -18,8 +17,11 @@ import java.util.List;
 @Service
 public class BmsBookFootnoteServiceImpl implements BmsBookFootnoteService {
 
-    @Autowired
-    private BmsBookFootnoteMapper bmsBookFootnoteMapper;
+    private final BmsBookFootnoteMapper bmsBookFootnoteMapper;
+
+    public BmsBookFootnoteServiceImpl(BmsBookFootnoteMapper bmsBookFootnoteMapper) {
+        this.bmsBookFootnoteMapper = bmsBookFootnoteMapper;
+    }
 
     @Override
     public List<BmsBookFootnote> listAll() {

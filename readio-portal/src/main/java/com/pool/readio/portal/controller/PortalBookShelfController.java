@@ -8,7 +8,6 @@ import com.pool.readio.mbg.model.BmsBook;
 import com.pool.readio.mbg.model.BmsBookShelf;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +21,11 @@ import java.util.List;
 @RequestMapping("/portal/bookShelf")
 public class PortalBookShelfController {
 
-    @Autowired
-    private BmsBookShelfService bmsBookShelfService;
+    private final BmsBookShelfService bmsBookShelfService;
+
+    public PortalBookShelfController(BmsBookShelfService bmsBookShelfService) {
+        this.bmsBookShelfService = bmsBookShelfService;
+    }
 
     @Operation(summary = "根据用户ID获取其书架")
     @GetMapping("/byMember/{memberId}")

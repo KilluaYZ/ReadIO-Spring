@@ -11,7 +11,6 @@ import com.pool.readio.mbg.model.PmsProductCategory;
 import com.pool.readio.mbg.model.PmsProductExample;
 import com.pool.readio.admin.service.PmsProductService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -23,10 +22,13 @@ import java.util.List;
 @Service
 public class PmsProductServiceImpl implements PmsProductService {
 
-    @Autowired
-    private PmsProductMapper productMapper;
-    @Autowired
-    private PmsProductCategoryMapper productCategoryMapper;
+    private final PmsProductMapper productMapper;
+    private final PmsProductCategoryMapper productCategoryMapper;
+
+    public PmsProductServiceImpl(PmsProductMapper productMapper, PmsProductCategoryMapper productCategoryMapper) {
+        this.productMapper = productMapper;
+        this.productCategoryMapper = productCategoryMapper;
+    }
 
     @Override
     public List<PmsProduct> listAll() {

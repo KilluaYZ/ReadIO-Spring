@@ -7,7 +7,6 @@ import com.pool.readio.common.api.CommonResult;
 import com.pool.readio.mbg.model.BmsBookFootnote;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +16,11 @@ import java.util.List;
 @RequestMapping("/bookFootnote")
 public class BmsBookFootnoteController {
 
-    @Autowired
-    private BmsBookFootnoteService bmsBookFootnoteService;
+    private final BmsBookFootnoteService bmsBookFootnoteService;
+
+    public BmsBookFootnoteController(BmsBookFootnoteService bmsBookFootnoteService) {
+        this.bmsBookFootnoteService = bmsBookFootnoteService;
+    }
 
     @Operation(summary = "获取所有书籍脚注")
     @GetMapping("/listAll")

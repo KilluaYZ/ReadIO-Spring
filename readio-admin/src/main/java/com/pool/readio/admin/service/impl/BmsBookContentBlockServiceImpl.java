@@ -9,7 +9,6 @@ import com.pool.readio.mbg.mapper.BmsBookContentBlockMapper;
 import com.pool.readio.mbg.model.BmsBookChapter;
 import com.pool.readio.mbg.model.BmsBookContentBlock;
 import com.pool.readio.mbg.model.BmsBookContentBlockExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -19,11 +18,14 @@ import java.util.List;
 @Service
 public class BmsBookContentBlockServiceImpl implements BmsBookContentBlockService {
 
-    @Autowired
-    private BmsBookContentBlockMapper bmsBookContentBlockMapper;
+    private final BmsBookContentBlockMapper bmsBookContentBlockMapper;
+    private final BmsBookChapterService bmsBookChapterService;
 
-    @Autowired
-    private BmsBookChapterService bmsBookChapterService;
+    public BmsBookContentBlockServiceImpl(BmsBookContentBlockMapper bmsBookContentBlockMapper,
+                                          BmsBookChapterService bmsBookChapterService) {
+        this.bmsBookContentBlockMapper = bmsBookContentBlockMapper;
+        this.bmsBookChapterService = bmsBookChapterService;
+    }
 
     @Override
     public List<BmsBookContentBlock> listAll() {

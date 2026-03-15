@@ -8,7 +8,6 @@ import com.pool.readio.mbg.model.OmsOrderExample;
 import com.pool.readio.admin.service.OmsOrderService;
 import com.pool.readio.admin.service.OrderEntitlementService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -23,11 +22,13 @@ import java.util.List;
 public class OmsOrderServiceImpl implements OmsOrderService {
     private static final int ORDER_STATUS_COMPLETED = 1;
 
-    @Autowired
-    private OmsOrderMapper orderMapper;
+    private final OmsOrderMapper orderMapper;
+    private final OrderEntitlementService orderEntitlementService;
 
-    @Autowired
-    private OrderEntitlementService orderEntitlementService;
+    public OmsOrderServiceImpl(OmsOrderMapper orderMapper, OrderEntitlementService orderEntitlementService) {
+        this.orderMapper = orderMapper;
+        this.orderEntitlementService = orderEntitlementService;
+    }
 
     @Override
     public List<OmsOrder> list(OmsOrderQueryParam queryParam, Integer pageSize, Integer pageNum) {

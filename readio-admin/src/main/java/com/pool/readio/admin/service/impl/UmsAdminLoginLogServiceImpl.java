@@ -5,7 +5,6 @@ import com.pool.readio.admin.service.UmsAdminLoginLogService;
 import com.pool.readio.mbg.mapper.UmsAdminLoginLogMapper;
 import com.pool.readio.mbg.model.UmsAdminLoginLog;
 import com.pool.readio.mbg.model.UmsAdminLoginLogExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -17,8 +16,11 @@ import java.util.List;
 @Service
 public class UmsAdminLoginLogServiceImpl implements UmsAdminLoginLogService {
 
-    @Autowired
-    private UmsAdminLoginLogMapper loginLogMapper;
+    private final UmsAdminLoginLogMapper loginLogMapper;
+
+    public UmsAdminLoginLogServiceImpl(UmsAdminLoginLogMapper loginLogMapper) {
+        this.loginLogMapper = loginLogMapper;
+    }
 
     @Override
     public int create(UmsAdminLoginLog log) {

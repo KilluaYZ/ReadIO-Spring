@@ -6,7 +6,6 @@ import com.pool.readio.mbg.model.SmsFlashPromotionLog;
 import com.pool.readio.admin.service.SmsFlashPromotionLogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +20,11 @@ import java.util.List;
 @RequestMapping("/flashLog")
 public class SmsFlashPromotionLogController {
 
-    @Autowired
-    private SmsFlashPromotionLogService logService;
+    private final SmsFlashPromotionLogService logService;
+
+    public SmsFlashPromotionLogController(SmsFlashPromotionLogService logService) {
+        this.logService = logService;
+    }
 
     @Operation(summary = "新增限时购通知记录")
     @PostMapping("/create")

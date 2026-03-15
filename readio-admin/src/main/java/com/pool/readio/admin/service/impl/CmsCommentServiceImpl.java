@@ -12,7 +12,6 @@ import com.pool.readio.mbg.model.CmsMemberPreferCommentRelation;
 import com.pool.readio.mbg.model.CmsMemberPreferCommentRelationExample;
 import com.pool.readio.mbg.model.UmsMember;
 import com.pool.readio.mbg.model.UmsMemberExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -25,14 +24,17 @@ import java.util.stream.Collectors;
 @Service
 public class CmsCommentServiceImpl implements CmsCommentService {
 
-    @Autowired
-    private CmsCommentMapper cmsCommentMapper;
+    private final CmsCommentMapper cmsCommentMapper;
+    private final CmsMemberPreferCommentRelationMapper cmsMemberPreferCommentRelationMapper;
+    private final UmsMemberMapper umsMemberMapper;
 
-    @Autowired
-    private CmsMemberPreferCommentRelationMapper cmsMemberPreferCommentRelationMapper;
-
-    @Autowired
-    private UmsMemberMapper umsMemberMapper;
+    public CmsCommentServiceImpl(CmsCommentMapper cmsCommentMapper,
+                                 CmsMemberPreferCommentRelationMapper cmsMemberPreferCommentRelationMapper,
+                                 UmsMemberMapper umsMemberMapper) {
+        this.cmsCommentMapper = cmsCommentMapper;
+        this.cmsMemberPreferCommentRelationMapper = cmsMemberPreferCommentRelationMapper;
+        this.umsMemberMapper = umsMemberMapper;
+    }
 
     @Override
     public List<CmsComment> listAll() {

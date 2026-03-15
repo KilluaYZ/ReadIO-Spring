@@ -6,7 +6,6 @@ import com.pool.readio.mbg.model.UmsAdminLoginLog;
 import com.pool.readio.admin.service.UmsAdminLoginLogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +20,11 @@ import java.util.List;
 @RequestMapping("/adminLoginLog")
 public class UmsAdminLoginLogController {
 
-    @Autowired
-    private UmsAdminLoginLogService loginLogService;
+    private final UmsAdminLoginLogService loginLogService;
+
+    public UmsAdminLoginLogController(UmsAdminLoginLogService loginLogService) {
+        this.loginLogService = loginLogService;
+    }
 
     @Operation(summary = "新增登录日志")
     @PostMapping("/create")

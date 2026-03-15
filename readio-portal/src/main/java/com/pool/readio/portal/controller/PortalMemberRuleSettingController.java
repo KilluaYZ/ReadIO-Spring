@@ -5,7 +5,6 @@ import com.pool.readio.common.api.CommonResult;
 import com.pool.readio.mbg.model.UmsMemberRuleSetting;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +17,11 @@ import java.util.List;
 @RequestMapping("/portal/memberRuleSetting")
 public class PortalMemberRuleSettingController {
 
-    @Autowired
-    private UmsMemberRuleSettingService ruleSettingService;
+    private final UmsMemberRuleSettingService ruleSettingService;
+
+    public PortalMemberRuleSettingController(UmsMemberRuleSettingService ruleSettingService) {
+        this.ruleSettingService = ruleSettingService;
+    }
 
     @Operation(summary = "获取全部规则")
     @GetMapping("/listAll")

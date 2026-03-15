@@ -8,7 +8,6 @@ import com.pool.readio.common.api.CommonResult;
 import com.pool.readio.mbg.model.BmsOneWord;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +20,11 @@ import java.util.List;
 @RequestMapping("/portal/oneWord")
 public class PortalOneWordController {
 
-    @Autowired
-    private BmsOneWordService bmsOneWordService;
+    private final BmsOneWordService bmsOneWordService;
+
+    public PortalOneWordController(BmsOneWordService bmsOneWordService) {
+        this.bmsOneWordService = bmsOneWordService;
+    }
 
     @Operation(summary = "获取全部一言列表")
     @GetMapping("/listAll")

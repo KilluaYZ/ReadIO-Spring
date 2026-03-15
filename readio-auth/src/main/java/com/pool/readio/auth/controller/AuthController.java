@@ -2,7 +2,6 @@ package com.pool.readio.auth.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,11 +23,13 @@ import com.pool.readio.common.constant.AuthConstant;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private UmsAdminService adminService;
+    private final UmsAdminService adminService;
+    private final UmsMemberService memberService;
 
-    @Autowired
-    private UmsMemberService memberService;
+    public AuthController(UmsAdminService adminService, UmsMemberService memberService) {
+        this.adminService = adminService;
+        this.memberService = memberService;
+    }
 
     @Operation(summary = "登陆之后返回token")
     @RequestMapping(value = "/login", method = RequestMethod.POST)

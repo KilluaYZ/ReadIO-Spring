@@ -18,7 +18,6 @@ import com.pool.readio.mbg.model.CmsMemberPreferPostRelation;
 import com.pool.readio.mbg.model.CmsMemberPreferPostRelationExample;
 import com.pool.readio.mbg.model.UmsMember;
 import com.pool.readio.mbg.model.UmsMemberExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import com.pool.readio.mbg.model.CmsPostTagExample;
@@ -38,26 +37,29 @@ import java.util.stream.Collectors;
 @Service
 public class CmsPostServiceImpl implements CmsPostService {
 
-    @Autowired
-    private CmsPostMapper cmsPostMapper;
+    private final CmsPostMapper cmsPostMapper;
+    private final CmsPostDao cmsPostDao;
+    private final CmsPostContentBlockMapper cmsPostContentBlockMapper;
+    private final CmsPostTagMapper cmsPostTagMapper;
+    private final CmsPostTagRelationMapper cmsPostTagRelationMapper;
+    private final CmsMemberPreferPostRelationMapper cmsMemberPreferPostRelationMapper;
+    private final UmsMemberMapper umsMemberMapper;
 
-    @Autowired
-    private CmsPostDao cmsPostDao;
-
-    @Autowired
-    private CmsPostContentBlockMapper cmsPostContentBlockMapper;
-
-    @Autowired
-    private CmsPostTagMapper cmsPostTagMapper;
-
-    @Autowired
-    private CmsPostTagRelationMapper cmsPostTagRelationMapper;
-
-    @Autowired
-    private CmsMemberPreferPostRelationMapper cmsMemberPreferPostRelationMapper;
-
-    @Autowired
-    private UmsMemberMapper umsMemberMapper;
+    public CmsPostServiceImpl(CmsPostMapper cmsPostMapper,
+                              CmsPostDao cmsPostDao,
+                              CmsPostContentBlockMapper cmsPostContentBlockMapper,
+                              CmsPostTagMapper cmsPostTagMapper,
+                              CmsPostTagRelationMapper cmsPostTagRelationMapper,
+                              CmsMemberPreferPostRelationMapper cmsMemberPreferPostRelationMapper,
+                              UmsMemberMapper umsMemberMapper) {
+        this.cmsPostMapper = cmsPostMapper;
+        this.cmsPostDao = cmsPostDao;
+        this.cmsPostContentBlockMapper = cmsPostContentBlockMapper;
+        this.cmsPostTagMapper = cmsPostTagMapper;
+        this.cmsPostTagRelationMapper = cmsPostTagRelationMapper;
+        this.cmsMemberPreferPostRelationMapper = cmsMemberPreferPostRelationMapper;
+        this.umsMemberMapper = umsMemberMapper;
+    }
 
     @Override
     public List<CmsPost> listAll() {

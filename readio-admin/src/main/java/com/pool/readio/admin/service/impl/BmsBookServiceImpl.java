@@ -13,7 +13,6 @@ import com.pool.readio.mbg.model.CmsMemberPreferBookRelation;
 import com.pool.readio.mbg.model.CmsMemberPreferBookRelationExample;
 import com.pool.readio.mbg.model.UmsMember;
 import com.pool.readio.mbg.model.UmsMemberExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -29,14 +28,17 @@ import java.util.stream.Collectors;
 @Service
 public class BmsBookServiceImpl implements BmsBookService {
 
-    @Autowired
-    private BmsBookMapper bmsBookMapper;
+    private final BmsBookMapper bmsBookMapper;
+    private final CmsMemberPreferBookRelationMapper cmsMemberPreferBookRelationMapper;
+    private final UmsMemberMapper umsMemberMapper;
 
-    @Autowired
-    private CmsMemberPreferBookRelationMapper cmsMemberPreferBookRelationMapper;
-
-    @Autowired
-    private UmsMemberMapper umsMemberMapper;
+    public BmsBookServiceImpl(BmsBookMapper bmsBookMapper,
+                              CmsMemberPreferBookRelationMapper cmsMemberPreferBookRelationMapper,
+                              UmsMemberMapper umsMemberMapper) {
+        this.bmsBookMapper = bmsBookMapper;
+        this.cmsMemberPreferBookRelationMapper = cmsMemberPreferBookRelationMapper;
+        this.umsMemberMapper = umsMemberMapper;
+    }
 
     @Override
     public List<BmsBook> listAll() {

@@ -5,7 +5,6 @@ import com.pool.readio.admin.service.BmsPublisherService;
 import com.pool.readio.mbg.mapper.BmsPublisherMapper;
 import com.pool.readio.mbg.model.BmsPublisher;
 import com.pool.readio.mbg.model.BmsPublisherExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -14,8 +13,11 @@ import java.util.List;
 @Service
 public class BmsPublisherServiceImpl implements BmsPublisherService {
 
-    @Autowired
-    private BmsPublisherMapper bmsPublisherMapper;
+    private final BmsPublisherMapper bmsPublisherMapper;
+
+    public BmsPublisherServiceImpl(BmsPublisherMapper bmsPublisherMapper) {
+        this.bmsPublisherMapper = bmsPublisherMapper;
+    }
 
     @Override
     public List<BmsPublisher> listAll() {

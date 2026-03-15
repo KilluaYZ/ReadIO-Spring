@@ -12,7 +12,6 @@ import com.pool.readio.mbg.model.BmsBookShelf;
 import com.pool.readio.mbg.model.BmsBookShelfBookRelation;
 import com.pool.readio.mbg.model.BmsBookShelfBookRelationExample;
 import com.pool.readio.mbg.model.BmsBookShelfExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,12 +24,17 @@ import java.util.stream.Collectors;
 @Service
 public class BmsBookShelfServiceImpl implements BmsBookShelfService {
 
-    @Autowired
-    private BmsBookShelfMapper bmsBookShelfMapper;
-    @Autowired
-    private BmsBookShelfBookRelationMapper bmsBookShelfBookRelationMapper;
-    @Autowired
-    private BmsBookMapper bmsBookMapper;
+    private final BmsBookShelfMapper bmsBookShelfMapper;
+    private final BmsBookShelfBookRelationMapper bmsBookShelfBookRelationMapper;
+    private final BmsBookMapper bmsBookMapper;
+
+    public BmsBookShelfServiceImpl(BmsBookShelfMapper bmsBookShelfMapper,
+                                   BmsBookShelfBookRelationMapper bmsBookShelfBookRelationMapper,
+                                   BmsBookMapper bmsBookMapper) {
+        this.bmsBookShelfMapper = bmsBookShelfMapper;
+        this.bmsBookShelfBookRelationMapper = bmsBookShelfBookRelationMapper;
+        this.bmsBookMapper = bmsBookMapper;
+    }
 
     @Override
     public List<BmsBookShelf> listAll() {

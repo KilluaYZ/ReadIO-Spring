@@ -6,7 +6,6 @@ import com.pool.readio.admin.service.BmsBookCategoryService;
 import com.pool.readio.mbg.mapper.BmsBookCategoryMapper;
 import com.pool.readio.mbg.model.BmsBookCategory;
 import com.pool.readio.mbg.model.BmsBookCategoryExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -18,8 +17,11 @@ import java.util.List;
 @Service
 public class BmsBookCategoryServiceImpl implements BmsBookCategoryService {
 
-    @Autowired
-    private BmsBookCategoryMapper bmsBookCategoryMapper;
+    private final BmsBookCategoryMapper bmsBookCategoryMapper;
+
+    public BmsBookCategoryServiceImpl(BmsBookCategoryMapper bmsBookCategoryMapper) {
+        this.bmsBookCategoryMapper = bmsBookCategoryMapper;
+    }
 
     @Override
     public List<BmsBookCategory> listAll() {

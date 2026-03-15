@@ -10,7 +10,6 @@ import com.pool.readio.mbg.model.UmsMember;
 import com.pool.readio.mbg.model.UmsMemberOwnBookRelation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +20,11 @@ import java.util.List;
 @RequestMapping("/member")
 public class UmsMemberController {
 
-    @Autowired
-    private UmsMemberService umsMemberService;
+    private final UmsMemberService umsMemberService;
+
+    public UmsMemberController(UmsMemberService umsMemberService) {
+        this.umsMemberService = umsMemberService;
+    }
 
     @Operation(summary = "获取所有会员")
     @GetMapping("/listAll")

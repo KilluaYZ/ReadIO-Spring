@@ -8,7 +8,6 @@ import com.pool.readio.admin.service.UmsMenuService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +22,11 @@ import java.util.List;
 @RequestMapping("/menu")
 public class UmsMenuController {
 
-    @Autowired
-    private UmsMenuService menuService;
+    private final UmsMenuService menuService;
+
+    public UmsMenuController(UmsMenuService menuService) {
+        this.menuService = menuService;
+    }
 
     @Operation(summary = "添加后台菜单")
     @RequestMapping(value = "/create", method = RequestMethod.POST)

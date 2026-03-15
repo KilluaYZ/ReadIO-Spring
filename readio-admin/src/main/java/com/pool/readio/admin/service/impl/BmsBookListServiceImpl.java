@@ -7,7 +7,6 @@ import com.pool.readio.admin.service.BmsBookListService;
 import com.pool.readio.mbg.mapper.BmsBookListMapper;
 import com.pool.readio.mbg.model.BmsBookList;
 import com.pool.readio.mbg.model.BmsBookListExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import com.pool.readio.admin.dto.BmsBookListBookRelationParam;
@@ -44,23 +43,26 @@ import java.util.stream.Collectors;
 @Service
 public class BmsBookListServiceImpl implements BmsBookListService {
 
-    @Autowired
-    private BmsBookListMapper bmsBookListMapper;
+    private final BmsBookListMapper bmsBookListMapper;
+    private final BmsBookListBookRelationMapper bmsBookListBookRelationMapper;
+    private final BmsBookListMemberRelationMapper bmsBookListMemberRelationMapper;
+    private final BmsBookMapper bmsBookMapper;
+    private final UmsMemberMapper umsMemberMapper;
+    private final CmsMemberPreferBookListRelationMapper cmsMemberPreferBookListRelationMapper;
 
-    @Autowired
-    private BmsBookListBookRelationMapper bmsBookListBookRelationMapper;
-
-    @Autowired
-    private BmsBookListMemberRelationMapper bmsBookListMemberRelationMapper;
-
-    @Autowired
-    private BmsBookMapper bmsBookMapper;
-
-    @Autowired
-    private UmsMemberMapper umsMemberMapper;
-
-    @Autowired
-    private CmsMemberPreferBookListRelationMapper cmsMemberPreferBookListRelationMapper;
+    public BmsBookListServiceImpl(BmsBookListMapper bmsBookListMapper,
+                                  BmsBookListBookRelationMapper bmsBookListBookRelationMapper,
+                                  BmsBookListMemberRelationMapper bmsBookListMemberRelationMapper,
+                                  BmsBookMapper bmsBookMapper,
+                                  UmsMemberMapper umsMemberMapper,
+                                  CmsMemberPreferBookListRelationMapper cmsMemberPreferBookListRelationMapper) {
+        this.bmsBookListMapper = bmsBookListMapper;
+        this.bmsBookListBookRelationMapper = bmsBookListBookRelationMapper;
+        this.bmsBookListMemberRelationMapper = bmsBookListMemberRelationMapper;
+        this.bmsBookMapper = bmsBookMapper;
+        this.umsMemberMapper = umsMemberMapper;
+        this.cmsMemberPreferBookListRelationMapper = cmsMemberPreferBookListRelationMapper;
+    }
 
     @Override
     public List<BmsBookList> listAll() {

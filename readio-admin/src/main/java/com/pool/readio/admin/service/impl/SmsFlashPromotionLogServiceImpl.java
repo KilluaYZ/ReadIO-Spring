@@ -5,7 +5,6 @@ import com.pool.readio.admin.service.SmsFlashPromotionLogService;
 import com.pool.readio.mbg.mapper.SmsFlashPromotionLogMapper;
 import com.pool.readio.mbg.model.SmsFlashPromotionLog;
 import com.pool.readio.mbg.model.SmsFlashPromotionLogExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -18,8 +17,11 @@ import java.util.List;
 @Service
 public class SmsFlashPromotionLogServiceImpl implements SmsFlashPromotionLogService {
 
-    @Autowired
-    private SmsFlashPromotionLogMapper logMapper;
+    private final SmsFlashPromotionLogMapper logMapper;
+
+    public SmsFlashPromotionLogServiceImpl(SmsFlashPromotionLogMapper logMapper) {
+        this.logMapper = logMapper;
+    }
 
     @Override
     public int create(SmsFlashPromotionLog log) {

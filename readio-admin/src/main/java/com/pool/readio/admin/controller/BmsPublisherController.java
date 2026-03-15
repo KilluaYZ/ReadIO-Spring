@@ -6,7 +6,6 @@ import com.pool.readio.common.api.CommonResult;
 import com.pool.readio.mbg.model.BmsPublisher;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +19,11 @@ import java.util.List;
 @RequestMapping("/publisher")
 public class BmsPublisherController {
 
-    @Autowired
-    private BmsPublisherService bmsPublisherService;
+    private final BmsPublisherService bmsPublisherService;
+
+    public BmsPublisherController(BmsPublisherService bmsPublisherService) {
+        this.bmsPublisherService = bmsPublisherService;
+    }
 
     @Operation(summary = "获取所有出版社")
     @GetMapping("/listAll")

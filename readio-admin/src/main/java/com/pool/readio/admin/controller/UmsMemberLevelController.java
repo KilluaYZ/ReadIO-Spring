@@ -5,7 +5,6 @@ import com.pool.readio.mbg.model.UmsMemberLevel;
 import com.pool.readio.admin.service.UmsMemberLevelService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +17,11 @@ import java.util.List;
 @RequestMapping("/memberLevel")
 public class UmsMemberLevelController {
 
-    @Autowired
-    private UmsMemberLevelService memberLevelService;
+    private final UmsMemberLevelService memberLevelService;
+
+    public UmsMemberLevelController(UmsMemberLevelService memberLevelService) {
+        this.memberLevelService = memberLevelService;
+    }
 
     @Operation(summary = "查询所有会员等级（可按是否默认筛选）")
     @GetMapping("/list")

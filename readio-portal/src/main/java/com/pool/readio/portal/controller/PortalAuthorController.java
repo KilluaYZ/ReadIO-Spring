@@ -7,7 +7,6 @@ import com.pool.readio.common.api.CommonResult;
 import com.pool.readio.mbg.model.BmsAuthor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +19,11 @@ import java.util.List;
 @RequestMapping("/portal/author")
 public class PortalAuthorController {
 
-    @Autowired
-    private BmsAuthorService bmsAuthorService;
+    private final BmsAuthorService bmsAuthorService;
+
+    public PortalAuthorController(BmsAuthorService bmsAuthorService) {
+        this.bmsAuthorService = bmsAuthorService;
+    }
 
     @Operation(summary = "获取所有作者")
     @GetMapping("/listAll")

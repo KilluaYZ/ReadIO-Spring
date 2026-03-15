@@ -9,7 +9,6 @@ import com.pool.readio.mbg.model.CmsComment;
 import com.pool.readio.mbg.model.UmsMember;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +22,11 @@ import java.util.List;
 @RequestMapping("/comment")
 public class CmsCommentController {
 
-    @Autowired
-    private CmsCommentService cmsCommentService;
+    private final CmsCommentService cmsCommentService;
+
+    public CmsCommentController(CmsCommentService cmsCommentService) {
+        this.cmsCommentService = cmsCommentService;
+    }
 
     @Operation(summary = "获取所有评论")
     @GetMapping("/listAll")

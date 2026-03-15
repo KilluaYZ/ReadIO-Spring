@@ -13,7 +13,6 @@ import com.pool.readio.mbg.model.BmsBookList;
 import com.pool.readio.mbg.model.UmsMember;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,8 +26,11 @@ import java.util.List;
 @RequestMapping("/bookList")
 public class BmsBookListController {
 
-    @Autowired
-    private BmsBookListService bmsBookListService;
+    private final BmsBookListService bmsBookListService;
+
+    public BmsBookListController(BmsBookListService bmsBookListService) {
+        this.bmsBookListService = bmsBookListService;
+    }
 
     @Operation(summary = "获取所有书单")
     @GetMapping("/listAll")

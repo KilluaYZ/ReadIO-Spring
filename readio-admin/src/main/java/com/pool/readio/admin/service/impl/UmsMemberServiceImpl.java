@@ -14,7 +14,6 @@ import com.pool.readio.mbg.model.UmsMemberOwnBookRelation;
 import com.pool.readio.mbg.model.UmsMemberOwnBookRelationExample;
 import com.pool.readio.mbg.model.UmsMemberVipRelation;
 import com.pool.readio.mbg.model.UmsMemberVipRelationExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -27,14 +26,17 @@ import static com.pool.readio.admin.dto.MemberBookReadPermissionDto.*;
 @Service
 public class UmsMemberServiceImpl implements UmsMemberService {
 
-    @Autowired
-    private UmsMemberMapper umsMemberMapper;
+    private final UmsMemberMapper umsMemberMapper;
+    private final UmsMemberOwnBookRelationMapper ownBookRelationMapper;
+    private final UmsMemberVipRelationMapper vipRelationMapper;
 
-    @Autowired
-    private UmsMemberOwnBookRelationMapper ownBookRelationMapper;
-
-    @Autowired
-    private UmsMemberVipRelationMapper vipRelationMapper;
+    public UmsMemberServiceImpl(UmsMemberMapper umsMemberMapper,
+                                UmsMemberOwnBookRelationMapper ownBookRelationMapper,
+                                UmsMemberVipRelationMapper vipRelationMapper) {
+        this.umsMemberMapper = umsMemberMapper;
+        this.ownBookRelationMapper = ownBookRelationMapper;
+        this.vipRelationMapper = vipRelationMapper;
+    }
 
     @Override
     public List<UmsMember> listAll() {

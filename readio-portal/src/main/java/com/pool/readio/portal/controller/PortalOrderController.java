@@ -7,7 +7,6 @@ import com.pool.readio.common.api.CommonResult;
 import com.pool.readio.mbg.model.OmsOrder;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +24,11 @@ import java.util.List;
 @RequestMapping("/portal/order")
 public class PortalOrderController {
 
-    @Autowired
-    private OmsOrderService orderService;
+    private final OmsOrderService orderService;
+
+    public PortalOrderController(OmsOrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @Operation(summary = "列出当前用户的所有订单（不分页）")
     @GetMapping("/listAll")

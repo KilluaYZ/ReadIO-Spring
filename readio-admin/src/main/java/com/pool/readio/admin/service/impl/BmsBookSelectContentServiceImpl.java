@@ -10,7 +10,6 @@ import com.pool.readio.mbg.model.BmsBookSelectContent;
 import com.pool.readio.mbg.model.BmsBookSelectContentExample;
 import com.pool.readio.mbg.model.BmsBookSelectContentItem;
 import com.pool.readio.mbg.model.BmsBookSelectContentItemExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,12 +20,17 @@ import java.util.stream.Collectors;
 @Service
 public class BmsBookSelectContentServiceImpl implements BmsBookSelectContentService {
 
-    @Autowired
-    private BmsBookSelectContentMapper bmsBookSelectContentMapper;
-    @Autowired
-    private BmsBookSelectContentItemMapper bmsBookSelectContentItemMapper;
-    @Autowired
-    private BmsBookSelectContentDao bmsBookSelectContentDao;
+    private final BmsBookSelectContentMapper bmsBookSelectContentMapper;
+    private final BmsBookSelectContentItemMapper bmsBookSelectContentItemMapper;
+    private final BmsBookSelectContentDao bmsBookSelectContentDao;
+
+    public BmsBookSelectContentServiceImpl(BmsBookSelectContentMapper bmsBookSelectContentMapper,
+                                           BmsBookSelectContentItemMapper bmsBookSelectContentItemMapper,
+                                           BmsBookSelectContentDao bmsBookSelectContentDao) {
+        this.bmsBookSelectContentMapper = bmsBookSelectContentMapper;
+        this.bmsBookSelectContentItemMapper = bmsBookSelectContentItemMapper;
+        this.bmsBookSelectContentDao = bmsBookSelectContentDao;
+    }
 
     private BmsBookSelectContentWithItems toWithItems(BmsBookSelectContent sc, List<BmsBookSelectContentItem> items) {
         if (sc == null) return null;

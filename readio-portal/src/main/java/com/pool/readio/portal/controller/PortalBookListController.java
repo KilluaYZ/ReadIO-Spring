@@ -10,7 +10,6 @@ import com.pool.readio.mbg.model.BmsBook;
 import com.pool.readio.mbg.model.BmsBookList;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +22,11 @@ import java.util.List;
 @RequestMapping("/portal/bookList")
 public class PortalBookListController {
 
-    @Autowired
-    private BmsBookListService bmsBookListService;
+    private final BmsBookListService bmsBookListService;
+
+    public PortalBookListController(BmsBookListService bmsBookListService) {
+        this.bmsBookListService = bmsBookListService;
+    }
 
     @Operation(summary = "获取未隐藏的书单（C 端展示）")
     @GetMapping("/listVisible")

@@ -7,7 +7,6 @@ import com.pool.readio.mbg.mapper.UmsMemberMapper;
 import com.pool.readio.mbg.model.UmsMember;
 import com.pool.readio.mbg.model.UmsMemberFollowRelation;
 import com.pool.readio.mbg.model.UmsMemberFollowRelationExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,11 +20,14 @@ import java.util.stream.Collectors;
 @Service
 public class UmsMemberFollowRelationServiceImpl implements UmsMemberFollowRelationService {
 
-    @Autowired
-    private UmsMemberFollowRelationMapper followRelationMapper;
+    private final UmsMemberFollowRelationMapper followRelationMapper;
+    private final UmsMemberMapper memberMapper;
 
-    @Autowired
-    private UmsMemberMapper memberMapper;
+    public UmsMemberFollowRelationServiceImpl(UmsMemberFollowRelationMapper followRelationMapper,
+                                              UmsMemberMapper memberMapper) {
+        this.followRelationMapper = followRelationMapper;
+        this.memberMapper = memberMapper;
+    }
 
     @Override
     public int follow(Integer followerId, Integer floweeId) {

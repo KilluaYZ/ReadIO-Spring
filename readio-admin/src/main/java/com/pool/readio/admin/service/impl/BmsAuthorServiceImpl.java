@@ -6,7 +6,6 @@ import com.pool.readio.mbg.mapper.BmsAuthorMapper;
 import com.pool.readio.mbg.model.BmsAuthor;
 import com.pool.readio.mbg.model.BmsAuthorExample;
 import com.github.pagehelper.PageHelper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -18,8 +17,11 @@ import java.util.List;
 @Service
 public class BmsAuthorServiceImpl implements BmsAuthorService {
 
-    @Autowired
-    private BmsAuthorMapper bmsAuthorMapper;
+    private final BmsAuthorMapper bmsAuthorMapper;
+
+    public BmsAuthorServiceImpl(BmsAuthorMapper bmsAuthorMapper) {
+        this.bmsAuthorMapper = bmsAuthorMapper;
+    }
 
     @Override
     public List<BmsAuthor> listAll() {

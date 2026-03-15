@@ -7,7 +7,6 @@ import com.pool.readio.admin.service.SmsFlashPromotionSessionService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +20,12 @@ import java.util.List;
 @Tag(name = "SmsFlashPromotionSessionController", description = "限时购场次管理")
 @RequestMapping("/flashSession")
 public class SmsFlashPromotionSessionController {
-    @Autowired
-    private SmsFlashPromotionSessionService flashPromotionSessionService;
+
+    private final SmsFlashPromotionSessionService flashPromotionSessionService;
+
+    public SmsFlashPromotionSessionController(SmsFlashPromotionSessionService flashPromotionSessionService) {
+        this.flashPromotionSessionService = flashPromotionSessionService;
+    }
 
     @Operation(summary = "添加场次")
     @PostMapping("/create")

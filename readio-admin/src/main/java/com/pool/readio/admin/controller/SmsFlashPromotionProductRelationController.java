@@ -8,7 +8,6 @@ import com.pool.readio.admin.service.SmsFlashPromotionProductRelationService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +21,12 @@ import java.util.List;
 @Tag(name = "SmsFlashPromotionProductRelationController", description = "限时购和商品关系管理")
 @RequestMapping("/flashProductRelation")
 public class SmsFlashPromotionProductRelationController {
-    @Autowired
-    private SmsFlashPromotionProductRelationService relationService;
+
+    private final SmsFlashPromotionProductRelationService relationService;
+
+    public SmsFlashPromotionProductRelationController(SmsFlashPromotionProductRelationService relationService) {
+        this.relationService = relationService;
+    }
 
     @Operation(summary = "批量选择商品添加关联")
     @RequestMapping(value = "/create", method = RequestMethod.POST)

@@ -8,7 +8,6 @@ import com.pool.readio.mbg.mapper.PmsProductMapper;
 import com.pool.readio.mbg.mapper.UmsMemberOwnBookRelationMapper;
 import com.pool.readio.mbg.mapper.UmsMemberVipRelationMapper;
 import com.pool.readio.mbg.model.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,18 +28,26 @@ public class OrderEntitlementServiceImpl implements OrderEntitlementService {
     /** 永久有效 */
     private static final int DURATION_UNLIMITED = -1;
 
-    @Autowired
-    private OmsOrderMapper orderMapper;
-    @Autowired
-    private PmsProductMapper productMapper;
-    @Autowired
-    private PmsProductCategoryMapper productCategoryMapper;
-    @Autowired
-    private BmsBookChapterMapper bookChapterMapper;
-    @Autowired
-    private UmsMemberOwnBookRelationMapper ownBookRelationMapper;
-    @Autowired
-    private UmsMemberVipRelationMapper vipRelationMapper;
+    private final OmsOrderMapper orderMapper;
+    private final PmsProductMapper productMapper;
+    private final PmsProductCategoryMapper productCategoryMapper;
+    private final BmsBookChapterMapper bookChapterMapper;
+    private final UmsMemberOwnBookRelationMapper ownBookRelationMapper;
+    private final UmsMemberVipRelationMapper vipRelationMapper;
+
+    public OrderEntitlementServiceImpl(OmsOrderMapper orderMapper,
+                                       PmsProductMapper productMapper,
+                                       PmsProductCategoryMapper productCategoryMapper,
+                                       BmsBookChapterMapper bookChapterMapper,
+                                       UmsMemberOwnBookRelationMapper ownBookRelationMapper,
+                                       UmsMemberVipRelationMapper vipRelationMapper) {
+        this.orderMapper = orderMapper;
+        this.productMapper = productMapper;
+        this.productCategoryMapper = productCategoryMapper;
+        this.bookChapterMapper = bookChapterMapper;
+        this.ownBookRelationMapper = ownBookRelationMapper;
+        this.vipRelationMapper = vipRelationMapper;
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

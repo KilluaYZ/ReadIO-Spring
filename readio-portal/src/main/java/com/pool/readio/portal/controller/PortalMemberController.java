@@ -8,7 +8,6 @@ import com.pool.readio.mbg.model.UmsMemberExample;
 import com.pool.readio.portal.dto.MemberProfileDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,8 +27,11 @@ import java.util.List;
 @RequestMapping("/portal/member")
 public class PortalMemberController {
 
-    @Autowired
-    private UmsMemberMapper umsMemberMapper;
+    private final UmsMemberMapper umsMemberMapper;
+
+    public PortalMemberController(UmsMemberMapper umsMemberMapper) {
+        this.umsMemberMapper = umsMemberMapper;
+    }
 
     public record MemberRegisterParam(String username, String password, String nickname) {}
 

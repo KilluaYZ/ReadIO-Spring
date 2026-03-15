@@ -10,7 +10,6 @@ import com.pool.readio.mbg.mapper.UmsRoleResourceRelationMapper;
 import com.pool.readio.mbg.model.*;
 import com.pool.readio.admin.service.UmsResourceService;
 import com.pool.readio.admin.service.UmsRoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -25,20 +24,30 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UmsRoleServiceImpl implements UmsRoleService {
-    @Autowired
-    private UmsRoleMapper roleMapper;
-    @Autowired
-    private UmsRoleMenuRelationMapper roleMenuRelationMapper;
-    @Autowired
-    private UmsRolePermissionRelationMapper rolePermissionRelationMapper;
-    @Autowired
-    private UmsRoleResourceRelationMapper roleResourceRelationMapper;
-    @Autowired
-    private UmsPermissionMapper permissionMapper;
-    @Autowired
-    private UmsRoleDao roleDao;
-    @Autowired
-    private UmsResourceService resourceService;
+
+    private final UmsRoleMapper roleMapper;
+    private final UmsRoleMenuRelationMapper roleMenuRelationMapper;
+    private final UmsRolePermissionRelationMapper rolePermissionRelationMapper;
+    private final UmsRoleResourceRelationMapper roleResourceRelationMapper;
+    private final UmsPermissionMapper permissionMapper;
+    private final UmsRoleDao roleDao;
+    private final UmsResourceService resourceService;
+
+    public UmsRoleServiceImpl(UmsRoleMapper roleMapper,
+                              UmsRoleMenuRelationMapper roleMenuRelationMapper,
+                              UmsRolePermissionRelationMapper rolePermissionRelationMapper,
+                              UmsRoleResourceRelationMapper roleResourceRelationMapper,
+                              UmsPermissionMapper permissionMapper,
+                              UmsRoleDao roleDao,
+                              UmsResourceService resourceService) {
+        this.roleMapper = roleMapper;
+        this.roleMenuRelationMapper = roleMenuRelationMapper;
+        this.rolePermissionRelationMapper = rolePermissionRelationMapper;
+        this.roleResourceRelationMapper = roleResourceRelationMapper;
+        this.permissionMapper = permissionMapper;
+        this.roleDao = roleDao;
+        this.resourceService = resourceService;
+    }
     @Override
     public int create(UmsRole role) {
         role.setCreateTime(new Date());

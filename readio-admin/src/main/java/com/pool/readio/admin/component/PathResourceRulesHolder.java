@@ -1,6 +1,5 @@
 package com.pool.readio.admin.component;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.pool.readio.admin.service.UmsResourceService;
 
@@ -14,8 +13,11 @@ import jakarta.annotation.PostConstruct;
 @Component
 public class PathResourceRulesHolder {
 
-    @Autowired
-    private UmsResourceService resourceService;
+    private final UmsResourceService resourceService;
+
+    public PathResourceRulesHolder(UmsResourceService resourceService) {
+        this.resourceService = resourceService;
+    }
 
     @PostConstruct
     public void initPathResourceMap(){

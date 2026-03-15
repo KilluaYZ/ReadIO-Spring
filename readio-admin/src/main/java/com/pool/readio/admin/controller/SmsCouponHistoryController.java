@@ -6,7 +6,6 @@ import com.pool.readio.mbg.model.SmsCouponHistory;
 import com.pool.readio.admin.service.SmsCouponHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +18,11 @@ import java.util.List;
 @RequestMapping("/couponHistory")
 public class SmsCouponHistoryController {
 
-    @Autowired
-    private SmsCouponHistoryService historyService;
+    private final SmsCouponHistoryService historyService;
+
+    public SmsCouponHistoryController(SmsCouponHistoryService historyService) {
+        this.historyService = historyService;
+    }
 
     @Operation(summary = "分页查询领取记录（支持按优惠券、会员、使用状态、订单号筛选）")
     @GetMapping("/list")

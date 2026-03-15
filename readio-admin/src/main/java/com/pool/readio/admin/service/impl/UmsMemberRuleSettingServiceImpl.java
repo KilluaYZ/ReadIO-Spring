@@ -4,7 +4,6 @@ import com.pool.readio.admin.service.UmsMemberRuleSettingService;
 import com.pool.readio.mbg.mapper.UmsMemberRuleSettingMapper;
 import com.pool.readio.mbg.model.UmsMemberRuleSetting;
 import com.pool.readio.mbg.model.UmsMemberRuleSettingExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.List;
 @Service
 public class UmsMemberRuleSettingServiceImpl implements UmsMemberRuleSettingService {
 
-    @Autowired
-    private UmsMemberRuleSettingMapper ruleSettingMapper;
+    private final UmsMemberRuleSettingMapper ruleSettingMapper;
+
+    public UmsMemberRuleSettingServiceImpl(UmsMemberRuleSettingMapper ruleSettingMapper) {
+        this.ruleSettingMapper = ruleSettingMapper;
+    }
 
     @Override
     public List<UmsMemberRuleSetting> listAll() {

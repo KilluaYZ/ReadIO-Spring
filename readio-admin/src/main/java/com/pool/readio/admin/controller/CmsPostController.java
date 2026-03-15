@@ -11,7 +11,6 @@ import com.pool.readio.mbg.model.CmsPost;
 import com.pool.readio.mbg.model.UmsMember;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.pool.readio.admin.dto.BmsPostTagsParam;
 
@@ -22,8 +21,11 @@ import java.util.List;
 @RequestMapping("/post")
 public class CmsPostController {
 
-    @Autowired
-    private CmsPostService cmsPostService;
+    private final CmsPostService cmsPostService;
+
+    public CmsPostController(CmsPostService cmsPostService) {
+        this.cmsPostService = cmsPostService;
+    }
 
     @Operation(summary = "获取所有帖子")
     @GetMapping("/listAll")

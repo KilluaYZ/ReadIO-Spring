@@ -10,7 +10,6 @@ import com.pool.readio.mbg.model.BmsAuthor;
 import com.pool.readio.mbg.model.BmsBook;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,11 +25,13 @@ import java.util.List;
 @RequestMapping("/portal/search")
 public class PortalSearchController {
 
-    @Autowired
-    private BmsBookService bmsBookService;
+    private final BmsBookService bmsBookService;
+    private final BmsAuthorService bmsAuthorService;
 
-    @Autowired
-    private BmsAuthorService bmsAuthorService;
+    public PortalSearchController(BmsBookService bmsBookService, BmsAuthorService bmsAuthorService) {
+        this.bmsBookService = bmsBookService;
+        this.bmsAuthorService = bmsAuthorService;
+    }
 
     @Operation(summary = "搜索书籍（按关键词匹配书名/简介）")
     @GetMapping("/books")

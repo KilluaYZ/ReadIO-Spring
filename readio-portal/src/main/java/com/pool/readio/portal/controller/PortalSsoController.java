@@ -4,7 +4,6 @@ import com.pool.readio.mbg.model.UmsMember;
 import com.pool.readio.portal.service.PortalMemberAuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,8 +21,11 @@ import java.util.Map;
 @RequestMapping("/sso")
 public class PortalSsoController {
 
-    @Autowired
-    private PortalMemberAuthService portalMemberAuthService;
+    private final PortalMemberAuthService portalMemberAuthService;
+
+    public PortalSsoController(PortalMemberAuthService portalMemberAuthService) {
+        this.portalMemberAuthService = portalMemberAuthService;
+    }
 
     // 登录/token 颁发统一由 OAuth2 + Gateway 处理，此处只保留用户校验逻辑（如后续需要可扩展）
     @Operation(summary = "SSO 登录（已迁移到 OAuth2，接口保留占位）")

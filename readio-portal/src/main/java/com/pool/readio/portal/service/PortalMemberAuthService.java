@@ -4,7 +4,6 @@ import cn.hutool.crypto.digest.BCrypt;
 import com.pool.readio.mbg.mapper.UmsMemberMapper;
 import com.pool.readio.mbg.model.UmsMember;
 import com.pool.readio.mbg.model.UmsMemberExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -13,8 +12,11 @@ import java.util.List;
 @Service
 public class PortalMemberAuthService {
 
-    @Autowired
-    private UmsMemberMapper umsMemberMapper;
+    private final UmsMemberMapper umsMemberMapper;
+
+    public PortalMemberAuthService(UmsMemberMapper umsMemberMapper) {
+        this.umsMemberMapper = umsMemberMapper;
+    }
 
     public UmsMember getEnabledMemberByUsername(String username) {
         if (!StringUtils.hasText(username)) {

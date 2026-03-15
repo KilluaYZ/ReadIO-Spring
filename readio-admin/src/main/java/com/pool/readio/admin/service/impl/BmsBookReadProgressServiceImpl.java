@@ -5,7 +5,6 @@ import com.pool.readio.admin.service.BmsBookReadProgressService;
 import com.pool.readio.mbg.mapper.BmsBookReadProgressMapper;
 import com.pool.readio.mbg.model.BmsBookReadProgress;
 import com.pool.readio.mbg.model.BmsBookReadProgressExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +15,11 @@ import java.util.List;
 @Service
 public class BmsBookReadProgressServiceImpl implements BmsBookReadProgressService {
 
-    @Autowired
-    private BmsBookReadProgressMapper bmsBookReadProgressMapper;
+    private final BmsBookReadProgressMapper bmsBookReadProgressMapper;
+
+    public BmsBookReadProgressServiceImpl(BmsBookReadProgressMapper bmsBookReadProgressMapper) {
+        this.bmsBookReadProgressMapper = bmsBookReadProgressMapper;
+    }
 
     @Override
     public List<BmsBookReadProgress> listAll() {
