@@ -44,6 +44,7 @@ dependencies {
     implementation libs.hutool
     implementation libs.lombok
     implementation libs.minio
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 }
 
 tasks.named('test') {
