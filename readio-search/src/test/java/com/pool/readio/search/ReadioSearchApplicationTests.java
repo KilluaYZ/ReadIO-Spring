@@ -1,4 +1,4 @@
-package com.pool.readio.readiosearch;
+package com.pool.readio.search;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

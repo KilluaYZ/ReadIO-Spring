@@ -163,6 +163,38 @@ services:
       retries: 5
       start_period: 10s
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
+    container_name: readio-elasticsearch-dev
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "26008:9200"   # HTTP
+      - "26009:9300"   # Transport
+    volumes:
+      - readio_elasticsearch_data:/usr/share/elasticsearch/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://127.0.0.1:9200/_cluster/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.15.3
+    container_name: readio-kibana-dev
+    environment:
+      - ELASTICSEARCH_HOSTS=http://readio-elasticsearch-dev:9200
+      - SERVER_PUBLICBASEURL=http://localhost:5601
+    ports:
+      - "26010:5601"   # Kibana Web UI
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+
 volumes:
   readio_postgres_data:
   readio_redis_data:
@@ -173,3 +205,4 @@ volumes:
   readio_milvus_minio_data:
   readio_milvus_data:
   readio_mongodb_data:
+  readio_elasticsearch_data:

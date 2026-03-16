@@ -1,0 +1,87 @@
+# 本地默认配置；若已接入 Nacos 配置中心，Nacos 中 readio-admin.yaml 的同名项会覆盖此处（见 doc/nacos-config/README.md）
+server:
+  port: 8405
+spring:
+  application:
+    name: readio-search
+  # 排除 MyBatis 自动配置：2.3.x 引用 Spring Boot 2/3 的 DataSourceAutoConfiguration，在 Spring Boot 4 中该类已迁移导致 ClassNotFoundException；readio-admin 已用 DataSourceConfig 显式提供 DataSource 与 SqlSessionFactory
+  autoconfigure:
+    exclude:
+      - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: jdbc:postgresql://localhost:26001/readio?currentSchema=public
+    username: readio
+    password: readio
+    driver-class-name: org.postgresql.Driver
+  data:
+    redis:
+      database: 0
+      port: 26002
+      host: localhost
+      username: readio
+      password: readio
+  elasticsearch:
+    uris: http://localhost:26008
+  mongodb:
+    uri: mongodb://readio:readio@localhost:26007/readio?authSource=admin
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://127.0.0.1:9401
+# 业务用 Redis 键前缀与过期时间（UmsAdminCacheServiceImpl 等使用，与 spring.data.redis 不同）
+redis:
+  database: "0"
+  expire:
+    common: 86400
+  key:
+    admin: admin
+# MinIO 对象存储（本地开发；docker-compose.dev 中端口为 26003，则 endpoint 填 http://localhost:26003）
+minio:
+  endpoint: http://localhost:9000
+  access-key: readio
+  secret-key: readio123
+  bucket: readio
+  dir:
+    prefix: readio/
+  policy:
+    expire: 3600
+  maxSize: 10
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' #暴露Actuator的监控端点
+  endpoint:
+    health:
+      show-details: always #显示健康的详细信息
+    env:
+      show-values: always #默认Actuator的环境变量会以****显示，这里开启显示
+    configprops:
+      show-values: always #默认Actuator的配置属性会以****显示，这里开启显示
+    info:
+      enabled: true
+# 文档中展示的 API 服务地址（Knife4j 网关聚合时显示的 host），不配置则使用当前请求 host
+springdoc:
+  servers:
+    server-url: http://localhost:8402
+  swagger-ui:
+    # 修改Swagger UI路径
+    path: /swagger-ui.html
+    # 开启Swagger UI界面
+    enabled: true
+    tags-sorter: alpha
+    operations-sorter: alpha
+    show-extensions: true
+  api-docs:
+    # 修改api-docs路径
+    path: /v3/api-docs
+    # 开启api-docs
+    enabled: true
+  group-configs:
+    - group: 'default'
+      packages-to-scan: com.pool.readio.search.controller
+  default-flat-param-object: false
