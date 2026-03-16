@@ -143,6 +143,7 @@ services:
       - milvus-minio
     restart: unless-stopped
 
+  # GridFS 无需额外配置，使用 MongoDB 自带能力（fs / book_content 等桶由应用自动创建）
   mongodb:
     image: docker.io/library/mongo:latest
     container_name: readio-mongodb-dev
