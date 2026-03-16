@@ -38,6 +38,7 @@ dependencies {
     annotationProcessor libs.lombok
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testRuntimeOnly libs.junit.platform.launcher
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 }
 
 tasks.named('test') {
