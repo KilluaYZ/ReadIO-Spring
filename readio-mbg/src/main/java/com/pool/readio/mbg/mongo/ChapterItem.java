@@ -1,5 +1,6 @@
 package com.pool.readio.mbg.mongo;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class ChapterItem {
 
     /** 章节内图片 URL 或标识列表 */
     @Field("images")
+    @JsonDeserialize(using = ChapterItemImagesDeserializer.class)
     private List<String> images = new ArrayList<>();
 
     public int getIndex() {

@@ -19,6 +19,8 @@ spring:
       host: localhost
       username: readio
       password: readio
+  mongodb:
+    uri: mongodb://readio:readio@localhost:26007/readio?authSource=admin
   datasource:
     url: jdbc:postgresql://localhost:26001/readio?currentSchema=public
     username: readio

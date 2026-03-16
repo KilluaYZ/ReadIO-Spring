@@ -23,6 +23,8 @@ spring:
       host: localhost
       username: readio
       password: readio
+  mongodb:
+    uri: mongodb://readio:readio@localhost:26007/readio?authSource=admin
   security:
     oauth2:
       resourceserver:

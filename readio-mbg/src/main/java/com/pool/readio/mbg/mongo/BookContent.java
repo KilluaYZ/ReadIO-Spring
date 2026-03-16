@@ -27,6 +27,10 @@ public class BookContent {
     @Field("file_path")
     private String filePath;
 
+    /** 关联的书籍元数据 ID（PostgreSQL bms_book.id） */
+    @Field("book_id")
+    private Integer bookId;
+
     @Field("authors")
     private List<String> authors = new ArrayList<>();
 
@@ -38,6 +42,13 @@ public class BookContent {
 
     @Field("chapters")
     private List<ChapterItem> chapters = new ArrayList<>();
+
+    /**
+     * 当内容存于 GridFS 时，此处为 GridFS 文件 ObjectId（十六进制字符串）。
+     * 非空时表示 chapters 在 GridFS，本文档的 chapters 为空；为空时表示旧数据，chapters 内联。
+     */
+    @Field("content_file_id")
+    private String contentFileId;
 
     public String getId() {
         return id;
@@ -61,6 +72,14 @@ public class BookContent {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public Integer getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
     }
 
     public List<String> getAuthors() {
@@ -93,5 +112,13 @@ public class BookContent {
 
     public void setChapters(List<ChapterItem> chapters) {
         this.chapters = chapters != null ? chapters : new ArrayList<>();
+    }
+
+    public String getContentFileId() {
+        return contentFileId;
+    }
+
+    public void setContentFileId(String contentFileId) {
+        this.contentFileId = contentFileId;
     }
 }

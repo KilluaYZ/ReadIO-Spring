@@ -11,6 +11,11 @@ import java.util.Optional;
 public interface BookContentRepository extends MongoRepository<BookContent, String> {
 
     /**
+     * 按关联的书籍元数据 ID（PostgreSQL bms_book.id）查询，用于根据书 ID 获取内容。
+     */
+    Optional<BookContent> findByBookId(Integer bookId);
+
+    /**
      * 按书名查询（支持多本同名书）。
      */
     List<BookContent> findByBookName(String bookName);
