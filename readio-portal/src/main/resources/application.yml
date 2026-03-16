@@ -23,6 +23,8 @@ spring:
       host: localhost
       username: readio
       password: readio
+  mongodb:
+    uri: mongodb://readio:readio@localhost:26007/readio?authSource=admin
 # 业务用 Redis 键前缀与过期（与 admin 一致，避免复用 admin 的 Service 时占位符缺失）
 redis:
   database: "0"

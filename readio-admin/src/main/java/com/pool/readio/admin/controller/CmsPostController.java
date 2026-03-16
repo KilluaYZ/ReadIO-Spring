@@ -4,10 +4,13 @@ import com.pool.readio.admin.dto.CmsPostDetail;
 import com.pool.readio.admin.dto.CmsMemberPreferPostCountResult;
 import com.pool.readio.admin.dto.CmsMemberPreferPostStatusResult;
 import com.pool.readio.admin.service.CmsPostService;
+import com.pool.readio.admin.service.PostContentService;
 import com.pool.readio.common.api.CommonPage;
 import com.pool.readio.common.api.CommonResult;
 import com.pool.readio.mbg.model.CmsPost;
 import com.pool.readio.mbg.model.UmsMember;
+import com.pool.readio.admin.dto.CmsPostContentUpdateParam;
+import com.pool.readio.mbg.mongo.PostContent;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +24,12 @@ import java.util.List;
 public class CmsPostController {
 
     private final CmsPostService cmsPostService;
+    private final PostContentService postContentService;
 
-    public CmsPostController(CmsPostService cmsPostService) {
+    public CmsPostController(CmsPostService cmsPostService,
+                             PostContentService postContentService) {
         this.cmsPostService = cmsPostService;
+        this.postContentService = postContentService;
     }
 
     @Operation(summary = "获取所有帖子")
@@ -55,11 +61,30 @@ public class CmsPostController {
         return item != null ? CommonResult.success(item) : CommonResult.failed("帖子不存在");
     }
 
+    @Operation(summary = "根据帖子ID从 MongoDB 获取帖子正文内容")
+    @GetMapping("/{id}/content")
+    public CommonResult<PostContent> getContentById(@PathVariable Integer id) {
+        return postContentService.getByPostId(id)
+                .map(CommonResult::success)
+                .orElse(CommonResult.failed("该帖子暂无内容"));
+    }
+
     @Operation(summary = "新增帖子")
     @PostMapping("/create")
     public CommonResult<Integer> create(@RequestBody CmsPost record) {
         int n = cmsPostService.create(record);
         return n > 0 ? CommonResult.success(record.getId()) : CommonResult.failed("新增失败");
+    }
+
+    @Operation(summary = "更新或保存帖子正文内容到 MongoDB")
+    @PostMapping("/{id}/content")
+    public CommonResult<Void> saveOrUpdateContent(@PathVariable Integer id,
+                                                  @RequestBody CmsPostContentUpdateParam body) {
+        if (body == null || body.getContent() == null) {
+            return CommonResult.failed("内容不能为空");
+        }
+        postContentService.saveOrUpdate(id, body.getContent());
+        return CommonResult.success(null);
     }
 
     @Operation(summary = "更新帖子")
