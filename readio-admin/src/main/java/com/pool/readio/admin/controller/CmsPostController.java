@@ -1,6 +1,5 @@
 package com.pool.readio.admin.controller;
 
-import com.pool.readio.admin.dto.CmsPostContentBlockParam;
 import com.pool.readio.admin.dto.CmsPostDetail;
 import com.pool.readio.admin.dto.CmsMemberPreferPostCountResult;
 import com.pool.readio.admin.dto.CmsMemberPreferPostStatusResult;
@@ -49,32 +48,11 @@ public class CmsPostController {
         return item != null ? CommonResult.success(item) : CommonResult.failed("帖子不存在");
     }
 
-    @Operation(summary = "根据ID获取帖子详情（含按 order 排序的内容块列表）")
+    @Operation(summary = "根据ID获取帖子详情（仅帖子元信息，内容块表已废弃）")
     @GetMapping("/{id}/detail")
     public CommonResult<CmsPostDetail> getDetailById(@PathVariable Integer id) {
         CmsPostDetail item = cmsPostService.getDetailById(id);
         return item != null ? CommonResult.success(item) : CommonResult.failed("帖子不存在");
-    }
-
-    @Operation(summary = "向帖子追加一个内容块（前端传入一段文本，加入该帖子的 contentBlocks）")
-    @PostMapping("/{id}/content-block/add")
-    public CommonResult<Integer> addContentBlock(@PathVariable Integer id,
-                                                @RequestBody CmsPostContentBlockParam param) {
-        if (param == null || param.getContent() == null || param.getContent().isBlank()) {
-            return CommonResult.failed("内容不能为空");
-        }
-        Integer blockId = cmsPostService.addContentBlock(id, param);
-        if (blockId == null) {
-            return CommonResult.failed("帖子不存在或添加失败");
-        }
-        return CommonResult.success(blockId);
-    }
-
-    @Operation(summary = "删除帖子的全部内容块")
-    @PostMapping("/{id}/content-blocks/delete")
-    public CommonResult<Integer> deleteContentBlocks(@PathVariable Integer id) {
-        int deleted = cmsPostService.deleteContentBlocksByPostId(id);
-        return CommonResult.success(deleted);
     }
 
     @Operation(summary = "新增帖子")
@@ -94,11 +72,7 @@ public class CmsPostController {
     @Operation(summary = "删除帖子")
     @PostMapping("/delete/{id}")
     public CommonResult<Void> delete(@PathVariable Integer id) {
-        int deleted = cmsPostService.deleteContentBlocksByPostId(id);
-        if (deleted <= 0) {
-            return CommonResult.failed("删除内容块失败");
-        }
-        deleted = cmsPostService.deleteById(id);
+        int deleted = cmsPostService.deleteById(id);
         return deleted > 0 ? CommonResult.success(null) : CommonResult.failed("删除失败");
     }
 

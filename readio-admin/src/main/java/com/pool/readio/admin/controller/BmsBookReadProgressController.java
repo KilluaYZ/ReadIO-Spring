@@ -91,14 +91,14 @@ public class BmsBookReadProgressController {
         return CommonResult.success(CommonPage.restPage(list));
     }
 
-    @Operation(summary = "新增阅读进度")
+    @Operation(summary = "新增阅读进度（内容存 MongoDB 后，offset 表示阅读偏移，如章节索引或字符位置）")
     @PostMapping("/create")
     public CommonResult<Integer> create(@RequestBody BmsBookReadProgress record) {
         if (record.getMemberId() == null || record.getBookId() == null) {
             return CommonResult.failed("用户ID和书籍ID不能为空");
         }
-        if (record.getLastBlockId() == null) {
-            record.setLastBlockId(0);
+        if (record.getOffset() == null) {
+            record.setOffset(0);
         }
         if (record.getIsFinished() == null) {
             record.setIsFinished(false);

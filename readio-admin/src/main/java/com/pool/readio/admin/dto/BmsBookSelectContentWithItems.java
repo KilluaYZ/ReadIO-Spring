@@ -1,13 +1,11 @@
 package com.pool.readio.admin.dto;
 
-import com.pool.readio.mbg.model.BmsBookSelectContentItem;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
-import java.util.List;
 
-/** 选中段落（划线）与明细项，用于新增/更新/查询返回 */
-@Schema(description = "选中段落（划线）及明细项")
+/** 选中段落（划线），用于新增/更新/查询返回。明细表 bms_book_select_content_item 已废弃，不再包含 items。 */
+@Schema(description = "选中段落（划线）")
 public class BmsBookSelectContentWithItems {
 
     @Schema(description = "主键ID，新增时不传")
@@ -22,8 +20,6 @@ public class BmsBookSelectContentWithItems {
     private String markColor;
     @Schema(description = "创建时间")
     private Date createTime;
-    @Schema(description = "选中的段落明细")
-    private List<BmsBookSelectContentItem> items;
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -37,6 +33,4 @@ public class BmsBookSelectContentWithItems {
     public void setMarkColor(String markColor) { this.markColor = markColor; }
     public Date getCreateTime() { return createTime; }
     public void setCreateTime(Date createTime) { this.createTime = createTime; }
-    public List<BmsBookSelectContentItem> getItems() { return items; }
-    public void setItems(List<BmsBookSelectContentItem> items) { this.items = items; }
 }

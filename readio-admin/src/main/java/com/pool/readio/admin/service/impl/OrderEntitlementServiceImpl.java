@@ -1,7 +1,6 @@
 package com.pool.readio.admin.service.impl;
 
 import com.pool.readio.admin.service.OrderEntitlementService;
-import com.pool.readio.mbg.mapper.BmsBookChapterMapper;
 import com.pool.readio.mbg.mapper.OmsOrderMapper;
 import com.pool.readio.mbg.mapper.PmsProductCategoryMapper;
 import com.pool.readio.mbg.mapper.PmsProductMapper;
@@ -31,20 +30,17 @@ public class OrderEntitlementServiceImpl implements OrderEntitlementService {
     private final OmsOrderMapper orderMapper;
     private final PmsProductMapper productMapper;
     private final PmsProductCategoryMapper productCategoryMapper;
-    private final BmsBookChapterMapper bookChapterMapper;
     private final UmsMemberOwnBookRelationMapper ownBookRelationMapper;
     private final UmsMemberVipRelationMapper vipRelationMapper;
 
     public OrderEntitlementServiceImpl(OmsOrderMapper orderMapper,
                                        PmsProductMapper productMapper,
                                        PmsProductCategoryMapper productCategoryMapper,
-                                       BmsBookChapterMapper bookChapterMapper,
                                        UmsMemberOwnBookRelationMapper ownBookRelationMapper,
                                        UmsMemberVipRelationMapper vipRelationMapper) {
         this.orderMapper = orderMapper;
         this.productMapper = productMapper;
         this.productCategoryMapper = productCategoryMapper;
-        this.bookChapterMapper = bookChapterMapper;
         this.ownBookRelationMapper = ownBookRelationMapper;
         this.vipRelationMapper = vipRelationMapper;
     }
@@ -87,16 +83,11 @@ public class OrderEntitlementServiceImpl implements OrderEntitlementService {
     }
 
     /**
-     * 下发书籍/章节阅读权限：写入 ums_member_own_book_relation，已存在同 member+book 则不再重复插入
+     * 下发书籍/章节阅读权限：写入 ums_member_own_book_relation，已存在同 member+book 则不再重复插入。
+     * 注：章节表已废弃，仅使用 product.bookId；商品为章节类型时需在商品上维护 bookId。
      */
     private boolean grantBookEntitlement(Integer memberId, PmsProduct product) {
         Integer bookId = product.getBookId();
-        if (bookId == null && product.getChapterId() != null) {
-            BmsBookChapter chapter = bookChapterMapper.selectByPrimaryKey(product.getChapterId());
-            if (chapter != null) {
-                bookId = chapter.getBookId();
-            }
-        }
         if (bookId == null) {
             return false;
         }

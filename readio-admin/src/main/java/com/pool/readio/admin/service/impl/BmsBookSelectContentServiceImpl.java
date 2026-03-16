@@ -4,12 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.pool.readio.admin.dao.BmsBookSelectContentDao;
 import com.pool.readio.admin.dto.BmsBookSelectContentWithItems;
 import com.pool.readio.admin.service.BmsBookSelectContentService;
-import com.pool.readio.mbg.mapper.BmsBookSelectContentItemMapper;
 import com.pool.readio.mbg.mapper.BmsBookSelectContentMapper;
 import com.pool.readio.mbg.model.BmsBookSelectContent;
 import com.pool.readio.mbg.model.BmsBookSelectContentExample;
-import com.pool.readio.mbg.model.BmsBookSelectContentItem;
-import com.pool.readio.mbg.model.BmsBookSelectContentItemExample;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,18 +18,15 @@ import java.util.stream.Collectors;
 public class BmsBookSelectContentServiceImpl implements BmsBookSelectContentService {
 
     private final BmsBookSelectContentMapper bmsBookSelectContentMapper;
-    private final BmsBookSelectContentItemMapper bmsBookSelectContentItemMapper;
     private final BmsBookSelectContentDao bmsBookSelectContentDao;
 
     public BmsBookSelectContentServiceImpl(BmsBookSelectContentMapper bmsBookSelectContentMapper,
-                                           BmsBookSelectContentItemMapper bmsBookSelectContentItemMapper,
                                            BmsBookSelectContentDao bmsBookSelectContentDao) {
         this.bmsBookSelectContentMapper = bmsBookSelectContentMapper;
-        this.bmsBookSelectContentItemMapper = bmsBookSelectContentItemMapper;
         this.bmsBookSelectContentDao = bmsBookSelectContentDao;
     }
 
-    private BmsBookSelectContentWithItems toWithItems(BmsBookSelectContent sc, List<BmsBookSelectContentItem> items) {
+    private BmsBookSelectContentWithItems toWithItems(BmsBookSelectContent sc) {
         if (sc == null) return null;
         BmsBookSelectContentWithItems dto = new BmsBookSelectContentWithItems();
         dto.setId(sc.getId());
@@ -41,15 +35,7 @@ public class BmsBookSelectContentServiceImpl implements BmsBookSelectContentServ
         dto.setMarkType(sc.getMarkType());
         dto.setMarkColor(sc.getMarkColor());
         dto.setCreateTime(sc.getCreateTime());
-        dto.setItems(items != null ? items : new ArrayList<>());
         return dto;
-    }
-
-    private List<BmsBookSelectContentItem> getItemsBySelectId(Integer selectId) {
-        if (selectId == null) return new ArrayList<>();
-        BmsBookSelectContentItemExample ex = new BmsBookSelectContentItemExample();
-        ex.createCriteria().andSelectIdEqualTo(selectId);
-        return bmsBookSelectContentItemMapper.selectByExample(ex);
     }
 
     @Override
@@ -64,18 +50,7 @@ public class BmsBookSelectContentServiceImpl implements BmsBookSelectContentServ
         sc.setMarkType(param.getMarkType());
         sc.setMarkColor(param.getMarkColor());
         int n = bmsBookSelectContentMapper.insertSelective(sc);
-        if (n <= 0) return null;
-        Integer selectId = sc.getId();
-        if (param.getItems() != null && !param.getItems().isEmpty()) {
-            for (BmsBookSelectContentItem item : param.getItems()) {
-                item.setSelectId(selectId);
-                item.setId(null);
-                if (item.getOffset() == null) item.setOffset(0);
-                if (item.getLength() == null) item.setLength(0);
-                bmsBookSelectContentItemMapper.insertSelective(item);
-            }
-        }
-        return selectId;
+        return n > 0 ? sc.getId() : null;
     }
 
     @Override
@@ -88,36 +63,19 @@ public class BmsBookSelectContentServiceImpl implements BmsBookSelectContentServ
             if (param.getMarkType() != null) existing.setMarkType(param.getMarkType());
             if (param.getMarkColor() != null) existing.setMarkColor(param.getMarkColor());
         }
-        int n = bmsBookSelectContentMapper.updateByPrimaryKeySelective(existing);
-        BmsBookSelectContentItemExample delEx = new BmsBookSelectContentItemExample();
-        delEx.createCriteria().andSelectIdEqualTo(id);
-        bmsBookSelectContentItemMapper.deleteByExample(delEx);
-        if (param != null && param.getItems() != null && !param.getItems().isEmpty()) {
-            for (BmsBookSelectContentItem item : param.getItems()) {
-                item.setSelectId(id);
-                item.setId(null);
-                if (item.getOffset() == null) item.setOffset(0);
-                if (item.getLength() == null) item.setLength(0);
-                bmsBookSelectContentItemMapper.insertSelective(item);
-            }
-        }
-        return n;
+        return bmsBookSelectContentMapper.updateByPrimaryKeySelective(existing);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int deleteById(Integer id) {
-        BmsBookSelectContentItemExample ex = new BmsBookSelectContentItemExample();
-        ex.createCriteria().andSelectIdEqualTo(id);
-        bmsBookSelectContentItemMapper.deleteByExample(ex);
         return bmsBookSelectContentMapper.deleteByPrimaryKey(id);
     }
 
     @Override
     public BmsBookSelectContentWithItems getById(Integer id) {
         BmsBookSelectContent sc = bmsBookSelectContentMapper.selectByPrimaryKey(id);
-        List<BmsBookSelectContentItem> items = getItemsBySelectId(id);
-        return toWithItems(sc, items);
+        return toWithItems(sc);
     }
 
     @Override
@@ -126,9 +84,7 @@ public class BmsBookSelectContentServiceImpl implements BmsBookSelectContentServ
         ex.createCriteria().andMemberIdEqualTo(memberId);
         ex.setOrderByClause("create_time DESC");
         List<BmsBookSelectContent> list = bmsBookSelectContentMapper.selectByExample(ex);
-        return list.stream()
-                .map(sc -> toWithItems(sc, getItemsBySelectId(sc.getId())))
-                .collect(Collectors.toList());
+        return list.stream().map(this::toWithItems).collect(Collectors.toList());
     }
 
     @Override
@@ -140,9 +96,7 @@ public class BmsBookSelectContentServiceImpl implements BmsBookSelectContentServ
     @Override
     public List<BmsBookSelectContentWithItems> listByMemberIdAndBookId(Integer memberId, Integer bookId) {
         List<BmsBookSelectContent> list = bmsBookSelectContentDao.listByMemberIdAndBookId(memberId, bookId);
-        return list.stream()
-                .map(sc -> toWithItems(sc, getItemsBySelectId(sc.getId())))
-                .collect(Collectors.toList());
+        return list.stream().map(this::toWithItems).collect(Collectors.toList());
     }
 
     @Override
@@ -154,9 +108,7 @@ public class BmsBookSelectContentServiceImpl implements BmsBookSelectContentServ
     @Override
     public List<BmsBookSelectContentWithItems> listByBookId(Integer bookId) {
         List<BmsBookSelectContent> list = bmsBookSelectContentDao.listByBookId(bookId);
-        return list.stream()
-                .map(sc -> toWithItems(sc, getItemsBySelectId(sc.getId())))
-                .collect(Collectors.toList());
+        return list.stream().map(this::toWithItems).collect(Collectors.toList());
     }
 
     @Override
@@ -170,9 +122,7 @@ public class BmsBookSelectContentServiceImpl implements BmsBookSelectContentServ
         BmsBookSelectContentExample ex = new BmsBookSelectContentExample();
         ex.setOrderByClause("create_time DESC");
         List<BmsBookSelectContent> list = bmsBookSelectContentMapper.selectByExample(ex);
-        return list.stream()
-                .map(sc -> toWithItems(sc, getItemsBySelectId(sc.getId())))
-                .collect(Collectors.toList());
+        return list.stream().map(this::toWithItems).collect(Collectors.toList());
     }
 
     @Override

@@ -8,6 +8,8 @@ import com.pool.readio.common.api.CommonPage;
 import com.pool.readio.common.api.CommonResult;
 import com.pool.readio.mbg.model.BmsBook;
 import com.pool.readio.mbg.model.UmsMember;
+import com.pool.readio.admin.service.BookContentService;
+import com.pool.readio.mbg.mongo.BookContent;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +22,12 @@ import java.util.List;
 public class BmsBookController {
 
     private final BmsBookService bmsBookService;
+    private final BookContentService bookContentService;
 
-    public BmsBookController(BmsBookService bmsBookService) {
+    public BmsBookController(BmsBookService bmsBookService,
+                             BookContentService bookContentService) {
         this.bmsBookService = bmsBookService;
+        this.bookContentService = bookContentService;
     }
 
     @Operation(summary = "获取所有书籍")
@@ -48,6 +53,14 @@ public class BmsBookController {
     public CommonResult<BmsBook> getById(@PathVariable Integer id) {
         BmsBook item = bmsBookService.getById(id);
         return item != null ? CommonResult.success(item) : CommonResult.failed("书籍不存在");
+    }
+
+    @Operation(summary = "根据书籍ID从 MongoDB 获取书籍内容（JSON），直接返回文档")
+    @GetMapping("/{id}/content")
+    public CommonResult<BookContent> getContentById(@PathVariable Integer id) {
+        return bookContentService.getByBookId(id)
+                .map(CommonResult::success)
+                .orElse(CommonResult.failed("该书暂无内容或未从 JSON 导入"));
     }
 
     @Operation(summary = "新增书籍")

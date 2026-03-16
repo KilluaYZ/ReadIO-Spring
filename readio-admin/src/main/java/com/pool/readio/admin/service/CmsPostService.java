@@ -1,6 +1,5 @@
 package com.pool.readio.admin.service;
 
-import com.pool.readio.admin.dto.CmsPostContentBlockParam;
 import com.pool.readio.admin.dto.CmsPostDetail;
 import com.pool.readio.admin.dto.CmsMemberPreferPostStatusResult;
 import com.pool.readio.mbg.model.CmsPost;
@@ -27,26 +26,9 @@ public interface CmsPostService {
     CmsPost getById(Integer id);
 
     /**
-     * 按 ID 获取帖子详情，包含按 order 排序的内容块列表
+     * 按 ID 获取帖子详情（仅帖子元信息，内容块表已废弃）
      */
     CmsPostDetail getDetailById(Integer id);
-
-    /**
-     * 向指定帖子追加一个内容块（如一段文本），类型默认为 0（文本）
-     *
-     * @param postId 帖子 ID
-     * @param param  内容块参数（content 必填，type 可选默认 0）
-     * @return 新内容块 ID，帖子不存在或 content 为空时返回 null
-     */
-    Integer addContentBlock(Integer postId, CmsPostContentBlockParam param);
-
-    /**
-     * 删除指定帖子的全部内容块
-     *
-     * @param postId 帖子 ID
-     * @return 删除的条数，帖子不存在返回 0
-     */
-    int deleteContentBlocksByPostId(Integer postId);
 
     int create(CmsPost record);
 

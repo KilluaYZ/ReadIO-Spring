@@ -2,17 +2,13 @@ package com.pool.readio.admin.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.pool.readio.admin.dao.CmsPostDao;
-import com.pool.readio.admin.dto.CmsPostContentBlockParam;
 import com.pool.readio.admin.dto.CmsPostDetail;
 import com.pool.readio.admin.dto.CmsMemberPreferPostStatusResult;
 import com.pool.readio.admin.service.CmsPostService;
-import com.pool.readio.mbg.mapper.CmsPostContentBlockMapper;
 import com.pool.readio.mbg.mapper.CmsPostMapper;
 import com.pool.readio.mbg.mapper.CmsMemberPreferPostRelationMapper;
 import com.pool.readio.mbg.mapper.UmsMemberMapper;
 import com.pool.readio.mbg.model.CmsPost;
-import com.pool.readio.mbg.model.CmsPostContentBlock;
-import com.pool.readio.mbg.model.CmsPostContentBlockExample;
 import com.pool.readio.mbg.model.CmsPostExample;
 import com.pool.readio.mbg.model.CmsMemberPreferPostRelation;
 import com.pool.readio.mbg.model.CmsMemberPreferPostRelationExample;
@@ -39,7 +35,6 @@ public class CmsPostServiceImpl implements CmsPostService {
 
     private final CmsPostMapper cmsPostMapper;
     private final CmsPostDao cmsPostDao;
-    private final CmsPostContentBlockMapper cmsPostContentBlockMapper;
     private final CmsPostTagMapper cmsPostTagMapper;
     private final CmsPostTagRelationMapper cmsPostTagRelationMapper;
     private final CmsMemberPreferPostRelationMapper cmsMemberPreferPostRelationMapper;
@@ -47,14 +42,12 @@ public class CmsPostServiceImpl implements CmsPostService {
 
     public CmsPostServiceImpl(CmsPostMapper cmsPostMapper,
                               CmsPostDao cmsPostDao,
-                              CmsPostContentBlockMapper cmsPostContentBlockMapper,
                               CmsPostTagMapper cmsPostTagMapper,
                               CmsPostTagRelationMapper cmsPostTagRelationMapper,
                               CmsMemberPreferPostRelationMapper cmsMemberPreferPostRelationMapper,
                               UmsMemberMapper umsMemberMapper) {
         this.cmsPostMapper = cmsPostMapper;
         this.cmsPostDao = cmsPostDao;
-        this.cmsPostContentBlockMapper = cmsPostContentBlockMapper;
         this.cmsPostTagMapper = cmsPostTagMapper;
         this.cmsPostTagRelationMapper = cmsPostTagRelationMapper;
         this.cmsMemberPreferPostRelationMapper = cmsMemberPreferPostRelationMapper;
@@ -80,32 +73,6 @@ public class CmsPostServiceImpl implements CmsPostService {
     @Override
     public CmsPostDetail getDetailById(Integer id) {
         return cmsPostDao.getDetail(id);
-    }
-
-    @Override
-    public Integer addContentBlock(Integer postId, CmsPostContentBlockParam param) {
-        if (postId == null || param == null || !StringUtils.hasText(param.getContent())) {
-            return null;
-        }
-        if (cmsPostMapper.selectByPrimaryKey(postId) == null) {
-            return null;
-        }
-        CmsPostContentBlock block = new CmsPostContentBlock();
-        block.setPostId(postId);
-        block.setType(param.getType() != null ? param.getType() : 0);
-        block.setContent(param.getContent().trim());
-        cmsPostContentBlockMapper.insertSelective(block);
-        return block.getId();
-    }
-
-    @Override
-    public int deleteContentBlocksByPostId(Integer postId) {
-        if (postId == null) {
-            return 0;
-        }
-        CmsPostContentBlockExample example = new CmsPostContentBlockExample();
-        example.createCriteria().andPostIdEqualTo(postId);
-        return cmsPostContentBlockMapper.deleteByExample(example);
     }
 
     @Override
