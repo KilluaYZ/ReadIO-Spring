@@ -7,6 +7,7 @@ import com.pool.readio.admin.service.CmsPostService;
 import com.pool.readio.admin.service.PostContentService;
 import com.pool.readio.common.api.CommonPage;
 import com.pool.readio.common.api.CommonResult;
+import com.pool.readio.common.api.ResultCode;
 import com.pool.readio.mbg.model.CmsPost;
 import com.pool.readio.mbg.model.UmsMember;
 import com.pool.readio.admin.dto.CmsPostContentUpdateParam;
@@ -66,7 +67,7 @@ public class CmsPostController {
     public CommonResult<PostContent> getContentById(@PathVariable Integer id) {
         return postContentService.getByPostId(id)
                 .map(CommonResult::success)
-                .orElse(CommonResult.failed("该帖子暂无内容"));
+                .orElse(CommonResult.failed(ResultCode.NO_CONTENT, "该帖子暂无内容"));
     }
 
     @Operation(summary = "新增帖子")

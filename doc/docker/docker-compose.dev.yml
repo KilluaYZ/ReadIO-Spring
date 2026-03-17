@@ -24,7 +24,7 @@ services:
       retries: 5
 
   debezium-server:
-    image: quay.io/debezium/server:2.7
+    image: quay.io/debezium/server:latest
     container_name: readio-debezium-server-dev
     environment:
       DEBEZIUM_LOGGING__LEVEL: INFO
@@ -42,12 +42,22 @@ services:
       # 只监听核心表，后续可根据需要扩展
       DEBEZIUM_SOURCE_TABLE_INCLUDE_LIST: public.bms_book,public.cms_post
 
-      # 先使用 log sink，把变更事件打印到日志；后续可切换为 amqp（RabbitMQ）
-      DEBEZIUM_SINK_TYPE: log
+      # Sink：RabbitMQ，将变更事件投递到 readio.cdc 交换机
+      DEBEZIUM_SINK_TYPE: rabbitmq
+      DEBEZIUM_SINK_RABBITMQ_CONNECTION_HOST: readio-rabbitmq-dev
+      DEBEZIUM_SINK_RABBITMQ_CONNECTION_PORT: 5672
+      DEBEZIUM_SINK_RABBITMQ_CONNECTION_USERNAME: readio
+      DEBEZIUM_SINK_RABBITMQ_CONNECTION_PASSWORD: readio
+      # 与 readio-search 中 CdcRabbitConfig 的 EXCHANGE / ROUTING_KEY 保持一致
+      DEBEZIUM_SINK_RABBITMQ_EXCHANGE: readio.cdc
+      DEBEZIUM_SINK_RABBITMQ_ROUTINGKEY_SOURCE: static
+      DEBEZIUM_SINK_RABBITMQ_ROUTINGKEY: readio.cdc.postgres
+      # 使用 JSON 格式，便于 CdcEventListener 用 Jackson 解析
       DEBEZIUM_FORMAT_KEY: json
       DEBEZIUM_FORMAT_VALUE: json
     depends_on:
       - postgres
+      - rabbitmq
     restart: unless-stopped
 
   redis:
@@ -65,6 +75,17 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  rabbitmq:
+    image: docker.io/library/rabbitmq:latest
+    container_name: readio-rabbitmq-dev
+    environment:
+      RABBITMQ_DEFAULT_USER: readio
+      RABBITMQ_DEFAULT_PASS: readio
+    ports:
+      - "26011:5672"   # AMQP
+      - "26012:15672"  # 管理控制台：http://localhost:26012
+    restart: unless-stopped
 
   # 与本地 docker run 成功参数一致：standalone + 内嵌 Derby，无 MySQL
   nacos:
@@ -225,7 +246,7 @@ services:
       start_period: 30s
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:8.15.3
+    image: docker.elastic.co/kibana/kibana:9.2.5
     container_name: readio-kibana-dev
     environment:
       - ELASTICSEARCH_HOSTS=http://readio-elasticsearch-dev:9200

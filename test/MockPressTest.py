@@ -95,7 +95,7 @@ def fake_member_payload() -> dict:
     }
 
 
-def fake_post_payload(member_id: int | None = None) -> dict:
+def fake_post_payload(member_id: int | None = None) -> tuple[dict, dict]:
     """
     按字段语义模拟 CmsPost：
     - title: 帖子标题
@@ -111,7 +111,13 @@ def fake_post_payload(member_id: int | None = None) -> dict:
     }
     if member_id is not None:
         payload["memberId"] = member_id
-    return payload
+    
+
+    payload_content = {
+        "content": random_description(300),
+    }
+
+    return payload, payload_content
 
 
 def fake_comment_payload(member_id: int, select_id: int | None = None,
@@ -141,48 +147,6 @@ def fake_comment_payload(member_id: int, select_id: int | None = None,
     if select_id is not None:
         payload["selectId"] = select_id
     return payload
-
-
-def fake_chapter_payload(book_id: int, order_id: int | None = None) -> dict:
-    """
-    按字段语义模拟 BmsBookChapter 新增：
-    - bookId: 所属书籍（必填）
-    - name: 章节名
-    - orderId: 章节顺序；不传则随机
-    - wordCount: 章节字数（可选）
-    """
-    payload = {
-        "bookId": book_id,
-        "name": random_title(4),
-        "orderId": order_id if order_id is not None else random.randint(1, 999),
-        "wordCount": random.randint(100, 5000),
-    }
-    return payload
-
-
-def fake_content_block_payload(
-    chapter_id: int,
-    book_id: int,
-    order_id: int | None = None,
-) -> dict:
-    """
-    按字段语义模拟 BmsBookContentBlock 新增：
-    - chapterId, bookId: 所属章节与书籍（必填）
-    - type: 0 文本；1 图片等
-    - orderId: 内容块顺序；不传则随机
-    - content: 正文（可选）
-    - newline: 是否换行（可选）
-    """
-    payload = {
-        "chapterId": chapter_id,
-        "bookId": book_id,
-        "type": random.choice([0, 1]),
-        "orderId": order_id if order_id is not None else random.randint(1, 999),
-        "content": random_description(200),
-        "newline": random.choice([True, False]),
-    }
-    return payload
-
 
 def fake_order_payload(member_id: int | None = None) -> dict:
     """
@@ -254,48 +218,6 @@ class ReadioAdminUser(HttpUser):
         self.client.get("/member/list", params={"pageNum": 1, "pageSize": 5}, headers=headers, name="member.list[GET]")
 
     # -------- 作者 & 出版社 & 书籍相关 --------
-
-    @tag("author", "write")
-    @task(2)
-    def create_author_and_publisher_and_book(self) -> None:
-        headers = self._headers()
-
-        # 创建作者
-        author_resp = self.client.post(
-            "/author/create",
-            json=fake_author_payload(),
-            headers=headers,
-            name="author.create[POST]",
-        )
-        author_id = None
-        if author_resp.ok:
-            try:
-                author_id = author_resp.json().get("data")
-            except Exception:
-                pass
-
-        # 创建出版社
-        publisher_resp = self.client.post(
-            "/publisher/create",
-            json=fake_publisher_payload(),
-            headers=headers,
-            name="publisher.create[POST]",
-        )
-        publisher_id = None
-        if publisher_resp.ok:
-            try:
-                publisher_id = publisher_resp.json().get("data")
-            except Exception:
-                pass
-
-        # 只有在拿到有效 authorId 时才创建书籍，避免向 bms_book.author_id 插入 NULL
-        if author_id is not None:
-            self.client.post(
-                "/book/create",
-                json=fake_book_payload(author_id=author_id, publisher_id=publisher_id),
-                headers=headers,
-                name="book.create[POST]",
-            )
 
     @tag("book", "read")
     @task(3)
@@ -375,51 +297,105 @@ class ReadioAdminUser(HttpUser):
             headers=headers,
             name="comment.create[POST]",
         )
+    
+    @tag("post", "write")
+    @task(1)
+    def create_post_content(self) -> None:
+        header = self._headers()
+
+        # 先查一个会员
+        member_id = self._pick_any_member_id() 
+        if member_id is None:
+            return
+
+        # 再拼凑帖子的payload
+        payload_meta, payload_content = fake_post_payload(member_id=member_id)
+        
+        # 先创建帖子
+        post_resp = self.client.post(
+            "/post/create",
+            json=payload_meta,
+            headers=header,
+            name="post.create[POST]",
+        )
+        post_id = None
+        if post_resp.ok:
+            try:
+                post_id = post_resp.json().get("data")
+            except Exception:
+                post_id = None
+        if post_id is None:
+            return
+        # 再创建帖子内容
+        self.client.post(
+            "/post/content",
+            json=payload_content,
+            headers=header,
+            name="post.content[POST]",
+        )
+
+    @tag("post", "read")
+    @task(2)
+    def read_post_content(self) -> None:
+        header = self._headers() 
+        post_id = self._pick_any_post_id()
+        if post_id is None:
+            return
+        self.client.get(
+            f"/post/{post_id}/detail",
+            headers=header,
+            name="post.detail[GET]",
+        )
+        self.client.get(
+            f"/post/{post_id}/content",
+            headers=header,
+            name="post.content[GET]",
+        )
 
     # -------- 订单 & 营销相关 --------
 
-    @tag("order", "write")
-    @task(1)
-    def create_order_for_member(self) -> None:
-        headers = self._headers()
-        # 先通过接口创建一个会员，保证有可用的 memberId
-        member_resp = self.client.post(
-            "/member/create",
-            json=fake_member_payload(),
-            headers=headers,
-            name="member.create[POST](forOrder)",
-        )
-        member_id: int | None = None
-        if member_resp.ok:
-            try:
-                member_id = member_resp.json().get("data")
-            except Exception:
-                member_id = None
-        # 如果创建失败，再尝试从已有会员中挑一个
-        if member_id is None:
-            member_id = self._pick_any_member_id()
-        # 依然没有会员就不创建订单，避免 oms_order.member_id 为 NULL
-        if member_id is None:
-            return
-        payload = fake_order_payload(member_id=member_id)
-        self.client.post(
-            "/order/create",
-            json=payload,
-            headers=headers,
-            name="order.create[POST]",
-        )
+    # @tag("order", "write")
+    # @task(1)
+    # def create_order_for_member(self) -> None:
+    #     headers = self._headers()
+    #     # 先通过接口创建一个会员，保证有可用的 memberId
+    #     member_resp = self.client.post(
+    #         "/member/create",
+    #         json=fake_member_payload(),
+    #         headers=headers,
+    #         name="member.create[POST](forOrder)",
+    #     )
+    #     member_id: int | None = None
+    #     if member_resp.ok:
+    #         try:
+    #             member_id = member_resp.json().get("data")
+    #         except Exception:
+    #             member_id = None
+    #     # 如果创建失败，再尝试从已有会员中挑一个
+    #     if member_id is None:
+    #         member_id = self._pick_any_member_id()
+    #     # 依然没有会员就不创建订单，避免 oms_order.member_id 为 NULL
+    #     if member_id is None:
+    #         return
+    #     payload = fake_order_payload(member_id=member_id)
+    #     self.client.post(
+    #         "/order/create",
+    #         json=payload,
+    #         headers=headers,
+    #         name="order.create[POST]",
+    #     )
 
-    @tag("order", "read")
-    @task(1)
-    def list_orders(self) -> None:
-        page = random.randint(1, 5)
-        headers = self._headers()
-        self.client.get(
-            "/order/list",
-            params={"pageNum": page, "pageSize": 10},
-            headers=headers,
-            name="order.list[GET]",
-        )
+    # @tag("order", "read")
+    # @task(1)
+    # def list_orders(self) -> None:
+    #     page = random.randint(1, 5)
+    #     headers = self._headers()
+    #     self.client.get(
+    #         "/order/list",
+    #         params={"pageNum": page, "pageSize": 10},
+    #         headers=headers,
+    #         name="order.list[GET]",
+    #     )
 
     # -------- 通用只读压力接口 --------
 
@@ -589,48 +565,7 @@ class ReadioAdminUser(HttpUser):
         except Exception:
             return None
 
-    # -------- 书籍章节 & 内容块相关 --------
-
-    @tag("book-chapter", "write")
-    @task(1)
-    def create_chapter_for_book(self) -> None:
-        """
-        压测：向已有书籍添加新章节。先取一个 bookId，再 POST /bookChapter/create。
-        """
-        headers = self._headers()
-        book_id = self._pick_any_book_id()
-        if book_id is None:
-            return
-        payload = fake_chapter_payload(book_id=book_id)
-        self.client.post(
-            "/bookChapter/create",
-            json=payload,
-            headers=headers,
-            name="bookChapter.create[POST]",
-        )
-
-    @tag("book-content-block", "write")
-    @task(1)
-    def create_content_block_for_chapter(self) -> None:
-        """
-        压测：向已有章节添加新内容块。先取 bookId，再取该书的 chapterId，再 POST /bookContentBlock/create。
-        """
-        headers = self._headers()
-        book_id = self._pick_any_book_id()
-        if book_id is None:
-            return
-        chapter_id = self._pick_any_chapter_id(book_id=book_id)
-        if chapter_id is None:
-            return
-        payload = fake_content_block_payload(chapter_id=chapter_id, book_id=book_id)
-        self.client.post(
-            "/bookContentBlock/create",
-            json=payload,
-            headers=headers,
-            name="bookContentBlock.create[POST]",
-        )
-
-    @tag("book-chapter", "book-content-block", "read")
+    @tag("book-content", "read")
     @task(2)
     def list_chapters_and_content_blocks_by_book(self) -> None:
         """
@@ -641,28 +576,10 @@ class ReadioAdminUser(HttpUser):
         if book_id is None:
             # 无书籍时仍可压测接口（部分接口可能返回空列表）
             book_id = 1
-        chapters_resp = self.client.get(
-            f"/bookChapter/listByBook/{book_id}",
-            headers=headers,
-            name="bookChapter.listByBook[GET]",
-        )
-        chapter_id = None
-        if chapters_resp.ok:
-            try:
-                data = chapters_resp.json().get("data") or []
-                if isinstance(data, list) and data:
-                    chapter_id = random.choice(data).get("id")
-            except Exception:
-                pass
-        if chapter_id is not None:
-            self.client.get(
-                f"/bookContentBlock/listByChapter/{chapter_id}",
-                headers=headers,
-                name="bookContentBlock.listByChapter[GET]",
-            )
+        # 直接请求相应的api，返回书籍内容
         self.client.get(
-            f"/bookContentBlock/listChaptersWithBlocksByBook/{book_id}",
+            f"/book/{book_id}/content",
             headers=headers,
-            name="bookContentBlock.listChaptersWithBlocksByBook[GET]",
+            name="book.content[GET]",
         )
 

@@ -7,143 +7,16 @@ import com.pool.readio.mbg.mongo.BookContentRepository;
 import com.pool.readio.mbg.mongo.PostContent;
 import com.pool.readio.mbg.mongo.PostContentRepository;
 import com.pool.readio.search.es.SearchContentDocument;
-import com.pool.readio.search.es.SearchContentEsRepository;
-import com.pool.readio.search.sync.SyncState;
-import com.pool.readio.search.sync.SyncStateRepository;
-import jakarta.transaction.Transactional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-
-import java.time.Instant;
-import java.time.ZoneId;
-import java.util.List;
-import java.util.Optional;
 
 @Component
 public class ReadioSyncElasticData {
 
-    private static final String SYNC_STATE_ID = "default";
-
-    private final BmsBookMapper bmsBookMapper;
-    private final CmsPostMapper cmsPostMapper;
-    private final BookContentRepository bookContentRepository;
-    private final PostContentRepository postContentRepository;
-    private final SearchContentEsRepository searchContentEsRepository;
-    private final SyncStateRepository syncStateRepository;
-
-    public ReadioSyncElasticData(BmsBookMapper bmsBookMapper,
-                                 CmsPostMapper cmsPostMapper,
-                                 BookContentRepository bookContentRepository,
-                                 PostContentRepository postContentRepository,
-                                 SearchContentEsRepository searchContentEsRepository,
-                                 SyncStateRepository syncStateRepository) {
-        this.bmsBookMapper = bmsBookMapper;
-        this.cmsPostMapper = cmsPostMapper;
-        this.bookContentRepository = bookContentRepository;
-        this.postContentRepository = postContentRepository;
-        this.searchContentEsRepository = searchContentEsRepository;
-        this.syncStateRepository = syncStateRepository;
-    }
-
-    @Transactional
-    public void syncIncremental() {
-        Instant lastSyncTime = getLastSyncTime();
-        Instant newLastSyncTime = lastSyncTime;
-
-        newLastSyncTime = syncBooksSince(lastSyncTime, newLastSyncTime);
-        newLastSyncTime = syncPostsSince(lastSyncTime, newLastSyncTime);
-
-        saveLastSyncTime(newLastSyncTime);
-    }
-
-    private Instant getLastSyncTime() {
-        Optional<SyncState> stateOpt = syncStateRepository.findById(SYNC_STATE_ID);
-        return stateOpt.map(SyncState::getLastSyncTime).orElse(Instant.EPOCH);
-    }
-
-    private void saveLastSyncTime(Instant instant) {
-        SyncState state = new SyncState(SYNC_STATE_ID, instant);
-        syncStateRepository.save(state);
-    }
-
-    private Instant syncBooksSince(Instant since, Instant currentMax) {
-        int page = 0;
-        int size = 500;
-
-        while (true) {
-            Page<BmsBook> booksPage = bmsBookMapper.findByPublishTimeAfter(
-                    since.atZone(ZoneId.systemDefault()).toLocalDateTime(),
-                    PageRequest.of(page, size)
-            );
-
-            if (booksPage.isEmpty()) {
-                break;
-            }
-
-            for (BmsBook book : booksPage.getContent()) {
-                BookContent content = bookContentRepository
-                        .findByBookId(book.getId())
-                        .orElse(null);
-                SearchContentDocument doc = mapBookToEs(book, content);
-                searchContentEsRepository.save(doc);
-
-                if (book.getPublishTime() != null) {
-                    Instant publishInstant = book.getPublishTime().toInstant();
-                    if (publishInstant.isAfter(currentMax)) {
-                        currentMax = publishInstant;
-                    }
-                }
-            }
-
-            if (!booksPage.hasNext()) {
-                break;
-            }
-            page++;
-        }
-
-        return currentMax;
-    }
-
-    private Instant syncPostsSince(Instant since, Instant currentMax) {
-        int page = 0;
-        int size = 500;
-
-        while (true) {
-            Page<CmsPost> postsPage = cmsPostMapper.findByUpdateTimeAfter(
-                    since.atZone(ZoneId.systemDefault()).toLocalDateTime(),
-                    PageRequest.of(page, size)
-            );
-
-            if (postsPage.isEmpty()) {
-                break;
-            }
-
-            for (CmsPost post : postsPage.getContent()) {
-                PostContent content = postContentRepository
-                        .findByPostId(post.getId())
-                        .orElse(null);
-                SearchContentDocument doc = mapPostToEs(post, content);
-                searchContentEsRepository.save(doc);
-
-                if (post.getUpdateTime() != null) {
-                    Instant updateInstant = post.getUpdateTime().toInstant();
-                    if (updateInstant.isAfter(currentMax)) {
-                        currentMax = updateInstant;
-                    }
-                }
-            }
-
-            if (!postsPage.hasNext()) {
-                break;
-            }
-            page++;
-        }
-
-        return currentMax;
-    }
-
-    private SearchContentDocument mapBookToEs(BmsBook book, BookContent content) {
+    /**
+     * 将书籍及其内容映射为 Elasticsearch 文档。
+     * 目前作为通用工具方法供其他地方需要时调用，增量分页同步逻辑后续再根据实际需求补充。
+     */
+    public SearchContentDocument mapBookToEs(BmsBook book, BookContent content) {
         SearchContentDocument doc = new SearchContentDocument();
         doc.setId("book:" + book.getId());
         doc.setType("BOOK");
@@ -177,7 +50,10 @@ public class ReadioSyncElasticData {
         return doc;
     }
 
-    private SearchContentDocument mapPostToEs(CmsPost post, PostContent content) {
+    /**
+     * 将帖子及其内容映射为 Elasticsearch 文档。
+     */
+    public SearchContentDocument mapPostToEs(CmsPost post, PostContent content) {
         SearchContentDocument doc = new SearchContentDocument();
         doc.setId("post:" + post.getId());
         doc.setType("POST");

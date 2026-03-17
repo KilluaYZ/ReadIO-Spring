@@ -12,6 +12,7 @@ spring-cloud-loadbalancer = "5.0.1"
 spring-cloud-gateway = "5.0.1"
 spring-cloud-openfeign = "5.0.1"
 
+
 # 工具与框架
 lombok = "1.18.42"
 hutool = "5.8.43"

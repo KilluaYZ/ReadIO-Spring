@@ -27,6 +27,11 @@ spring:
     uris: http://localhost:26008
   mongodb:
     uri: mongodb://readio:readio@localhost:26007/readio?authSource=admin
+  rabbitmq:
+    host: localhost
+    port: 26011
+    username: readio
+    password: readio
   security:
     oauth2:
       resourceserver:
