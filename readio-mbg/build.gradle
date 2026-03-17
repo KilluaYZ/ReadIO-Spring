@@ -10,7 +10,7 @@ description = 'readio-mbg'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -33,4 +33,9 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.register('runGenerator', JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.pool.readio.mbg.Generator'
 }
