@@ -2,6 +2,12 @@ services:
   postgres:
     image: docker.io/library/postgres:latest
     container_name: readio-postgres-dev
+    command: >
+      postgres
+      -c wal_level=logical
+      -c max_wal_senders=10
+      -c max_replication_slots=10
+      -c max_connections=200
     environment:
       POSTGRES_USER: readio
       POSTGRES_PASSWORD: readio
@@ -16,6 +22,33 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  debezium-server:
+    image: quay.io/debezium/server:2.7
+    container_name: readio-debezium-server-dev
+    environment:
+      DEBEZIUM_LOGGING__LEVEL: INFO
+
+      # 源：PostgreSQL（与上面的 postgres 服务对应）
+      DEBEZIUM_SOURCE_CONNECTOR_CLASS: io.debezium.connector.postgresql.PostgresConnector
+      DEBEZIUM_SOURCE_DATABASE_HOSTNAME: readio-postgres-dev
+      DEBEZIUM_SOURCE_DATABASE_PORT: 5432
+      DEBEZIUM_SOURCE_DATABASE_USER: readio
+      DEBEZIUM_SOURCE_DATABASE_PASSWORD: readio
+      DEBEZIUM_SOURCE_DATABASE_DBNAME: readio
+      DEBEZIUM_SOURCE_PLUGIN_NAME: pgoutput
+      DEBEZIUM_SOURCE_SLOT_NAME: readio_cdc_slot
+      DEBEZIUM_SOURCE_PUBLICATION_NAME: readio_cdc_pub
+      # 只监听核心表，后续可根据需要扩展
+      DEBEZIUM_SOURCE_TABLE_INCLUDE_LIST: public.bms_book,public.cms_post
+
+      # 先使用 log sink，把变更事件打印到日志；后续可切换为 amqp（RabbitMQ）
+      DEBEZIUM_SINK_TYPE: log
+      DEBEZIUM_FORMAT_KEY: json
+      DEBEZIUM_FORMAT_VALUE: json
+    depends_on:
+      - postgres
+    restart: unless-stopped
 
   redis:
     image: docker.io/library/redis:7-alpine
@@ -58,21 +91,7 @@ services:
       retries: 10
       start_period: 30s
 
-  logstash:
-    image: docker.elastic.co/logstash/logstash:8.19.0
-    container_name: readio-logstash-dev
-    environment:
-      # 开发环境限制 JVM 堆，避免占满内存
-      LS_JAVA_OPTS: "-Xms256m -Xmx512m"
-    ports:
-      - "4560:4560"
-      - "4561:4561"
-      - "4562:4562"
-      - "4563:4563"
-    volumes:
-      - ./logstash/readio.conf:/usr/share/logstash/pipeline/readio.conf:ro
-    restart: unless-stopped
-
+  
   minio:
     image: docker.io/minio/minio:latest
     container_name: readio-minio-dev
@@ -163,8 +182,29 @@ services:
       retries: 5
       start_period: 10s
 
+  logstash:
+    build:
+      context: ./logstash
+      dockerfile: Dockerfile
+    container_name: readio-logstash-dev
+    environment:
+      # 开发环境限制 JVM 堆，避免占满内存
+      LS_JAVA_OPTS: "-Xms256m -Xmx512m"
+    ports:
+      - "4560:4560"
+      - "4561:4561"
+      - "4562:4562"
+      - "4563:4563"
+      - "5044:5044"
+    volumes:
+      - ./logstash/readio.conf:/usr/share/logstash/pipeline/readio.conf:ro
+    restart: unless-stopped
+
+
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
+    build:
+      context: ./elasticsearch
+      dockerfile: Dockerfile
     container_name: readio-elasticsearch-dev
     environment:
       - discovery.type=single-node
@@ -172,9 +212,10 @@ services:
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
     ports:
       - "26008:9200"   # HTTP
-      - "26009:9300"   # Transport
+      - "26009:9300"   # Transportda
     volumes:
       - readio_elasticsearch_data:/usr/share/elasticsearch/data
+      - readio_elasticsearch_plugins:/usr/share/elasticsearch/plugins
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -s http://127.0.0.1:9200/_cluster/health || exit 1"]
@@ -206,3 +247,4 @@ volumes:
   readio_milvus_data:
   readio_mongodb_data:
   readio_elasticsearch_data:
+  readio_elasticsearch_plugins:

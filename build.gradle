@@ -42,6 +42,6 @@ subprojects {
         // implementation libs.sa.token.reactor
         // implementation libs.sa.token.redis.jackson
         // implementation libs.sa.token.jwt
-        // implementation libs.postgresql
+         implementation libs.postgresql
     }
 }
