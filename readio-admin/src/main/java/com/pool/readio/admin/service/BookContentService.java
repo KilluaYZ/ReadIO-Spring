@@ -7,6 +7,7 @@ import com.mongodb.client.gridfs.model.GridFSFile;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -38,6 +39,7 @@ public class BookContentService {
     /**
      * 按书籍 ID 获取完整内容。若文档带 contentFileId 则从 GridFS 读取正文并合并返回。
      */
+    @Cacheable(cacheNames = "bookContent", key = "#bookId")
     public Optional<BookContent> getByBookId(Integer bookId) {
         Optional<BookContent> metaOpt = bookContentRepository.findByBookId(bookId);
         if (metaOpt.isEmpty()) {

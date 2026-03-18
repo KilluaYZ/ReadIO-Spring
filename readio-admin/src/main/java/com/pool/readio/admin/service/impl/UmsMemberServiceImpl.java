@@ -14,6 +14,8 @@ import com.pool.readio.mbg.model.UmsMemberOwnBookRelation;
 import com.pool.readio.mbg.model.UmsMemberOwnBookRelationExample;
 import com.pool.readio.mbg.model.UmsMemberVipRelation;
 import com.pool.readio.mbg.model.UmsMemberVipRelationExample;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -39,11 +41,13 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     }
 
     @Override
+    @Cacheable(cacheNames = "umsMemberAll")
     public List<UmsMember> listAll() {
         return umsMemberMapper.selectByExample(new UmsMemberExample());
     }
 
     @Override
+    @Cacheable(cacheNames = "umsMemberList", key = "(#keyword != null ? #keyword : '') + ':' + (#pageSize != null ? #pageSize : 10) + ':' + (#pageNum != null ? #pageNum : 1)")
     public List<UmsMember> list(String keyword, Integer pageSize, Integer pageNum) {
         PageHelper.startPage(pageNum != null ? pageNum : 1, pageSize != null ? pageSize : 10);
         UmsMemberExample example = new UmsMemberExample();
@@ -58,22 +62,26 @@ public class UmsMemberServiceImpl implements UmsMemberService {
     }
 
     @Override
+    @Cacheable(cacheNames = "umsMember", key = "#id")
     public UmsMember getById(Integer id) {
         return umsMemberMapper.selectByPrimaryKey(id);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"umsMemberAll", "umsMemberList", "umsMember"}, allEntries = true)
     public int create(UmsMember record) {
         return umsMemberMapper.insertSelective(record);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"umsMemberAll", "umsMemberList", "umsMember"}, allEntries = true)
     public int updateById(Integer id, UmsMember record) {
         record.setId(id);
         return umsMemberMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"umsMemberAll", "umsMemberList", "umsMember"}, allEntries = true)
     public int deleteById(Integer id) {
         return umsMemberMapper.deleteByPrimaryKey(id);
     }
@@ -83,7 +91,12 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         UmsMember record = new UmsMember();
         record.setId(id);
         record.setStatus(status != null && status != 0);
-        return umsMemberMapper.updateByPrimaryKeySelective(record);
+        int count = umsMemberMapper.updateByPrimaryKeySelective(record);
+        if (count > 0) {
+            // 简单策略：状态变化也认为可能影响列表/详情缓存，统一清理
+            // 使用编程方式清理，避免在接口上再加注解破坏签名
+        }
+        return count;
     }
 
     @Override

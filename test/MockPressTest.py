@@ -103,15 +103,15 @@ def fake_post_payload(member_id: int | None = None) -> tuple[dict, dict]:
     - visible: 可见类型（0->公开）
     - ip/address: 发送时的 IP 和位置
     """
+    if member_id is None:
+        raise RuntimeError("member_id is required")
     payload = {
         "title": random_title(8),
         "visible": 0,
         "ip": faker.ipv4(),
         "address": faker.address(),
+        "memberId": member_id,
     }
-    if member_id is not None:
-        payload["memberId"] = member_id
-    
 
     payload_content = {
         "content": random_description(300),
@@ -213,7 +213,8 @@ class ReadioAdminUser(HttpUser):
 
         # 简单预热：访问几个只读接口（同样带上鉴权头）
         headers = self._headers()
-        self.client.get("/author/listAll", headers=headers, name="author.listAll")
+        # self.client.get("/author/listAll", headers=headers, name="author.listAll")
+        self.client.get("/author/list", params={"pageNum": 1, "pageSize": 5}, headers=headers, name="author.list[GET]")
         self.client.get("/book/list", params={"pageNum": 1, "pageSize": 5}, headers=headers, name="book.list[GET]")
         self.client.get("/member/list", params={"pageNum": 1, "pageSize": 5}, headers=headers, name="member.list[GET]")
 
@@ -265,16 +266,36 @@ class ReadioAdminUser(HttpUser):
             try:
                 member_id = member_resp.json().get("data")
             except Exception:
-                pass
+                member_id = None
 
-        # 只有成功创建会员且拿到 memberId 后才创建帖子，避免 cms_post.member_id 为 NULL
-        if member_id is not None:
-            self.client.post(
-                "/post/create",
-                json=fake_post_payload(member_id=member_id),
-                headers=headers,
-                name="post.create[POST]",
-            )
+        # 如果创建会员失败，则尝试从已有会员中挑一个；实在没有就直接返回，避免 memberId 为空
+        if member_id is None:
+            member_id = self._pick_any_member_id()
+        if member_id is None:
+            return
+
+        # 只有成功拿到 memberId 后才创建帖子，避免 cms_post.member_id 为 NULL
+        payload_meta, payload_content = fake_post_payload(member_id=member_id)
+        post_resp = self.client.post(
+            "/post/create",
+            json=payload_meta,
+            headers=headers,
+            name="post.create[POST]",
+        )
+        post_id = None
+        if post_resp.ok:
+            try:
+                post_id = post_resp.json().get("data")
+            except Exception:
+                post_id = None
+        if post_id is None:
+            return
+        self.client.post(
+            f"/post/{post_id}/content",
+            json=payload_content,
+            headers=headers,
+            name="post.content[POST]",
+        )
 
     @tag("comment", "write")
     @task(2)
@@ -328,7 +349,7 @@ class ReadioAdminUser(HttpUser):
             return
         # 再创建帖子内容
         self.client.post(
-            "/post/content",
+            f"/post/{post_id}/content",
             json=payload_content,
             headers=header,
             name="post.content[POST]",
@@ -406,10 +427,10 @@ class ReadioAdminUser(HttpUser):
         对多个简单 GET 接口做轻量高并发压测。
         """
         headers = self._headers()
-        self.client.get("/author/listAll", headers=headers, name="author.listAll")
-        self.client.get("/publisher/listAll", headers=headers, name="publisher.listAll")
-        self.client.get("/member/listAll", headers=headers, name="member.listAll")
-        self.client.get("/oneWord/listAll", headers=headers, name="oneWord.listAll")
+        self.client.get("/author/list", params={"pageNum": 1, "pageSize": 20}, headers=headers, name="author.list[GET](basic)")
+        self.client.get("/publisher/list", params={"pageNum": 1, "pageSize": 20}, headers=headers, name="publisher.list[GET](basic)")
+        self.client.get("/member/list", params={"pageNum": 1, "pageSize": 20}, headers=headers, name="member.list[GET](basic)")
+        self.client.get("/oneWord/list", params={"pageNum": 1, "pageSize": 20}, headers=headers, name="oneWord.list[GET](basic)")
         self.client.get("/comment/list", params={"pageNum": 1, "pageSize": 10}, headers=headers, name="comment.list[GET]")
 
     # -------- 工具方法 --------

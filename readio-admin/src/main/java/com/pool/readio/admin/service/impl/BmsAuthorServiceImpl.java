@@ -6,6 +6,8 @@ import com.pool.readio.mbg.mapper.BmsAuthorMapper;
 import com.pool.readio.mbg.model.BmsAuthor;
 import com.pool.readio.mbg.model.BmsAuthorExample;
 import com.github.pagehelper.PageHelper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -24,11 +26,13 @@ public class BmsAuthorServiceImpl implements BmsAuthorService {
     }
 
     @Override
+    @Cacheable(cacheNames = "bmsAuthorAll")
     public List<BmsAuthor> listAll() {
         return bmsAuthorMapper.selectByExample(new BmsAuthorExample());
     }
 
     @Override
+    @Cacheable(cacheNames = "bmsAuthorList", key = "T(java.util.Objects).hash(#queryParam) + ':' + #pageNum + ':' + #pageSize")
     public List<BmsAuthor> list(BmsAuthorQueryParam queryParam, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         BmsAuthorExample example = new BmsAuthorExample();
@@ -91,27 +95,32 @@ public class BmsAuthorServiceImpl implements BmsAuthorService {
     }
 
     @Override
+    @Cacheable(cacheNames = "bmsAuthor", key = "#id")
     public BmsAuthor getById(Integer id) {
         return bmsAuthorMapper.selectByPrimaryKey(id);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"bmsAuthorAll", "bmsAuthorList", "bmsAuthor"}, allEntries = true)
     public int create(BmsAuthor record) {
         return bmsAuthorMapper.insertSelective(record);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"bmsAuthorAll", "bmsAuthorList", "bmsAuthor"}, allEntries = true)
     public int updateById(Integer id, BmsAuthor record) {
         record.setId(id);
         return bmsAuthorMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"bmsAuthorAll", "bmsAuthorList", "bmsAuthor"}, allEntries = true)
     public int deleteById(Integer id) {
         return bmsAuthorMapper.deleteByPrimaryKey(id);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"bmsAuthorAll", "bmsAuthorList", "bmsAuthor"}, allEntries = true)
     public int deleteByIds(List<Integer> ids) {
         if (ids == null || ids.isEmpty()) {
             return 0;

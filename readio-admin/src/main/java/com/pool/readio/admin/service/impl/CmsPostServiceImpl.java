@@ -14,6 +14,8 @@ import com.pool.readio.mbg.model.CmsMemberPreferPostRelation;
 import com.pool.readio.mbg.model.CmsMemberPreferPostRelationExample;
 import com.pool.readio.mbg.model.UmsMember;
 import com.pool.readio.mbg.model.UmsMemberExample;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import com.pool.readio.mbg.model.CmsPostTagExample;
@@ -55,38 +57,45 @@ public class CmsPostServiceImpl implements CmsPostService {
     }
 
     @Override
+    @Cacheable(cacheNames = "cmsPostAll")
     public List<CmsPost> listAll() {
         return cmsPostMapper.selectByExample(new CmsPostExample());
     }
 
     @Override
+    @Cacheable(cacheNames = "cmsPostList", key = "#pageNum + ':' + #pageSize")
     public List<CmsPost> list(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         return cmsPostMapper.selectByExample(new CmsPostExample());
     }
 
     @Override
+    @Cacheable(cacheNames = "cmsPost", key = "#id")
     public CmsPost getById(Integer id) {
         return cmsPostMapper.selectByPrimaryKey(id);
     }
 
     @Override
+    @Cacheable(cacheNames = "cmsPostDetail", key = "#id")
     public CmsPostDetail getDetailById(Integer id) {
         return cmsPostDao.getDetail(id);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"cmsPostAll", "cmsPostList", "cmsPost", "cmsPostDetail"}, allEntries = true)
     public int create(CmsPost record) {
         return cmsPostMapper.insertSelective(record);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"cmsPostAll", "cmsPostList", "cmsPost", "cmsPostDetail"}, allEntries = true)
     public int updateById(Integer id, CmsPost record) {
         record.setId(id);
         return cmsPostMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"cmsPostAll", "cmsPostList", "cmsPost", "cmsPostDetail"}, allEntries = true)
     public int deleteById(Integer id) {
         return cmsPostMapper.deleteByPrimaryKey(id);
     }

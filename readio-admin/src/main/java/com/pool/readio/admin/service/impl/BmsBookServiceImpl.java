@@ -13,6 +13,8 @@ import com.pool.readio.mbg.model.CmsMemberPreferBookRelation;
 import com.pool.readio.mbg.model.CmsMemberPreferBookRelationExample;
 import com.pool.readio.mbg.model.UmsMember;
 import com.pool.readio.mbg.model.UmsMemberExample;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -41,11 +43,13 @@ public class BmsBookServiceImpl implements BmsBookService {
     }
 
     @Override
+    @Cacheable(cacheNames = "bmsBookAll")
     public List<BmsBook> listAll() {
         return bmsBookMapper.selectByExample(new BmsBookExample());
     }
 
     @Override
+    @Cacheable(cacheNames = "bmsBookList", key = "T(java.util.Objects).hash(#queryParam) + ':' + #pageNum + ':' + #pageSize")
     public List<BmsBook> list(BmsBookQueryParam queryParam, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         BmsBookExample example = new BmsBookExample();
@@ -119,27 +123,32 @@ public class BmsBookServiceImpl implements BmsBookService {
     }
 
     @Override
+    @Cacheable(cacheNames = "bmsBook", key = "#id")
     public BmsBook getById(Integer id) {
         return bmsBookMapper.selectByPrimaryKey(id);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"bmsBookAll", "bmsBookList", "bmsBook"}, allEntries = true)
     public int create(BmsBook record) {
         return bmsBookMapper.insertSelective(record);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"bmsBookAll", "bmsBookList", "bmsBook"}, allEntries = true)
     public int updateById(Integer id, BmsBook record) {
         record.setId(id);
         return bmsBookMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"bmsBookAll", "bmsBookList", "bmsBook"}, allEntries = true)
     public int deleteById(Integer id) {
         return bmsBookMapper.deleteByPrimaryKey(id);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"bmsBookAll", "bmsBookList", "bmsBook"}, allEntries = true)
     public int deleteByIds(List<Integer> ids) {
         if (ids == null || ids.isEmpty()) {
             return 0;

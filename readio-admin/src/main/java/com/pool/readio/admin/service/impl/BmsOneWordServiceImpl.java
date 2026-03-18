@@ -12,6 +12,8 @@ import com.pool.readio.mbg.model.CmsMemberPreferOneWordRelation;
 import com.pool.readio.mbg.model.CmsMemberPreferOneWordRelationExample;
 import com.pool.readio.mbg.model.UmsMember;
 import com.pool.readio.mbg.model.UmsMemberExample;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -37,6 +39,7 @@ public class BmsOneWordServiceImpl implements BmsOneWordService {
     }
 
     @Override
+    @Cacheable(cacheNames = "bmsOneWordAll")
     public List<BmsOneWord> listAll() {
         BmsOneWordExample ex = new BmsOneWordExample();
         ex.setOrderByClause("create_time DESC");
@@ -44,6 +47,7 @@ public class BmsOneWordServiceImpl implements BmsOneWordService {
     }
 
     @Override
+    @Cacheable(cacheNames = "bmsOneWordList", key = "(#bookId != null ? #bookId : 'null') + ':' + (#contentKeyword != null ? #contentKeyword : '') + ':' + #pageNum + ':' + #pageSize")
     public List<BmsOneWord> list(Integer bookId, String contentKeyword, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         BmsOneWordExample ex = new BmsOneWordExample();
@@ -59,11 +63,13 @@ public class BmsOneWordServiceImpl implements BmsOneWordService {
     }
 
     @Override
+    @Cacheable(cacheNames = "bmsOneWord", key = "#id")
     public BmsOneWord getById(Integer id) {
         return bmsOneWordMapper.selectByPrimaryKey(id);
     }
 
     @Override
+    @Cacheable(cacheNames = "bmsOneWordByBook", key = "#bookId")
     public List<BmsOneWord> listByBookId(Integer bookId) {
         if (bookId == null) return List.of();
         BmsOneWordExample ex = new BmsOneWordExample();
@@ -73,6 +79,7 @@ public class BmsOneWordServiceImpl implements BmsOneWordService {
     }
 
     @Override
+    @Cacheable(cacheNames = "bmsOneWordByBookPage", key = "#bookId + ':' + #pageNum + ':' + #pageSize")
     public List<BmsOneWord> listByBookIdPage(Integer bookId, Integer pageNum, Integer pageSize) {
         if (bookId == null) return List.of();
         PageHelper.startPage(pageNum, pageSize);
@@ -83,22 +90,26 @@ public class BmsOneWordServiceImpl implements BmsOneWordService {
     }
 
     @Override
+    @CacheEvict(cacheNames = {"bmsOneWordAll", "bmsOneWordList", "bmsOneWord", "bmsOneWordByBook", "bmsOneWordByBookPage"}, allEntries = true)
     public int create(BmsOneWord record) {
         return bmsOneWordMapper.insertSelective(record);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"bmsOneWordAll", "bmsOneWordList", "bmsOneWord", "bmsOneWordByBook", "bmsOneWordByBookPage"}, allEntries = true)
     public int updateById(Integer id, BmsOneWord record) {
         record.setId(id);
         return bmsOneWordMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"bmsOneWordAll", "bmsOneWordList", "bmsOneWord", "bmsOneWordByBook", "bmsOneWordByBookPage"}, allEntries = true)
     public int deleteById(Integer id) {
         return bmsOneWordMapper.deleteByPrimaryKey(id);
     }
 
     @Override
+    @CacheEvict(cacheNames = {"bmsOneWordAll", "bmsOneWordList", "bmsOneWord", "bmsOneWordByBook", "bmsOneWordByBookPage"}, allEntries = true)
     public int deleteByIds(List<Integer> ids) {
         if (ids == null || ids.isEmpty()) return 0;
         BmsOneWordExample ex = new BmsOneWordExample();
